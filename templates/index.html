@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title data-translate="gpaCalculatorTitle">GPA Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main>
+        <section class="page-content">
+            <h1 data-translate="gpaCalculatorTitle">GPA Calculator</h1>
+            <p data-translate="gpaCalculatorDescription">Calculate your GPA by adding courses and grades.</p>
+
+            <div class="input-section">
+                <h2 data-translate="addCourseHeading">Add Course</h2>
+                <div class="course-input-row"> 
+                    <div class="form-group">
+                        <label for="courseName" data-translate="courseNameLabel">Course Name</label>
+                        <input type="text" id="courseName" placeholder="Enter Course Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="credits" data-translate="creditsLabel">Credits</label>
+                        <input type="number" id="credits" step="0.1" min="0.5" placeholder="e.g., 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="grade" data-translate="gradeLabel">Grade</label>
+                        <select id="grade">
+                            <option value="" data-translate="selectGradeOption">Select Grade</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="button-group">
+                    <button id="clearCourseBtn" class="secondary-btn" data-translate="clearButton">Clear</button>
+                    <button id="addCourseBtn" class="primary-btn" data-translate="addCourseButton">Add Course</button>
+                </div>
+            </div>
+
+            <div class="course-list-section">
+                <h2><span data-translate="myCoursesHeading">My Courses</span></h2>
+                <table class="course-table"> <thead>
+                        <tr>
+                            <th data-translate="tableHeaderCourse">Course</th>
+                            <th data-translate="tableHeaderCredits">Credits</th>
+                            <th data-translate="tableHeaderGrade">Grade</th>
+                            <th data-translate="tableHeaderActions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td data-label="Course">Maths</td>
+                            <td data-label="Credits">3</td>
+                            <td data-label="Grade">A-</td>
+                            <td data-label="Actions">
+                                <a href="#">Edit</a> | <a href="#">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="gpa-summary-section">
+                <h2 data-translate="gpaSummaryHeading">GPA Summary</h2>
+                <div class="gpa-box">
+                    <span data-translate="currentGpaLabel">Current GPA</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <button id="resetCoursesBtn" class="secondary-btn" data-translate="resetCoursesButton">Reset All Courses</button>
+                </div>
+            </div>
+
+            <div class="navigation-cards-section">
+                <h2 data-translate="moreToolsHeading">More GPA Tools</h2>
+                <div class="cards-container">
+                    <div class="card" id="priorSemesterCard">
+                        <h3 data-translate="priorSemesterCardTitle">Prior Semester/Final GPA</h3>
+                        <p data-translate="priorSemesterCardDescription">Calculate your GPA including previous semesters or your final cumulative GPA.</p>
+                        <button class="card-button" data-translate="goToCalculatorButton">Go to Calculator</button>
+                    </div>
+                    <div class="card" id="gpaPlanningCard">
+                        <h3 data-translate="gpaPlanningCardTitle">GPA Planning</h3>
+                        <p data-translate="gpaPlanningCardDescription">Plan your future semester GPA to achieve a target cumulative GPA.</p>
+                        <button class="card-button" data-translate="goToCalculatorButton">Go to Calculator</button>
+                    </div>
+                </div>
+            </div>
+            
+            <br>
+            <div class="content-section">
+                <h2 data-translate="contentHeading1">Important Information</h2>
+                <p data-translate="contentParagraph1">This calculator helps you estimate your GPA based on your course grades.</p>
+            </div>
+
+            <div class="content-section">
+                <h2 data-translate="contentHeading2">How Grades are Calculated</h2>
+                <p data-translate="contentParagraph2">Different universities may have different grading scales. Please check your institution's specific criteria.</p>
+            </div>
+
+            <div class="faq-section centered-section">
+                <h2 data-translate="faqHeading">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
+                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
+                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
+                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

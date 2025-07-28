@@ -1,0 +1,62 @@
+{
+    "brandName": {
+        "en": "GradeWise",
+        "ur": "گریڈ وائز"
+    },
+    "myCourses": {
+        "en": "My Courses",
+        "ur": "میرے کورسز"
+    },
+    "gpaCalculator": {
+        "en": "GPA Calculator",
+        "ur": "جی پی اے کیلکولیٹر"
+    },
+    "gpaPlanning": {
+        "en": "GPA Planning",
+        "ur": "جی پی اے پلاننگ"
+    },
+    "upgrade": {
+        "en": "Upgrade",
+        "ur": "اپ گریڈ"
+    },
+    "termsOfService": {
+        "en": "Terms of Service",
+        "ur": "خدمات کی شرائط"
+    },
+    "privacyPolicy": {
+        "en": "Privacy Policy",
+        "ur": "پرائیویسی پالیسی"
+    },
+    "contactUs": {
+        "en": "Contact Us",
+        "ur": "ہم سے رابطہ کریں"
+    },
+    "editLink": {
+        "en": "Edit",
+        "ur": "ترمیم"
+    },
+    "deleteLink": {
+        "en": "Delete",
+        "ur": "حذف کریں"
+    },
+    "clearButton": {
+        "en": "Clear",
+        "ur": "صاف کریں"
+    },
+    "calculateButton": {
+        "en": "Calculate",
+        "ur": "حساب لگائیں"
+    },
+    "updateButton": {
+        "en": "Update Course",
+        "ur": "کورس اپ ڈیٹ کریں"
+    },
+    "confirmDeleteMessage": {
+        "en": "Are you sure you want to delete this course?",
+        "ur": "کیا آپ واقعی اس کورس کو حذف کرنا چاہتے ہیں؟"
+    },
+    "fillAllFieldsAlert": {
+        "en": "Please fill in all details correctly.",
+        "ur": "براہ کرم تمام تفصیلات صحیح طریقے سے پُر کریں۔"
+    }
+}

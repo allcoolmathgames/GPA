@@ -1,0 +1,114 @@
+{
+    "gpaCalculatorTitle": {
+        "en": "GPA Calculator",
+        "ur": "جی پی اے کیلکولیٹر"
+    },
+    "gpaCalculatorDescription": {
+        "en": "Calculate your GPA by adding courses and grades.",
+        "ur": "کورسز اور گریڈز شامل کرکے اپنا جی پی اے شمار کریں۔"
+    },
+    "addCourseHeading": {
+        "en": "Add Course",
+        "ur": "کورس شامل کریں"
+    },
+    "courseNameLabel": {
+        "en": "Course Name",
+        "ur": "کورس کا نام"
+    },
+    "creditsLabel": {
+        "en": "Credits",
+        "ur": "کریڈٹس"
+    },
+    "gradeLabel": {
+        "en": "Grade",
+        "ur": "گریڈ"
+    },
+    "selectGradeOption": {
+        "en": "Select Grade",
+        "ur": "گریڈ منتخب کریں"
+    },
+    "addCourseButton": {
+        "en": "Add Course",
+        "ur": "کورس شامل کریں"
+    },
+    "tableHeaderCourse": {
+        "en": "Course",
+        "ur": "کورس"
+    },
+    "tableHeaderCredits": {
+        "en": "Credits",
+        "ur": "کریڈٹس"
+    },
+    "tableHeaderGrade": {
+        "en": "Grade",
+        "ur": "گریڈ"
+    },
+    "tableHeaderActions": {
+        "en": "Actions",
+        "ur": "اقدامات"
+    },
+    "gpaSummaryHeading": {
+        "en": "GPA Summary",
+        "ur": "جی پی اے کا خلاصہ"
+    },
+    "currentGpaLabel": {
+        "en": "Current GPA: ",
+        "ur": "موجودہ جی پی اے"
+    },
+    "priorSemesterFinalGpaButton": {
+        "en": "Prior Semester/Final GPA",
+        "ur": "گزشتہ سمسٹر/فائنل جی پی اے"
+    },
+    "gpaPlanningButton": {
+        "en": "GPA Planning",
+        "ur": "جی پی اے پلاننگ"
+    },
+    "contentHeading1": {
+        "en": "Important Information",
+        "ur": "اہم معلومات"
+    },
+    "contentParagraph1": {
+        "en": "This calculator helps you estimate your GPA based on your course grades.",
+        "ur": "یہ کیلکولیٹر آپ کے کورس گریڈز کی بنیاد پر آپ کے جی پی اے کا اندازہ لگانے میں مدد کرتا ہے۔"
+    },
+    "contentHeading2": {
+        "en": "How Grades are Calculated",
+        "ur": "گریڈز کا حساب کیسے لگایا جاتا ہے"
+    },
+    "contentParagraph2": {
+        "en": "Different universities may have different grading scales. Please check your institution's specific criteria.",
+        "ur": "مختلف یونیورسٹیوں کے گریڈنگ کے پیمانے مختلف ہو سکتے ہیں۔ براہ کرم اپنے ادارے کے مخصوص معیار کو چیک کریں۔"
+    },
+    "faqHeading": {
+        "en": "Frequently Asked Questions",
+        "ur": "اکثر پوچھے گئے سوالات"
+    },
+    "faqQuestion1": {
+        "en": "How is the GPA calculated?",
+        "ur": "جی پی اے کا حساب کیسے لگایا جاتا ہے؟"
+    },
+    "faqAnswer1": {
+        "en": "GPA is calculated by dividing the total grade points earned by the total credit hours attempted.",
+        "ur": "جی پی اے حاصل کردہ کل گریڈ پوائنٹس کو کل کریڈٹ آورز سے تقسیم کرکے شمار کیا جاتا ہے۔"
+    },
+    "faqQuestion2": {
+        "en": "Can I save my courses?",
+        "ur": "کیا میں اپنے کورسز محفوظ کر سکتا ہوں؟"
+    },
+    "faqAnswer2": {
+        "en": "Currently, courses are not saved. This is a basic calculator for quick estimation.",
+        "ur": "فی الحال، کورسز محفوظ نہیں کیے جاتے ہیں۔ یہ فوری تخمینہ کے لیے ایک بنیادی کیلکولیٹر ہے۔"
+    },
+    "requiredGpaResultText": {
+        "en": "You need a {{gpa}} GPA in your next semester to achieve a cumulative GPA of {{goal}}.",
+        "ur": "آپ کو اپنے اگلے سمسٹر میں {{goal}} کا مجموعی جی پی اے حاصل کرنے کے لیے {{gpa}} جی پی اے کی ضرورت ہے۔"
+    },
+    "unrealisticGpaGoal": {
+        "en": "Your goal GPA is too high or unrealistic. Consider adjusting it.",
+        "ur": "آپ کا ہدف جی پی اے بہت زیادہ یا غیر حقیقی ہے۔ اسے ایڈجسٹ کرنے پر غور کریں۔"
+    },
+    "gpaGoalAlreadyMet": {
+        "en": "Your goal GPA has already been met or is lower than your current GPA.",
+        "ur": "آپ کا ہدف جی پی اے پہلے ہی حاصل ہو چکا ہے یا آپ کے موجودہ جی پی اے سے کم ہے۔"
+    }
+}

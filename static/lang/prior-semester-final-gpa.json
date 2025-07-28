@@ -1,0 +1,102 @@
+{
+    "calcGpaTitle": {
+        "en": "Calculate GPA",
+        "ur": "جی پی اے کا حساب لگائیں"
+    },
+    "calcGpaDescription": {
+        "en": "Calculate GPA with Previous Semesters",
+        "ur": "گزشتہ سمسٹرز کے ساتھ جی پی اے کا حساب لگائیں"
+    },
+    "gpaPreviousSemesterHeading": {
+        "en": "Calculate GPA with Previous Semesters",
+        "ur": "گزشتہ سمسٹرز کے ساتھ جی پی اے کا حساب لگائیں"
+    },
+    "oldTotalCreditsLabel": {
+        "en": "Old Total Credits",
+        "ur": "پرانے کل کریڈٹس"
+    },
+    "oldGpaLabel": {
+        "en": "Old GPA",
+        "ur": "پرانا جی پی اے"
+    },
+    "newSemesterCreditsLabel": {
+        "en": "New Semester Credits",
+        "ur": "نئے سمسٹر کے کریڈٹس"
+    },
+    "newSemesterGpaLabel": {
+        "en": "New Semester GPA",
+        "ur": "نئے سمسٹر کا جی پی اے"
+    },
+    "calculateCombinedGpaButton": {
+        "en": "Calculate Combined GPA",
+        "ur": "مجموعی جی پی اے کا حساب لگائیں"
+    },
+    "combinedGpaResultText": {
+        "en": "Combined GPA: ",
+        "ur": "مجموعی جی پی اے: "
+    },
+    "calcFinalCumulativeGpaHeading": {
+        "en": "Calculate Final Cumulative GPA",
+        "ur": "حتمی مجموعی جی پی اے کا حساب لگائیں"
+    },
+    "totalCreditsLabel": {
+        "en": "Total Credits",
+        "ur": "کل کریڈٹس"
+    },
+    "gpaLabel": {
+        "en": "GPA",
+        "ur": "جی پی اے"
+    },
+    "calculateFinalGpaButton": {
+        "en": "Calculate Final GPA",
+        "ur": "حتمی جی پی اے کا حساب لگائیں"
+    },
+    "finalGpaResultText": {
+        "en": "Final Cumulative GPA: ",
+        "ur": "حتمی مجموعی جی پی اے: "
+    },
+    "contentHeading1": {
+        "en": "Understanding Cumulative GPA",
+        "ur": "مجموعی جی پی اے کو سمجھنا"
+    },
+    "contentParagraph1": {
+        "en": "Your cumulative GPA is a weighted average of all grades received in all courses.",
+        "ur": "آپ کا مجموعی جی پی اے تمام کورسز میں حاصل کردہ تمام گریڈز کا ایک وزن شدہ اوسط ہے۔"
+    },
+    "contentHeading2": {
+        "en": "Tips for Improving GPA",
+        "ur": "جی پی اے بہتر بنانے کے لیے تجاویز"
+    },
+    "contentParagraph2": {
+        "en": "Focus on difficult courses, attend study groups, and seek help from instructors.",
+        "ur": "مشکل کورسز پر توجہ دیں، اسٹڈی گروپس میں شرکت کریں، اور اساتذہ سے مدد طلب کریں۔"
+    },
+    "faqHeading": {
+        "en": "FAQ",
+        "ur": "اکثر پوچھے گئے سوالات"
+    },
+    "faqQuestion1": {
+        "en": "How is the GPA calculated?",
+        "ur": "جی پی اے کا حساب کیسے لگایا جاتا ہے؟"
+    },
+    "faqAnswer1": {
+        "en": "GPA is calculated by dividing the total grade points earned by the total credit hours attempted.",
+        "ur": "جی پی اے حاصل کردہ کل گریڈ پوائنٹس کو کل کریڈٹ آورز سے تقسیم کرکے شمار کیا جاتا ہے۔"
+    },
+    "faqQuestion2": {
+        "en": "What is a good GPA?",
+        "ur": "اچھا جی پی اے کیا ہے؟"
+    },
+    "faqAnswer2": {
+        "en": "A good GPA varies by institution and program, but generally, 3.0 and above is considered strong.",
+        "ur": "ایک اچھا جی پی اے ادارے اور پروگرام کے لحاظ سے مختلف ہوتا ہے، لیکن عام طور پر 3.0 اور اس سے زیادہ کو مضبوط سمجھا جاتا ہے۔"
+    },
+    "faqQuestion3": {
+        "en": "How can I improve my GPA?",
+        "ur": "میں اپنا جی پی اے کیسے بہتر بنا سکتا ہوں؟"
+    },
+    "faqAnswer3": {
+        "en": "Focus on performing well in your current and future courses, especially those with higher credit hours.",
+        "ur": "اپنے موجودہ اور مستقبل کے کورسز میں اچھی کارکردگی دکھانے پر توجہ دیں، خاص طور پر زیادہ کریڈٹ آورز والے کورسز پر۔"
+    }
+}

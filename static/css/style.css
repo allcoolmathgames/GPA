@@ -1,0 +1,862 @@
+/* Universal Styles */
+:root {
+    --light-bg: #F2F2F2; /* Light grey background for the body */
+    --primary-color: #EAE4D5; /* Light cream/beige for navbar and some elements */
+    --secondary-color: #B6B09F; /* Muted gray/brown for secondary buttons and footer */
+    --dark-text: #333333; /* Darker text for readability */
+    --accent-color: #C83F12; /* Deep orange/red for accents, primary buttons, links */
+    --primary-dark: #a73333; /* Darker shade for primary button hover (adjust to match image if needed, current is #a7330f) */
+    --secondary-dark: #928a7b; /* Darker shade for secondary button hover */
+    --heading-color: #222222; /* A common color for section headings, slightly darker */
+    --border-color: #e0e0e0; /* Lighter border for a softer look */
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More refined shadow for sections */
+    --button-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header / Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px; /* Increased padding */
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+    position: sticky; /* Make navbar sticky */
+    top: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+.navbar .logo {
+    font-weight: 700; /* Bolder font weight */
+    font-size: 26px; /* Slightly larger */
+    color: var(--dark-text);
+    text-decoration: none;
+    letter-spacing: -0.5px; /* Tighter letter spacing for modern look */
+}
+
+.navbar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar nav ul li {
+    margin-left: 30px; /* Increased spacing */
+}
+
+.navbar nav ul li a {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.2s ease; /* Added transform for subtle animation */
+    padding: 5px 0; /* Add some padding for better click area */
+    position: relative; /* For underline effect */
+}
+
+.navbar nav ul li a::after { /* Underline effect */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-out;
+}
+
+.navbar nav ul li a:hover::after {
+    width: 100%;
+}
+
+.navbar nav ul li a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.navbar .user-profile img {
+    width: 35px; /* Slightly larger profile pic */
+    height: 35px;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 2px solid var(--accent-color); /* Accent border for profile pic */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .btn-upgrade {
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 10px 20px; /* Larger button */
+    border-radius: 25px; /* Pill shape */
+    text-decoration: none;
+    margin-left: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .btn-upgrade:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Language Switcher Styling (Navbar) */
+.language-switcher-container {
+    margin-left: 20px; /* Space from other nav items */
+}
+
+#language-switcher {
+    width: 100px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color); /* Border color from theme */
+    background-color: #fff; /* White background */
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none; /* Remove default dropdown arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px top 50%;
+    background-size: 16px 16px;
+    color: var(--dark-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#language-switcher:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(200, 63, 18, 0.2);
+}
+
+
+/* Page Content Layout (Main container for all sections below navbar) */
+.page-content {
+    flex: 1; /* Allows content to expand and push footer down */
+    max-width: 1000px; /* Overall max width for the content area */
+    margin: 30px auto; /* Centered with vertical margin */
+    padding: 0 20px; /* Horizontal padding for smaller screens */
+}
+
+/* Common Section Styles */
+.input-section,
+.course-list-section, /* For tables */
+.gpa-summary-section,
+.content-section,
+.faq-section,
+.navigation-cards-section {
+    background-color: #fff;
+    border: 1px solid var(--border-color); /* Consistent border color */
+    border-radius: 10px; /* More rounded corners */
+    padding: 30px; /* Increased padding */
+    margin-bottom: 35px; /* More space between sections */
+    box-shadow: var(--box-shadow); /* Consistent shadow */
+}
+
+/* Headings within sections */
+.page-content h1 {
+    font-size: 38px; /* Larger main title */
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.page-content p:first-of-type { /* Description right below H1 */
+    font-size: 17px; /* Slightly larger description */
+    color: #666; /* Softer text color */
+    margin-bottom: 30px; /* More space below description */
+    text-align: center;
+}
+
+
+.input-section h2,
+.gpa-summary-section h2,
+.content-section h2,
+.faq-section h2,
+.navigation-cards-section h2 {
+    font-size: 28px; /* Larger section headings */
+    color: var(--heading-color);
+    margin-top: 0;
+    margin-bottom: 25px; /* More space below heading */
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Slightly more space */
+    font-weight: 600; /* Bolder labels */
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 12px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Slightly more rounded inputs */
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fcfcfc; /* Slightly off-white background for inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 63, 18, 0.15); /* Softer glow on focus */
+}
+
+/* Styles for making Course Name, Credits, Grade in one line (Page 1 Specific) */
+.course-input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; /* Increased gap */
+    justify-content: center; /* Center the input fields */
+    margin-bottom: 25px; /* More space below this row */
+}
+
+.course-input-row .form-group {
+    flex: 1;
+    min-width: 180px; /* Adjusted min-width for better spacing */
+    max-width: 250px; /* Max width to prevent overly wide inputs */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Button Group Styles */
+.button-group {
+    display: flex;
+    gap: 15px; /* Increased gap between buttons */
+    margin-top: 25px;
+    justify-content: center; /* Center buttons horizontally */
+}
+
+.primary-btn, .secondary-btn {
+    padding: 12px 28px; /* Larger buttons */
+    border: none;
+    border-radius: 8px; /* More rounded buttons */
+    cursor: pointer;
+    font-size: 17px; /* Slightly larger font */
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+}
+
+.primary-btn {
+    background-color: var(--accent-color);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(200, 63, 18, 0.3);
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(200, 63, 18, 0.4);
+}
+
+.secondary-btn {
+    background-color: var(--secondary-color);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(182, 176, 159, 0.3);
+}
+
+.secondary-btn:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(182, 176, 159, 0.4);
+}
+
+/* Table Styles (Page 1 Specific) */
+.course-list-section h2 { /* Targeting the heading specifically */
+    margin-bottom: 5px; /* Thora space kam kar diya heading aur labels ke beech */
+}
+
+.table-column-labels {
+    display: flex;
+    justify-content: space-between; /* Items ke beech equal space */
+    margin-top: 15px; /* Heading se thora neeche */
+    margin-bottom: 10px; /* Table se thora upar */
+    font-weight: 600; /* Boldness */
+    color: #555; /* Softer text color */
+    padding: 0 20px; /* Table cells ki padding se align karne ke liye */
+    font-size: 15px; /* Thora chota font jaisa image mein lag raha hai */
+    width: 100%; /* Puri width le */
+    box-sizing: border-box; /* Padding include ho width mein */
+}
+
+/* Table styling for the actual table */
+.course-list-section table { /* Applying table styles to the actual table in course-list-section */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px; /* More space above table */
+    font-size: 16px; /* Slightly larger text in table */
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.course-list-section th, .course-list-section td {
+    border: 1px solid var(--border-color);
+    padding: 15px 20px; /* Increased padding */
+    text-align: left;
+}
+
+.course-list-section th {
+    background-color: var(--primary-color);
+    color: var(--dark-text);
+    font-weight: 700; /* Bolder headers */
+    text-transform: uppercase; /* Uppercase headers */
+    font-size: 15px; /* Slightly smaller font for headers */
+}
+
+.course-list-section tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.course-list-section tr:hover {
+    background-color: #f5f5f5; /* Lighter hover effect */
+}
+
+.course-list-section td a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.course-list-section td a:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+
+/* GPA Summary Box (Page 1 Specific) */
+.gpa-summary-section {
+    text-align: center;
+}
+
+.gpa-box {
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 25px 40px; /* Increased padding and horizontal padding */
+    border-radius: 10px;
+    display: inline-flex; /* Use inline-flex to center the box itself */
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* More space between label and GPA value */
+    font-size: 20px; /* Larger font for label */
+    font-weight: 600;
+    margin-bottom: 25px; /* More space below GPA box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Stronger shadow for emphasis */
+    color: var(--dark-text);
+    min-width: 300px; /* Increased min-width for the GPA box */
+    max-width: 500px; /* Max width to keep it from getting too wide */
+}
+
+.gpa-box span:last-child {
+    color: var(--accent-color);
+    font-size: 42px; /* Much larger GPA value */
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* For "Reset All Courses" button to be centered */
+.gpa-summary-section .button-group {
+    justify-content: center;
+}
+
+/* Result Display (for other calculators - e.g. Prior Semester/Planning) */
+.result-display {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--dark-text);
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: none; /* Initially hidden, shown by JS */
+}
+
+/* FAQ Section */
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.3s ease; /* Smooth transition for background, border etc. */
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+}
+
+.faq-item h3 {
+    font-size: 18px;
+    color: var(--heading-color);
+    margin: 0;
+    padding: 18px 25px; /* Increased padding */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-bg);
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.faq-item h3:hover {
+    background-color: #e6e6e6; /* Lighter hover effect */
+}
+
+.faq-item h3 .toggle-icon {
+    font-size: 26px; /* Larger icon */
+    font-weight: normal;
+    margin-left: 15px;
+    transition: transform 0.3s ease;
+    line-height: 1;
+    color: var(--accent-color); /* Accent color for icon */
+}
+
+.faq-item p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 25px; /* Horizontal padding for content */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* Slower transition for smoother open/close */
+    text-align: left;
+}
+
+.faq-item p.active { /* Class added by JS when FAQ is open */
+    max-height: 200px; /* Adjust as needed for content height */
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+/* Navigation Cards Section (Typically for home/index page) */
+.navigation-cards-section {
+    margin-top: 40px;
+    text-align: center; /* Center the heading within its section */
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Increased gap between cards */
+    justify-content: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+    padding: 30px; /* Increased padding */
+    flex: 1;
+    min-width: 280px; /* Slightly larger min-width */
+    max-width: 48%; /* Adjust max-width for better two-column layout */
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.3s ease; /* Added border transition */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid transparent; /* Default transparent border */
+}
+
+.card:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+    border-color: var(--accent-color); /* Accent color border on hover */
+}
+
+.card h3 {
+    font-size: 22px; /* Larger card title */
+    color: var(--accent-color);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px; /* More space below text */
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.card-button {
+    padding: 12px 25px;
+    font-size: 17px;
+    border-radius: 25px; /* Pill shape for card buttons */
+    border: none;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--dark-text);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-button:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Footer Styles (Updated for the new layout and consistent color scheme) */
+.footer {
+    background-color: var(--primary-color); /* Consistent with navbar background */
+    color: var(--dark-text); /* Darker text for readability */
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border-color); /* Light border */
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px; /* Max width to match the image layout */
+    margin: 0 auto;
+    gap: 30px; /* Space between columns */
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px; /* Minimum width for columns */
+    padding: 10px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    color: var(--heading-color); /* Darker heading color */
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.footer-column p,
+.footer-column ul {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
+.footer-column ul li a {
+    color: var(--dark-text); /* Consistent dark text for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: var(--accent-color); /* Accent color hover for links */
+    text-decoration: underline;
+}
+
+.footer-column .email-address {
+    color: var(--accent-color); /* Accent color for email */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-bottom {
+    height: 75px;
+    background-color: var(--primary-dark);
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    color: var(--light-bg);
+    font-size: 14px;
+}
+
+/* Language Switcher in Footer */
+.footer .language-switcher {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color); /* Consistent border color from theme */
+    background-color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px top 50%;
+    background-size: 16px 16px;
+    color: var(--dark-text); /* Consistent dark text */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Make it take full width of its container */
+    margin-bottom: 20px; /* Space below the language switcher */
+}
+
+.footer .language-switcher:focus {
+    outline: none;
+    border-color: var(--accent-color); /* Accent color focus border for consistency */
+    box-shadow: 0 0 0 3px rgba(200, 63, 18, 0.2);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) { /* Tablet size adjustment */
+    .navbar {
+        padding: 15px 30px;
+    }
+    .navbar nav ul li {
+        margin-left: 20px;
+    }
+    .page-content {
+        padding: 0 15px;
+        margin: 25px auto;
+    }
+    .page-content h1 {
+        font-size: 32px;
+    }
+    .input-section, .course-list-section, .gpa-summary-section, .content-section, .faq-section, .navigation-cards-section {
+        padding: 25px;
+    }
+    .input-section h2, .gpa-summary-section h2, .content-section h2, .faq-section h2, .navigation-cards-section h2 {
+        font-size: 24px;
+    }
+    .gpa-box {
+        min-width: 250px;
+        font-size: 18px;
+    }
+    .gpa-box span:last-child {
+        font-size: 36px;
+    }
+    .cards-container {
+        gap: 20px; /* Reduce gap for tablets */
+    }
+    .card {
+        max-width: 48%; /* Maintain two columns for tablets */
+        min-width: 260px;
+        padding: 25px;
+    }
+}
+
+
+@media (max-width: 768px) { /* Mobile specific adjustments */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start; /* Align items to the start when stacked */
+        padding: 15px 20px;
+    }
+    .navbar .logo {
+        margin-bottom: 10px;
+    }
+    .navbar nav {
+        width: 100%; /* Ensure nav takes full width */
+        margin-bottom: 10px;
+    }
+    .navbar nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center; /* Center nav links */
+        width: 100%;
+    }
+    .navbar nav ul li {
+        margin: 5px 10px;
+    }
+    .language-switcher-container {
+        margin: 15px auto 0; /* Center language switcher when stacked */
+    }
+    .navbar .btn-upgrade {
+        margin-left: 0;
+        margin-top: 15px;
+        width: 100%; /* Full width button */
+    }
+
+    .page-content {
+        margin: 10px auto;
+        padding: 0 15px;
+    }
+
+    .page-content h1 {
+        font-size: 28px;
+    }
+
+    .input-section,
+    .course-list-section,
+    .gpa-summary-section,
+    .content-section,
+    .faq-section,
+    .navigation-cards-section {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+    .input-section h2, .gpa-summary-section h2, .content-section h2, .faq-section h2, .navigation-cards-section h2 {
+        font-size: 22px;
+    }
+
+    /* Course inputs stacked on small screens (Page 1 Specific) */
+    .course-input-row {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        gap: 15px;
+        justify-content: center; /* Ensure they stay centered */
+    }
+
+    .course-input-row .form-group {
+        min-width: unset;
+        width: 90%; /* Take up most of the width */
+        max-width: 350px; /* Constrain max width for phone view */
+        margin: 0 auto; /* Center individual form groups */
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px; /* Reduced gap for stacked buttons */
+    }
+
+    .primary-btn, .secondary-btn {
+        width: 100%;
+        margin-bottom: 0; /* Handled by gap */
+        padding: 12px 20px; /* Adjusted padding */
+    }
+    
+    /* Responsive Table (Page 1 Specific) */
+    .table-column-labels { /* Hide these labels on smaller screens */
+        display: none;
+    }
+
+    .course-list-section th, .course-list-section td { /* Apply to table elements */
+        padding: 10px;
+        font-size: 14px;
+    }
+    .course-list-section thead { /* Hide table headers on very small screens for better readability */
+        display: none;
+    }
+
+    .course-list-section table, .course-list-section tbody, .course-list-section tr, .course-list-section td {
+        display: block; /* Make table elements behave like blocks */
+        width: 100%;
+    }
+    .course-list-section tr {
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .course-list-section td {
+        border: none; /* Remove individual cell borders */
+        border-bottom: 1px solid #eee; /* Add bottom border to differentiate rows */
+        position: relative;
+        padding-left: 50%; /* Space for pseudo-element labels */
+        text-align: right;
+    }
+    .course-list-section td:last-child {
+        border-bottom: none;
+    }
+    .course-list-section td::before { /* Add labels using pseudo-elements */
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+    }
+
+    .gpa-box {
+        flex-direction: column;
+        align-items: center; /* Center items in stacked gpa-box */
+        width: 90%; /* Take up most of the width */
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        padding: 15px 20px; /* Adjust padding */
+    }
+    .gpa-box span:last-child {
+        font-size: 32px; /* Smaller GPA number on mobile */
+    }
+
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        max-width: 90%;
+        width: 100%;
+        padding: 20px; /* Adjusted padding */
+    }
+
+    /* Footer Responsive Adjustments */
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px; /* Reduce gap for mobile */
+    }
+
+    .footer-column {
+        min-width: unset;
+        width: 100%; /* Full width for columns on small screens */
+    }
+
+    .footer-column ul {
+        padding: 0;
+        text-align: center;
+    }
+
+    .footer .language-switcher {
+        width: 80%; /* Adjust width for mobile footer language picker */
+        max-width: 250px; /* Prevent it from becoming too wide */
+    }
+}

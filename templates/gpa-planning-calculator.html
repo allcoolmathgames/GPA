@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal GPA Calculator – Achieve Your Academic Targets</title> {# Title updated for Goal GPA Calculator #}
+    <meta name="description" content="Use our Goal GPA Calculator to determine the GPA you need in future semesters to reach your desired cumulative GPA. Plan your academic success."> {# Description updated #}
+    <meta name="keywords" content="goal GPA calculator, target GPA, required GPA, academic planning, cumulative GPA, future GPA, GPA strategy"> {# Keywords updated #}
+    <meta name="robots" content="noindex, nofollow"> {# User's explicit instruction followed #}
+    
+    <link rel="canonical" href="https://yourwebsite.com/gpa-planning/"> {# Canonical link updated for gpa-planning #}
+
+    <link rel="alternate" hreflang="x-default" href="https://yourwebsite.com/gpa-planning/"/>
+    <link rel="alternate" hreflang="en" href="https://yourwebsite.com/gpa-planning/"/>
+    <link rel="alternate" hreflang="ur" href="https://yourwebsite.com/ur/gpa-planning/"/>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Calculator", {# Schema type remains Calculator #}
+      "name": "Goal GPA Calculator", {# Name updated #}
+      "description": "An online tool to calculate the GPA required in upcoming semesters to achieve a specific cumulative GPA.", {# Description updated #}
+      "url": "https://yourwebsite.com/gpa-planning/", {# URL updated #}
+      "potentialAction": {
+        "@type": "PerformAction",
+        "name": "Calculate Required GPA", {# Action name updated #}
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://yourwebsite.com/gpa-planning/?goalGpa={goalGpa}&currentGpa={currentGpa}&currentTotalCredits={currentTotalCredits}&nextSemesterCredits={nextSemesterCredits}", {# URL template updated based on calculator inputs #}
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/IOSPlatform",
+            "http://schema.org/AndroidPlatform"
+          ]
+        },
+        "queryInput": [
+            "required name=goalGpa",
+            "required name=currentGpa",
+            "required name=currentTotalCredits",
+            "required name=nextSemesterCredits"
+        ]
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> {# Link to your CSS file #}
+</head>
+<body>
+{% include 'header.html' %}
+<section class="page-content">
+    <h1 data-translate="goalGpaCalcTitle">Goal GPA Calculator</h1>
+    <p data-translate="goalGpaCalcDescription">Calculate the GPA you need to achieve your desired cumulative GPA.</p>
+
+    <div class="input-section centered-section"> {# Added centered-section class #}
+        <h2 data-translate="goalGpaCalcHeading">Goal GPA Calculator</h2>
+        <div class="form-group">
+            <label for="goalGpa" data-translate="goalGpaLabel">Goal GPA</label>
+            <input type="number" step="0.01" id="goalGpa" placeholder="3.5">
+        </div>
+        <div class="form-group">
+            <label for="currentGpa" data-translate="currentGpaLabel">Current GPA</label>
+            <input type="number" step="0.01" id="currentGpa" placeholder="3.2">
+        </div>
+        <div class="form-group">
+            <label for="currentTotalCredits" data-translate="currentTotalCreditsLabel">Current Total Credits</label>
+            <input type="number" id="currentTotalCredits" placeholder="60">
+        </div>
+        <div class="form-group">
+            <label for="nextSemesterCredits" data-translate="nextSemesterCreditsLabel">Next Semester's Credits</label>
+            <input type="number" id="nextSemesterCredits" placeholder="15">
+        </div>
+        <div class="button-group">
+            <button id="calculateRequiredGpaBtn" class="primary-btn" data-translate="calculateButton">Calculate</button>
+            <button id="clearPlanningBtn" class="secondary-btn" data-translate="clearButton">Clear</button>
+        </div>
+        <div class="result-display" id="requiredGpaResult" style="display: none;"> {# Added style="display: none;" for initial hiding #}
+            </div>
+    </div>
+
+    <div class="content-section centered-section"> {# Added centered-section class #}
+        <h2 data-translate="contentHeading1">Setting Realistic Goals</h2>
+        <p data-translate="contentParagraph1">It's important to set achievable GPA goals. Consider your academic strengths and weaknesses.</p>
+    </div>
+
+    <div class="content-section centered-section"> {# Added centered-section class #}
+        <h2 data-translate="contentHeading2">Strategies for Success</h2>
+        <p data-translate="contentParagraph2">Consistent study habits, seeking extra help, and time management are key to achieving your target GPA.</p>
+    </div>
+
+    <div class="faq-section centered-section"> {# Added centered-section class #}
+        <h2 data-translate="faqHeading">FAQ</h2>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion1">How is the required GPA calculated?</h3>
+            <p data-translate="faqAnswer1">It's calculated based on your current GPA, total credits, and the credits you plan to take in the next semester to reach your goal.</p>
+        </div>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion2">What if my goal GPA is unrealistic?</h3>
+            <p data-translate="faqAnswer2">The calculator will show a very high or impossible required GPA. You may need to adjust your goal or study harder.</p>
+        </div>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
+            <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
+</body>
+</html>

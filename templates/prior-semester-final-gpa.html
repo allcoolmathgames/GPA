@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate GPA with Previous Semesters – GradeWise</title> {# Title updated for this specific page #}
+    <meta name="description" content="Calculate your cumulative GPA including previous semesters. Easily combine old GPA and credits with new semester performance."> {# Description updated #}
+    <meta name="keywords" content="calculate GPA, cumulative GPA, previous semester GPA, combined GPA, grade point average, university GPA, college GPA"> {# Keywords updated #}
+    <meta name="robots" content="noindex, nofollow"> {# User's explicit instruction followed #}
+    
+    <link rel="canonical" href="https://yourwebsite.com/prior-semester-gpa/"> {# Canonical link updated for this page #}
+
+    <link rel="alternate" hreflang="x-default" href="https://yourwebsite.com/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="en" href="https://yourwebsite.com/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="ur" href="https://yourwebsite.com/ur/prior-semester-gpa/"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<section class="page-content">
+    <h1 data-translate="calcGpaTitle">Calculate GPA</h1>
+    <p data-translate="calcGpaDescription">Calculate GPA with Previous Semesters</p>
+
+    <div class="input-section">
+        <h2 data-translate="gpaPreviousSemesterHeading">Calculate GPA with Previous Semesters</h2>
+        <div class="form-group">
+            <label for="oldTotalCredits" data-translate="oldTotalCreditsLabel">Old Total Credits</label>
+            <input type="number" id="oldTotalCredits" placeholder="Enter old total credits" min="0">
+        </div>
+        <div class="form-group">
+            <label for="oldGpa" data-translate="oldGpaLabel">Old GPA</label>
+            <input type="number" step="0.01" id="oldGpa" placeholder="Enter old GPA" min="0" max="4">
+        </div>
+        <div class="form-group">
+            <label for="newSemesterCredits" data-translate="newSemesterCreditsLabel">New Semester Credits</label>
+            <input type="number" id="newSemesterCredits" placeholder="Enter new semester credits" min="0">
+        </div>
+        <div class="form-group">
+            <label for="newSemesterGpa" data-translate="newSemesterGpaLabel">New Semester GPA</label>
+            <input type="number" step="0.01" id="newSemesterGpa" placeholder="Enter new semester GPA" min="0" max="4">
+        </div>
+        <div class="button-group">
+            <button id="calculateCombinedGpaBtn" class="primary-btn" data-translate="calculateCombinedGpaButton">Calculate Combined GPA</button>
+            <button id="clearCombinedBtn" class="secondary-btn" data-translate="clearButton">Clear</button>
+        </div>
+        
+        {# Ye woh jagah hai jahan combined GPA ka result display hoga #}
+        <div class="result-display" id="combinedGpaResult" style="display: none;">
+            {# Example: <span style="font-size:1.2em; font-weight:bold;">Your Combined Cumulative GPA:</span> <span style="font-size:1.8em; color:var(--accent-color);">3.50</span> #}
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2 data-translate="contentHeading1">Understanding Cumulative GPA</h2>
+        <p data-translate="contentParagraph1">Your cumulative GPA is a weighted average of all grades received in all courses taken throughout your academic career. It provides a comprehensive overview of your overall academic performance by combining your previous academic achievements with your latest semester's results.</p>
+    </div>
+
+    <div class="content-section">
+        <h2 data-translate="contentHeading2">Tips for Improving Your GPA</h2>
+        <p data-translate="contentParagraph2">To improve your cumulative GPA, focus on performing exceptionally well in your current and upcoming courses, especially those with higher credit hours. Consider seeking academic support, forming study groups, and regularly attending office hours with your instructors. Prioritize your most challenging subjects and ensure you have a clear understanding of the material.</p>
+    </div>
+
+    <div class="faq-section centered-section"> {# Added centered-section class #}
+        <h2 data-translate="faqHeading">FAQ</h2>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion1">How is the required GPA calculated?</h3>
+            <p data-translate="faqAnswer1">It's calculated based on your current GPA, total credits, and the credits you plan to take in the next semester to reach your goal.</p>
+        </div>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion2">What if my goal GPA is unrealistic?</h3>
+            <p data-translate="faqAnswer2">The calculator will show a very high or impossible required GPA. You may need to adjust your goal or study harder.</p>
+        </div>
+        <div class="faq-item">
+            <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
+            <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script> {# Link to your JavaScript file #}
+</body>
+</html>
