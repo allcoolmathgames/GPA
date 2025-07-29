@@ -29,65 +29,56 @@
   "langEnglish": {
     "en": "English",
     "ur": "English",
-    "ar": "الإنجليزية",
-    "pt": "Inglês",
-    "ru": "Английский",
-    "es": "Inglés",
-    "de": "Englisch"
-  },
-  "langUrdu": {
-    "en": "Urdu",
-    "ur": "Urdu",
-    "ar": "الأردية",
-    "pt": "Urdu",
-    "ru": "Урду",
-    "es": "Urdu",
-    "de": "Urdu"
+    "ar": "English",
+    "pt": "English",
+    "ru": "English",
+    "es": "English",
+    "de": "English"
   },
   "langArabic": {
     "en": "Arabic",
-    "ur": "Arbi",
-    "ar": "العربية",
-    "pt": "Árabe",
-    "ru": "Арабский",
-    "es": "Árabe",
-    "de": "Arabisch"
+    "ur": "Arabic",
+    "ar": "Arabic",
+    "pt": "Arabic",
+    "ru": "Arabic",
+    "es": "Arabic",
+    "de": "Arabic"
   },
   "langPortuguese": {
     "en": "Portuguese",
     "ur": "Portuguese",
-    "ar": "البرتغالية",
-    "pt": "Português",
-    "ru": "Португальский",
-    "es": "Portugués",
-    "de": "Portugiesisch"
+    "ar": "Portuguese",
+    "pt": "Portuguese",
+    "ru": "Portuguese",
+    "es": "Portuguese",
+    "de": "Portuguese"
   },
   "langRussian": {
     "en": "Russian",
-    "ur": "Roosi",
-    "ar": "الروسية",
-    "pt": "Russo",
-    "ru": "Русский",
-    "es": "Ruso",
-    "de": "Russisch"
+    "ur": "Russian",
+    "ar": "Russian",
+    "pt": "Russian",
+    "ru": "Russian",
+    "es": "Russian",
+    "de": "Russian"
   },
   "langSpanish": {
     "en": "Spanish",
     "ur": "Spanish",
-    "ar": "الإسبانية",
-    "pt": "Espanhol",
-    "ru": "Испанский",
-    "es": "Español",
-    "de": "Spanisch"
+    "ar": "Spanish",
+    "pt": "Spanish",
+    "ru": "Spanish",
+    "es": "Spanish",
+    "de": "Spanish"
   },
   "langGerman": {
     "en": "German",
     "ur": "German",
-    "ar": "الألمانية",
-    "pt": "Alemão",
-    "ru": "Немецкий",
-    "es": "Alemán",
-    "de": "Deutsch"
+    "ar": "German",
+    "pt": "German",
+    "ru": "German",
+    "es": "German",
+    "de": "German"
   },
   "footerAboutOurSite": {
     "en": "GradeWise",
