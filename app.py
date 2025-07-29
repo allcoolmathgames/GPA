@@ -3,14 +3,12 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 # Dummy data store (real project mein database use hoga)
-# Abhi ke liye simple list rakhtay hain for demonstration
 courses_data = [] # For Page 1
 
 # Helper function to calculate GPA
 def calculate_gpa_from_courses():
     total_grade_points = 0
     total_credits = 0
-    # Updated grade_map to include all grades from image_9f14ad.png
     grade_map = {
         'A+': 4.0, 'A': 4.0, 'A-': 3.7,
         'B+': 3.3, 'B': 3.0, 'B-': 2.7,
@@ -20,7 +18,6 @@ def calculate_gpa_from_courses():
     }
 
     for course in courses_data:
-        # Ensure 'grade' and 'credits' keys exist and are valid
         if 'grade' in course and course['grade'] in grade_map and \
            'credits' in course and isinstance(course['credits'], (int, float)):
             grade_points = grade_map[course['grade']] * course['credits']
@@ -33,22 +30,68 @@ def calculate_gpa_from_courses():
 
 @app.route('/')
 def index():
-    # Page 1: Main GPA Calculator
     return render_template('index.html')
 
 @app.route('/prior-semester-gpa')
 def prior_semester_gpa():
-    # Page 2: Prior Semester / Final GPA Calculator
     return render_template('prior-semester-final-gpa.html')
 
 @app.route('/gpa-planning')
 def gpa_planning():
-    # Page 3: GPA Planning Calculator
     return render_template('gpa-planning-calculator.html')
+
+# --- Blog Routes ---
+@app.route('/blogs')
+def blog_index():
+    return render_template('blogs/blog_index.html')
+
+@app.route('/blogs/<slug>')
+def blog_post(slug):
+    blog_templates = {
+        'how-to-improve-your-gpa-effectively': 'blogs/gpa_blog.html',
+        'understanding-different-grading-scales': 'blogs/final_gpa_blog.html',
+        'achieving-your-target-gpa-guide': 'blogs/target_gpa_blog.html'
+    }
+
+    template_to_render = blog_templates.get(slug)
+    
+    if template_to_render:
+        return render_template(template_to_render, slug=slug)
+    else:
+        return "Blog Post Not Found", 404
+
+@app.route('/blogs/gpa_blog')
+def gpa_blog():
+    return render_template('blogs/gpa_blog.html')
+
+@app.route('/blogs/final_gpa_blog')
+def final_gpa_blog():
+    return render_template('blogs/final_gpa_blog.html')
+
+@app.route('/blogs/target_gpa_blog')
+def target_gpa_blog():
+    return render_template('blogs/target_gpa_blog.html')
+
+# --- Other Static Pages (from 'pages' folder) ---
+@app.route('/privacy')
+def privacy_policy():
+    return render_template('pages/privacy.html')
+
+@app.route('/terms_conditions')
+def terms_conditions():
+    return render_template('pages/terms_conditions.html')
+
+@app.route('/aboutus')
+def about_us():
+    return render_template('pages/Aboutus.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('pages/Contact.html')
+
 
 # --- API Endpoints for Page 1 (Main GPA Calculator) ---
 
-# New endpoint: Get current courses for initial load and updates
 @app.route('/get_courses', methods=['GET'])
 def get_courses():
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
@@ -61,7 +104,6 @@ def add_course():
     credits = data.get('credits')
     grade = data.get('grade')
     
-    # Input Validation
     if not course_name or not grade:
         return jsonify({'status': 'error', 'message': 'Course Name and Grade are required.'}), 400
     try:
@@ -71,8 +113,7 @@ def add_course():
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid Credits value.'}), 400
     
-    # Check if grade is valid (assuming grades from updated grade_map)
-    grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'} # Updated allowed grades
+    grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'}
     if grade not in grade_map_keys:
         return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F.'}), 400
 
@@ -84,8 +125,6 @@ def add_course():
 def update_course():
     data = request.json
     index = data.get('index')
-    # Frontend now sends courseName even if readonly, but we don't use it to update name
-    # We allow credits and grade to be updated.
     new_credits = data.get('credits')
     new_grade = data.get('grade')
     
@@ -100,14 +139,16 @@ def update_course():
             courses_data[index]['credits'] = new_credits
         
         if new_grade:
-            grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'} # Updated allowed grades
+            grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'}
             if new_grade not in grade_map_keys:
-                return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F.'}), 400
+                return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-,C+, C, C-, D+, D, D-, F'}), 400
             courses_data[index]['grade'] = new_grade
             
         return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid data for update.'}), 400
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 @app.route('/delete_course', methods=['POST'])
 def delete_course():
@@ -121,11 +162,10 @@ def delete_course():
     
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
-# New endpoint: Reset all courses
 @app.route('/reset_courses', methods=['POST'])
 def reset_courses():
-    global courses_data # Make sure we're modifying the global list
-    courses_data = [] # Clear all courses
+    global courses_data
+    courses_data = []
     return jsonify({'status': 'success', 'message': 'All courses cleared.', 'currentGpa': 0.0})
 
 
@@ -141,7 +181,7 @@ def calculate_combined_gpa():
 
         if old_total_credits < 0 or old_gpa < 0 or new_semester_credits < 0 or new_semester_gpa < 0:
             return jsonify({'status': 'error', 'message': 'All credit and GPA values must be non-negative.'}), 400
-        if old_gpa > 4.0 or new_semester_gpa > 4.0: # Assuming 4.0 scale
+        if old_gpa > 4.0 or new_semester_gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
 
         old_grade_points = old_total_credits * old_gpa
@@ -167,7 +207,7 @@ def calculate_final_cumulative_gpa():
 
         if total_credits < 0 or gpa < 0:
             return jsonify({'status': 'error', 'message': 'Credits and GPA must be non-negative.'}), 400
-        if gpa > 4.0: # Assuming 4.0 scale
+        if gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
 
         final_gpa = round(gpa, 2)
@@ -191,28 +231,18 @@ def calculate_required_gpa():
         
         if goal_gpa < 0 or current_gpa < 0 or current_total_credits < 0 or next_semester_credits < 0:
             return jsonify({'status': 'error', 'message': 'All credit and GPA values must be non-negative.'}), 400
-        if goal_gpa > 4.0 or current_gpa > 4.0: # Assuming 4.0 scale
+        if goal_gpa > 4.0 or current_gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
         if next_semester_credits == 0:
             return jsonify({'status': 'error', 'message': 'Next semester credits cannot be zero for planning.'}), 400
 
-        # GPA planning calculation logic:
-        # Desired total grade points = (current_total_credits + next_semester_credits) * goal_gpa
-        # Current grade points = current_total_credits * current_gpa
-        # Required grade points for next semester = Desired total grade points - Current grade points
-        # Required GPA for next semester = Required grade points for next semester / next_semester_credits
-        
         desired_total_grade_points = (current_total_credits + next_semester_credits) * goal_gpa
         current_grade_points = current_total_credits * current_gpa
         
         required_grade_points_for_next_semester = desired_total_grade_points - current_grade_points
         
-        # Ensure required_gpa does not exceed 4.0 or go below 0.0, if that's a business rule
-        # A student cannot get more than a 4.0 in a semester. If the calculation yields > 4.0, it means it's impossible
-        # to reach the goal GPA with the given credits and current GPA.
         required_gpa = round(required_grade_points_for_next_semester / next_semester_credits, 2)
         
-        # Optional: Add checks for realistic GPA
         if required_gpa > 4.0:
             return jsonify({'status': 'success', 'requiredGpa': required_gpa, 'message': 'The required GPA is very high. It might be impossible to achieve your goal with the given credits.'})
         elif required_gpa < 0.0:
@@ -226,5 +256,4 @@ def calculate_required_gpa():
 
 
 if __name__ == '__main__':
-    # Production environment mein debug=False hota hai
     app.run(debug=True)

@@ -1,102 +1,194 @@
 {
-    "calcGpaTitle": {
-        "en": "Calculate GPA",
-        "ur": "جی پی اے کا حساب لگائیں"
-    },
-    "calcGpaDescription": {
-        "en": "Calculate GPA with Previous Semesters",
-        "ur": "گزشتہ سمسٹرز کے ساتھ جی پی اے کا حساب لگائیں"
-    },
-    "gpaPreviousSemesterHeading": {
-        "en": "Calculate GPA with Previous Semesters",
-        "ur": "گزشتہ سمسٹرز کے ساتھ جی پی اے کا حساب لگائیں"
-    },
-    "oldTotalCreditsLabel": {
-        "en": "Old Total Credits",
-        "ur": "پرانے کل کریڈٹس"
-    },
-    "oldGpaLabel": {
-        "en": "Old GPA",
-        "ur": "پرانا جی پی اے"
-    },
-    "newSemesterCreditsLabel": {
-        "en": "New Semester Credits",
-        "ur": "نئے سمسٹر کے کریڈٹس"
-    },
-    "newSemesterGpaLabel": {
-        "en": "New Semester GPA",
-        "ur": "نئے سمسٹر کا جی پی اے"
-    },
-    "calculateCombinedGpaButton": {
-        "en": "Calculate Combined GPA",
-        "ur": "مجموعی جی پی اے کا حساب لگائیں"
-    },
-    "combinedGpaResultText": {
-        "en": "Combined GPA: ",
-        "ur": "مجموعی جی پی اے: "
-    },
-    "calcFinalCumulativeGpaHeading": {
-        "en": "Calculate Final Cumulative GPA",
-        "ur": "حتمی مجموعی جی پی اے کا حساب لگائیں"
-    },
-    "totalCreditsLabel": {
-        "en": "Total Credits",
-        "ur": "کل کریڈٹس"
-    },
-    "gpaLabel": {
-        "en": "GPA",
-        "ur": "جی پی اے"
-    },
-    "calculateFinalGpaButton": {
-        "en": "Calculate Final GPA",
-        "ur": "حتمی جی پی اے کا حساب لگائیں"
-    },
-    "finalGpaResultText": {
-        "en": "Final Cumulative GPA: ",
-        "ur": "حتمی مجموعی جی پی اے: "
-    },
-    "contentHeading1": {
-        "en": "Understanding Cumulative GPA",
-        "ur": "مجموعی جی پی اے کو سمجھنا"
-    },
-    "contentParagraph1": {
-        "en": "Your cumulative GPA is a weighted average of all grades received in all courses.",
-        "ur": "آپ کا مجموعی جی پی اے تمام کورسز میں حاصل کردہ تمام گریڈز کا ایک وزن شدہ اوسط ہے۔"
-    },
-    "contentHeading2": {
-        "en": "Tips for Improving GPA",
-        "ur": "جی پی اے بہتر بنانے کے لیے تجاویز"
-    },
-    "contentParagraph2": {
-        "en": "Focus on difficult courses, attend study groups, and seek help from instructors.",
-        "ur": "مشکل کورسز پر توجہ دیں، اسٹڈی گروپس میں شرکت کریں، اور اساتذہ سے مدد طلب کریں۔"
-    },
-    "faqHeading": {
-        "en": "FAQ",
-        "ur": "اکثر پوچھے گئے سوالات"
-    },
-    "faqQuestion1": {
-        "en": "How is the GPA calculated?",
-        "ur": "جی پی اے کا حساب کیسے لگایا جاتا ہے؟"
-    },
-    "faqAnswer1": {
-        "en": "GPA is calculated by dividing the total grade points earned by the total credit hours attempted.",
-        "ur": "جی پی اے حاصل کردہ کل گریڈ پوائنٹس کو کل کریڈٹ آورز سے تقسیم کرکے شمار کیا جاتا ہے۔"
-    },
-    "faqQuestion2": {
-        "en": "What is a good GPA?",
-        "ur": "اچھا جی پی اے کیا ہے؟"
-    },
-    "faqAnswer2": {
-        "en": "A good GPA varies by institution and program, but generally, 3.0 and above is considered strong.",
-        "ur": "ایک اچھا جی پی اے ادارے اور پروگرام کے لحاظ سے مختلف ہوتا ہے، لیکن عام طور پر 3.0 اور اس سے زیادہ کو مضبوط سمجھا جاتا ہے۔"
-    },
-    "faqQuestion3": {
-        "en": "How can I improve my GPA?",
-        "ur": "میں اپنا جی پی اے کیسے بہتر بنا سکتا ہوں؟"
-    },
-    "faqAnswer3": {
-        "en": "Focus on performing well in your current and future courses, especially those with higher credit hours.",
-        "ur": "اپنے موجودہ اور مستقبل کے کورسز میں اچھی کارکردگی دکھانے پر توجہ دیں، خاص طور پر زیادہ کریڈٹ آورز والے کورسز پر۔"
-    }
+  "calcGpaTitle": {
+    "en": "Calculate GPA with Previous Semesters – GradeWise",
+    "ar": "حساب المعدل التراكمي مع الفصول الدراسية السابقة – GradeWise",
+    "pt": "Calcular GPA com Semestres Anteriores – GradeWise",
+    "ru": "Расчет среднего балла с учетом предыдущих семестров – GradeWise",
+    "es": "Calcular GPA con Semestres Anteriores – GradeWise",
+    "de": "GPA mit früheren Semestern berechnen – GradeWise"
+  },
+  "calcGpaDescription": {
+    "en": "Calculate your cumulative GPA including previous semesters. Easily combine old GPA and credits with new semester performance.",
+    "ar": "احسب معدلك التراكمي بما في ذلك الفصول الدراسية السابقة. ادمج بسهولة المعدل التراكمي القديم والوحدات مع أداء الفصل الدراسي الجديد.",
+    "pt": "Calcule seu GPA cumulativo incluindo semestres anteriores. Combine facilmente GPA e créditos antigos com o desempenho do novo semestre.",
+    "ru": "Рассчитайте свой кумулятивный средний балл с учетом предыдущих семестров. Легко объединяйте старый средний балл и кредиты с результатами нового семестра.",
+    "es": "Calcula tu GPA acumulativo incluyendo semestres anteriores. Combina fácilmente el GPA y los créditos antiguos con el rendimiento del nuevo semestre.",
+    "de": "Berechnen Sie Ihren kumulativen GPA einschließlich früherer Semester. Kombinieren Sie ganz einfach alte GPA und Leistungspunkte mit der Leistung des neuen Semesters."
+  },
+  "gpaPreviousSemesterHeading": {
+    "en": "Calculate GPA with Previous Semesters",
+    "ar": "حساب المعدل التراكمي مع الفصول الدراسية السابقة",
+    "pt": "Calcular GPA com Semestres Anteriores",
+    "ru": "Расчет среднего балла с учетом предыдущих семестров",
+    "es": "Calcular GPA con Semestres Anteriores",
+    "de": "GPA mit früheren Semestern berechnen"
+  },
+  "oldTotalCreditsLabel": {
+    "en": "Old Total Credits",
+    "ar": "إجمالي الوحدات القديمة",
+    "pt": "Créditos Totais Antigos",
+    "ru": "Общее количество кредитов за прошлые семестры",
+    "es": "Créditos Totales Antiguos",
+    "de": "Alte Gesamtleistungspunkte"
+  },
+  "oldGpaLabel": {
+    "en": "Old GPA",
+    "ar": "المعدل التراكمي القديم",
+    "pt": "GPA Antigo",
+    "ru": "Средний балл за прошлые семестры",
+    "es": "GPA Antiguo",
+    "de": "Alter GPA"
+  },
+  "newSemesterCreditsLabel": {
+    "en": "New Semester Credits",
+    "ar": "وحدات الفصل الدراسي الجديد",
+    "pt": "Créditos do Novo Semestre",
+    "ru": "Кредиты нового семестра",
+    "es": "Créditos del Nuevo Semestre",
+    "de": "Leistungspunkte des neuen Semesters"
+  },
+  "newSemesterGpaLabel": {
+    "en": "New Semester GPA",
+    "ar": "المعدل التراكمي للفصل الدراسي الجديد",
+    "pt": "GPA do Novo Semestre",
+    "ru": "Средний балл нового семестра",
+    "es": "GPA del Nuevo Semestre",
+    "de": "GPA des neuen Semesters"
+  },
+  "calculateCombinedGpaButton": {
+    "en": "Calculate Combined GPA",
+    "ar": "احسب المعدل التراكمي المجمع",
+    "pt": "Calcular GPA Combinado",
+    "ru": "Рассчитать объединенный средний балл",
+    "es": "Calcular GPA Combinado",
+    "de": "Kumulativen GPA berechnen"
+  },
+  "clearButton": {
+    "en": "Clear",
+    "ar": "مسح",
+    "pt": "Limpar",
+    "ru": "Очистить",
+    "es": "Limpiar",
+    "de": "Löschen"
+  },
+  "contentHeading1": {
+    "en": "Understanding Cumulative GPA",
+    "ar": "فهم المعدل التراكمي",
+    "pt": "Entendendo o GPA Cumulativo",
+    "ru": "Понимание кумулятивного среднего балла",
+    "es": "Comprendiendo el GPA Acumulativo",
+    "de": "Kumulativen GPA verstehen"
+  },
+  "contentParagraph1": {
+    "en": "Your cumulative GPA is a weighted average of all grades received in all courses taken throughout your academic career. It provides a comprehensive overview of your overall academic performance by combining your previous academic achievements with your latest semester's results.",
+    "ar": "المعدل التراكمي هو متوسط مرجح لجميع الدرجات المستلمة في جميع المقررات التي تم أخذها طوال مسيرتك الأكاديمية. يوفر نظرة عامة شاملة على أدائك الأكاديمي العام من خلال الجمع بين إنجازاتك الأكاديمية السابقة ونتائج الفصل الدراسي الأخير.",
+    "pt": "Seu GPA cumulativo é uma média ponderada de todas as notas recebidas em todos os cursos feitos ao longo de sua carreira acadêmica. Ele fornece uma visão geral abrangente de seu desempenho acadêmico geral, combinando suas conquistas acadêmicas anteriores com os resultados de seu último semestre.",
+    "ru": "Ваш кумулятивный средний балл — это средневзвешенное значение всех оценок, полученных по всем курсам за всю вашу академическую карьеру. Он обеспечивает всесторонний обзор вашей общей успеваемости, объединяя ваши предыдущие академические достижения с результатами вашего последнего семестра.",
+    "es": "Tu GPA acumulativo es un promedio ponderado de todas las calificaciones recibidas en todos los cursos tomados a lo largo de tu carrera académica. Proporciona una visión general completa de tu rendimiento académico general al combinar tus logros académicos anteriores con los resultados de tu último semestre.",
+    "de": "Ihr kumulativer GPA ist ein gewichteter Durchschnitt aller Noten, die Sie in allen Kursen während Ihrer akademischen Laufbahn erhalten haben. Er bietet einen umfassenden Überblick über Ihre gesamte akademische Leistung, indem er Ihre früheren akademischen Leistungen mit den Ergebnissen Ihres letzten Semesters kombiniert."
+  },
+  "contentHeading2": {
+    "en": "Tips for Improving Your GPA",
+    "ar": "نصائح لتحسين المعدل التراكمي",
+    "pt": "Dicas para Melhorar Seu GPA",
+    "ru": "Советы по улучшению среднего балла",
+    "es": "Consejos para Mejorar tu GPA",
+    "de": "Tipps zur Verbesserung Ihres GPA"
+  },
+  "contentParagraph2": {
+    "en": "To improve your cumulative GPA, focus on performing exceptionally well in your current and upcoming courses, especially those with higher credit hours. Consider seeking academic support, forming study groups, and regularly attending office hours with your instructors. Prioritize your most challenging subjects and ensure you have a clear understanding of the material.",
+    "ar": "لتحسين معدلك التراكمي، ركز على الأداء الاستثنائي في مقرراتك الحالية والقادمة، خاصة تلك التي تحتوي على ساعات معتمدة أعلى. فكر في طلب الدعم الأكاديمي، وتكوين مجموعات دراسية، وحضور ساعات العمل بانتظام مع معلميك. ركز على أصعب المواد وتأكد من فهمك الواضح للمادة.",
+    "pt": "Para melhorar seu GPA cumulativo, concentre-se em ter um desempenho excepcionalmente bom em seus cursos atuais e futuros, especialmente aqueles com maior carga horária. Considere procurar apoio acadêmico, formar grupos de estudo e frequentar regularmente o horário de atendimento com seus instrutores. Priorize suas disciplinas mais desafiadoras e certifique-se de ter uma compreensão clara do material.",
+    "ru": "Чтобы улучшить свой кумулятивный средний балл, сосредоточьтесь на исключительно хорошем выполнении текущих и предстоящих курсов, особенно тех, которые имеют большее количество кредитных часов. Рассмотрите возможность обращения за академической поддержкой, формирования учебных групп и регулярного посещения консультационных часов с вашими преподавателями. Уделите приоритетное внимание своим самым сложным предметам и убедитесь, что вы четко понимаете материал.",
+    "es": "Para mejorar tu GPA acumulativo, concéntrate en obtener un rendimiento excepcionalmente bueno en tus cursos actuales y futuros, especialmente aquellos con mayor número de créditos. Considera buscar apoyo académico, formar grupos de estudio y asistir regularmente a las horas de oficina con tus instructores. Prioriza tus asignaturas más desafiantes y asegúrate de tener una comprensión clara del material.",
+    "de": "Um Ihren kumulativen GPA zu verbessern, konzentrieren Sie sich darauf, in Ihren aktuellen und kommenden Kursen außergewöhnlich gut abzuschneiden, insbesondere in denen mit höheren Leistungspunkten. Ziehen Sie akademische Unterstützung in Betracht, bilden Sie Lerngruppen und besuchen Sie regelmäßig die Sprechstunden Ihrer Dozenten. Priorisieren Sie Ihre anspruchsvollsten Fächer und stellen Sie sicher, dass Sie das Material klar verstehen."
+  },
+  "faqHeading": {
+    "en": "FAQ",
+    "ar": "الأسئلة الشائعة",
+    "pt": "Perguntas Frequentes",
+    "ru": "Часто задаваемые вопросы",
+    "es": "Preguntas Frecuentes",
+    "de": "FAQ"
+  },
+  "faqQuestion1": {
+    "en": "How is the required GPA calculated?",
+    "ar": "كيف يتم حساب المعدل التراكمي المطلوب؟",
+    "pt": "Como o GPA necessário é calculado?",
+    "ru": "Как рассчитывается требуемый средний балл?",
+    "es": "¿Cómo se calcula el GPA requerido?",
+    "de": "Wie wird der benötigte GPA berechnet?"
+  },
+  "faqAnswer1": {
+    "en": "It's calculated based on your current GPA, total credits, and the credits you plan to take in the next semester to reach your goal.",
+    "ar": "يتم حسابه بناءً على معدلك التراكمي الحالي، وإجمالي الوحدات، والوحدات التي تخطط لأخذها في الفصل الدراسي التالي للوصول إلى هدفك.",
+    "pt": "É calculado com base no seu GPA atual, total de créditos e nos créditos que você planeja cursar no próximo semestre para atingir sua meta.",
+    "ru": "Он рассчитывается на основе вашего текущего среднего балла, общего количества кредитов и кредитов, которые вы планируете взять в следующем семестре для достижения своей цели.",
+    "es": "Se calcula en función de tu GPA actual, los créditos totales y los créditos que planeas tomar en el próximo semestre para alcanzar tu meta.",
+    "de": "Er wird basierend auf Ihrem aktuellen GPA, den Gesamtleistungspunkten und den Leistungspunkten berechnet, die Sie im nächsten Semester belegen möchten, um Ihr Ziel zu erreichen."
+  },
+  "faqQuestion2": {
+    "en": "What if my goal GPA is unrealistic?",
+    "ar": "ماذا لو كان المعدل التراكمي المستهدف غير واقعي؟",
+    "pt": "E se meu GPA alvo for irreal?",
+    "ru": "Что, если мой целевой средний балл нереалистичен?",
+    "es": "¿Qué pasa si mi GPA objetivo es poco realista?",
+    "de": "Was, wenn mein Ziel-GPA unrealistisch ist?"
+  },
+  "faqAnswer2": {
+    "en": "The calculator will show a very high or impossible required GPA. You may need to adjust your goal or study harder.",
+    "ar": "ستظهر لك الآلة الحاسبة معدلًا تراكميًا مطلوبًا عاليًا جدًا أو مستحيلًا. قد تحتاج إلى تعديل هدفك أو الدراسة بجدية أكبر.",
+    "pt": "A calculadora mostrará um GPA necessário muito alto ou impossível. Você pode precisar ajustar sua meta ou estudar mais.",
+    "ru": "Калькулятор покажет очень высокий или невозможный требуемый средний балл. Возможно, вам придется скорректировать свою цель или учиться усерднее.",
+    "es": "La calculadora mostrará un GPA requerido muy alto o imposible. Es posible que debas ajustar tu meta o estudiar más.",
+    "de": "Der Rechner zeigt einen sehr hohen oder unmöglichen benötigten GPA an. Möglicherweise müssen Sie Ihr Ziel anpassen oder härter lernen."
+  },
+  "faqQuestion3": {
+    "en": "Can I adjust my goal GPA later?",
+    "ar": "هل يمكنني تعديل المعدل التراكمي المستهدف لاحقًا؟",
+    "pt": "Posso ajustar meu GPA alvo mais tarde?",
+    "ru": "Могу ли я изменить свой целевой средний балл позже?",
+    "es": "¿Puedo ajustar mi GPA objetivo más tarde?",
+    "de": "Kann ich meinen Ziel-GPA später anpassen?"
+  },
+  "faqAnswer3": {
+    "en": "Yes, you can always re-enter new values to calculate a different required GPA.",
+    "ar": "نعم، يمكنك دائمًا إعادة إدخال قيم جديدة لحساب معدل تراكمي مطلوب مختلف.",
+    "pt": "Sim, você sempre pode inserir novos valores para calcular um GPA necessário diferente.",
+    "ru": "Да, вы всегда можете ввести новые значения для расчета другого требуемого среднего балла.",
+    "es": "Sí, siempre puedes volver a introducir nuevos valores para calcular un GPA requerido diferente.",
+    "de": "Ja, Sie können jederzeit neue Werte eingeben, um einen anderen benötigten GPA zu berechnen."
+  },
+  "resultMessagePrefix": {
+    "en": "Your Combined Cumulative GPA:",
+    "ar": "المعدل التراكمي المجمع الخاص بك:",
+    "pt": "Seu GPA Cumulativo Combinado:",
+    "ru": "Ваш объединенный кумулятивный средний балл:",
+    "es": "Tu GPA Acumulativo Combinado:",
+    "de": "Ihr kumulativer GPA:"
+  },
+  "errorInvalidInput": {
+    "en": "Please enter valid numbers for all fields.",
+    "ar": "الرجاء إدخال أرقام صحيحة لجميع الحقول.",
+    "pt": "Por favor, insira números válidos para todos os campos.",
+    "ru": "Пожалуйста, введите корректные числа для всех полей.",
+    "es": "Por favor, ingresa números válidos para todos los campos.",
+    "de": "Bitte geben Sie gültige Zahlen für alle Felder ein."
+  },
+  "errorNegativeCredits": {
+    "en": "Credits cannot be negative.",
+    "ar": "لا يمكن أن تكون الوحدات سالبة.",
+    "pt": "Créditos não podem ser negativos.",
+    "ru": "Кредиты не могут быть отрицательными.",
+    "es": "Los créditos no pueden ser negativos.",
+    "de": "Leistungspunkte können nicht negativ sein."
+  },
+  "errorGpaRange": {
+    "en": "GPA must be between 0 and 4.",
+    "ar": "يجب أن يكون المعدل التراكمي بين 0 و 4.",
+    "pt": "O GPA deve estar entre 0 e 4.",
+    "ru": "Средний балл должен быть от 0 до 4.",
+    "es": "El GPA debe estar entre 0 y 4.",
+    "de": "Der GPA muss zwischen 0 und 4 liegen."
+  }
 }

@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate GPA with Previous Semesters – GradeWise</title> {# Title updated for this specific page #}
-    <meta name="description" content="Calculate your cumulative GPA including previous semesters. Easily combine old GPA and credits with new semester performance."> {# Description updated #}
-    <meta name="keywords" content="calculate GPA, cumulative GPA, previous semester GPA, combined GPA, grade point average, university GPA, college GPA"> {# Keywords updated #}
-    <meta name="robots" content="noindex, nofollow"> {# User's explicit instruction followed #}
+    <title data-translate="calcGpaTitle">Calculate GPA with Previous Semesters – GradeWise</title>
+    <meta name="description" data-translate="calcGpaDescription" content="Calculate your cumulative GPA including previous semesters. Easily combine old GPA and credits with new semester performance.">
+    <meta name="keywords" content="calculate GPA, cumulative GPA, previous semester GPA, combined GPA, grade point average, university GPA, college GPA">
+    <meta name="robots" content="noindex, nofollow">
     
-    <link rel="canonical" href="https://yourwebsite.com/prior-semester-gpa/"> {# Canonical link updated for this page #}
+    <link rel="canonical" href="https://yourwebsite.com/prior-semester-gpa/">
 
     <link rel="alternate" hreflang="x-default" href="https://yourwebsite.com/prior-semester-gpa/"/>
     <link rel="alternate" hreflang="en" href="https://yourwebsite.com/prior-semester-gpa/"/>
-    <link rel="alternate" hreflang="ur" href="https://yourwebsite.com/ur/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="ar" href="https://yourwebsite.com/ar/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="pt" href="https://yourwebsite.com/pt/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="ru" href="https://yourwebsite.com/ru/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="es" href="https://yourwebsite.com/es/prior-semester-gpa/"/>
+    <link rel="alternate" hreflang="de" href="https://yourwebsite.com/de/prior-semester-gpa/"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5P5M5A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+<body data-lang="en"> {# Default language set to English, can be changed by JS #}
 {% include 'header.html' %}
 <section class="page-content">
     <h1 data-translate="calcGpaTitle">Calculate GPA</h1>
     <p data-translate="calcGpaDescription">Calculate GPA with Previous Semesters</p>
 
-    <div class="input-section">
+    <div class="input-section centered-section"> {# Added centered-section for consistency #}
         <h2 data-translate="gpaPreviousSemesterHeading">Calculate GPA with Previous Semesters</h2>
         <div class="form-group">
             <label for="oldTotalCredits" data-translate="oldTotalCreditsLabel">Old Total Credits</label>
@@ -44,23 +55,21 @@
             <button id="clearCombinedBtn" class="secondary-btn" data-translate="clearButton">Clear</button>
         </div>
         
-        {# Ye woh jagah hai jahan combined GPA ka result display hoga #}
         <div class="result-display" id="combinedGpaResult" style="display: none;">
-            {# Example: <span style="font-size:1.2em; font-weight:bold;">Your Combined Cumulative GPA:</span> <span style="font-size:1.8em; color:var(--accent-color);">3.50</span> #}
         </div>
     </div>
 
-    <div class="content-section">
+    <div class="content-section centered-section"> {# Added centered-section for consistency #}
         <h2 data-translate="contentHeading1">Understanding Cumulative GPA</h2>
         <p data-translate="contentParagraph1">Your cumulative GPA is a weighted average of all grades received in all courses taken throughout your academic career. It provides a comprehensive overview of your overall academic performance by combining your previous academic achievements with your latest semester's results.</p>
     </div>
 
-    <div class="content-section">
+    <div class="content-section centered-section"> {# Added centered-section for consistency #}
         <h2 data-translate="contentHeading2">Tips for Improving Your GPA</h2>
         <p data-translate="contentParagraph2">To improve your cumulative GPA, focus on performing exceptionally well in your current and upcoming courses, especially those with higher credit hours. Consider seeking academic support, forming study groups, and regularly attending office hours with your instructors. Prioritize your most challenging subjects and ensure you have a clear understanding of the material.</p>
     </div>
 
-    <div class="faq-section centered-section"> {# Added centered-section class #}
+    <div class="faq-section centered-section">
         <h2 data-translate="faqHeading">FAQ</h2>
         <div class="faq-item">
             <h3 data-translate="faqQuestion1">How is the required GPA calculated?</h3>
@@ -78,6 +87,7 @@
 </section>
 {% include 'footer.html' %}
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script> {# Link to your JavaScript file #}
+<script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </body>
 </html>

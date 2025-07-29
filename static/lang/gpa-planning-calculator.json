@@ -1,74 +1,234 @@
 {
-    "goalGpaCalcTitle": {
-        "en": "Goal GPA Calculator",
-        "ur": "ہدف جی پی اے کیلکولیٹر"
-    },
-    "goalGpaCalcDescription": {
-        "en": "Calculate the GPA you need to achieve your desired cumulative GPA.",
-        "ur": "وہ جی پی اے شمار کریں جو آپ کو اپنا مطلوبہ مجموعی جی پی اے حاصل کرنے کے لیے درکار ہے۔"
-    },
-    "goalGpaCalcHeading": {
-        "en": "Goal GPA Calculator",
-        "ur": "ہدف جی پی اے کیلکولیٹر"
-    },
-    "goalGpaLabel": {
-        "en": "Goal GPA",
-        "ur": "ہدف جی پی اے"
-    },
-    "currentGpaLabel": {
-        "en": "Current GPA",
-        "ur": "موجودہ جی پی اے"
-    },
-    "currentTotalCreditsLabel": {
-        "en": "Current Total Credits",
-        "ur": "موجودہ کل کریڈٹس"
-    },
-    "nextSemesterCreditsLabel": {
-        "en": "Next Semester's Credits",
-        "ur": "اگلے سمسٹر کے کریڈٹس"
-    },
-    "contentHeading1": {
-        "en": "Setting Realistic Goals",
-        "ur": "حقیقت پسندانہ اہداف طے کرنا"
-    },
-    "contentParagraph1": {
-        "en": "It's important to set achievable GPA goals. Consider your academic strengths and weaknesses.",
-        "ur": "حاصل کیے جانے والے جی پی اے کے اہداف طے کرنا اہم ہے۔ اپنی تعلیمی طاقتوں اور کمزوریوں پر غور کریں۔"
-    },
-    "contentHeading2": {
-        "en": "Strategies for Success",
-        "ur": "کامیابی کے لیے حکمت عملی"
-    },
-    "contentParagraph2": {
-        "en": "Consistent study habits, seeking extra help, and time management are key to achieving your target GPA.",
-        "ur": "مستقل مطالعے کی عادات، اضافی مدد حاصل کرنا، اور وقت کا انتظام آپ کے ہدف جی پی اے کو حاصل کرنے کی کلید ہیں۔"
-    },
-    "faqHeading": {
-        "en": "FAQ",
-        "ur": "اکثر پوچھے گئے سوالات"
-    },
-    "faqQuestion1": {
-        "en": "How is the required GPA calculated?",
-        "ur": "مطلوبہ جی پی اے کا حساب کیسے لگایا جاتا ہے؟"
-    },
-    "faqAnswer1": {
-        "en": "It's calculated based on your current GPA, total credits, and the credits you plan to take in the next semester to reach your goal.",
-        "ur": "اس کا حساب آپ کے موجودہ جی پی اے، کل کریڈٹس، اور اگلے سمسٹر میں اپنے ہدف تک پہنچنے کے لیے آپ کے لینے والے کریڈٹس کی بنیاد پر کیا جاتا ہے۔"
-    },
-    "faqQuestion2": {
-        "en": "What if my goal GPA is unrealistic?",
-        "ur": "اگر میرا ہدف جی پی اے غیر حقیقی ہو تو کیا ہوگا؟"
-    },
-    "faqAnswer2": {
-        "en": "The calculator will show a very high or impossible required GPA. You may need to adjust your goal or study harder.",
-        "ur": "کیلکولیٹر ایک بہت اونچا یا ناممکن مطلوبہ جی پی اے دکھائے گا۔ آپ کو اپنا ہدف ایڈجسٹ کرنے یا زیادہ محنت کرنے کی ضرورت پڑ سکتی ہے۔"
-    },
-    "faqQuestion3": {
-        "en": "Can I adjust my goal GPA later?",
-        "ur": "کیا میں اپنا ہدف جی پی اے بعد میں ایڈجسٹ کر سکتا ہوں؟"
-    },
-    "faqAnswer3": {
-        "en": "Yes, you can always re-enter new values to calculate a different required GPA.",
-        "ur": "ہاں، آپ ہمیشہ مختلف مطلوبہ جی پی اے کا حساب لگانے کے لیے نئی اقدار دوبارہ داخل کر سکتے ہیں۔"
-    }
+  "goalGpaCalcTitle": {
+    "en": "Goal GPA Calculator – Achieve Your Academic Targets",
+    "ar": "حاسبة المعدل التراكمي المستهدف – حقق أهدافك الأكاديمية",
+    "pt": "Calculadora de GPA Alvo – Atinja Seus Objetivos Acadêmicos",
+    "ru": "Калькулятор целевого среднего балла – Достигайте своих академических целей",
+    "es": "Calculadora de GPA Objetivo – Alcanza Tus Metas Académicas",
+    "de": "Ziel-GPA-Rechner – Erreichen Sie Ihre akademischen Ziele"
+  },
+  "goalGpaCalcDescription": {
+    "en": "Calculate the GPA you need to achieve your desired cumulative GPA.",
+    "ar": "احسب المعدل التراكمي الذي تحتاجه في الفصول الدراسية القادمة للوصول إلى معدلك التراكمي المطلوب.",
+    "pt": "Use nossa Calculadora de GPA Alvo para determinar o GPA que você precisa nos futuros semestres para alcançar seu GPA cumulativo desejado. Planeje seu sucesso acadêmico.",
+    "ru": "Используйте наш Калькулятор целевого среднего балла, чтобы определить, какой средний балл вам нужен в будущих семестрах для достижения желаемого кумулятивного среднего балла. Планируйте свой академический успех.",
+    "es": "Usa nuestra Calculadora de GPA Objetivo para determinar el GPA que necesitas en futuros semestres para alcanzar tu GPA acumulativo deseado. Planifica tu éxito académico.",
+    "de": "Verwenden Sie unseren Ziel-GPA-Rechner, um den GPA zu ermitteln, den Sie in zukünftigen Semestern benötigen, um Ihren gewünschten kumulativen GPA zu erreichen. Planen Sie Ihren akademischen Erfolg."
+  },
+  "goalGpaCalcHeading": {
+    "en": "Goal GPA Calculator",
+    "ar": "حاسبة المعدل التراكمي المستهدف",
+    "pt": "Calculadora de GPA Alvo",
+    "ru": "Калькулятор целевого среднего балла",
+    "es": "Calculadora de GPA Objetivo",
+    "de": "Ziel-GPA-Rechner"
+  },
+  "goalGpaLabel": {
+    "en": "Goal GPA",
+    "ar": "المعدل التراكمي المستهدف",
+    "pt": "GPA Alvo",
+    "ru": "Целевой средний балл",
+    "es": "GPA Objetivo",
+    "de": "Ziel-GPA"
+  },
+  "currentGpaLabel": {
+    "en": "Current GPA",
+    "ar": "المعدل التراكمي الحالي",
+    "pt": "GPA Atual",
+    "ru": "Текущий средний балл",
+    "es": "GPA Actual",
+    "de": "Aktueller GPA"
+  },
+  "currentTotalCreditsLabel": {
+    "en": "Current Total Credits",
+    "ar": "إجمالي الوحدات الحالية",
+    "pt": "Créditos Totais Atuais",
+    "ru": "Текущее общее количество кредитов",
+    "es": "Créditos Totales Actuales",
+    "de": "Aktuelle Gesamtleistungspunkte"
+  },
+  "nextSemesterCreditsLabel": {
+    "en": "Next Semester's Credits",
+    "ar": "وحدات الفصل الدراسي القادم",
+    "pt": "Créditos do Próximo Semestre",
+    "ru": "Кредиты следующего семестра",
+    "es": "Créditos del Próximo Semestre",
+    "de": "Leistungspunkte des nächsten Semesters"
+  },
+  "calculateButton": {
+    "en": "Calculate",
+    "ar": "احسب",
+    "pt": "Calcular",
+    "ru": "Рассчитать",
+    "es": "Calcular",
+    "de": "Berechnen"
+  },
+  "clearButton": {
+    "en": "Clear",
+    "ar": "مسح",
+    "pt": "Limpar",
+    "ru": "Очистить",
+    "es": "Limpiar",
+    "de": "Löschen"
+  },
+  "contentHeading1": {
+    "en": "Setting Realistic Goals",
+    "ar": "تحديد أهداف واقعية",
+    "pt": "Definindo Metas Realistas",
+    "ru": "Установка реалистичных целей",
+    "es": "Estableciendo Metas Realistas",
+    "de": "Realistische Ziele setzen"
+  },
+  "contentParagraph1": {
+    "en": "It's important to set achievable GPA goals. Consider your academic strengths and weaknesses.",
+    "ar": "من المهم تحديد أهداف واقعية للمعدل التراكمي. ضع في اعتبارك نقاط قوتك وضعفك الأكاديمية.",
+    "pt": "É importante definir metas de GPA alcançáveis. Considere seus pontos fortes e fracos acadêmicos.",
+    "ru": "Важно ставить достижимые цели по среднему баллу. Учитывайте свои академические сильные и слабые стороны.",
+    "es": "Es importante establecer metas de GPA alcanzables. Considera tus fortalezas y debilidades académicas.",
+    "de": "Es ist wichtig, erreichbare GPA-Ziele zu setzen. Berücksichtigen Sie Ihre akademischen Stärken und Schwächen."
+  },
+  "contentHeading2": {
+    "en": "Strategies for Success",
+    "ar": "استراتيجيات النجاح",
+    "pt": "Estratégias para o Sucesso",
+    "ru": "Стратегии успеха",
+    "es": "Estrategias para el Éxito",
+    "de": "Strategien für den Erfolg"
+  },
+  "contentParagraph2": {
+    "en": "Consistent study habits, seeking extra help, and time management are key to achieving your target GPA.",
+    "ar": "عادات الدراسة المتسقة، وطلب المساعدة الإضافية، وإدارة الوقت هي مفتاح تحقيق المعدل التراكمي المستهدف.",
+    "pt": "Hábitos de estudo consistentes, procurar ajuda extra e gerenciamento de tempo são fundamentais para alcançar seu GPA alvo.",
+    "ru": "Постоянные учебные привычки, поиск дополнительной помощи и управление временем являются ключом к достижению вашего целевого среднего балла.",
+    "es": "Hábitos de estudio consistentes, buscar ayuda adicional y la gestión del tiempo son clave para alcanzar tu GPA objetivo.",
+    "de": "Konstante Lerngewohnheiten, die Suche nach zusätzlicher Hilfe und Zeitmanagement sind der Schlüssel zum Erreichen Ihres Ziel-GPA."
+  },
+  "faqHeading": {
+    "en": "FAQ",
+    "ar": "الأسئلة الشائعة",
+    "pt": "Perguntas Frequentes",
+    "ru": "Часто задаваемые вопросы",
+    "es": "Preguntas Frecuentes",
+    "de": "FAQ"
+  },
+  "faqQuestion1": {
+    "en": "How is the required GPA calculated?",
+    "ar": "كيف يتم حساب المعدل التراكمي المطلوب؟",
+    "pt": "Como o GPA necessário é calculado?",
+    "ru": "Как рассчитывается требуемый средний балл?",
+    "es": "¿Cómo se calcula el GPA requerido?",
+    "de": "Wie wird der benötigte GPA berechnet?"
+  },
+  "faqAnswer1": {
+    "en": "It's calculated based on your current GPA, total credits, and the credits you plan to take in the next semester to reach your goal.",
+    "ar": "يتم حسابه بناءً على معدلك التراكمي الحالي، وإجمالي الوحدات، والوحدات التي تخطط لأخذها في الفصل الدراسي التالي للوصول إلى هدفك.",
+    "pt": "É calculado com base no seu GPA atual, total de créditos e nos créditos que você planeja cursar no próximo semestre para atingir sua meta.",
+    "ru": "Он рассчитывается на основе вашего текущего среднего балла, общего количества кредитов и кредитов, которые вы планируете взять в следующем семестре для достижения своей цели.",
+    "es": "Se calcula en función de tu GPA actual, los créditos totales y los créditos que planeas tomar en el próximo semestre para alcanzar tu meta.",
+    "de": "Er wird basierend auf Ihrem aktuellen GPA, den Gesamtleistungspunkten und den Leistungspunkten berechnet, die Sie im nächsten Semester belegen möchten, um Ihr Ziel zu erreichen."
+  },
+  "faqQuestion2": {
+    "en": "What if my goal GPA is unrealistic?",
+    "ar": "ماذا لو كان المعدل التراكمي المستهدف غير واقعي؟",
+    "pt": "E se meu GPA alvo for irreal?",
+    "ru": "Что, если мой целевой средний балл нереалистичен?",
+    "es": "¿Qué pasa si mi GPA objetivo es poco realista?",
+    "de": "Was, wenn mein Ziel-GPA unrealistisch ist?"
+  },
+  "faqAnswer2": {
+    "en": "The calculator will show a very high or impossible required GPA. You may need to adjust your goal or study harder.",
+    "ar": "ستظهر لك الآلة الحاسبة معدلًا تراكميًا مطلوبًا عاليًا جدًا أو مستحيلًا. قد تحتاج إلى تعديل هدفك أو الدراسة بجدية أكبر.",
+    "pt": "A calculadora mostrará um GPA necessário muito alto ou impossível. Você pode precisar ajustar sua meta ou estudar mais.",
+    "ru": "Калькулятор покажет очень высокий или невозможный требуемый средний балл. Возможно, вам придется скорректировать свою цель или учиться усерднее.",
+    "es": "La calculadora mostrará un GPA requerido muy alto o imposible. Es posible que debas ajustar tu meta o estudiar más.",
+    "de": "Der Rechner zeigt einen sehr hohen oder unmöglichen benötigten GPA an. Möglicherweise müssen Sie Ihr Ziel anpassen oder härter lernen."
+  },
+  "faqQuestion3": {
+    "en": "Can I adjust my goal GPA later?",
+    "ar": "هل يمكنني تعديل المعدل التراكمي المستهدف لاحقًا؟",
+    "pt": "Posso ajustar meu GPA alvo mais tarde?",
+    "ru": "Могу ли я изменить свой целевой средний балл позже?",
+    "es": "¿Puedo ajustar mi GPA objetivo más tarde?",
+    "de": "Kann ich meinen Ziel-GPA später anpassen?"
+  },
+  "faqAnswer3": {
+    "en": "Yes, you can always re-enter new values to calculate a different required GPA.",
+    "ar": "نعم، يمكنك دائمًا إعادة إدخال قيم جديدة لحساب معدل تراكمي مطلوب مختلف.",
+    "pt": "Sim, você sempre pode inserir novos valores para calcular um GPA necessário diferente.",
+    "ru": "Да, вы всегда можете ввести новые значения для расчета другого требуемого среднего балла.",
+    "es": "Sí, siempre puedes volver a introducir nuevos valores para calcular un GPA requerido diferente.",
+    "de": "Ja, Sie können jederzeit neue Werte eingeben, um einen anderen benötigten GPA zu berechnen."
+  },
+  "resultMessagePrefix": {
+    "en": "To reach a GPA of",
+    "ar": "للوصول إلى معدل تراكمي قدره",
+    "pt": "Para atingir um GPA de",
+    "ru": "Чтобы достичь среднего балла",
+    "es": "Para alcanzar un GPA de",
+    "de": "Um einen GPA von"
+  },
+  "resultMessageSuffix": {
+    "en": "you need to achieve a GPA of",
+    "ar": "، تحتاج إلى تحقيق معدل تراكمي قدره",
+    "pt": ", você precisa alcançar um GPA de",
+    "ru": ", вам необходимо получить средний балл",
+    "es": ", necesitas lograr un GPA de",
+    "de": "zu erreichen, benötigen Sie einen GPA von"
+  },
+  "resultMessageSuffixCredits": {
+    "en": "in your next semester of",
+    "ar": "في فصلك الدراسي القادم البالغ",
+    "pt": "no seu próximo semestre de",
+    "ru": "в следующем семестре из",
+    "es": "en tu próximo semestre de",
+    "de": "in Ihrem nächsten Semester mit"
+  },
+  "resultMessageCreditsTotal": {
+    "en": "credits.",
+    "ar": "وحدة.",
+    "pt": "créditos.",
+    "ru": "кредитов.",
+    "es": "créditos.",
+    "de": "Leistungspunkten."
+  },
+  "errorInvalidInput": {
+    "en": "Please enter valid numbers for all fields.",
+    "ar": "يرجى إدخال أرقام صحيحة لجميع الحقول.",
+    "pt": "Por favor, insira números válidos para todos os campos.",
+    "ru": "Пожалуйста, введите корректные числа для всех полей.",
+    "es": "Por favor, ingresa números válidos para todos los campos.",
+    "de": "Bitte geben Sie gültige Zahlen für alle Felder ein."
+  },
+  "errorNegativeCredits": {
+    "en": "Credits cannot be negative.",
+    "ar": "لا يمكن أن تكون الوحدات سالبة.",
+    "pt": "Créditos não podem ser negativos.",
+    "ru": "Кредиты не могут быть отрицательными.",
+    "es": "Los créditos no pueden ser negativos.",
+    "de": "Leistungspunkte können nicht negativ sein."
+  },
+  "errorGpaRange": {
+    "en": "GPA must be between 0 and 4.",
+    "ar": "يجب أن يكون المعدل التراكمي بين 0 و 4.",
+    "pt": "O GPA deve estar entre 0 e 4.",
+    "ru": "Средний балл должен быть от 0 до 4.",
+    "es": "El GPA debe estar entre 0 y 4.",
+    "de": "Der GPA muss zwischen 0 und 4 liegen."
+  },
+  "errorGoalGpaHigher": {
+    "en": "Your goal GPA must be higher than your current GPA for a meaningful calculation.",
+    "ar": "يجب أن يكون معدلك التراكمي المستهدف أعلى من معدلك التراكمي الحالي لإجراء حساب ذي معنى.",
+    "pt": "Seu GPA alvo deve ser maior que seu GPA atual para um cálculo significativo.",
+    "ru": "Ваш целевой средний балл должен быть выше вашего текущего среднего балла для значимого расчета.",
+    "es": "Tu GPA objetivo debe ser mayor que tu GPA actual para un cálculo significativo.",
+    "de": "Ihr Ziel-GPA muss für eine sinnvolle Berechnung höher als Ihr aktueller GPA sein."
+  },
+  "errorImpossibleGpa": {
+    "en": "The required GPA is unrealistically high/low. Please adjust your goal or current GPA/credits.",
+    "ar": "المعدل التراكمي المطلوب مرتفع / منخفض بشكل غير واقعي. يرجى تعديل هدفك أو المعدل التراكمي / الوحدات الحالية.",
+    "pt": "O GPA necessário é irrealisticamente alto/baixo. Por favor, ajuste seu objetivo ou GPA/créditos atuais.",
+    "ru": "Требуемый средний балл нереалистично высок/низок. Пожалуйста, скорректируйте свою цель или текущий средний балл/кредиты.",
+    "es": "El GPA requerido es irrealmente alto/bajo. Por favor, ajusta tu objetivo o tu GPA/créditos actuales.",
+    "de": "Der erforderliche GPA ist unrealistisch hoch/niedrig. Bitte passen Sie Ihr Ziel oder Ihren aktuellen GPA/Leistungspunkte an."
+  }
 }

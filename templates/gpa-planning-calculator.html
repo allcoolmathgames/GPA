@@ -3,29 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goal GPA Calculator – Achieve Your Academic Targets</title> {# Title updated for Goal GPA Calculator #}
-    <meta name="description" content="Use our Goal GPA Calculator to determine the GPA you need in future semesters to reach your desired cumulative GPA. Plan your academic success."> {# Description updated #}
-    <meta name="keywords" content="goal GPA calculator, target GPA, required GPA, academic planning, cumulative GPA, future GPA, GPA strategy"> {# Keywords updated #}
-    <meta name="robots" content="noindex, nofollow"> {# User's explicit instruction followed #}
+    <title data-translate="goalGpaCalcTitle">Goal GPA Calculator – Achieve Your Academic Targets</title>
+    <meta name="description" data-translate="goalGpaCalcDescription" content="Use our Goal GPA Calculator to determine the GPA you need in future semesters to reach your desired cumulative GPA. Plan your academic success.">
+    <meta name="keywords" content="goal GPA calculator, target GPA, required GPA, academic planning, cumulative GPA, future GPA, GPA strategy">
+    <meta name="robots" content="noindex, nofollow">
     
-    <link rel="canonical" href="https://yourwebsite.com/gpa-planning/"> {# Canonical link updated for gpa-planning #}
+    <link rel="canonical" href="https://yourwebsite.com/gpa-planning/">
 
     <link rel="alternate" hreflang="x-default" href="https://yourwebsite.com/gpa-planning/"/>
     <link rel="alternate" hreflang="en" href="https://yourwebsite.com/gpa-planning/"/>
-    <link rel="alternate" hreflang="ur" href="https://yourwebsite.com/ur/gpa-planning/"/>
+    <link rel="alternate" hreflang="ar" href="https://yourwebsite.com/ar/gpa-planning/"/>
+    <link rel="alternate" hreflang="pt" href="https://yourwebsite.com/pt/gpa-planning/"/>
+    <link rel="alternate" hreflang="ru" href="https://yourwebsite.com/ru/gpa-planning/"/>
+    <link rel="alternate" hreflang="es" href="https://yourwebsite.com/es/gpa-planning/"/>
+    <link rel="alternate" hreflang="de" href="https://yourwebsite.com/de/gpa-planning/"/>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Calculator", {# Schema type remains Calculator #}
-      "name": "Goal GPA Calculator", {# Name updated #}
-      "description": "An online tool to calculate the GPA required in upcoming semesters to achieve a specific cumulative GPA.", {# Description updated #}
-      "url": "https://yourwebsite.com/gpa-planning/", {# URL updated #}
+      "@type": "Calculator",
+      "name": "Goal GPA Calculator",
+      "description": "An online tool to calculate the GPA required in upcoming semesters to achieve a specific cumulative GPA.",
+      "url": "https://yourwebsite.com/gpa-planning/",
       "potentialAction": {
         "@type": "PerformAction",
-        "name": "Calculate Required GPA", {# Action name updated #}
+        "name": "Calculate Required GPA",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://yourwebsite.com/gpa-planning/?goalGpa={goalGpa}&currentGpa={currentGpa}&currentTotalCredits={currentTotalCredits}&nextSemesterCredits={nextSemesterCredits}", {# URL template updated based on calculator inputs #}
+          "urlTemplate": "https://yourwebsite.com/gpa-planning/?goalGpa={goalGpa}&currentGpa={currentGpa}&currentTotalCredits={currentTotalCredits}&nextSemesterCredits={nextSemesterCredits}",
           "actionPlatform": [
             "http://schema.org/DesktopWebPlatform",
             "http://schema.org/IOSPlatform",
@@ -41,15 +46,21 @@
       }
     }
     </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> {# Link to your CSS file #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5S5P5M5P5M5A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+<body data-lang="en"> {# Default language set to English, can be changed by JS #}
 {% include 'header.html' %}
 <section class="page-content">
     <h1 data-translate="goalGpaCalcTitle">Goal GPA Calculator</h1>
     <p data-translate="goalGpaCalcDescription">Calculate the GPA you need to achieve your desired cumulative GPA.</p>
 
-    <div class="input-section centered-section"> {# Added centered-section class #}
+    <div class="input-section centered-section">
         <h2 data-translate="goalGpaCalcHeading">Goal GPA Calculator</h2>
         <div class="form-group">
             <label for="goalGpa" data-translate="goalGpaLabel">Goal GPA</label>
@@ -71,21 +82,21 @@
             <button id="calculateRequiredGpaBtn" class="primary-btn" data-translate="calculateButton">Calculate</button>
             <button id="clearPlanningBtn" class="secondary-btn" data-translate="clearButton">Clear</button>
         </div>
-        <div class="result-display" id="requiredGpaResult" style="display: none;"> {# Added style="display: none;" for initial hiding #}
-            </div>
+        <div class="result-display" id="requiredGpaResult" style="display: none;">
+        </div>
     </div>
 
-    <div class="content-section centered-section"> {# Added centered-section class #}
+    <div class="content-section centered-section">
         <h2 data-translate="contentHeading1">Setting Realistic Goals</h2>
         <p data-translate="contentParagraph1">It's important to set achievable GPA goals. Consider your academic strengths and weaknesses.</p>
     </div>
 
-    <div class="content-section centered-section"> {# Added centered-section class #}
+    <div class="content-section centered-section">
         <h2 data-translate="contentHeading2">Strategies for Success</h2>
         <p data-translate="contentParagraph2">Consistent study habits, seeking extra help, and time management are key to achieving your target GPA.</p>
     </div>
 
-    <div class="faq-section centered-section"> {# Added centered-section class #}
+    <div class="faq-section centered-section">
         <h2 data-translate="faqHeading">FAQ</h2>
         <div class="faq-item">
             <h3 data-translate="faqQuestion1">How is the required GPA calculated?</h3>
@@ -102,5 +113,7 @@
     </div>
 </section>
 {% include 'footer.html' %}
+<script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </body>
 </html>

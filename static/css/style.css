@@ -860,3 +860,276 @@ body {
         max-width: 250px; /* Prevent it from becoming too wide */
     }
 }
+
+/* Blog Card Image Styling */
+.blog-card-image {
+    width: 100%; /* Make image take full width of its container */
+    height: 180px; /* Fixed height for consistency */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    border-radius: 8px; /* Match card border-radius */
+    margin-bottom: 15px; /* Space between image and title */
+}
+
+/* View All Blogs Button Group */
+.view-all-blogs-btn-group {
+    text-align: center; /* Center the button */
+    margin-top: 30px; /* Space above the button */
+}
+
+/* Ensure the primary button within blog section looks consistent */
+.blog-section .primary-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: var(--button-shadow);
+}
+
+.blog-section .primary-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Contact Page Specific Styles - Enhanced for "Piyari" look */
+
+/* Contact Info Section */
+.contact-info {
+    list-style: none; /* Remove default list bullets */
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    background-color: #f9f9f9; /* Light background for info section */
+    border-left: 5px solid var(--accent-color); /* Accent border */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-info li {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* Spacing between icon (if added) and text */
+}
+
+.contact-info li:last-child {
+    margin-bottom: 0; /* No margin for the last item */
+}
+
+.contact-info li strong {
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.contact-info li a {
+    word-break: break-all; /* Ensures long emails wrap */
+}
+
+
+/* Contact Form Enhancements */
+.contact-form {
+    background-color: #ffffff; /* White background for the form itself */
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow); /* Reusing the defined shadow variable */
+    max-width: 600px; /* Max width for better form readability */
+    margin: 2rem auto; /* Center the form */
+    border: 1px solid var(--border-color); /* Subtle border */
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.5rem; /* More space between form groups */
+}
+
+.contact-form label {
+    font-weight: bold;
+    color: var(--dark-text);
+    margin-bottom: 0.6rem; /* More space below label */
+    display: block; /* Ensures label takes its own line */
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="text"], /* Subject input */
+.contact-form textarea {
+    width: 100%;
+    padding: 1rem 1.2rem; /* Increased padding */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Slightly more rounded corners */
+    font-size: 1.05rem; /* Slightly larger font */
+    color: var(--dark-text);
+    background-color: #fdfdfd; /* Off-white background for inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(200, 63, 18, 0.25); /* More pronounced glow on focus */
+}
+
+.contact-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 120px; /* Minimum height for textarea */
+}
+
+.contact-form .primary-button {
+    width: auto; /* Button should not take full width in a form */
+    display: block; /* Make it a block element to control margin-auto */
+    margin: 1.5rem auto 0 auto; /* Center the button below the form */
+    padding: 1rem 2.5rem; /* Larger padding for button */
+    font-size: 1.1rem; /* Larger font size for button text */
+    letter-spacing: 0.5px;
+    box-shadow: var(--button-shadow); /* Apply button shadow */
+}
+
+/* Responsive adjustments for contact page */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+    }
+
+    .contact-info {
+        padding: 1rem;
+    }
+
+    .contact-info li,
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form .primary-button {
+        font-size: 1rem;
+    }
+}
+
+/* Privacy Policy Page Specific Styles */
+
+.page-content h1 {
+    font-size: 2.8rem; /* Slightly larger heading for main title */
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(200, 63, 18, 0.1); /* Lighter accent border */
+}
+
+.page-content h2 {
+    font-size: 2rem; /* Adjusted for section headings */
+    color: var(--heading-color);
+    margin-top: 2.5rem; /* More space above new sections */
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color); /* Subtle border */
+}
+
+.page-content p {
+    font-size: 1.05rem; /* Slightly larger paragraph text */
+    line-height: 1.7; /* Improved line spacing for readability */
+    margin-bottom: 1rem; /* Consistent spacing between paragraphs */
+    color: var(--dark-text);
+}
+
+.page-content p:last-of-type {
+    margin-bottom: 0; /* No bottom margin for the last paragraph in a section */
+}
+
+/* Specific styling for the contact email link at the bottom */
+.page-content .contactUsText1 a {
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.page-content .contactUsText1 a:hover {
+    color: var(--primary-dark);
+}
+
+/* General page content padding and box-shadow is already defined,
+   but we can ensure it looks good for this page. */
+.page-content {
+    padding: 3rem 4rem; /* More generous padding for text-heavy page */
+    max-width: 900px; /* Optimal reading width for long text */
+    margin: 2rem auto; /* Center the content */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 2rem;
+        margin: 1rem auto;
+    }
+    .page-content h1 {
+        font-size: 2rem;
+    }
+    .page-content h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    .page-content p {
+        font-size: 1rem;
+    }
+}
+
+/* Terms & Conditions Page Specific Styling Enhancements */
+
+/* To ensure good readability for long text blocks */
+.page-content p {
+    margin-bottom: 1.2rem; /* Paragraphs ke beech thori zyada jagah */
+    line-height: 1.7;     /* Lines ke beech behtar fasla */
+    font-size: 1.05rem;   /* Text thora bada kiya gaya hai behtar reading ke liye */
+    color: var(--dark-text); /* Consistent text colour */
+}
+
+/* Enhance heading separation */
+.page-content h2 {
+    margin-top: 2.5rem; /* Section headings ke upar zyada jagah */
+    margin-bottom: 1.5rem; /* Section headings ke neeche consistent jagah */
+    padding-bottom: 0.7rem; /* Border ke liye thora zyada padding */
+    border-bottom: 2px solid var(--border-color); /* Border ko qaim rakha gaya hai */
+    color: var(--heading-color); /* Consistent heading colour */
+}
+
+/* Specific styling for the intro paragraph */
+.page-content p[data-translate$="Intro"] { /* Intro paragraph ko target karta hai */
+    font-size: 1.15rem; /* Intro ke liye bada font */
+    font-weight: 500; /* Thora sa mota text */
+    color: var(--accent-color); /* Intro ke liye accent colour */
+    text-align: center; /* Intro text ko center mein rakhe */
+    max-width: 800px; /* Intro readability ke liye width limit kare */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem; /* Intro ke baad zyada jagah */
+}
+
+/* Styling for email link in contact us section */
+.page-content p a { /* Assuming contactUsText1 will be in a p tag */
+    font-weight: bold;
+    text-decoration: underline; /* Email link ko numaya kare */
+}
+
+/* Responsive adjustments for Terms & Conditions content */
+@media (max-width: 768px) {
+    .page-content p {
+        font-size: 1rem; /* Chhote screens ke liye font size adjust kare */
+        line-height: 1.6;
+    }
+
+    .page-content p[data-translate$="Intro"] {
+        font-size: 1.05rem;
+        padding: 0 1rem; /* Intro ke liye horizontal padding add kare */
+    }
+
+    .page-content h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+}

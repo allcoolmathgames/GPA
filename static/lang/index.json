@@ -1,114 +1,462 @@
 {
-    "gpaCalculatorTitle": {
-        "en": "GPA Calculator",
-        "ur": "جی پی اے کیلکولیٹر"
+  "gpaCalculatorTitle": {
+    "en": "GPA Calculator",
+    "ar": "حاسبة المعدل التراكمي",
+    "pt": "Calculadora de GPA",
+    "ru": "Калькулятор GPA",
+    "es": "Calculadora de GPA",
+    "de": "GPA-Rechner"
+  },
+  "gpaCalculatorDescription": {
+    "en": "Calculate your GPA by adding courses and grades.",
+    "ar": "احسب معدلك التراكمي بإضافة المقررات والدرجات.",
+    "pt": "Calcule seu GPA adicionando cursos e notas.",
+    "ru": "Рассчитайте свой GPA, добавляя курсы и оценки.",
+    "es": "Calcula tu GPA añadiendo cursos y calificaciones.",
+    "de": "Berechnen Sie Ihren GPA, indem Sie Kurse und Noten hinzufügen."
+  },
+  "addCourseHeading": {
+    "en": "Add Course",
+    "ar": "إضافة مقرر",
+    "pt": "Adicionar Curso",
+    "ru": "Добавить курс",
+    "es": "Añadir Curso",
+    "de": "Kurs hinzufügen"
+  },
+  "courseNameLabel": {
+    "en": "Course Name",
+    "ar": "اسم المقرر",
+    "pt": "Nome do Curso",
+    "ru": "Название курса",
+    "es": "Nombre del Curso",
+    "de": "Kursname"
+  },
+  "creditsLabel": {
+    "en": "Credits",
+    "ar": "النقاط",
+    "pt": "Créditos",
+    "ru": "Кредиты",
+    "es": "Créditos",
+    "de": "Leistungspunkte"
+  },
+  "gradeLabel": {
+    "en": "Grade",
+    "ar": "الدرجة",
+    "pt": "Nota",
+    "ru": "Оценка",
+    "es": "Calificación",
+    "de": "Note"
+  },
+  "selectGradeOption": {
+    "en": "Select Grade",
+    "ar": "اختر الدرجة",
+    "pt": "Selecionar Nota",
+    "ru": "Выбрать оценку",
+    "es": "Seleccionar Calificación",
+    "de": "Note auswählen"
+  },
+  "clearButton": {
+    "en": "Clear",
+    "ar": "مسح",
+    "pt": "Limpar",
+    "ru": "Очистить",
+    "es": "Limpiar",
+    "de": "Löschen"
+  },
+  "addCourseButton": {
+    "en": "Add Course",
+    "ar": "إضافة مقرر",
+    "pt": "Adicionar Curso",
+    "ru": "Добавить курс",
+    "es": "Añadir Curso",
+    "de": "Kurs hinzufügen"
+  },
+  "myCoursesHeading": {
+    "en": "My Courses",
+    "ar": "مقرراتي",
+    "pt": "Meus Cursos",
+    "ru": "Мои курсы",
+    "es": "Mis Cursos",
+    "de": "Meine Kurse"
+  },
+  "tableHeaderCourse": {
+    "en": "Course",
+    "ar": "المقرر",
+    "pt": "Curso",
+    "ru": "Курс",
+    "es": "Curso",
+    "de": "Kurs"
+  },
+  "tableHeaderCredits": {
+    "en": "Credits",
+    "ar": "النقاط",
+    "pt": "Créditos",
+    "ru": "Кредиты",
+    "es": "Créditos",
+    "de": "Leistungspunkte"
+  },
+  "tableHeaderGrade": {
+    "en": "Grade",
+    "ar": "الدرجة",
+    "pt": "Nota",
+    "ru": "Оценка",
+    "es": "Calificación",
+    "de": "Note"
+  },
+  "tableHeaderActions": {
+    "en": "Actions",
+    "ar": "الإجراءات",
+    "pt": "Ações",
+    "ru": "Действия",
+    "es": "Acciones",
+    "de": "Aktionen"
+  },
+  "gpaSummaryHeading": {
+    "en": "GPA Summary",
+    "ar": "ملخص المعدل التراكمي",
+    "pt": "Resumo do GPA",
+    "ru": "Сводка GPA",
+    "es": "Resumen del GPA",
+    "de": "GPA-Zusammenfassung"
+  },
+  "currentGpaLabel": {
+    "en": "Current GPA",
+    "ar": "المعدل التراكمي الحالي",
+    "pt": "GPA Atual",
+    "ru": "Текущий GPA",
+    "es": "GPA Actual",
+    "de": "Aktueller GPA"
+  },
+  "resetCoursesButton": {
+    "en": "Reset All Courses",
+    "ar": "إعادة تعيين جميع المقررات",
+    "pt": "Redefinir Todos os Cursos",
+    "ru": "Сбросить все курсы",
+    "es": "Restablecer Todos los Cursos",
+    "de": "Alle Kurse zurücksetzen"
+  },
+  "moreToolsHeading": {
+    "en": "More GPA Tools",
+    "ar": "المزيد من أدوات المعدل التراكمي",
+    "pt": "Mais Ferramentas de GPA",
+    "ru": "Другие инструменты GPA",
+    "es": "Más Herramientas de GPA",
+    "de": "Weitere GPA-Tools"
+  },
+  "priorSemesterCardTitle": {
+    "en": "Prior Semester/Final GPA",
+    "ar": "الفصل الدراسي السابق / المعدل التراكمي النهائي",
+    "pt": "Semestre Anterior/GPA Final",
+    "ru": "Предыдущий семестр/Итоговый GPA",
+    "es": "Semestre Anterior/GPA Final",
+    "de": "Vorheriges Semester/End-GPA"
+  },
+  "priorSemesterCardDescription": {
+    "en": "Calculate your GPA including previous semesters or your final cumulative GPA.",
+    "ar": "احسب معدلك التراكمي بما في ذلك الفصول الدراسية السابقة أو معدلك التراكمي النهائي.",
+    "pt": "Calcule seu GPA incluindo semestres anteriores ou seu GPA cumulativo final.",
+    "ru": "Рассчитайте свой GPA с учетом предыдущих семестров или ваш итоговый кумулятивный GPA.",
+    "es": "Calcula tu GPA incluyendo semestres anteriores o tu GPA acumulativo final.",
+    "de": "Berechnen Sie Ihren GPA einschließlich früherer Semester oder Ihren endgültigen kumulativen GPA."
+  },
+  "goToCalculatorButton": {
+    "en": "Go to Calculator",
+    "ar": "اذهب إلى الحاسبة",
+    "pt": "Ir para a Calculadora",
+    "ru": "Перейти к калькулятору",
+    "es": "Ir a la Calculadora",
+    "de": "Zum Rechner gehen"
+  },
+  "gpaPlanningCardTitle": {
+    "en": "GPA Planning",
+    "ar": "تخطيط المعدل التراكمي",
+    "pt": "Planejamento de GPA",
+    "ru": "Планирование GPA",
+    "es": "Planificación del GPA",
+    "de": "GPA-Planung"
+  },
+  "gpaPlanningCardDescription": {
+    "en": "Plan your future semester GPA to achieve a target cumulative GPA.",
+    "ar": "خطط لمعدلك التراكمي للفصل الدراسي المستقبلي لتحقيق معدل تراكمي مستهدف.",
+    "pt": "Planeje seu GPA do próximo semestre para atingir um GPA cumulativo alvo.",
+    "ru": "Спланируйте свой GPA на будущий семестр для достижения целевого кумулятивного GPA.",
+    "es": "Planifica tu GPA del próximo semestre para alcanzar un GPA acumulativo objetivo.",
+    "de": "Planen Sie Ihren zukünftigen Semester-GPA, um einen Ziel-Gesamt-GPA zu erreichen."
+  },
+  "latestBlogsHeading": {
+    "en": "Latest Blogs",
+    "ar": "أحدث المدونات",
+    "pt": "Últimos Blogs",
+    "ru": "Последние блоги",
+    "es": "Últimos Blogs",
+    "de": "Neueste Blogs"
+  },
+  "blogTitle1": {
+    "en": "How to Improve Your GPA Effectively",
+    "ar": "كيف تحسن معدلك التراكمي بفعالية",
+    "pt": "Como Melhorar Seu GPA Efetivamente",
+    "ru": "Как эффективно улучшить свой GPA",
+    "es": "Cómo Mejorar tu GPA de Forma Efectiva",
+    "de": "Wie Sie Ihren GPA effektiv verbessern können"
+  },
+  "blogSnippet1": {
+    "en": "Discover proven strategies to boost your grade point average and achieve academic success.",
+    "ar": "اكتشف استراتيجيات مثبتة لتعزيز متوسط درجاتك وتحقيق النجاح الأكاديمي.",
+    "pt": "Descubra estratégias comprovadas para aumentar sua média de notas e alcançar o sucesso acadêmico.",
+    "ru": "Откройте для себя проверенные стратегии для повышения среднего балла и достижения академического успеха.",
+    "es": "Descubre estrategias probadas para aumentar tu promedio de calificaciones y lograr el éxito académico.",
+    "de": "Entdecken Sie bewährte Strategien, um Ihren Notendurchschnitt zu steigern und akademischen Erfolg zu erzielen."
+  },
+  "blogTitle2": {
+    "en": "Understanding Different Grading Scales",
+    "ar": "فهم مقاييس الدرجات المختلفة",
+    "pt": "Compreendendo as Diferentes Escalas de Notas",
+    "ru": "Понимание различных систем оценок",
+    "es": "Comprendiendo las Diferentes Escalas de Calificación",
+    "de": "Verschiedene Benotungsskalen verstehen"
+  },
+  "blogSnippet2": {
+    "en": "A comprehensive guide to various grading systems used across universities worldwide.",
+    "ar": "دليل شامل لأنظمة الدرجات المختلفة المستخدمة في الجامعات حول العالم.",
+    "pt": "Um guia completo para vários sistemas de notas usados em universidades de todo o mundo.",
+    "ru": "Подробное руководство по различным системам оценок, используемым в университетах по всему миру.",
+    "es": "Una guía completa sobre los diversos sistemas de calificación utilizados en universidades de todo el mundo.",
+    "de": "Ein umfassender Leitfaden zu verschiedenen Benotungssystemen, die an Universitäten weltweit verwendet werden."
+  },
+  "readMoreButton": {
+    "en": "Read More",
+    "ar": "اقرأ المزيد",
+    "pt": "Leia Mais",
+    "ru": "Читать далее",
+    "es": "Leer Más",
+    "de": "Mehr erfahren"
+  },
+  "viewAllBlogsButton": {
+    "en": "View All Blogs",
+    "ar": "عرض جميع المدونات",
+    "pt": "Ver Todos os Blogs",
+    "ru": "Посмотреть все блоги",
+    "es": "Ver Todos los Blogs",
+    "de": "Alle Blogs anzeigen"
+  },
+  "contentHeading1": {
+    "en": "Important Information",
+    "ar": "معلومات هامة",
+    "pt": "Informações Importantes",
+    "ru": "Важная информация",
+    "es": "Información Importante",
+    "de": "Wichtige Informationen"
+  },
+  "contentParagraph1": {
+    "en": "This calculator helps you estimate your GPA based on your course grades.",
+    "ar": "تساعدك هذه الحاسبة على تقدير معدلك التراكمي بناءً على درجات مقرراتك.",
+    "pt": "Esta calculadora ajuda você a estimar seu GPA com base nas notas dos seus cursos.",
+    "ru": "Этот калькулятор поможет вам оценить ваш GPA на основе оценок по курсам.",
+    "es": "Esta calculadora te ayuda a estimar tu GPA basándose en las calificaciones de tus cursos.",
+    "de": "Dieser Rechner hilft Ihnen, Ihren GPA basierend auf Ihren Kursnoten zu schätzen."
+  },
+  "contentHeading2": {
+    "en": "How Grades are Calculated",
+    "ar": "كيفية حساب الدرجات",
+    "pt": "Como as Notas são Calculadas",
+    "ru": "Как рассчитываются оценки",
+    "es": "Cómo se Calculan las Calificaciones",
+    "de": "Wie Noten berechnet werden"
+  },
+  "contentParagraph2": {
+    "en": "Different universities may have different grading scales. Please check your institution's specific criteria.",
+    "ar": "قد تختلف الجامعات المختلفة في مقاييس الدرجات. يرجى التحقق من المعايير الخاصة بمؤسستك.",
+    "pt": "Diferentes universidades podem ter diferentes escalas de notas. Por favor, verifique os critérios específicos da sua instituição.",
+    "ru": "Различные университеты могут иметь разные шкалы оценок. Пожалуйста, проверьте конкретные критерии вашего учебного заведения.",
+    "es": "Diferentes universidades pueden tener diferentes escalas de calificación. Por favor, verifica los criterios específicos de tu institución.",
+    "de": "Verschiedene Universitäten können unterschiedliche Benotungsskalen haben. Bitte überprüfen Sie die spezifischen Kriterien Ihrer Institution."
+  },
+  "faqHeading": {
+    "en": "Frequently Asked Questions",
+    "ar": "الأسئلة الشائعة",
+    "pt": "Perguntas Frequentes",
+    "ru": "Часто задаваемые вопросы",
+    "es": "Preguntas Frecuentes",
+    "de": "Häufig gestellte Fragen"
+  },
+  "faqQuestion1": {
+    "en": "How is the GPA calculated?",
+    "ar": "كيف يتم حساب المعدل التراكمي؟",
+    "pt": "Como o GPA é calculado?",
+    "ru": "Как рассчитывается GPA?",
+    "es": "¿Cómo se calcula el GPA?",
+    "de": "Wie wird der GPA berechnet?"
+  },
+  "faqAnswer1": {
+    "en": "GPA is calculated by dividing the total grade points earned by the total credit hours attempted.",
+    "ar": "يتم حساب المعدل التراكمي بقسمة إجمالي النقاط المكتسبة على إجمالي الساعات المعتمدة المحاولة.",
+    "pt": "O GPA é calculado dividindo o total de pontos de nota obtidos pelo total de horas de crédito tentadas.",
+    "ru": "GPA рассчитывается путем деления общего количества набранных баллов на общее количество попыток кредитных часов.",
+    "es": "El GPA se calcula dividiendo el total de puntos de calificación obtenidos entre el total de horas de crédito intentadas.",
+    "de": "Der GPA wird berechnet, indem die insgesamt erreichten Notenpunkte durch die insgesamt versuchten Leistungspunkte geteilt werden."
+  },
+  "faqQuestion2": {
+    "en": "Can I save my courses?",
+    "ar": "هل يمكنني حفظ مقرراتي؟",
+    "pt": "Posso salvar meus cursos?",
+    "ru": "Могу ли я сохранить свои курсы?",
+    "es": "¿Puedo guardar mis cursos?",
+    "de": "Kann ich meine Kurse speichern?"
+  },
+  "faqAnswer2": {
+    "en": "Currently, courses are not saved. This is a basic calculator for quick estimation.",
+    "ar": "حاليًا، لا يتم حفظ المقررات. هذه حاسبة أساسية للتقدير السريع.",
+    "pt": "Atualmente, os cursos não são salvos. Esta é uma calculadora básica para estimativa rápida.",
+    "ru": "В настоящее время курсы не сохраняются. Это базовый калькулятор для быстрой оценки.",
+    "es": "Actualmente, los cursos no se guardan. Esta es una calculadora básica para una estimación rápida.",
+    "de": "Derzeit werden Kurse nicht gespeichert. Dies ist ein einfacher Rechner für eine schnelle Schätzung."
+  },
+  "grades": {
+    "A+": {
+      "en": 4.0,
+      "ar": 4.0,
+      "pt": 4.0,
+      "ru": 4.0,
+      "es": 4.0,
+      "de": 4.0
     },
-    "gpaCalculatorDescription": {
-        "en": "Calculate your GPA by adding courses and grades.",
-        "ur": "کورسز اور گریڈز شامل کرکے اپنا جی پی اے شمار کریں۔"
+    "A": {
+      "en": 4.0,
+      "ar": 4.0,
+      "pt": 4.0,
+      "ru": 4.0,
+      "es": 4.0,
+      "de": 4.0
     },
-    "addCourseHeading": {
-        "en": "Add Course",
-        "ur": "کورس شامل کریں"
+    "A-": {
+      "en": 3.7,
+      "ar": 3.7,
+      "pt": 3.7,
+      "ru": 3.7,
+      "es": 3.7,
+      "de": 3.7
     },
-    "courseNameLabel": {
-        "en": "Course Name",
-        "ur": "کورس کا نام"
+    "B+": {
+      "en": 3.3,
+      "ar": 3.3,
+      "pt": 3.3,
+      "ru": 3.3,
+      "es": 3.3,
+      "de": 3.3
     },
-    "creditsLabel": {
-        "en": "Credits",
-        "ur": "کریڈٹس"
+    "B": {
+      "en": 3.0,
+      "ar": 3.0,
+      "pt": 3.0,
+      "ru": 3.0,
+      "es": 3.0,
+      "de": 3.0
     },
-    "gradeLabel": {
-        "en": "Grade",
-        "ur": "گریڈ"
+    "B-": {
+      "en": 2.7,
+      "ar": 2.7,
+      "pt": 2.7,
+      "ru": 2.7,
+      "es": 2.7,
+      "de": 2.7
     },
-    "selectGradeOption": {
-        "en": "Select Grade",
-        "ur": "گریڈ منتخب کریں"
+    "C+": {
+      "en": 2.3,
+      "ar": 2.3,
+      "pt": 2.3,
+      "ru": 2.3,
+      "es": 2.3,
+      "de": 2.3
     },
-    "addCourseButton": {
-        "en": "Add Course",
-        "ur": "کورس شامل کریں"
+    "C": {
+      "en": 2.0,
+      "ar": 2.0,
+      "pt": 2.0,
+      "ru": 2.0,
+      "es": 2.0,
+      "de": 2.0
     },
-    "tableHeaderCourse": {
-        "en": "Course",
-        "ur": "کورس"
+    "C-": {
+      "en": 1.7,
+      "ar": 1.7,
+      "pt": 1.7,
+      "ru": 1.7,
+      "es": 1.7,
+      "de": 1.7
     },
-    "tableHeaderCredits": {
-        "en": "Credits",
-        "ur": "کریڈٹس"
+    "D+": {
+      "en": 1.3,
+      "ar": 1.3,
+      "pt": 1.3,
+      "ru": 1.3,
+      "es": 1.3,
+      "de": 1.3
     },
-    "tableHeaderGrade": {
-        "en": "Grade",
-        "ur": "گریڈ"
+    "D": {
+      "en": 1.0,
+      "ar": 1.0,
+      "pt": 1.0,
+      "ru": 1.0,
+      "es": 1.0,
+      "de": 1.0
     },
-    "tableHeaderActions": {
-        "en": "Actions",
-        "ur": "اقدامات"
+    "D-": {
+      "en": 0.7,
+      "ar": 0.7,
+      "pt": 0.7,
+      "ru": 0.7,
+      "es": 0.7,
+      "de": 0.7
     },
-    "gpaSummaryHeading": {
-        "en": "GPA Summary",
-        "ur": "جی پی اے کا خلاصہ"
-    },
-    "currentGpaLabel": {
-        "en": "Current GPA: ",
-        "ur": "موجودہ جی پی اے"
-    },
-    "priorSemesterFinalGpaButton": {
-        "en": "Prior Semester/Final GPA",
-        "ur": "گزشتہ سمسٹر/فائنل جی پی اے"
-    },
-    "gpaPlanningButton": {
-        "en": "GPA Planning",
-        "ur": "جی پی اے پلاننگ"
-    },
-    "contentHeading1": {
-        "en": "Important Information",
-        "ur": "اہم معلومات"
-    },
-    "contentParagraph1": {
-        "en": "This calculator helps you estimate your GPA based on your course grades.",
-        "ur": "یہ کیلکولیٹر آپ کے کورس گریڈز کی بنیاد پر آپ کے جی پی اے کا اندازہ لگانے میں مدد کرتا ہے۔"
-    },
-    "contentHeading2": {
-        "en": "How Grades are Calculated",
-        "ur": "گریڈز کا حساب کیسے لگایا جاتا ہے"
-    },
-    "contentParagraph2": {
-        "en": "Different universities may have different grading scales. Please check your institution's specific criteria.",
-        "ur": "مختلف یونیورسٹیوں کے گریڈنگ کے پیمانے مختلف ہو سکتے ہیں۔ براہ کرم اپنے ادارے کے مخصوص معیار کو چیک کریں۔"
-    },
-    "faqHeading": {
-        "en": "Frequently Asked Questions",
-        "ur": "اکثر پوچھے گئے سوالات"
-    },
-    "faqQuestion1": {
-        "en": "How is the GPA calculated?",
-        "ur": "جی پی اے کا حساب کیسے لگایا جاتا ہے؟"
-    },
-    "faqAnswer1": {
-        "en": "GPA is calculated by dividing the total grade points earned by the total credit hours attempted.",
-        "ur": "جی پی اے حاصل کردہ کل گریڈ پوائنٹس کو کل کریڈٹ آورز سے تقسیم کرکے شمار کیا جاتا ہے۔"
-    },
-    "faqQuestion2": {
-        "en": "Can I save my courses?",
-        "ur": "کیا میں اپنے کورسز محفوظ کر سکتا ہوں؟"
-    },
-    "faqAnswer2": {
-        "en": "Currently, courses are not saved. This is a basic calculator for quick estimation.",
-        "ur": "فی الحال، کورسز محفوظ نہیں کیے جاتے ہیں۔ یہ فوری تخمینہ کے لیے ایک بنیادی کیلکولیٹر ہے۔"
-    },
-    "requiredGpaResultText": {
-        "en": "You need a {{gpa}} GPA in your next semester to achieve a cumulative GPA of {{goal}}.",
-        "ur": "آپ کو اپنے اگلے سمسٹر میں {{goal}} کا مجموعی جی پی اے حاصل کرنے کے لیے {{gpa}} جی پی اے کی ضرورت ہے۔"
-    },
-    "unrealisticGpaGoal": {
-        "en": "Your goal GPA is too high or unrealistic. Consider adjusting it.",
-        "ur": "آپ کا ہدف جی پی اے بہت زیادہ یا غیر حقیقی ہے۔ اسے ایڈجسٹ کرنے پر غور کریں۔"
-    },
-    "gpaGoalAlreadyMet": {
-        "en": "Your goal GPA has already been met or is lower than your current GPA.",
-        "ur": "آپ کا ہدف جی پی اے پہلے ہی حاصل ہو چکا ہے یا آپ کے موجودہ جی پی اے سے کم ہے۔"
+    "F": {
+      "en": 0.0,
+      "ar": 0.0,
+      "pt": 0.0,
+      "ru": 0.0,
+      "es": 0.0,
+      "de": 0.0
     }
+  },
+  "alerts": {
+    "fillAllFields": {
+      "en": "Please fill in all course details (Name, Credits, Grade).",
+      "ar": "الرجاء ملء جميع تفاصيل المقرر (الاسم، النقاط، الدرجة).",
+      "pt": "Por favor, preencha todos os detalhes do curso (Nome, Créditos, Nota).",
+      "ru": "Пожалуйста, заполните все детали курса (название, кредиты, оценка).",
+      "es": "Por favor, complete todos los detalles del curso (Nombre, Créditos, Calificación).",
+      "de": "Bitte füllen Sie alle Kursdetails aus (Name, Leistungspunkte, Note)."
+    },
+    "invalidCredits": {
+      "en": "Credits must be a positive number.",
+      "ar": "يجب أن تكون النقاط عددًا موجبًا.",
+      "pt": "Os créditos devem ser um número positivo.",
+      "ru": "Кредиты должны быть положительным числом.",
+      "es": "Los créditos deben ser un número positivo.",
+      "de": "Leistungspunkte können nicht negativ sein."
+    },
+    "courseAdded": {
+      "en": "Course added successfully!",
+      "ar": "تمت إضافة المقرر بنجاح!",
+      "pt": "Curso adicionado com sucesso!",
+      "ru": "Курс успешно добавлен!",
+      "es": "¡Curso añadido con éxito!",
+      "de": "Kurs erfolgreich hinzugefügt!"
+    },
+    "courseRemoved": {
+      "en": "Course removed.",
+      "ar": "تمت إزالة المقرر.",
+      "pt": "Curso removido.",
+      "ru": "Курс удален.",
+      "es": "Curso eliminado.",
+      "de": "Kurs entfernt."
+    },
+    "allCoursesReset": {
+      "en": "All courses have been reset.",
+      "ar": "تمت إعادة تعيين جميع المقررات.",
+      "pt": "Todos os cursos foram redefinidos.",
+      "ru": "Все курсы были сброшены.",
+      "es": "Todos los cursos han sido restablecidos.",
+      "de": "Alle Kurse wurden zurückgesetzt."
+    }
+  }
 }

@@ -5,10 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title data-translate="gpaCalculatorTitle">GPA Calculator</title>
+    
+    <link rel="canonical" href="https://yourwebsite.com/gpa-calculator/">
+
+    <link rel="alternate" hreflang="x-default" href="https://yourwebsite.com/gpa-calculator/"/>
+    <link rel="alternate" hreflang="en" href="https://yourwebsite.com/gpa-calculator/"/>
+    <link rel="alternate" hreflang="ar" href="https://yourwebsite.com/ar/gpa-calculator/"/>
+    <link rel="alternate" hreflang="pt" href="https://yourwebsite.com/pt/gpa-calculator/"/>
+    <link rel="alternate" hreflang="ru" href="https://yourwebsite.com/ru/gpa-calculator/"/>
+    <link rel="alternate" hreflang="es" href="https://yourwebsite.com/es/gpa-calculator/"/>
+    <link rel="alternate" hreflang="de" href="https://yourwebsite.com/de/gpa-calculator/"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5P5M5A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {# language.js pehle load ho raha hai, script.js se bhi pehle #}
     <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
 </head>
-<body>
+<body data-lang="en"> {# Default language set to English, can be changed by JS #}
     {% include 'header.html' %}
 
     <main>
@@ -16,7 +34,7 @@
             <h1 data-translate="gpaCalculatorTitle">GPA Calculator</h1>
             <p data-translate="gpaCalculatorDescription">Calculate your GPA by adding courses and grades.</p>
 
-            <div class="input-section">
+            <div class="input-section centered-section">
                 <h2 data-translate="addCourseHeading">Add Course</h2>
                 <div class="course-input-row"> 
                     <div class="form-group">
@@ -31,6 +49,7 @@
                         <label for="grade" data-translate="gradeLabel">Grade</label>
                         <select id="grade">
                             <option value="" data-translate="selectGradeOption">Select Grade</option>
+                            {# Options for grades will be populated by JavaScript from the JSON #}
                         </select>
                     </div>
                 </div> 
@@ -40,9 +59,10 @@
                 </div>
             </div>
 
-            <div class="course-list-section">
+            <div class="course-list-section centered-section">
                 <h2><span data-translate="myCoursesHeading">My Courses</span></h2>
-                <table class="course-table"> <thead>
+                <table class="course-table">
+                    <thead>
                         <tr>
                             <th data-translate="tableHeaderCourse">Course</th>
                             <th data-translate="tableHeaderCredits">Credits</th>
@@ -51,19 +71,12 @@
                         </tr>
                     </thead>
                     <tbody id="courseTableBody">
-                        <tr>
-                            <td data-label="Course">Maths</td>
-                            <td data-label="Credits">3</td>
-                            <td data-label="Grade">A-</td>
-                            <td data-label="Actions">
-                                <a href="#">Edit</a> | <a href="#">Delete</a>
-                            </td>
-                        </tr>
+                        {# Dynamic content will be inserted here by JavaScript #}
                     </tbody>
                 </table>
             </div>
 
-            <div class="gpa-summary-section">
+            <div class="gpa-summary-section centered-section">
                 <h2 data-translate="gpaSummaryHeading">GPA Summary</h2>
                 <div class="gpa-box">
                     <span data-translate="currentGpaLabel">Current GPA</span>
@@ -74,47 +87,65 @@
                 </div>
             </div>
 
-            <div class="navigation-cards-section">
+            <div class="navigation-cards-section centered-section">
                 <h2 data-translate="moreToolsHeading">More GPA Tools</h2>
                 <div class="cards-container">
                     <div class="card" id="priorSemesterCard">
                         <h3 data-translate="priorSemesterCardTitle">Prior Semester/Final GPA</h3>
                         <p data-translate="priorSemesterCardDescription">Calculate your GPA including previous semesters or your final cumulative GPA.</p>
-                        <button class="card-button" data-translate="goToCalculatorButton">Go to Calculator</button>
+                        <a href="{{ url_for('prior_semester_gpa') }}" class="card-button" data-translate="goToCalculatorButton">Go to Calculator</a>
                     </div>
                     <div class="card" id="gpaPlanningCard">
                         <h3 data-translate="gpaPlanningCardTitle">GPA Planning</h3>
                         <p data-translate="gpaPlanningCardDescription">Plan your future semester GPA to achieve a target cumulative GPA.</p>
-                        <button class="card-button" data-translate="goToCalculatorButton">Go to Calculator</button>
+                        <a href="{{ url_for('gpa_planning') }}" class="card-button" data-translate="goToCalculatorButton">Go to Calculator</a>
                     </div>
                 </div>
             </div>
             
             <br>
-            <div class="content-section">
+            <div class="content-section centered-section">
                 <h2 data-translate="contentHeading1">Important Information</h2>
                 <p data-translate="contentParagraph1">This calculator helps you estimate your GPA based on your course grades.</p>
             </div>
 
-            <div class="content-section">
+            <div class="content-section centered-section">
                 <h2 data-translate="contentHeading2">How Grades are Calculated</h2>
                 <p data-translate="contentParagraph2">Different universities may have different grading scales. Please check your institution's specific criteria.</p>
             </div>
 
+            <div class="blog-section centered-section">
+                <h2 data-translate="latestBlogsHeading" style="text-align: center;">Latest Blogs</h2>
+                <br>
+                <div class="cards-container">
+                    <div class="card blog-card">
+                        <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Blog Image" class="blog-card-image">
+                        <h3><span data-translate="blogTitle1">How to Improve Your GPA Effectively</span></h3>
+                        <p><span data-translate="blogSnippet1">Discover proven strategies to boost your grade point average and achieve academic success.</span></p>
+                        <a href="{{ url_for('gpa_blog') }}" class="card-button" data-translate="readMoreButton">Read More</a>
+                    </div>
+                    <div class="card blog-card">
+                        <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Blog Image" class="blog-card-image">
+                        <h3><span data-translate="blogTitle2">Understanding Different Grading Scales</span></h3>
+                        <p><span data-translate="blogSnippet2">A comprehensive guide to various grading systems used across universities worldwide.</span></p>
+                        <a href="{{ url_for('final_gpa_blog') }}" class="card-button" data-translate="readMoreButton">Read More</a>
+                    </div>
+                </div>
+                <div class="button-group view-all-blogs-btn-group">
+                    <a href="{{ url_for('blog_index') }}" class="primary-btn" data-translate="viewAllBlogsButton">View All Blogs</a>
+                </div>
+            </div>
+            <br>
             <div class="faq-section centered-section">
                 <h2 data-translate="faqHeading">Frequently Asked Questions</h2>
                 
                 <div class="faq-item">
-                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
-                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+                    <h3 data-translate="faqQuestion1">How is the GPA calculated?</h3>
+                    <p data-translate="faqAnswer1">GPA is calculated by dividing the total grade points earned by the total credit hours attempted.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
-                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
-                </div>
-                <div class="faq-item">
-                    <h3 data-translate="faqQuestion3">Can I adjust my goal GPA later?</h3>
-                    <p data-translate="faqAnswer3">Yes, you can always re-enter new values to calculate a different required GPA.</p>
+                    <h3 data-translate="faqQuestion2">Can I save my courses?</h3>
+                    <p data-translate="faqAnswer2">Currently, courses are not saved. This is a basic calculator for quick estimation.</p>
                 </div>
             </div>
         </section>
