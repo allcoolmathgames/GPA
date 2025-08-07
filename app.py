@@ -70,6 +70,7 @@ def blog_post(slug):
         return "Blog Post Not Found", 404
 
 # --- Other Static Pages (from 'pages' folder) ---
+<<<<<<< HEAD
 @app.route('/privacy-policy')
 def privacy_policy():
     return render_template('pages/privacy-policy.html')
@@ -81,6 +82,19 @@ def terms_conditions():
 @app.route('/about-us')
 def about_us():
     return render_template('pages/About-us.html')
+=======
+@app.route('/privacy')
+def privacy_policy():
+    return render_template('pages/privacy.html')
+
+@app.route('/terms_conditions')
+def terms_conditions():
+    return render_template('pages/terms_conditions.html')
+
+@app.route('/aboutus')
+def about_us():
+    return render_template('pages/Aboutus.html')
+>>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 
 @app.route('/contact')
 def contact():
