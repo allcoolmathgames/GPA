@@ -1,0 +1,453 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title data-translate="pageTitle">College GPA Calculator - Know Your College GPA</title>
+    <meta name="description" content="Easily calculate your college GPA with our free College GPA calculator. Enter grades and credit hours to get instant results, no sign-up needed." data-translate="metaDescription">
+    
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta name="keywords" content="GPA calculator, calculate GPA, how to calculate GPA, what is my GPA, grade point average calculator, online GPA calculator, 4.0 GPA scale, credit hour GPA calculator, GPA calculator uf" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com//gpa-calculator/">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com//gpa-calculator/"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com//gpa-calculator/"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com//ar/gpa-calculator/"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com//pt/gpa-calculator/"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com//ru/gpa-calculator/"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com//es/gpa-calculator/"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com//de/gpa-calculator/"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+</head>
+
+<body data-lang="en" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">College GPA Calculator</h1>
+
+                <p>Use this College GPA Calculator to easily calculate your college grade point average by just making a single click.</p>
+                <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="myCoursesHeading" style="position: relative; top: -35px;">Calculate College GPA</h2>
+                <table class="course-input-table" data-translate="courseTable" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th data-translate="tableHeaderCourse">Course</th>
+                            <th data-translate="tableHeaderCredits">Credits</th>
+                            <th data-translate="tableHeaderGrade">Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody" data-translate="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Add course"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 4"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 2"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" data-translate="buttonGroupAddCourse" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn" data-translate="addMoreCoursesButton">Add More Courses</button>
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calculate GPA</button>
+                </div>
+            </div>
+
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">GPA Summary</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Current GPA</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/"><button class="secondary-btn" data-translate="resetCoursesButton">Reset All Courses</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">How to Use the GPA Calculator</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step1Title">Step 1: Enter Your Courses</span></h3>
+                        <p style="text-align: left;"><span data-translate="step1Description">List each course you’ve taken for the semester.</span></p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step2Title">Step 2: Add Credit Hours</span></h3>
+                        <p style="text-align: left;"><span data-translate="step2Description">Type in the credit hours for each course (usually 1 to 4 hours).</span></p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step3Title">Step 3: Select Your Grades</span></h3>
+                        <p style="text-align: left;"><span data-translate="step3Description">Choose the grade you received for each course (A, B, C, etc.).</span></p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step3Title">Step 4: Click <b>Calculate GPA</b></span></h3>
+                        <p style="text-align: left;"><span data-translate="step3Description">Hit the calculate button to instantly see your GPA result.</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Why Use Our College GPA Calculator?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Accuracy</h3>
+                        <p data-translate="feature1Description" style="text-align: left;">Our tool gives accurate results by using your grades and credit hours, so you can see how you're doing in your studies.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">User-Friendly Interface</h3>
+                        <p data-translate="feature2Description" style="text-align: left;">We designed the interface of this tool to be user-friendly so that everyone can use it easily. No technical skills are required to utilize this tool. </p>
+                    </div>
+                </div>
+
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Track Academic Goals</h3>
+                        <p data-translate="feature3Description" style="text-align: left;">This tool helps you stay focused on your academic goals. By checking your GPA regularly, you can see how well you're doing, spot areas that need improvement, and make smart decisions to boost your grades.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Instant and Fast Results</h3>
+                        <p data-translate="feature4Description" style="text-align: left;">Get your calculated GPA instantly! Just enter your grades and credit hours - no waiting, no loading, just quick and reliable results right away.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Free to Use</h3>
+                        <p data-translate="feature1Description" style="text-align: left;">Gpacalculatorcollege.com is 100% free - no sign-ups, no hidden fees, and no limits. Just enter your grades and credit hours to get your grade point average instantly.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="navigation-cards-section centered-section" data-translate="navigationCardsSection">
+                <h2 data-translate="moreToolsHeading">More GPA Tools</h2>
+                <div class="cards-container" data-translate="cardsContainer">
+                    <div class="card" id="priorSemesterCard" data-translate="priorSemesterCard">
+                        <h3 data-translate="priorSemesterCardTitle">Prior Semester/Final GPA</h3>
+                        <p data-translate="priorSemesterCardDescription">Calculate your GPA including previous semesters or your final cumulative GPA.</p>
+                        <a href="{{ url_for('prior_semester_gpa') }}" class="card-button" data-translate="goToCalculatorButton">Go to Calculator</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard" data-translate="gpaPlanningCard">
+                        <h3 data-translate="gpaPlanningCardTitle">GPA Planning</h3>
+                        <p data-translate="gpaPlanningCardDescription">Plan your future semester GPA to achieve a target cumulative GPA.</p>
+                        <a href="{{ url_for('gpa_planning') }}" class="card-button" data-translate="goToCalculatorButton">Go to Calculator</a>
+                    </div>
+                </div>
+            </div>
+
+            <br data-translate="br1">
+            <div class="content-section centered-section" data-translate="contentSection1">
+
+                <h2 data-translate="contentHeading1">What Is College GPA?</h2>
+                <p data-translate="contentParagraph1" style="text-align: left;">
+                    College Grade Point Average is a number that shows your overall academic performance in college. It’s calculated by converting your letter grades (like A, B, or C) into numbers and averaging them based on the credit hours of each course.
+                    <br>
+                    GPA is usually measured on a <b>4.0 scale</b>, where:
+                </p>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead>
+                        <tr>
+                            <th data-translate="letterGrade">Letter Grade</th>
+                            <th data-translate="gpaValue">GPA Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+
+                <h2 data-translate="contentHeading1">How can I calculate my College GPA?</h2>
+                <p data-translate="contentParagraph1">
+                    If you know the formula, then calculating GPA is very easy. Your Grade Point Average is based on the grades you receive in each course and the number of credit hours each course is worth.
+                </p>
+
+                <h2 data-translate="contentHeading2.1">Formula</h2>
+                <p data-translate="contentParagraph3">
+                    <b style="text-align: center;">GPA = (Total Grade Points) ÷ (Total Credit Hours)</b> <br>
+                    Skip the manual calculations and simply use GPA Calculator College to get your result in seconds - fast, accurate, and hassle-free!
+                </p>
+            </div>
+
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="contentHeading1">Use Cases Of This Calculator</h2>
+                <h3>College Students</h3>
+                <p data-translate="contentParagraph1" style="text-align: left;">
+                    We make this website for college students who want to stay on top of their academic progress. Whether you're aiming for scholarships, honors, or just trying to meet graduation requirements, it helps you keep track of your performance.
+                </p>
+                <h3>College Professors</h3>
+                <p data-translate="contentParagraph1">
+                    Professors can use the tool to quickly check or verify a student's grade point average based on their grades and credit hours. It’s a simple and efficient way to calculate academic performance without manual math.
+                </p>
+                <h3>Advisors & Tutors</h3>
+                <p data-translate="contentParagraph1">
+                   Advisors and tutors can use the College GPA Calculator to quickly calculate a student’s academic performance. It helps them get a clear picture of a student's progress without needing to do manual calculations.
+                </p>
+                <h3>Parents</h3>
+                <p data-translate="contentParagraph1">
+                   Parents can use this calculator to stay informed about their child’s academic progress.
+                </p>
+                <h3>Colleges</h3>
+                <p data-translate="contentParagraph1">It's often used by colleges for:</p>
+                <ul style="padding-left: 30px;">
+                    <li>Academic standing</li>
+                    <li>Graduation eligibility</li>
+                    <li>Scholarships or financial aid</li>
+                    <li>Honors and dean’s list qualification</li>
+                    <li>ob or internship applications</li>
+                </ul>
+            </div>
+
+<!--
+            <div class="blog-section centered-section" data-translate="blogSection">
+                <h2 data-translate="latestBlogsHeading" style="text-align: center;">Latest Blogs</h2>
+                <br data-translate="br4">
+                <div class="cards-container" data-translate="blogCardsContainer">
+                    <div class="card blog-card" data-translate="blogCard1">
+                        <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Blog Image" class="blog-card-image" data-translate="blogImage1Alt">
+                        <h3 data-translate="blogTitle1">How to Improve Your GPA Effectively</h3>
+                        <p data-translate="blogSnippet1">Discover proven strategies to boost your grade point average and achieve academic success.</p>
+                        <a href="{{ url_for('blog_post', slug='how-to-improve-your-gpa-effectively') }}" class="card-button" data-translate="readMoreButton">Read More</a>
+                    </div>
+                    <div class="card blog-card" data-translate="blogCard2">
+                        <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Blog Image" class="blog-card-image" data-translate="blogImage2Alt">
+                        <h3 data-translate="blogTitle2">Understanding Different Grading Scales</h3>
+                        <p data-translate="blogSnippet2">A comprehensive guide to various grading systems used across universities worldwide.</p>
+                        <a href="{{ url_for('blog_post', slug='understanding-different-grading-scales') }}" class="card-button" data-translate="readMoreButton">Read More</a>
+                    </div>
+                </div>
+                <div class="button-group view-all-blogs-btn-group" data-translate="viewAllBlogsGroup">
+                    <a href="{{ url_for('blog_index') }}" class="primary-btn" data-translate="viewAllBlogsButton">View All Blogs</a>
+                </div>
+            </div>
+-->
+
+            <br data-translate="br5">
+
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Frequently Asked Questions</h2>
+
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">How accurate is this College GPA calculator?</h3>
+                    <p data-translate="faqAnswer1">This calculator provides accurate results as long as you enter the correct grades and credit hours for each course.</p>
+                </div>
+
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Can I use this calculator for multiple semesters?</h3>
+                    <p data-translate="faqAnswer2">Yes, you can calculate GPA for a single semester or combine multiple semesters to find your cumulative GPA.</p>
+                </div>
+
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Do I need to download anything?</h3>
+                    <p data-translate="faqAnswer3">No, the tool works online just open the calculator, enter your info, and get your Grade point average instantly.</p>
+                </div>
+
+                <div class="faq-item" data-translate="faqItem4">
+                    <h3 data-translate="faqQuestion4">Will my information be saved?</h3>
+                    <p data-translate="faqAnswer4">No, the calculator does not store any data. All information you enter stays private and is cleared once you leave the page.</p>
+                </div>
+
+                <div class="faq-item" data-translate="faqItem5">
+                    <h3 data-translate="faqQuestion5">What if I make a mistake while entering my grades?</h3>
+                    <p data-translate="faqAnswer5">No worries, you can edit or reset the form at any time to correct your entries.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<!--Author section-->
+<!--    
+    <section class="author-section similar-to-amazon" data-translate="authorSection">
+        <div class="author-content" data-translate="authorContent">
+            <h2 class="author-headline" data-translate="authorHeadline">AUTHOR SECTION</h2>
+            <p class="author-subheadline" data-translate="authorSubheadline">We'll make it easy for you to keep your profile up to date and stay informed about what's happening with all of your work.</p>
+        </div>
+        <div class="author-image-container" data-translate="authorImageContainer">
+            <img src="https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Smiling person using a tablet" data-translate="authorImageAlt">
+        </div>
+    </section>
+--->
+
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+
+            const gradeOptions = [
+                { value: '4.0', text: 'A' },
+                { value: '3.7', text: 'A–' },
+                { value: '3.3', text: 'B+' },
+                { value: '3.0', text: 'B' },
+                { value: '2.7', text: 'B–' },
+                { value: '2.3', text: 'C+' },
+                { value: '2.0', text: 'C' },
+                { value: '1.7', text: 'C–' },
+                { value: '1.3', text: 'D+' },
+                { value: '1.0', text: 'D' },
+                { value: '0.0', text: 'F' }
+            ];
+
+            function populateGradeSelects() {
+                const gradeSelects = document.querySelectorAll('select[name="grade"]');
+                gradeSelects.forEach(select => {
+                    select.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select Grade';
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    select.appendChild(defaultOption);
+
+                    gradeOptions.forEach(optionData => {
+                        const option = document.createElement('option');
+                        option.value = optionData.value;
+                        option.textContent = optionData.text;
+                        select.appendChild(option);
+                    });
+                });
+            }
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                    <td><select name="grade"></select></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+                populateGradeSelects();
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        totalCredits += credits;
+                        totalGradePoints += credits * gradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]')) {
+                    calculateGPA();
+                }
+            });
+
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+
+            // Populate initial existing rows with grade options
+            populateGradeSelects();
+
+
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+
+                // Set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
+</body>
+</html>
