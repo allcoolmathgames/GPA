@@ -43,11 +43,7 @@ body {
 
 .navbar .logo {
   font-weight: 700;
-<<<<<<< HEAD
   font-size: 21px;
-=======
-  font-size: 26px;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   color: var(--dark-text);
   text-decoration: none;
   letter-spacing: -0.5px;
@@ -221,7 +217,6 @@ body {
 }
 
 .course-input-table {
-<<<<<<< HEAD
   width: 100%;
   border-collapse: collapse;
 }
@@ -255,39 +250,6 @@ body {
 
 .delete-btn i {
   pointer-events: none;
-=======
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.course-input-table th, .course-input-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.course-input-table input, .course-input-table select {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    color: #ff0000;
-    font-size: 1.2em;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-
-.delete-btn i {
-    pointer-events: none;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 .form-group input[type="text"],
@@ -335,12 +297,8 @@ body {
   justify-content: center;
 }
 
-<<<<<<< HEAD
 .primary-btn,
 .secondary-btn {
-=======
-.primary-btn, .secondary-btn {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   padding: 12px 28px;
   border: none;
   border-radius: 8px;
@@ -405,12 +363,8 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-<<<<<<< HEAD
 .course-list-section th,
 .course-list-section td {
-=======
-.course-list-section th, .course-list-section td {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   border: 1px solid var(--border-color);
   padding: 15px 20px;
   text-align: left;
@@ -465,10 +419,7 @@ body {
   color: var(--dark-text);
   min-width: 300px;
   max-width: 500px;
-<<<<<<< HEAD
   height: 90px;
-=======
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 .gpa-box span:last-child {
@@ -500,7 +451,6 @@ body {
 
 /* FAQ Section */
 .faq-item {
-<<<<<<< HEAD
   margin-bottom: 15px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -529,41 +479,10 @@ body {
 
 .faq-item h3:hover {
   background-color: #e6e6e6;
-=======
-    margin-bottom: 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.faq-item:last-child {
-    margin-bottom: 0;
-}
-
-.faq-item h3 {
-    font-size: 18px;
-    color: var(--heading-color);
-    margin: 0;
-    padding: 18px 25px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--light-bg);
-    transition: background-color 0.3s ease;
-    font-weight: 600;
-}
-
-.faq-item h3:hover {
-    background-color: #e6e6e6;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 /* Jab item active ho to h3 ka background change ho */
 .faq-item.active h3 {
-<<<<<<< HEAD
   background-color: var(--faq-active-bg, #f0f0f0);
 }
 
@@ -574,32 +493,15 @@ body {
   transition: transform 0.3s ease;
   line-height: 1;
   color: var(--accent-color);
-=======
-    background-color: var(--faq-active-bg, #f0f0f0);
-}
-
-.faq-item h3 .toggle-icon {
-    font-size: 26px;
-    font-weight: normal;
-    margin-left: 15px;
-    transition: transform 0.3s ease;
-    line-height: 1;
-    color: var(--accent-color);
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 /* Icon ki initial state */
 .faq-item h3 .toggle-icon::before {
-<<<<<<< HEAD
   content: '+';
-=======
-    content: '+';
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 /* Jab item active ho to icon rotate ho */
 .faq-item.active h3 .toggle-icon::before {
-<<<<<<< HEAD
   content: '-';
 }
 
@@ -620,27 +522,6 @@ body {
   /* Is value ko tum apne content ke hisab se badha sakte ho */
   padding-top: 15px;
   padding-bottom: 20px;
-=======
-    content: '-';
-}
-
-.faq-item p {
-    font-size: 15px;
-    color: #555;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0 25px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-    text-align: left;
-}
-
-.faq-item.active p {
-    max-height: 500px; /* Is value ko tum apne content ke hisab se badha sakte ho */
-    padding-top: 15px;
-    padding-bottom: 20px;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
 }
 
 /* Navigation Cards Section (Typically for home/index page) */
@@ -836,7 +717,6 @@ body {
     font-size: 32px;
   }
 
-<<<<<<< HEAD
   .input-section,
   .course-list-section,
   .gpa-summary-section,
@@ -855,13 +735,6 @@ body {
   .navigation-cards-section h2,
   .how-to-use-section h2,
   .why-choose-us-section h2 {
-=======
-  .input-section, .course-list-section, .gpa-summary-section, .content-section, .faq-section, .navigation-cards-section, .how-to-use-section, .why-choose-us-section {
-    padding: 25px;
-  }
-
-  .input-section h2, .gpa-summary-section h2, .content-section h2, .faq-section h2, .navigation-cards-section h2, .how-to-use-section h2, .why-choose-us-section h2 {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     font-size: 24px;
   }
 
@@ -871,11 +744,7 @@ body {
   }
 
   .gpa-box span:last-child {
-<<<<<<< HEAD
     font-size: 30px;
-=======
-    font-size: 36px;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   }
 
   .cards-container {
@@ -889,23 +758,15 @@ body {
   }
 }
 
-<<<<<<< HEAD
 /* MOBILE DROPDOWN STYLES */
 @media (max-width: 768px) {
   .navbar {
     flex-wrap: wrap;
     align-items: center;
-=======
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     padding: 15px 20px;
   }
 
   .navbar .logo {
-<<<<<<< HEAD
     margin-bottom: 0;
   }
 
@@ -1008,37 +869,6 @@ body {
     width: 90% !important;
   }
   
-=======
-    margin-bottom: 10px;
-  }
-
-  .navbar nav {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .navbar nav ul {
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .navbar nav ul li {
-    margin: 5px 10px;
-  }
-
-  .language-switcher-container {
-    margin: 15px auto 0;
-  }
-
-  .navbar .btn-upgrade {
-    margin-left: 0;
-    margin-top: 15px;
-    width: 100%;
-  }
-
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   .page-content {
     margin: 10px auto;
     padding: 0 15px;
@@ -1048,7 +878,6 @@ body {
     font-size: 28px;
   }
 
-<<<<<<< HEAD
   .input-section,
   .course-list-section,
   .gpa-summary-section,
@@ -1057,14 +886,10 @@ body {
   .navigation-cards-section,
   .how-to-use-section,
   .why-choose-us-section {
-=======
-  .input-section, .course-list-section, .gpa-summary-section, .content-section, .faq-section, .navigation-cards-section, .how-to-use-section, .why-choose-us-section {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     padding: 15px;
     margin-bottom: 25px;
   }
 
-<<<<<<< HEAD
   .input-section h2,
   .gpa-summary-section h2,
   .content-section h2,
@@ -1072,9 +897,6 @@ body {
   .navigation-cards-section h2,
   .how-to-use-section h2,
   .why-choose-us-section h2 {
-=======
-  .input-section h2, .gpa-summary-section h2, .content-section h2, .faq-section h2, .navigation-cards-section h2, .how-to-use-section h2, .why-choose-us-section h2 {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     font-size: 22px;
   }
 
@@ -1103,23 +925,15 @@ body {
     gap: 10px;
   }
 
-<<<<<<< HEAD
   .primary-btn,
   .secondary-btn {
-=======
-  .primary-btn, .secondary-btn {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     width: 100%;
     margin-bottom: 0;
     padding: 12px 20px;
   }
 
-<<<<<<< HEAD
   .course-list-section th,
   .course-list-section td {
-=======
-  .course-list-section th, .course-list-section td {
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
     padding: 10px;
     font-size: 14px;
   }
@@ -1740,13 +1554,6 @@ body {
     text-align: center;
   }
 
-<<<<<<< HEAD
-=======
-  .author-image-container {
-    text-align: center;
-  }
-
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
   .author-actions {
     display: flex;
     flex-direction: column;
@@ -1758,8 +1565,4 @@ body {
     width: 200px;
     text-align: center;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b68f0f323ea798f7aabda9347c81dab8907576ec
