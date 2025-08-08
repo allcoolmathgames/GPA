@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory
 
 app = Flask(__name__)
 
@@ -258,11 +258,11 @@ def pages_terms_conditions_redirect():
 
 @app.route('/pages/privacy-policy/')
 def pages_privacy_policy_redirect():
-    return redirect(url_for('index'), code=301)
+    return redirect(url_for('privacy_policy'), code=301)
 
 @app.route('/templates/index.html')
 def templates_index_redirect():
-    return redirect(url_for('privacy_policy'), code=301)
+    return redirect(url_for('index'), code=301)
 
 @app.route('/ur/pages/privacy-policy/')
 def ur_pages_privacy_policy_redirect_with_slash():
@@ -299,6 +299,11 @@ def prior_semester_final_gpa_redirect():
 @app.route('/templates/gpa-planning-calculator.html')
 def templates_gpa_planning_calculator_redirect():
     return redirect(url_for('gpa_planning'), code=301)
+
+# Sitemap route
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.root_path, 'sitemap.xml')
 
 
 if __name__ == '__main__':
