@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
     <title>GPA Calculator – Calculate Your Grade Point Average</title>
     <meta name="description" content="Use this GPA Calculator to quickly find your grade point average. Fast, accurate, and perfect for high school and college students.">
     
@@ -22,8 +22,8 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px; /* Reduced width */
-            height: 22px; /* Reduced height */
+            width: 40px;
+            height: 22px;
         }
 
         .switch input {
@@ -41,14 +41,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 22px; /* Adjusted to match new height */
+            border-radius: 22px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px; /* Reduced height */
-            width: 14px; /* Reduced width */
+            height: 14px;
+            width: 14px;
             left: 4px;
             bottom: 4px;
             background-color: white;
@@ -61,7 +61,7 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(18px); /* Adjusted to match new width */
+            transform: translateX(18px);
         }
     </style>
 </head>
