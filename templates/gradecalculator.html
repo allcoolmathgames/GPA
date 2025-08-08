@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title data-translate="pageTitle">Grade Calculator</title>
+    <meta name="description"
+        content="Calculate your weighted grade for any class with this free and easy-to-use grade calculator."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+<body data-lang="en" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gradeCalculatorTitle">Grade Calculator</h1>
+
+            <p>Use this simple Grade Calculator to find out your current grade and what you need on your final.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="myAssessmentsHeading" style="position: relative; top: -35px;">Calculate Your Grade</h2>
+                <table class="course-input-table" data-translate="assessmentTable" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th data-translate="tableHeaderAssessment">Assessment</th>
+                            <th data-translate="tableHeaderScore">Score (%)</th>
+                            <th data-translate="tableHeaderWeight">Weight (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody" data-translate="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Course"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Course"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Course"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" data-translate="buttonGroupAddAssessment" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn" data-translate="addMoreAssessmentsButton">Add More
+                        Assessments</button>
+                    <button id="calculateGradeBtn" class="primary-btn" data-translate="calculateGradeButton">Calculate
+                        Grade</button>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
+                <h2 data-translate="gradeSummaryHeading">Grade Summary</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="currentGradeLabel">Current Grade</span>
+                    <span id="currentGradeDisplay" data-translate="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/grade-calculator"><button class="secondary-btn" data-translate="resetAssessmentsButton">Reset All Assessments</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">How to Use the Grade Calculator</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step1Title">Step 1: Enter Your Assessments</span></h3>
+                        <p style="text-align: left;"><span data-translate="step1Description">List each assessment (e.g., quizzes, midterms, final exam) and its score (in percentage).</span></p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step2Title">Step 2: Add Weights</span></h3>
+                        <p style="text-align: left;"><span data-translate="step2Description">Enter the percentage weight of each assessment. The total weight can be 100% or any other value.</span></p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step3Title">Step 3: Click <b>Calculate Grade</b></span></h3>
+                        <p style="text-align: left;"><span data-translate="step3Description">The calculator will instantly show your total weighted grade.</span></p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section centered-section">
+                <h2>Why Use Our Grade Calculator?</h2>
+                <p style="text-align: left;">
+                    Hamara Grade Calculator aapki academic planning ko asaan banane ke liye design kiya gaya hai. Isse aap apne grades ko track kar sakte hain, aur yeh dekh sakte hain ke har assessment ka aapke final grade par kya asar padega. Yeh tool students ke liye bohat faida mand hai jo apne academic goals ko achieve karna chahte hain.
+                </p>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Accuracy and Efficiency</h3>
+                        <p style="text-align: left;">Grade calculator apko bilkul sahi results deta hai, aur jald se jald aapki percentage calculate kar deta hai, jiss se aapka waqt bachta hai.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>User-Friendly Interface</h3>
+                        <p style="text-align: left;">Iski design bilkul simple aur easy to use hai. Aapko koi technical knowledge ki zaroorat nahi hai. Bas apni values daalein aur result dekh lein.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Final Grade Prediction</h3>
+                        <p style="text-align: left;">Yeh tool aapko yeh bhi batata hai ke aapko final exam mein kitne marks chahiye taake aap apna desired grade hasil kar sakein. Yeh aapko apne goals set karne mein madad karta hai.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section centered-section">
+                <h2>What Is a Grade Calculator?</h2>
+                <p style="text-align: left;">
+                    Grade Calculator ek online tool hai jo students ko unke grades ko calculate karne mein madad karta hai. Is tool mein, aap apne assessments (jaise ke quizzes, assignments, midterms, aur final exams) ke scores aur unke weights enter karte hain. Iske baad, calculator in values ko use karke aapka **weighted average grade** nikalti hai.
+                </p>
+            </section>
+            
+            <section class="content-section centered-section">
+                <h2>Use Cases Of This Calculator</h2>
+                <ul style="text-align: left; padding-left: 50px;">
+                    <li>**Semester-wise Planning:** Aap isse har semester ki shuruat mein apne grades ka target set karne ke liye istemal kar sakte hain.</li>
+                    <li>**Final Exam Planning:** Jab aapko pata chal jae ke aapko final exam mein kitne marks chahiye to aap uske mutabiq apni preparation kar sakte hain.</li>
+                    <li>**Progress Tracking:** Aap isse apne academic progress ko monitor karne aur yeh dekhne ke liye istemal kar sakte hain ke aap apne goals ki taraf kitni tezi se progress kar rahe hain.</li>
+                </ul>
+            </section>
+            
+            <section class="faq-section centered-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How does the Grade Calculator work?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>This calculator works on the principle of weighted average. It multiplies each assessment's score by its weight and then divides the sum of these products by the total weight.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is it necessary for the total weight to be 100%?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, it is not necessary. The calculator will find your weighted average grade even if the total weight is not 100%.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I use this for multiple courses at once?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>This calculator is designed for one course at a time. To calculate grades for a different course, simply reset the fields or refresh the page.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Add Course"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="e.g., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
+</body>
+</html>

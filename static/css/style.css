@@ -164,6 +164,7 @@ body {
 .author-section.similar-to-amazon,
 .navigation-cards-section,
 .how-to-use-section,
+.grade-summary-section,
 .why-choose-us-section {
   background-color: #fff;
   border: 1px solid var(--border-color);
@@ -191,6 +192,7 @@ body {
 
 .input-section h2,
 .gpa-summary-section h2,
+.grade-summary-section h2,
 .content-section h2,
 .faq-section h2,
 .navigation-cards-section h2,
@@ -399,10 +401,13 @@ body {
 }
 
 /* GPA Summary Box (Page 1 Specific) */
-.gpa-summary-section {
+.gpa-summary-section,
+.grade-summary-section
+ {
   text-align: center;
 }
 
+.grade-box,
 .gpa-box {
   background-color: var(--primary-color);
   border: 1px solid var(--secondary-color);
@@ -422,6 +427,7 @@ body {
   height: 90px;
 }
 
+.grade-box span:last-child,
 .gpa-box span:last-child {
   color: var(--accent-color);
   font-size: 42px;
@@ -430,6 +436,7 @@ body {
 }
 
 /* For "Reset All Courses" button to be centered */
+.grade-summary-section .button-group,
 .gpa-summary-section .button-group {
   justify-content: center;
 }
@@ -720,6 +727,7 @@ body {
   .input-section,
   .course-list-section,
   .gpa-summary-section,
+  .grade-summary-section,
   .content-section,
   .faq-section,
   .navigation-cards-section,
@@ -730,6 +738,7 @@ body {
 
   .input-section h2,
   .gpa-summary-section h2,
+  .grade-summary-section h2,
   .content-section h2,
   .faq-section h2,
   .navigation-cards-section h2,
@@ -738,11 +747,13 @@ body {
     font-size: 24px;
   }
 
+  .grade-box,
   .gpa-box {
     min-width: 250px;
     font-size: 18px;
   }
 
+  .grade-box span:last-child,
   .gpa-box span:last-child {
     font-size: 30px;
   }
@@ -881,6 +892,7 @@ body {
   .input-section,
   .course-list-section,
   .gpa-summary-section,
+  .grade-summary-section,
   .content-section,
   .faq-section,
   .navigation-cards-section,
@@ -892,6 +904,7 @@ body {
 
   .input-section h2,
   .gpa-summary-section h2,
+  .grade-summary-section h2,
   .content-section h2,
   .faq-section h2,
   .navigation-cards-section h2,
@@ -937,7 +950,7 @@ body {
     padding: 10px;
     font-size: 14px;
   }
-
+  .grade-box,
   .gpa-box {
     flex-direction: column;
     align-items: center;
@@ -949,6 +962,7 @@ body {
     padding: 15px 20px;
   }
 
+  .grade-box span:last-child,
   .gpa-box span:last-child {
     font-size: 32px;
   }

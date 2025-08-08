@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, request, jsonify, url_for, redirect
 
 app = Flask(__name__)
 
@@ -35,11 +35,15 @@ def index():
 
 @app.route('/prior-semester-gpa')
 def prior_semester_gpa():
-    return render_template('prior-semester-final-gpa.html')
+    return render_template('prior-semester-gpa.html')
 
 @app.route('/highschool-gpa')
 def highschool_gpa():
     return render_template('highschool.html')
+
+@app.route('/grade-calculator')
+def grade_calculator():
+    return render_template('gradecalculator.html')
 
 @app.route('/gpa-calculator')
 def gpa_calculator():
@@ -245,6 +249,56 @@ def calculate_required_gpa():
         return jsonify({'status': 'error', 'message': 'Invalid input: Please provide valid numbers.'}), 400
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
+
+
+# --- Redirects ---
+@app.route('/pages/about-us/')
+def pages_about_us_redirect():
+    return redirect(url_for('about_us'), code=301)
+
+@app.route('/pages/terms-conditions/')
+def pages_terms_conditions_redirect():
+    return redirect(url_for('terms_conditions'), code=301)
+
+@app.route('/pages/privacy-policy/')
+def pages_privacy_policy_redirect():
+    return redirect(url_for('index'), code=301)
+
+@app.route('/templates/index.html')
+def templates_index_redirect():
+    return redirect(url_for('privacy_policy'), code=301)
+
+@app.route('/ur/pages/privacy-policy')
+def ur_pages_privacy_policy_redirect():
+    return redirect(url_for('prior_semester_gpa'), code=301)
+
+@app.route('/templates/prior-semester-final-gpa.html')
+def templates_prior_semester_final_gpa_redirect():
+    return redirect(url_for('prior_semester_gpa'), code=301)
+
+@app.route('/ur/pages/about-us/')
+def ur_pages_about_us_redirect():
+    return redirect(url_for('about_us'), code=301)
+
+@app.route('/ur/pages/terms-conditions/')
+def ur_pages_terms_conditions_redirect():
+    return redirect(url_for('terms_conditions'), code=301)
+
+@app.route('/gpacalculatorcollege@gmail.com')
+def email_contact_redirect():
+    return redirect(url_for('contact'), code=301)
+
+@app.route('/blogs/time-management-tips-for-students')
+def blog_redirect():
+    return redirect(url_for('blog_index'), code=301)
+
+@app.route('/prior-semester-final-gpa')
+def prior_semester_final_gpa_redirect():
+    return redirect(url_for('prior_semester_gpa'), code=301)
+
+@app.route('/templates/gpa-planning-calculator.html')
+def templates_gpa_planning_calculator_redirect():
+    return redirect(url_for('gpa_planning'), code=301)
 
 
 if __name__ == '__main__':
