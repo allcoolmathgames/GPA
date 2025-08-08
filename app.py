@@ -41,10 +41,6 @@ def prior_semester_gpa():
 def highschool_gpa():
     return render_template('highschool.html')
 
-@app.route('/grade-calculator')
-def grade_calculator():
-    return render_template('gradecalculator.html')
-
 @app.route('/gpa-calculator')
 def gpa_calculator():
     return render_template('gpa-calculator.html')
@@ -268,9 +264,13 @@ def pages_privacy_policy_redirect():
 def templates_index_redirect():
     return redirect(url_for('privacy_policy'), code=301)
 
+@app.route('/ur/pages/privacy-policy/')
+def ur_pages_privacy_policy_redirect_with_slash():
+    return redirect(url_for('privacy_policy'), code=301)
+
 @app.route('/ur/pages/privacy-policy')
 def ur_pages_privacy_policy_redirect():
-    return redirect(url_for('prior_semester_gpa'), code=301)
+    return redirect(url_for('privacy_policy'), code=301)
 
 @app.route('/templates/prior-semester-final-gpa.html')
 def templates_prior_semester_final_gpa_redirect():
