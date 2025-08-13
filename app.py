@@ -129,25 +129,24 @@ def sitemap():
     pages = get_translated_paths_from_js()
     languages = SUPPORTED_LANGUAGES + ['en'] # Add 'en' for the default language
     
-    sitemap_template = """
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-            xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    {% for page in pages %}
-        <url>
-            <loc>https://gpacalculatorcollege.com{{ page }}</loc>
-            {% for lang in languages %}
-                {% if lang == 'en' %}
-                    <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com{{ page }}"/>
-                {% else %}
-                    <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com/{{ lang }}{{ page }}"/>
-                {% endif %}
-            {% endfor %}
-            <xhtml:link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com{{ page }}"/>
-        </url>
-    {% endfor %}
-    </urlset>
-    """
+    sitemap_template = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for page in pages %}
+    <url>
+        <loc>https://gpacalculatorcollege.com{{ page }}</loc>
+        {% for lang in languages %}
+            {% if lang == 'en' %}
+                <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com{{ page }}"/>
+            {% else %}
+                <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com/{{ lang }}{{ page }}"/>
+            {% endif %}
+        {% endfor %}
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com{{ page }}"/>
+    </url>
+{% endfor %}
+</urlset>
+"""
     
     sitemap_content = render_template_string(sitemap_template, pages=pages, languages=languages)
     response = make_response(sitemap_content)
