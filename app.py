@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, g
+from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, g, render_template_string
 from functools import wraps
 import re
 
