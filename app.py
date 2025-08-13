@@ -306,7 +306,7 @@ def pages_privacy_policy_redirect():
 
 @app.route('/templates/index.html')
 def templates_index_redirect():
-    return redirect(url_for('privacy_policy'), code=301)
+    return redirect(url_for('index'), code=301)
 
 @app.route('/ur/pages/privacy-policy/')
 def ur_pages_privacy_policy_redirect_with_slash():

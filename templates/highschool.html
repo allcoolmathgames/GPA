@@ -11,8 +11,16 @@
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <meta name="keywords" content="GPA calculator, calculate GPA, how to calculate GPA, what is my GPA, grade point average calculator, online GPA calculator, 4.0 GPA scale, credit hour GPA calculator, GPA calculator uf">
+    
     <link rel="canonical" href="https://gpacalculatorcollege.com/highschool-gpa">
-
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,14 +49,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 22px; /* Adjusted to match new height */
+            border-radius: 22px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px; /* Reduced height */
-            width: 14px; /* Reduced width */
+            height: 14px;
+            width: 14px;
             left: 4px;
             bottom: 4px;
             background-color: white;
@@ -61,10 +69,11 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(18px); /* Adjusted to match new width */
+            transform: translateX(18px);
         }
     </style>
 </head>
+</html>
 <body data-lang="en">
     {% include 'header.html' %}
     <main style="position: relative; top: -55px;">

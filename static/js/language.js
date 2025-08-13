@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageSwitcher = document.getElementById('language-switcher');
     const defaultLanguage = 'en';
     let translations = {};
+
     const loadTranslations = async () => {
         try {
             const [commonResponse, indexResponse, gpaCalculatorResponse] = await Promise.all([
@@ -26,16 +27,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             console.log("All translations loaded successfully.");
-            const savedLanguage = localStorage.getItem('selectedLanguage') || defaultLanguage;
-            applyTranslations(savedLanguage);
+            
+            const urlPath = window.location.pathname;
+            const urlLangRegex = /^\/(ur|ar|pt|es|fr|de|ru)\b/i;
+            const match = urlPath.match(urlLangRegex);
+
+            let currentLanguage;
+            if (match && match[1]) {
+                currentLanguage = match[1];
+                localStorage.setItem('selectedLanguage', currentLanguage);
+            } else {
+                // Ye naya code hai
+                localStorage.removeItem('selectedLanguage');
+                currentLanguage = defaultLanguage;
+            }
+            
+            applyTranslations(currentLanguage);
             
             if (languageSwitcher) {
-                languageSwitcher.value = savedLanguage;
+                languageSwitcher.value = currentLanguage;
             }
         } catch (error) {
             console.error("Error loading translations:", error);
         }
     };
+    
     const applyTranslations = (lang) => {
         const langData = translations[lang] || translations[defaultLanguage];
         document.querySelectorAll('[data-translate]').forEach(element => {
@@ -58,37 +74,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         console.log(`Translations applied for language: ${lang}`);
         
-        // URLs ke liye naya code
         document.querySelectorAll('a').forEach(link => {
             const href = link.getAttribute('href');
             if (href && href.startsWith('/')) {
-                const regex = /^\/(ur|ar|pt|es|de|ru)\b/i; // All languages except English
+                const regex = /^\/(ur|ar|pt|es|fr|de|ru)\b/i;
                 const newPath = href.replace(regex, '');
                 if (lang === 'en') {
-                    link.href = newPath; // English ke liye path se language code hata dein
+                    link.href = newPath;
                 } else {
-                    link.href = `/${lang}${newPath}`; // Baaki languages ke liye code add karein
+                    link.href = `/${lang}${newPath}`;
                 }
             }
         });
     };
+    
     const setLanguage = (lang) => {
-        localStorage.setItem('selectedLanguage', lang);
+        if (lang === defaultLanguage) {
+            localStorage.removeItem('selectedLanguage');
+        } else {
+            localStorage.setItem('selectedLanguage', lang);
+        }
         
         const currentUrl = window.location.pathname;
         let newUrl;
         
-        // Pehle se maujood language code ko remove karein
-        const regex = /^\/(ur|ar|pt|es|de|ru)\b/i; // Apni languages ke mutabik update karein
+        const regex = /^\/(ur|ar|pt|es|fr|de|ru)\b/i;
         const pathWithoutLang = currentUrl.replace(regex, '');
         if (lang === 'en') {
-            newUrl = pathWithoutLang; // English ke liye sirf path rakhein
+            newUrl = pathWithoutLang;
         } else {
-            newUrl = `/${lang}${pathWithoutLang}`; // Baaki languages ke liye code add karein
+            newUrl = `/${lang}${pathWithoutLang}`;
         }
         
         history.pushState({}, '', newUrl);
     };
+    
     loadTranslations();
     if (languageSwitcher) {
         languageSwitcher.addEventListener('change', (event) => {

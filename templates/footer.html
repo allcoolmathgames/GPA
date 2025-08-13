@@ -2,7 +2,9 @@
     <div class="footer-container">
         <div class="footer-column">
             <h3><span data-translate="footerAboutOurSite">Gpa Calculator College</span></h3>
-            <p data-translate="footerAboutOurSiteDesc">Your reliable tool for precise GPA calculations and academic planning.</p>
+            <p data-translate="footerAboutOurSiteDesc">
+                Your reliable tool for precise GPA calculations and academic planning.
+            </p>
             <p class="email-address">gpacalculatorcollege@gmail.com</p>
         </div>
 
@@ -33,7 +35,29 @@
         </div>
     </div>
 </footer>
+
 <div class="footer-bottom">
-    <span class="copyright" data-translate="copyright" id="currentYear" style="position: relative; top: -10px;">© 2025 Gpa Calculator College. All Rights Reserved.</span>
+    <span class="copyright" 
+          data-translate="copyright" 
+          id="currentYear" 
+          style="position: relative; top: -10px;">
+        © 2025 Gpa Calculator College. All Rights Reserved.
+    </span>
 </div>
+
+<!-- Main Script -->
 <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+<!-- Language Translation Script -->
+<script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+
+<!-- Auto Year Update -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const yearEl = document.getElementById('currentYear');
+        if (yearEl) {
+            const currentYear = new Date().getFullYear();
+            yearEl.innerHTML = `© ${currentYear} Gpa Calculator College. All Rights Reserved.`;
+        }
+    });
+</script>
