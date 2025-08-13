@@ -1,28 +1,31 @@
 from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, g
 from functools import wraps
+import re
 
 app = Flask(__name__)
 
-# Dummy data store
+# Dummy data store for the GPA calculator
 courses_data = []
 
 # Supported languages list
 SUPPORTED_LANGUAGES = ['ur', 'ar', 'pt', 'es', 'fr', 'de', 'ru']
 
+# --- Helper Functions ---
+
 def handle_language_routes(f):
+    """Decorator to handle language codes in the URL."""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         lang_code = kwargs.pop('lang_code', 'en')
-
         if lang_code not in SUPPORTED_LANGUAGES and lang_code != 'en':
+            # Fallback to English if language code is not supported
             lang_code = 'en'
-
         g.lang_code = lang_code
         return f(*args, **kwargs)
     return decorated_function
 
-# Helper function to calculate GPA
 def calculate_gpa_from_courses():
+    """Calculates GPA from a list of courses."""
     total_grade_points = 0
     total_credits = 0
     grade_map = {
@@ -42,7 +45,41 @@ def calculate_gpa_from_courses():
         return 0.0
     return round(total_grade_points / total_credits, 2)
 
-# Routes for pages
+def get_translated_paths_from_js():
+    """Extracts URL paths from the language.js file using regex."""
+    try:
+        # Assuming language.js is in the static/js folder
+        js_file_path = 'static/js/language.js'
+        with open(js_file_path, 'r', encoding='utf-8') as f:
+            js_code = f.read()
+        
+        # Regex to find links starting with '/' from the JS file
+        regex = r"href\s*=\s*`\/\$\{(?:lang|newLang)\}([^`]+)`"
+        dynamic_paths = set(re.findall(regex, js_code))
+        
+        # Manually add static paths to be included in the sitemap
+        static_pages = [
+            '/', '/prior-semester-gpa', '/highschool-gpa',
+            '/grade-calculator', '/final-grade-calculator',
+            '/gpa-calculator', '/gpa-planning', '/blogs',
+            '/privacy-policy', '/terms-conditions',
+            '/about-us', '/contact'
+        ]
+        
+        # Add blog post slugs manually as they are not in the JS file
+        blog_slugs = [
+            '/blogs/how-to-improve-your-gpa-effectively',
+            '/blogs/understanding-different-grading-scales',
+            '/blogs/achieving-your-target-gpa-guide'
+        ]
+
+        return list(dynamic_paths.union(static_pages).union(blog_slugs))
+    except FileNotFoundError:
+        print("Error: language.js file not found. Sitemap will not include translated URLs.")
+        return ['/'] # Return a default path to avoid errors
+
+# --- Routes for Pages ---
+
 @app.route('/<string:lang_code>/')
 @app.route('/')
 @handle_language_routes
@@ -85,12 +122,39 @@ def gpa_calculator(lang_code=None):
 def gpa_planning(lang_code=None):
     return render_template('gpa-planning-calculator.html')
 
-# Sitemap Route
+# --- Sitemap Route ---
+
 @app.route('/sitemap.xml')
 def sitemap():
-    return send_from_directory(app.root_path, 'sitemap.xml')
+    pages = get_translated_paths_from_js()
+    languages = SUPPORTED_LANGUAGES + ['en'] # Add 'en' for the default language
+    
+    sitemap_template = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    {% for page in pages %}
+        <url>
+            <loc>https://gpacalculatorcollege.com{{ page }}</loc>
+            {% for lang in languages %}
+                {% if lang == 'en' %}
+                    <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com{{ page }}"/>
+                {% else %}
+                    <xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://gpacalculatorcollege.com/{{ lang }}{{ page }}"/>
+                {% endif %}
+            {% endfor %}
+            <xhtml:link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com{{ page }}"/>
+        </url>
+    {% endfor %}
+    </urlset>
+    """
+    
+    response = render_template_string(sitemap_template, pages=pages, languages=languages)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
 
-# Blog Routes
+# --- Blog Routes ---
+
 @app.route('/<string:lang_code>/blogs')
 @app.route('/blogs')
 @handle_language_routes
@@ -106,15 +170,14 @@ def blog_post(slug, lang_code=None):
         'understanding-different-grading-scales': 'blogs/final_gpa_blog.html',
         'achieving-your-target-gpa-guide': 'blogs/target_gpa_blog.html'
     }
-
     template_to_render = blog_templates.get(slug)
-
     if template_to_render:
         return render_template(template_to_render, slug=slug)
     else:
         return "Blog Post Not Found", 404
 
-# Other Static Pages
+# --- Other Static Pages ---
+
 @app.route('/<string:lang_code>/privacy-policy')
 @app.route('/privacy-policy')
 @handle_language_routes
@@ -139,7 +202,9 @@ def about_us(lang_code=None):
 def contact(lang_code=None):
     return render_template('pages/Contact.html')
 
-# API Endpoints for Page 1 (Main GPA Calculator)
+# --- API Endpoints ---
+
+# GPA Calculator Page Endpoints
 @app.route('/get_courses', methods=['GET'])
 def get_courses():
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
@@ -150,7 +215,6 @@ def add_course():
     course_name = data.get('courseName')
     credits = data.get('credits')
     grade = data.get('grade')
-
     if not course_name or not grade:
         return jsonify({'status': 'error', 'message': 'Course Name and Grade are required.'}), 400
     try:
@@ -159,12 +223,10 @@ def add_course():
             return jsonify({'status': 'error', 'message': 'Credits must be a positive number.'}), 400
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid Credits value.'}), 400
-
     grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'}
     if grade not in grade_map_keys:
         return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F.'}), 400
     courses_data.append({'name': course_name, 'credits': credits, 'grade': grade})
-
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
 @app.route('/update_course', methods=['POST'])
@@ -173,23 +235,19 @@ def update_course():
     index = data.get('index')
     new_credits = data.get('credits')
     new_grade = data.get('grade')
-
     if not (0 <= index < len(courses_data)):
         return jsonify({'status': 'error', 'message': 'Course not found at specified index.'}), 404
-
     try:
         if new_credits is not None:
             new_credits = float(new_credits)
             if new_credits <= 0:
                 return jsonify({'status': 'error', 'message': 'Credits must be a positive number.'}), 400
             courses_data[index]['credits'] = new_credits
-
         if new_grade:
             grade_map_keys = {'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'}
             if new_grade not in grade_map_keys:
                 return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-,C+, C, C-, D+, D, D-, F'}), 400
             courses_data[index]['grade'] = new_grade
-
         return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid data for update.'}), 400
@@ -200,12 +258,9 @@ def update_course():
 def delete_course():
     data = request.json
     index = data.get('index')
-
     if not (0 <= index < len(courses_data)):
         return jsonify({'status': 'error', 'message': 'Course not found at specified index.'}), 404
-
     del courses_data[index]
-
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
 @app.route('/reset_courses', methods=['POST'])
@@ -214,7 +269,7 @@ def reset_courses():
     courses_data = []
     return jsonify({'status': 'success', 'message': 'All courses cleared.', 'currentGpa': 0.0})
 
-# API Endpoints for Page 2 (Prior Semester / Final GPA Calculator)
+# Prior Semester / Final GPA Calculator Page Endpoints
 @app.route('/calculate_combined_gpa', methods=['POST'])
 def calculate_combined_gpa():
     data = request.json
@@ -229,12 +284,9 @@ def calculate_combined_gpa():
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
         old_grade_points = old_total_credits * old_gpa
         new_grade_points = new_semester_credits * new_semester_gpa
-
         combined_total_credits = old_total_credits + new_semester_credits
         combined_total_grade_points = old_grade_points + new_grade_points
-
         combined_gpa = round(combined_total_grade_points / combined_total_credits, 2) if combined_total_credits > 0 else 0.0
-
         return jsonify({'status': 'success', 'combinedGpa': combined_gpa})
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid input: Please provide valid numbers.'}), 400
@@ -258,7 +310,7 @@ def calculate_final_cumulative_gpa():
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
-# API Endpoints for Page 3 (GPA Planning)
+# GPA Planning Page Endpoints
 @app.route('/calculate_required_gpa', methods=['POST'])
 def calculate_required_gpa():
     data = request.json
@@ -267,31 +319,27 @@ def calculate_required_gpa():
         current_gpa = float(data.get('currentGpa'))
         current_total_credits = float(data.get('currentTotalCredits'))
         next_semester_credits = float(data.get('nextSemesterCredits'))
-
         if goal_gpa < 0 or current_gpa < 0 or current_total_credits < 0 or next_semester_credits <= 0:
             return jsonify({'status': 'error', 'message': 'All credit and GPA values must be non-negative, and Next Semester Credits must be greater than zero.'}), 400
         if goal_gpa > 4.0 or current_gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
         desired_total_grade_points = (current_total_credits + next_semester_credits) * goal_gpa
         current_grade_points = current_total_credits * current_gpa
-
         required_grade_points_for_next_semester = desired_total_grade_points - current_grade_points
-
         required_gpa = round(required_grade_points_for_next_semester / next_semester_credits, 2)
-
         message = ""
         if required_gpa > 4.0:
             message = 'The required GPA is very high. It might be impossible to achieve your goal with the given credits.'
         elif required_gpa < 0.0:
             message = 'The required GPA is negative, meaning you can achieve your goal even with a lower GPA in the next semester.'
-
         return jsonify({'status': 'success', 'requiredGpa': required_gpa, 'message': message})
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid input: Please provide valid numbers.'}), 400
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
-# Redirects
+# --- Redirects ---
+
 @app.route('/pages/about-us/')
 def pages_about_us_redirect():
     return redirect(url_for('about_us'), code=301)
@@ -310,11 +358,11 @@ def templates_index_redirect():
 
 @app.route('/ur/pages/privacy-policy/')
 def ur_pages_privacy_policy_redirect_with_slash():
-    return redirect(url_for('privacy_policy'), code=301)
+    return redirect(url_for('privacy_policy', lang_code='ur'), code=301)
 
 @app.route('/ur/pages/privacy-policy')
 def ur_pages_privacy_policy_redirect():
-    return redirect(url_for('privacy_policy'), code=301)
+    return redirect(url_for('privacy_policy', lang_code='ur'), code=301)
 
 @app.route('/templates/prior-semester-final-gpa.html')
 def templates_prior_semester_final_gpa_redirect():
@@ -322,11 +370,11 @@ def templates_prior_semester_final_gpa_redirect():
 
 @app.route('/ur/pages/about-us/')
 def ur_pages_about_us_redirect():
-    return redirect(url_for('about_us'), code=301)
+    return redirect(url_for('about_us', lang_code='ur'), code=301)
 
 @app.route('/ur/pages/terms-conditions/')
 def ur_pages_terms_conditions_redirect():
-    return redirect(url_for('terms_conditions'), code=301)
+    return redirect(url_for('terms_conditions', lang_code='ur'), code=301)
 
 @app.route('/gpacalculatorcollege@gmail.com')
 def email_contact_redirect():
