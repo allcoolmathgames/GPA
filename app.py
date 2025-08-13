@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, g, render_template_string
+from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, g, render_template_string, make_response
 from functools import wraps
 import re
 
@@ -149,7 +149,8 @@ def sitemap():
     </urlset>
     """
     
-    response = render_template_string(sitemap_template, pages=pages, languages=languages)
+    sitemap_content = render_template_string(sitemap_template, pages=pages, languages=languages)
+    response = make_response(sitemap_content)
     response.headers['Content-Type'] = 'application/xml'
     return response
 
