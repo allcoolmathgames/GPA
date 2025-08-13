@@ -1,7 +1,7 @@
 {
     "en": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "College GPA Calculator - Know Your College GPA",
         "index_metaDescription": "Easily calculate your college GPA with our free College GPA calculator. Enter grades and credit hours to get instant results, no sign-up needed.",
         "index_faviconLink": "",
@@ -182,7 +182,7 @@
     },
       "es": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "Calculadora de GPA universitario: conoce tu GPA universitario",
         "index_metaDescription": "Calcula fácilmente tu promedio universitario con nuestra calculadora gratuita. Ingresa tus calificaciones y créditos para     obtener resultados instantáneos, sin necesidad de registrarte.",
         "index_faviconLink": "",
@@ -363,7 +363,7 @@
     },
        "ar": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "حاسبة المعدل التراكمي الجامعي - اعرف معدلك التراكمي الجامعي",
         "index_metaDescription": "احسب معدلك التراكمي في الجامعة بسهولة باستخدام حاسبة معدلك التراكمي المجانية. أدخل الدرجات والساعات المعتمدة للحصول على نتائج     فورية، دون الحاجة إلى التسجيل.",
         "index_faviconLink": "",
@@ -544,7 +544,7 @@
     },
         "pt": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "Calculadora de GPA da faculdade - Conheça seu GPA da faculdade",
         "index_metaDescription": "Calcule facilmente seu GPA universitário com nossa calculadora gratuita de GPA universitário. Insira notas e créditos para obter  resultados instantâneos, sem necessidade de cadastro.",
         "index_faviconLink": "",
@@ -725,7 +725,7 @@
     },
         "ru": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "Калькулятор среднего балла колледжа — узнайте средний балл своего колледжа",
         "index_metaDescription": "Рассчитайте свой средний балл (GPA) с помощью нашего бесплатного калькулятора. Введите оценки и зачётные часы, чтобы получить     мгновенный результат. Регистрация не требуется.",
         "index_faviconLink": "",
@@ -906,7 +906,7 @@
     },
     "de": {
         "index_headSection": "",
-        "index_metaRobots": "noindex, nofollow",
+        "index_metaRobots": "index, follow",
         "index_pageTitle": "GPA-Rechner für das College - Kennen Sie Ihren GPA",
         "index_metaDescription": "Berechnen Sie Ihren Notendurchschnitt ganz einfach mit unserem kostenlosen Notendurchschnittsrechner. Geben Sie Noten und     Leistungspunkte ein, um sofort Ergebnisse zu erhalten keine Anmeldung erforderlich.",
         "index_faviconLink": "",
