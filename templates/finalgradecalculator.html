@@ -328,13 +328,13 @@
                 resultSection.style.display = 'block';
 
                 if (requiredFinalGrade > 100) {
-                    messageDisplay.textContent = 'Aapko final mein 100% se zyada marks chahiye, jo ke impossible hai. Aapko apna desired grade kam karna hoga.';
+                    messageDisplay.textContent = 'You need more than 100% in the final, which is impossible. You will have to lower your desired grade.';
                     messageDisplay.style.color = '#d9534f';
                 } else if (requiredFinalGrade < 0) {
-                    messageDisplay.textContent = 'Aapne already apna desired grade achieve kar liya hai.';
+                    messageDisplay.textContent = 'You have already achieved your desired grade.';
                     messageDisplay.style.color = '#5cb85c';
                 } else {
-                    messageDisplay.textContent = 'Aapka target achieve karne ke liye yeh zaroori grade hai.';
+                    messageDisplay.textContent = 'To achieve your target, this is the required grade.';
                     messageDisplay.style.color = '#4a4a4a';
                 }
 
