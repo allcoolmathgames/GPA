@@ -11,7 +11,6 @@ courses_data = []
 SUPPORTED_LANGUAGES = ['ur', 'ar', 'pt', 'es', 'fr', 'de', 'ru']
 
 # --- Helper Functions ---
-
 def handle_language_routes(f):
     """Decorator to handle language codes in the URL."""
     @wraps(f)
@@ -52,11 +51,11 @@ def get_translated_paths_from_js():
         js_file_path = 'static/js/language.js'
         with open(js_file_path, 'r', encoding='utf-8') as f:
             js_code = f.read()
-        
+
         # Regex to find links starting with '/' from the JS file
         regex = r"href\s*=\s*`\/\$\{(?:lang|newLang)\}([^`]+)`"
         dynamic_paths = set(re.findall(regex, js_code))
-        
+
         # Manually add static paths to be included in the sitemap
         static_pages = [
             '/', '/prior-semester-gpa', '/highschool-gpa',
@@ -65,21 +64,19 @@ def get_translated_paths_from_js():
             '/privacy-policy', '/terms-conditions',
             '/about-us', '/contact'
         ]
-        
+
         # Add blog post slugs manually as they are not in the JS file
         blog_slugs = [
             '/blogs/how-to-improve-your-gpa-effectively',
             '/blogs/understanding-different-grading-scales',
             '/blogs/achieving-your-target-gpa-guide'
         ]
-
         return list(dynamic_paths.union(static_pages).union(blog_slugs))
     except FileNotFoundError:
         print("Error: language.js file not found. Sitemap will not include translated URLs.")
         return ['/'] # Return a default path to avoid errors
 
 # --- Routes for Pages ---
-
 @app.route('/<string:lang_code>/')
 @app.route('/')
 @handle_language_routes
@@ -123,12 +120,11 @@ def gpa_planning(lang_code=None):
     return render_template('gpa-planning-calculator.html')
 
 # --- Sitemap Route ---
-
 @app.route('/sitemap.xml')
 def sitemap():
     pages = get_translated_paths_from_js()
     languages = SUPPORTED_LANGUAGES + ['en'] # Add 'en' for the default language
-    
+
     sitemap_template = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -147,14 +143,13 @@ def sitemap():
 {% endfor %}
 </urlset>
 """
-    
+
     sitemap_content = render_template_string(sitemap_template, pages=pages, languages=languages)
     response = make_response(sitemap_content)
     response.headers['Content-Type'] = 'application/xml'
     return response
 
 # --- Blog Routes ---
-
 @app.route('/<string:lang_code>/blogs')
 @app.route('/blogs')
 @handle_language_routes
@@ -177,7 +172,6 @@ def blog_post(slug, lang_code=None):
         return "Blog Post Not Found", 404
 
 # --- Other Static Pages ---
-
 @app.route('/<string:lang_code>/privacy-policy')
 @app.route('/privacy-policy')
 @handle_language_routes
@@ -203,7 +197,6 @@ def contact(lang_code=None):
     return render_template('pages/Contact.html')
 
 # --- API Endpoints ---
-
 # GPA Calculator Page Endpoints
 @app.route('/get_courses', methods=['GET'])
 def get_courses():
@@ -339,7 +332,6 @@ def calculate_required_gpa():
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 # --- Redirects ---
-
 @app.route('/pages/about-us/')
 def pages_about_us_redirect():
     return redirect(url_for('about_us'), code=301)
@@ -395,6 +387,14 @@ def prior_semester_final_gpa_redirect():
 @app.route('/templates/gpa-planning-calculator.html')
 def templates_gpa_planning_calculator_redirect():
     return redirect(url_for('gpa_planning'), code=301)
+
+@app.route('/x-default/final-grade-calculator')
+def x_default_final_grade_calculator_redirect():
+    return redirect(url_for('final_grade_calculator'), code=301)
+
+@app.route('/x-default/')
+def x_default_root_redirect():
+    return redirect(url_for('index'), code=301)
 
 if __name__ == '__main__':
     app.run(debug=True)
