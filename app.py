@@ -118,7 +118,13 @@ def grade_calculator(lang_code):
     template_name = get_template_name('gradecalculator/gradecalculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
-
+    
+@app.route('/gpa-planning')
+def gpa_planning_en():
+    template_name = get_template_name('gpaplan/gpa-planning-calculator', 'en')
+    session['lang_code'] = 'en'
+    return render_template(template_name, lang_code='en')
+    
 @lang_routes.route('/gpa-planning')
 def gpa_planning(lang_code):
     template_name = get_template_name('gpaplan/gpa-planning-calculator', lang_code)
@@ -387,7 +393,7 @@ def prior_semester_final_gpa_redirect():
 
 @redirect_routes.route('/templates/gpa-planning-calculator.html')
 def templates_gpa_planning_calculator_redirect():
-    return redirect(url_for('lang_routes.gpa_planning', lang_code='en'), code=301)
+    return redirect(url_for('gpa_planning_en'), code=301)
 
 @redirect_routes.route('/en/gpa-calculator')
 def gpa_calculator_redirect_en():
@@ -410,6 +416,34 @@ def prior_semester_gpa_redirect_trailing_slash():
 def gpa_calculator_redirect():
     return redirect(url_for('gpa_calculator_en'), code=301)
 
+@redirect_routes.route('/rufinal-grade-calculator/')
+def r_final_grade_calculator_redirect():
+    return redirect(url_for('lang_routes.final_grade_calculator', lang_code='ru'), code=301)
+
+@redirect_routes.route('/gpa-planning/')
+def gpa_planning_redirect_no_lang():
+    return redirect(url_for('gpa_planning_en'), code=301)
+    
+@redirect_routes.route('/static/css/rtl.css')
+def css_redirect():
+    return redirect(url_for('home'), code=301)
+
+@redirect_routes.route('/x-default/final-grade-calculator')
+def x_default_final_grade_calculator_redirect():
+    return redirect(url_for('final_grade_calculator_en'), code=301)
+
+@redirect_routes.route('/x-default/')
+def x_default_home_redirect():
+    return redirect(url_for('home'), code=301)
+
+# --- Yeh route hata diya gaya hai taake redirect loop na bane ---
+# @app.route('/blogs/')
+# def blog_index_redirect_trailing_slash():
+#     return redirect(url_for('blog_routes.blog_index'), code=301)
+
+@app.route('/en/gpa-planning')
+def en_gpa_planning_redirect():
+    return redirect(url_for('gpa_planning_en'), code=301)
 
 # Register Blueprints
 app.register_blueprint(lang_routes)
