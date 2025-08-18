@@ -1,0 +1,88 @@
+GPA Live
+├── Procfile
+├── app.py
+├── requirements.txt
+├── static
+│   ├── css/
+│   │   └── style.css
+│   ├── img/
+│   │   ├── favicon.png
+│   │   └── logo.png
+│   └──  js/
+│        └── script.js
+├── templates
+│   ├── blogs/
+│   │   ├── blog_index.html
+│   │   ├── final_gpa_blog.html
+│   │   ├── gpa_blog.html
+│   │   └── target_gpa_blog.html
+│   ├── pages/
+│   │   ├── About-us.html
+│   │   ├── Contact.html
+│   │   ├── privacy-policy.html
+│   │   └── terms-conditions.html
+│   ├── finalgrade
+│   │   ├──finalgradecalculator_es.html
+│   │   ├──finalgradecalculator_ar.html
+│   │   ├──finalgradecalculator_pt.html
+│   │   ├──finalgradecalculator_de.html
+│   │   ├──finalgradecalculator_ru.html
+│   │   └──finalgradecalculator.html
+│   ├── footer.html
+│   │   ├──footer_es.html
+│   │   ├──footer_ar.html
+│   │   ├──footer_pt.html
+│   │   ├──footer_de.html
+│   │   ├──footer_ru.html
+│   │   └──footer.html
+│   ├── gpacalculator
+│   │   ├──gpa-calculator_es.html
+│   │   ├──gpa-calculator_ar.html
+│   │   ├──gpa-calculator_pt.html
+│   │   ├──gpa-calculator_de.html
+│   │   ├──gpa-calculator_ru.html
+│   │   └──gpa-calculator.html
+│   ├── gpaplan
+│   │   ├──gpa-planning-calculator_es.html
+│   │   ├──gpa-planning-calculator_ar.html
+│   │   ├──gpa-planning-calculator_pt.html
+│   │   ├──gpa-planning-calculator_de.html
+│   │   ├──gpa-planning-calculator_ru.html
+│   │   └──gpa-planning-calculator.html
+│   ├── gradecalculator
+│   │   ├──gradecalculator_es.html
+│   │   ├──gradecalculator_ar.html
+│   │   ├──gradecalculator_pt.html
+│   │   ├──gradecalculator_de.html
+│   │   ├──gradecalculator_ru.html
+│   │   └──gradecalculator.html
+│   ├── header
+│   │   ├──header_es.html
+│   │   ├──header_ar.html
+│   │   ├──header_pt.html
+│   │   ├──header_de.html
+│   │   ├──header_ru.html
+│   │   └──header.html
+│   ├── highschool
+│   │   ├──highschool_es.html
+│   │   ├──highschool_ar.html
+│   │   ├──highschool_pt.html
+│   │   ├──highschool_de.html
+│   │   ├──highschool_ru.html
+│   │   └──highschool.html
+│   ├── home
+│   │   ├──index_es.html
+│   │   ├──index_ar.html
+│   │   ├──index_pt.html
+│   │   ├──index_de.html
+│   │   ├──index_ru.html
+│   │   └──index.html
+│   └── prior-semester-gpa
+│       ├──prior-semester-gpa_es.html
+│       ├──prior-semester-gpa_ar.html
+│       ├──prior-semester-gpa_pt.html
+│       ├──prior-semester-gpa_de.html
+│       ├──prior-semester-gpa_ru.html
+│       └──prior-semester-gpa.html
+│
+└──  sitemap.xml
