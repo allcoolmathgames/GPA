@@ -131,6 +131,19 @@ def gpa_planning(lang_code):
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
+# --- New routes for Semester Grade Calculator ---
+@app.route('/semester-grade-calculator')
+def semester_grade_calculator_en():
+    template_name = get_template_name('samesterGradeCalcuator/samesterGradecalculator', 'en')
+    session['lang_code'] = 'en'
+    return render_template(template_name, lang_code='en')
+
+@lang_routes.route('/semester-grade-calculator')
+def semester_grade_calculator(lang_code):
+    template_name = get_template_name('samesterGradeCalcuator/samesterGradecalculator', lang_code)
+    session['lang_code'] = lang_code
+    return render_template(template_name, lang_code=lang_code)
+    
 # --- Sitemap Route (static) ---
 @app.route('/sitemap.xml')
 def sitemap():
@@ -439,7 +452,7 @@ def x_default_home_redirect():
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/')
 # def blog_index_redirect_trailing_slash():
-#     return redirect(url_for('blog_routes.blog_index'), code=301)
+#    return redirect(url_for('blog_routes.blog_index'), code=301)
 
 @app.route('/en/gpa-planning')
 def en_gpa_planning_redirect():
