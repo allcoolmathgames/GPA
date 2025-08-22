@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, Blueprint, session
+from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, Blueprint, session, Response
+from datetime import datetime
 
 # Create a Flask app instance
 app = Flask(__name__)
@@ -144,10 +145,58 @@ def semester_grade_calculator(lang_code):
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
-# --- Sitemap Route (static) ---
+# --- Sitemap Route (Dynamic) ---
 @app.route('/sitemap.xml')
 def sitemap():
-    return send_from_directory(app.root_path, 'sitemap.xml')
+    # Saare pages ki list jinhein aap sitemap mein shamil karna chahte hain
+    pages = [
+        '/',
+        '/gpa-calculator',
+        '/highschool-gpa',
+        '/grade-calculator',
+        '/gpa-planning',
+        '/privacy-policy',
+        '/terms-conditions',
+        '/about-us',
+        '/contact',
+        '/final-grade-calculator',
+        '/prior-semester-gpa',
+        '/semester-grade-calculator'
+    ]
+    
+    # Sitemap XML content
+    urlset_start = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+'''
+    url_template = '''
+    <url>
+        <loc>{}</loc>
+        <lastmod>{}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>{}</priority>
+    </url>'''
+    
+    urlset_end = '</urlset>'
+    
+    urls = []
+    lastmod = datetime.now().strftime('%Y-%m-%d')
+    
+    # English pages add karein
+    for page in pages:
+        urls.append(url_template.format(url_for('home', _external=True) + page[1:], lastmod, '1.00' if page == '/' else '0.80'))
+        
+    # Other language pages add karein
+    for lang in SUPPORTED_LANGS:
+        if lang != 'en':
+            for page in pages:
+                # 'en' pages ke liye already '/' se shuru ho chuke hain
+                # Is liye yahan sirf non-English languages ke liye '/lang_code/path' format use karein
+                urls.append(url_template.format(url_for('lang_routes.index', lang_code=lang, _external=True) + page[1:], lastmod, '0.64'))
+
+    sitemap_content = urlset_start + ''.join(urls) + urlset_end
+    
+    response = Response(sitemap_content, mimetype='text/xml')
+    return response
 
 # --- Blog Routes (static) ---
 @blog_routes.route('/')
@@ -187,8 +236,6 @@ def contact():
     return render_template('pages/Contact.html')
 
 # --- API Endpoints ---
-# (Yahan aapke saare API routes hain, unko maine change nahi kiya kyunke masla routing mein tha)
-# --- Helper function to calculate GPA ---
 def calculate_gpa_from_courses():
     total_grade_points = 0
     total_credits = 0
@@ -370,6 +417,10 @@ def calculate_required_gpa():
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 # --- Redirects ---
+@redirect_routes.route('/en/')
+def en_home_redirect():
+    return redirect(url_for('home'), code=301)
+    
 @redirect_routes.route('/pages/about-us/')
 @redirect_routes.route('/ur/pages/about-us/')
 def pages_about_us_redirect():
@@ -452,7 +503,7 @@ def x_default_home_redirect():
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/')
 # def blog_index_redirect_trailing_slash():
-#    return redirect(url_for('blog_routes.blog_index'), code=301)
+#     return redirect(url_for('blog_routes.blog_index'), code=301)
 
 @app.route('/en/gpa-planning')
 def en_gpa_planning_redirect():
