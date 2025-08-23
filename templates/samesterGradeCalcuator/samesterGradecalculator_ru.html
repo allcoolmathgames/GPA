@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
                 <div class="button-group">
-                    <button class="primary-btn" onclick="calculateGrade()">Рассчитать оценку</button>
+                    <button class="primary-btn" onclick="calculateAndScroll()">>Рассчитать оценку</button>
                 </div>
             </section>
             <div class="grade-summary-section centered-section" id="gradeSummarySection">
@@ -283,7 +283,7 @@
     </main>
 
     {% include 'footer.html' %}
-<scr<script></script>ipt>
+<script>
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
@@ -336,6 +336,15 @@
         // Scroll to result section
         document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
     }
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 </script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>

@@ -11,14 +11,14 @@
     <meta name="keywords" content="Semester Grade Calculator, Grade Calculations, Calculate Semester Grade, test grade calculator, weighted grade calculator, unweighted grade calculator">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
     
-    <link rel="canonical" href="https://gpacalculatorcollege.com/grade-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
-    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
-    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
-    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
-    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
-    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
-    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="canonical" href="https://gpacalculatorcollege.com/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@
                 </table>
 
                 <div class="button-group">
-                    <button class="primary-btn" onclick="calculateGrade()">Calculate Grade</button>
+                    <button class="primary-btn" onclick="calculateAndScroll()">Calculate Grade</button>
                 </div>
             </section>
 
@@ -304,11 +304,9 @@
 
 <script>
     const faqItems = document.querySelectorAll('.faq-item');
-
     faqItems.forEach(item => {
         const header = item.querySelector('h3');
         const paragraph = item.querySelector('p');
-        // Set initial state to open
         paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
         header.addEventListener('click', () => {
             if (paragraph.style.maxHeight === '0px') {
@@ -319,19 +317,45 @@
         });
     });
 
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
     function calculateGrade() {
-        // Get input values
         let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
         let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
         let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
         let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
         let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
-        let weight3Input = document.getElementById('weight3');
         let weight3 = parseFloat(weight3Input.value) || 0;
+        
 
-        // Auto-calculate Final Exam weight if not set
-        if (weight3 === 0) {
-            weight3 = 100 - (weight1 + weight2);
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
             weight3Input.value = weight3.toFixed(2);
         }
 
@@ -341,22 +365,30 @@
             return;
         }
 
-        // Calculate weighted grades
         let weightedGrade1 = (grade1 * weight1) / 100;
         let weightedGrade2 = (grade2 * weight2) / 100;
         let weightedGrade3 = (grade3 * weight3) / 100;
-
-        // Calculate final grade
         let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
 
-        // Display result
         document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
-
-        // Scroll to result section
-        document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
+        
     }
-</script>
 
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
 </body>

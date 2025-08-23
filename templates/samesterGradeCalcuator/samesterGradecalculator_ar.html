@@ -9,13 +9,14 @@
     <meta name="keywords" content="حاسبة الدرجات الفصلية, حساب الدرجات, حاسبة الدرجات الربع سنوية, حاسبة الدرجات النهائية">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
 
-    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/grade-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
-    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
-    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
-    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
-    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
-    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,7 +73,7 @@
                     </tbody>
                 </table>
                 <div class="button-group">
-                    <button class="primary-btn" onclick="calculateGrade()">احسب الدرجة</button>
+                    <button class="primary-btn" onclick="calculateAndScroll()">>احسب الدرجة</button>
                 </div>
             </section>
             <div class="grade-summary-section centered-section" id="gradeSummarySection">
@@ -344,6 +345,15 @@
         // Scroll to result section
         document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
     }
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 </script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
