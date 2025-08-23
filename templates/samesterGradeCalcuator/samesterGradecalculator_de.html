@@ -285,11 +285,9 @@
     {% include 'footer.html' %}
     <script>
     const faqItems = document.querySelectorAll('.faq-item');
-
     faqItems.forEach(item => {
         const header = item.querySelector('h3');
         const paragraph = item.querySelector('p');
-        // Set initial state to open
         paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
         header.addEventListener('click', () => {
             if (paragraph.style.maxHeight === '0px') {
@@ -300,19 +298,45 @@
         });
     });
 
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
     function calculateGrade() {
-        // Get input values
         let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
         let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
         let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
         let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
         let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
-        let weight3Input = document.getElementById('weight3');
         let weight3 = parseFloat(weight3Input.value) || 0;
+        
 
-        // Auto-calculate Final Exam weight if not set
-        if (weight3 === 0) {
-            weight3 = 100 - (weight1 + weight2);
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
             weight3Input.value = weight3.toFixed(2);
         }
 
@@ -322,20 +346,20 @@
             return;
         }
 
-        // Calculate weighted grades
         let weightedGrade1 = (grade1 * weight1) / 100;
         let weightedGrade2 = (grade2 * weight2) / 100;
         let weightedGrade3 = (grade3 * weight3) / 100;
-
-        // Calculate final grade
         let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
 
-        // Display result
         document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
-
-        // Scroll to result section
-        document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
+        
     }
+
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
     function calculateAndScroll() {
     calculateGrade(); // Pehle calculate function ko call karega
     
