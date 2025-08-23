@@ -29,29 +29,28 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Header / Navbar */
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 40px;
+  padding: 10px 40px;
   background-color: var(--primary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   position: sticky;
   top: 0;
   z-index: 1000;
   direction: ltr;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar * {
-  direction: ltr;
+  transition: background-color 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .navbar .logo {
+  display: flex;
+  align-items: center;
   font-weight: 700;
-  font-size: 21px;
-  color: var(--dark-text);
+  font-size: 24px;
+  color: var(--accent-color);
   text-decoration: none;
   letter-spacing: -0.5px;
 }
@@ -62,97 +61,134 @@ body {
   padding: 0;
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .navbar nav ul li {
-  margin-left: 30px;
+  position: relative;
+  padding: 0;
 }
 
 .navbar nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
-  color: var(--dark-text);
-  font-weight: 500;
-  transition: color 0.3s ease, transform 0.2s ease;
-  padding: 5px 0;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar nav ul li a.active-link {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar nav ul li a:not(.active-link):hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--accent-color);
+}
+
+/* Dropdown */
+.dropdown-menu {
   position: relative;
 }
 
-.navbar nav ul li a::after {
-  content: '';
+.dropdown-content {
   position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--accent-color);
-  transition: width 0.3s ease-out;
-}
-
-.navbar nav ul li a:hover::after {
-  width: 100%;
-}
-
-.navbar nav ul li a:hover {
-  color: var(--accent-color);
-  transform: translateY(-2px);
-}
-
-.navbar .user-profile img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  vertical-align: middle;
-  border: 2px solid var(--accent-color);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar .btn-upgrade {
-  background-color: var(--accent-color);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  margin-left: 20px;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  font-weight: 600;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.navbar .btn-upgrade:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Language Switcher Styling (Navbar) */
-.language-switcher-container {
-  margin-left: 20px;
-}
-
-#language-switcher {
-  width: 100px;
-  padding: 8px 15px;
+  top: 100%;
+  left: 50%; /* ✅ Parent ke center par align */
+  transform: translateX(-50%); /* ✅ Dropdown apne aap ko center shift karega */
+  background-color: var(--primary-color);
   border-radius: 5px;
-  border: 1px solid var(--secondary-color);
-  background-color: #fff;
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+
+  /* hidden by default */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+
+  /* vertical list enforce */
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content li {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.dropdown-column{
+  padding-left: 30px;
+}
+
+.dropdown-content a {
+  color: var(--accent-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 400;
+  width: 100%;
+  border-radius: 0;
+  white-space: nowrap; /* ✅ prevent breaking words in 2 lines */
+}
+
+.dropdown-content a:hover {
+  background-color: var(--secondary-color);
+}
+
+/* show on hover */
+.dropdown-menu:hover .dropdown-content,
+.dropdown-menu:focus-within .dropdown-content {
+  max-height: 500px;
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+.navbar .nav-menu i {
+  font-size: 18px;
+}
+
+/* Language Switcher */
+#language-switcher {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
   font-size: 1rem;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
   background-repeat: no-repeat;
-  background-position: right 8px top 50%;
+  background-position: right 8px center;
   background-size: 16px 16px;
-  color: var(--dark-text);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-#language-switcher:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(200, 63, 18, 0.2);
+#language-switcher:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
+
+/* Theme toggle */
+#theme-toggle-btn {
+  color: var(--accent-color) !important;
+}
+
 
 /* Page Content Layout (Main container for all sections below navbar) */
 .page-content {
@@ -1643,4 +1679,37 @@ body {
 /* Contact form ke background ke liye */
 .contact-form {
   background-color: var(--primary-color);
+}
+
+
+
+/* Social icons section */
+.footer-column.social-icons {
+    text-align: center; /* icons ko center karne ke liye */
+}
+
+.footer-column.social-icons .icons {
+    display: flex;
+    justify-content: center; /* horizontally center */
+    gap: 15px; /* icons ke beech space */
+    margin-top: 10px;
+}
+
+.footer-column.social-icons .icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #333; /* default background */
+    color: #fff; /* default icon color */
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.footer-column.social-icons .icons a:hover {
+    background-color: #C83F12; /* hover color (tumhari burnt orange palette) */
+    color: #fff;
+    transform: scale(1.1); /* thoda zoom effect hover par */
 }
