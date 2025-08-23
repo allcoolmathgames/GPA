@@ -283,49 +283,60 @@
 
     {% include 'footer.html' %}
     <script>
-        const faqItems = document.querySelectorAll('.faq-item');
+    const faqItems = document.querySelectorAll('.faq-item');
 
-        faqItems.forEach(item => {
-            const header = item.querySelector('h3');
-            const paragraph = item.querySelector('p');
-            paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
-            header.addEventListener('click', () => {
-                if (paragraph.style.maxHeight === '0px') {
-                    paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
-                } else {
-                    paragraph.style.maxHeight = '0';
-                }
-            });
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        // Set initial state to open
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
         });
+    });
 
-        function calculateGrade() {
-            let grade1 = parseFloat(document.getElementById('grade1').value);
-            let weight1 = parseFloat(document.getElementById('weight1').value);
-            let grade2 = parseFloat(document.getElementById('grade2').value);
-            let weight2 = parseFloat(document.getElementById('weight2').value);
-            let grade3 = parseFloat(document.getElementById('grade3').value);
-            let weight3 = parseFloat(document.getElementById('weight3').value);
-            let currentGradeDisplay = document.getElementById('currentGradeDisplay');
+    function calculateGrade() {
+        // Get input values
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3Input = document.getElementById('weight3');
+        let weight3 = parseFloat(weight3Input.value) || 0;
 
-            if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
-                currentGradeDisplay.textContent = "Fehler";
-                return;
-            }
-
-            let totalWeight = weight1 + weight2 + weight3;
-            if (totalWeight !== 100) {
-                currentGradeDisplay.textContent = "Fehler";
-                return;
-            }
-
-            let weightedGrade1 = (grade1 * weight1) / 100;
-            let weightedGrade2 = (grade2 * weight2) / 100;
-            let weightedGrade3 = (grade3 * weight3) / 100;
-            let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
-            currentGradeDisplay.textContent = `${finalGrade.toFixed(2)}%`;
-            document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
+        // Auto-calculate Final Exam weight if not set
+        if (weight3 === 0) {
+            weight3 = 100 - (weight1 + weight2);
+            weight3Input.value = weight3.toFixed(2);
         }
-    </script>
+
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            return;
+        }
+
+        // Calculate weighted grades
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+
+        // Calculate final grade
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+
+        // Display result
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+
+        // Scroll to result section
+        document.getElementById('gradeSummarySection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </body>
 </html>
