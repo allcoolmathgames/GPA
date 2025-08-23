@@ -297,23 +297,20 @@
                 { value: '0.0', text: 'F' }
             ];
 
-            function populateGradeSelects() {
-                const gradeSelects = document.querySelectorAll('select[name="grade"]');
-                gradeSelects.forEach(select => {
-                    select.innerHTML = '';
-                    const defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.textContent = 'Выберите оценку';
-                    defaultOption.disabled = true;
-                    defaultOption.selected = true;
-                    select.appendChild(defaultOption);
+            function populateGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Выберите оценку';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
 
-                    gradeOptions.forEach(optionData => {
-                        const option = document.createElement('option');
-                        option.value = optionData.value;
-                        option.textContent = optionData.text;
-                        select.appendChild(option);
-                    });
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
                 });
             }
 
@@ -326,7 +323,8 @@
                     <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
                 `;
                 gradeTableBody.appendChild(newRow);
-                populateGradeSelects();
+                const newGradeSelect = newRow.querySelector('select[name="grade"]');
+                populateGradeSelect(newGradeSelect);
             }
 
             function calculateGPA() {
@@ -384,7 +382,9 @@
             });
 
             // Populate initial existing rows with grade options
-            populateGradeSelects();
+            document.querySelectorAll('select[name="grade"]').forEach(select => {
+                populateGradeSelect(select);
+            });
 
             // Toggle functionality for FAQ items
             const faqItems = document.querySelectorAll('.faq-item');

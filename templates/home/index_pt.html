@@ -317,6 +317,23 @@
                 });
             }
 
+            function populateSingleGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Selecione uma nota';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
+                });
+            }
+
             function addCourseRow() {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
@@ -326,7 +343,8 @@
                     <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
                 `;
                 gradeTableBody.appendChild(newRow);
-                populateGradeSelects();
+                const newSelect = newRow.querySelector('select[name="grade"]');
+                populateSingleGradeSelect(newSelect);
             }
 
             function calculateGPA() {
@@ -400,7 +418,7 @@
 
                 header.addEventListener('click', () => {
                     if (paragraph) {
-                        if (paragraph.style.maxHeight === '0px') {
+                        if (paragraph.style.maxHeight === '0px' || paragraph.style.maxHeight === '0') {
                             paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
                         } else {
                             paragraph.style.maxHeight = '0';

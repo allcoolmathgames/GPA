@@ -33,7 +33,7 @@
 <header class="navbar">
     <a href="{{ url_for('home') }}" class="logo">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Gpa Calculator College Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
-        <span data-translate="brandName" style="vertical-align: middle; position: relative; top: 1px;">Gpa Calculator College</span>
+        <span data-translate="brandName" style="vertical-align: middle; position: relative; top: 1px; font-size: 20px;">Gpa Calculator College</span>
     </a>
     
     <button class="menu-toggle" aria-label="Toggle navigation">
@@ -77,19 +77,13 @@
                     </div>
                 </div>
             </li>
-
-            <li>
-                <a href="/about-us">
-                    <i class="fas fa-info-circle"></i> <span>About</span>
-                </a>
-            </li>
             <li>
                 <a href="/contact">
                     <i class="fas fa-envelope"></i> <span>Contact Us</span>
                 </a>
             </li>
             <li class="language-switcher-container">
-                <select id="language-switcher">
+                <select id="language-switcher" style="text-align: center;">
                     <option value="en">EN</option>
                     <option value="ar">AR</option>
                     <option value="pt">PT</option>

@@ -1713,3 +1713,7 @@ body {
     color: #fff;
     transform: scale(1.1); /* thoda zoom effect hover par */
 }
+
+.faq-answer p {
+    text-align: left !important;
+}
