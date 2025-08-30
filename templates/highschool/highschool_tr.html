@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Lise Not Ortalaması Hesaplayıcısı | Lise Not Ortalamanızı Hesaplayın</title>
+    <meta name="description" content="Lise Not Ortalaması Hesaplayıcımız, öğrencilerin ders notlarına ve kredi saatlerine göre not ortalamalarını hesaplamalarına yardımcı olur. Ücretsiz, hızlı ve kullanımı kolay.">
+
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="keywords" content="Lise not ortalaması hesaplayıcı, not ortalaması hesapla, lise not ortalaması nasıl hesaplanır, not ortalamam kaç, not ortalaması hesaplama, online not ortalaması hesaplayıcı, 4.0 not ortalaması ölçeği, kredi saati not ortalaması hesaplayıcı">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/highschool-gpa">
+
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/highschool-gpa"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+<body data-lang="tr">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Lise Not Ortalaması Hesaplayıcısı</h1>
+            <p>Lise Not Ortalaması Hesaplayıcımız, öğrencilerin ders notlarına ve kredi saatlerine göre not ortalamalarını hesaplamalarına yardımcı olur.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Lise Not Ortalamasını Hesapla</h2>
+                <div class="weighted-toggle-container" style="position: relative; top: -25px; display: flex; justify-content: flex-end; align-items: center;">
+                    <label class="switch">
+                        <input type="checkbox" id="weightedToggle" checked>
+                    </label>
+                </div>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Ders</th>
+                            <th>Krediler</th>
+                            <th>Not</th>
+                            <th class="weight-column">Ders Türü</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="örn., Matematik 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>Not Seçin</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">Normal</option>
+                                    <option value="0.5">Onur</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">Üniversite</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Daha Fazla Ders Ekle</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Not Ortalamasını Hesapla</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Not Ortalaması Özeti</h2>
+                <div class="gpa-box">
+                    <span>Mevcut Not Ortalaması</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/tr/highschool-gpa"><button id="resetCoursesButton" class="secondary-btn">Tüm Dersleri Sıfırla</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Lise <a href="https://gpacalculatorcollege.com/tr/gpa-calculator">Not Ortalaması Hesaplayıcımız</a>, öğrencilerin ders notlarına ve kredi saatlerine göre not ortalamalarını hesaplamalarına yardımcı olur. Lise öğrencileri bu aracı akademik performanslarını takip etmek, üniversiteye kabul ve burs başvurularını planlamak için kullanır.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Lise Not Ortalaması Hesaplayıcısı Nasıl Kullanılır?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>1. Adım: Ders Adını Girin</span></h3>
+                        <p style="text-align: left;"><span>Öncelikle ders adını girmeniz gerekiyor.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>2. Adım: Notları Seçin</span></h3>
+                        <p style="text-align: left;"><span>Her dersten aldığınız notu seçin (A, B, C vb.).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>3. Adım: Kredi Saatlerini Girin</span></h3>
+                        <p style="text-align: left;"><span>Her ders için kredi saatini girin (genellikle 1 ila 4 saat arasında).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>4. Adım: Ders Türünü Seçin</span></h3>
+                        <p style="text-align: left;"><span>Bu, ağırlıklı ve ağırlıksız not ortalaması hesaplamaları için isteğe bağlı bir adımdır.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>5. Adım: Not Ortalamasını Hesaplayın</span></h3>
+                        <p style="text-align: left;"><span>Tüm girdileri girdikten sonra, sonuçlarınızı almak için "Lise Not Ortalamasını Hesapla" düğmesine tıklayın.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Lise Not Ortalaması Hesaplayıcımızı Neden Kullanmalısınız?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Birden Fazla Ders/Ders Ekleyin</h3>
+                        <p style="text-align: left;">
+                            Okul programınızdan Matematik, İngilizce, Fen Bilimleri ve Tarih gibi birden fazla ders girebilirsiniz. Her ders için aldığınız notu ve kredi saatini girmeniz yeterlidir.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Kayıt Gerekmez</h3>
+                        <p style="text-align: left;">
+                            Hesap makinesini anında kullanın; hesap oluşturmanıza, kişisel bilgilerinizi girmenize veya kayıt olmanıza gerek yok.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Ders Türü Seçme Seçeneği</h3>
+                        <p style="text-align: left;">
+                            Ders zorluğuna göre daha doğru bir not ortalaması elde etmek için Normal, Onur, AP (İleri Düzey Yerleştirme) veya IB (Uluslararası Bakalorya) gibi ders türlerini seçin.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Lise Not Ortalaması Nasıl Hesaplanır?</h2>
+                <p style="text-align: left;">
+                    Adımları anladıktan sonra lise not ortalamasını hesaplamak kolaydır. Çoğu okul, A'nın 4,0 puan, B'nin 3,0, C'nin 2,0, D'nin 1,0 ve F'nin 0 olduğu 4,0'lık bir ölçek kullanır. Lise not ortalamasını manuel olarak hesaplamak için aşağıdaki adımları izleyin.
+                </p>
+                <ul style="text-align: left;">
+                    <li>Derslerinizi ve aldığınız notları yazın.</li>
+                    <li>Her notu, not ortalaması ölçeğini kullanarak puana dönüştürün.</li>
+                    <li>Örneğin, Matematik'ten A aldıysanız, bu 4,0 puandır.</li>
+                    <li>Her not puanını, o dersin kredi saatleriyle çarpın.</li>
+                    <li>Matematik 3 kredi değerindeyse, 4,0 × 3 = 12 not puanıdır.</li>
+                    <li>Bunu tüm dersleriniz için yapın.</li>
+                    <li>Tüm not puanlarını toplayın.</li>
+                    <li>Tüm kredi saatlerini toplayın.</li>
+                    <li>Toplam not puanını toplam kredi saatine bölün.</li>
+                </ul>
+                <p style="text-align: left;">
+                    Manuel hesaplamalar zamanınızı alacaktır; Hesaplamaları hızlı ve kolay bir şekilde yapmak için lise not ortalamanızı hesaplamak için GPA hesaplayıcımızı kullanın.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Bu Not Ortalaması Hesaplayıcısını Kimler Kullanabilir?</h2>
+                <h3>Lise Öğrencileri</h3>
+                <p style="text-align: left;">
+                    Lise öğrencileri, akademik performanslarını takip etmek, akademik hedefler belirlemek ve üniversite başvurularına hazırlanmak için bu hesaplayıcıyı kullanabilirler. Bu hesaplayıcı, ilerlemeleri hakkında bilgi sahibi olmalarına ve geliştirilmesi gereken alanları belirlemelerine yardımcı olur.
+                </p>
+                <h3>Öğretmenler ve Rehber Öğretmenler</h3>
+                <p style="text-align: left;">
+                    Öğretmenler ve rehber öğretmenler, öğrencilerin akademik durumlarını takip etmelerine, ders seçimlerinde rehberlik etmelerine ve üniversite veya burs planlamalarını desteklemelerine yardımcı olmak için bu aracı kullanabilirler.
+                </p>
+                <h3>Veliler</h3>
+                <p style="text-align: left;">
+                    Veliler, çocuklarının akademik gelişimine dahil olmak için lise not ortalaması hesaplayıcısını kullanabilirler. Bu hesaplayıcı, notların genel performansı nasıl etkilediğini anlamalarına yardımcı olur ve çocuklarının akademik hedefler belirlemesine ve üniversiteye hazırlanmasına destek olmalarını sağlar.
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <div class="faq-item">
+                    <h3>Kredi saatleri nedir ve bunları nasıl öğrenebilirim?</h3>
+                    <p style="text-align: left;">
+                        Kredi saatleri bir dersin ağırlığını temsil eder. Çoğu lise dersi 1 kredidir, ancak bazıları (laboratuvarlar veya seçmeli dersler gibi) 0,5 veya daha fazla kredi olabilir.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Lise not ortalamamı hesaplamak neden önemlidir?</h3>
+                    <p style="text-align: left;">
+                        Lise not ortalamanı hesaplamak önemlidir çünkü genel akademik performansını gösterir. Üniversiteler, burs programları ve hatta bazı iş başvuruları genellikle okulda ne kadar başarılı olduğunu değerlendirmek için not ortalamasını kullanır.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Bu araç not ortalamamı yükseltmeme yardımcı olabilir mi?</h3>
+                    <p style="text-align: left;">
+                        Hayır, bu araç not ortalamanı yükseltmene yardımcı olmaz. Ancak not ortalamanı takip etmenize yardımcı olur. Not ortalamanı yükseltmek için <a href="https://gpacalculatorcollege.com/tr/gpa-planning">not ortalaması planlama hesaplayıcımızı</a> kullanabilirsin.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Lise not ortalaması hesaplayıcısını kullanmak için kaydolmam gerekir mi?</h3>
+                    <p style="text-align: left;">
+                        Hayır, hesaplayıcımız ücretsizdir ve herhangi bir kayıt veya oturum açma gerektirmez.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const weightedToggle = document.getElementById('weightedToggle');
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="örn., Matematik 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>Not Seçin</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">Normal</option>
+                            <option value="0.5">Onur</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">Üniversite</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                const isWeighted = weightedToggle.checked;
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = 0;
+                    if (isWeighted) {
+                        weightValue = parseFloat(weightSelect.value);
+                    }
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+            function toggleWeightColumn() {
+                const isChecked = weightedToggle.checked;
+                const weightColumns = document.querySelectorAll('.weight-column');
+                const weightSelects = document.querySelectorAll('select[name="weight"]');
+                weightColumns.forEach(column => {
+                    column.style.display = isChecked ? '' : 'none';
+                });
+                if (!isChecked) {
+                    weightSelects.forEach(select => {
+                        select.value = "0";
+                        select.disabled = true;
+                    });
+                } else {
+                    weightSelects.forEach(select => {
+                        select.disabled = false;
+                    });
+                }
+                calculateGPA();
+            }
+            weightedToggle.addEventListener('change', toggleWeightColumn);
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
+                    calculateGPA();
+                }
+            });
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+            // Initial call to set column visibility and add first row
+            addCourseRow();
+            toggleWeightColumn();
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // Set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

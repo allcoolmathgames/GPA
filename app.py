@@ -9,7 +9,7 @@ app.secret_key = 'your_secret_key_here' # Session ke liye secret key zaroori hai
 courses_data = [] # For Page 1
 
 # Supported languages list
-SUPPORTED_LANGS = ['en', 'ar', 'es', 'de', 'pt', 'ru']
+SUPPORTED_LANGS = ['en', 'ar', 'es', 'de', 'pt', 'ru', 'fr', 'it', 'tr']
 
 # --- Helper function to get correct template name ---
 def get_template_name(base_path, lang_code):
@@ -158,6 +158,19 @@ def ez_grader(lang_code):
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
+# --- NEW ROUTES FOR MIDDLE SCHOOL GPA CALCULATOR ---
+@app.route('/middle-school-gpa-calculator')
+def middle_school_gpa_calculator_en():
+    template_name = get_template_name('middleSchool/middleSchool', 'en')
+    session['lang_code'] = 'en'
+    return render_template(template_name, lang_code='en')
+
+@lang_routes.route('/middle-school-gpa-calculator')
+def middle_school_gpa_calculator(lang_code):
+    template_name = get_template_name('middleSchool/middleSchool', lang_code)
+    session['lang_code'] = lang_code
+    return render_template(template_name, lang_code=lang_code)
+
 
 # --- Sitemap Route ---
 @app.route('/sitemap.xml')
@@ -168,10 +181,14 @@ def sitemap():
 # --- Blog Routes (static) ---
 @blog_routes.route('/')
 def blog_index():
-    return render_template('blogs/blog_index.html')
+    # Blogs pages mein 'lang_code' pass karne ki zaroorat nahi hai
+    # kyunki inki translations nahi hain.
+    lang_code = session.get('lang_code', 'en')
+    return render_template('blogs/blog_index.html', lang_code=lang_code)
 
 @blog_routes.route('/<slug>')
 def blog_post(slug):
+    lang_code = session.get('lang_code', 'en')
     blog_templates = {
         'how-to-improve-your-gpa-effectively': 'blogs/gpa_blog.html',
         'understanding-different-grading-scales': 'blogs/final_gpa_blog.html',
@@ -181,26 +198,31 @@ def blog_post(slug):
     template_to_render = blog_templates.get(slug)
     
     if template_to_render:
-        return render_template(template_to_render, slug=slug)
+        return render_template(template_to_render, slug=slug, lang_code=lang_code)
     else:
         return "Blog Post Not Found", 404
 
 # --- Other Static Pages ---
 @static_pages.route('/privacy-policy')
 def privacy_policy():
-    return render_template('pages/privacy-policy.html')
+    lang_code = session.get('lang_code', 'en')
+    return render_template('pages/privacy-policy.html', lang_code=lang_code)
 
 @static_pages.route('/terms-conditions')
 def terms_conditions():
-    return render_template('pages/terms-conditions.html')
+    lang_code = session.get('lang_code', 'en')
+    return render_template('pages/terms-conditions.html', lang_code=lang_code)
 
 @static_pages.route('/about-us')
 def about_us():
-    return render_template('pages/About-us.html')
+    lang_code = session.get('lang_code', 'en')
+    return render_template('pages/About-us.html', lang_code=lang_code)
 
 @static_pages.route('/contact')
 def contact():
-    return render_template('pages/Contact.html')
+    # Yahan 'lang_code' ko session se le kar pass kiya gaya hai
+    lang_code = session.get('lang_code', 'en')
+    return render_template('pages/Contact.html', lang_code=lang_code)
 
 # --- API Endpoints ---
 def calculate_gpa_from_courses():
@@ -383,7 +405,7 @@ def calculate_required_gpa():
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
-# --- Redirects ---
+# --- Redirects (Old, broken links) ---
 @redirect_routes.route('/en/')
 def en_home_redirect():
     return redirect(url_for('home'), code=301)
@@ -470,7 +492,7 @@ def x_default_home_redirect():
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/')
 # def blog_index_redirect_trailing_slash():
-#     return redirect(url_for('blog_routes.blog_index'), code=301)
+#    return redirect(url_for('blog_routes.blog_index'), code=301)
 
 @app.route('/en/panning')
 def en_gpa_planning_redirect():
@@ -484,6 +506,40 @@ def semester_grade_calculator_redirect():
 @redirect_routes.route('/ez-grader/')
 def ez_grader_redirect_trailing_slash():
     return redirect(url_for('ez_grader_en'), code=301)
+
+# New Middle School redirects
+@redirect_routes.route('/middle-school-gpa-calculator/')
+def middle_school_gpa_calculator_redirect_trailing_slash():
+    return redirect(url_for('middle_school_gpa_calculator_en'), code=301)
+
+# Naye redirect routes aapki request ke mutabiq
+@redirect_routes.route('/ez-grader/<path:subpath>')
+def ez_grader_catch_all_redirect(subpath):
+    return redirect(url_for('ez_grader_en'), code=301)
+
+@lang_routes.route('/privacy-policy')
+def privacy_policy_redirect(lang_code):
+    return redirect(url_for('static_pages.privacy_policy'), code=301)
+
+@lang_routes.route('/terms-conditions')
+def terms_conditions_redirect(lang_code):
+    return redirect(url_for('static_pages.terms_conditions'), code=301)
+
+@lang_routes.route('/about-us')
+def about_us_redirect(lang_code):
+    return redirect(url_for('static_pages.about_us'), code=301)
+
+@lang_routes.route('/contact')
+def contact_redirect(lang_code):
+    return redirect(url_for('static_pages.contact'), code=301)
+
+@lang_routes.route('/blogs/')
+def blogs_index_redirect(lang_code):
+    return redirect(url_for('blog_routes.blog_index'), code=301)
+
+@lang_routes.route('/blogs/<path:subpath>')
+def blogs_post_redirect(lang_code, subpath):
+    return redirect(url_for('blog_routes.blog_post', slug=subpath), code=301)
 
 
 # Register Blueprints
