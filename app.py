@@ -435,6 +435,11 @@ def email_contact_redirect():
 def templates_redirect():
     return redirect(url_for('home'), code=301)
 
+@app.route('/oldpath')
+def oldpath_redirect():
+    return redirect(url_for('home'), code=301)
+
+
 @redirect_routes.route('/blogs/time-management-tips-for-students')
 def blog_redirect():
     return redirect(url_for('blog_routes.blog_index'), code=301)
@@ -488,6 +493,15 @@ def x_default_final_grade_calculator_redirect():
 @redirect_routes.route('/x-default/')
 def x_default_home_redirect():
     return redirect(url_for('home'), code=301)
+
+@redirect_routes.route('/high-school-gpa-calculator')
+def high_school_gpa_calculator_redirect():
+    return redirect(url_for('highschool_gpa_en'), code=301)
+
+@redirect_routes.route('/high-school-gpa-calculator/')
+def high_school_gpa_calculator_redirect_trailing_slash():
+    return redirect(url_for('highschool_gpa_en'), code=301)
+
 
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/')
