@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head data-translate="headSection">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title data-translate="pageTitle">EZ Grader</title>
-    <meta name="description" content="Use our Ez-Grader to quickly calculate your percentage and letter grade by entering total and wrong questions. Simple, fast, and accurate." data-translate="metaDescription">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Livellatrice EZ</title>
+    <meta name="description" content="Usa la nostra Livellatrice EZ per calcolare rapidamente la percentuale e il voto in lettere inserendo il totale e le domande sbagliate. Semplice, veloce e accurato." data-translate="metaDescription">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
-    <meta name="keywords" content="ez grader, grade calculator, percentage calculator, wrong answers, calculate percentage, grade from wrong questions, how to calculate grade" data-translate="metaKeywords">
-    <link rel="canonical" href="https://gpacalculatorcollege.com/ez-grader">
-
+    <meta name="keywords" content="livellatrice ez, calcolatore voti, calcolatore percentuale, risposte sbagliate, calcolare percentuale, voto da domande sbagliate, come calcolare voto" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/ez-grader">
     <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/ez-grader"/>
     <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/ez-grader"/>
     <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/ez-grader"/>
@@ -21,7 +20,6 @@
     <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/ez-grader"/>
     <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/ez-grader"/>
     <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/ez-grader"/>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
@@ -83,10 +81,10 @@
             font-size: 24px;
             font-weight: bold;
         }
-        
-        /* New styles for the modal */
+
+        /* Stili per la modale */
         .modal-container {
-            display: none; /* Hidden by default */
+            display: none; /* Nascosto di default */
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -132,8 +130,8 @@
         .grade-scale-table th {
             background-color: #f2f2f2;
         }
-        
-        /* New styles for grade stepper */
+
+        /* Stili per il selezionatore di voti */
         .grade-stepper {
             display: flex;
             align-items: center;
@@ -171,133 +169,128 @@
         }
     </style>
 </head>
-<body data-lang="en" data-translate="bodyMain">
+<body data-lang="it" data-translate="bodyMain">
     {% include 'header.html' %}
     <main class="main-content" data-translate="mainContent" style="position: relative; top: -150px;">
         <section class="page-content" data-translate="pageContentSection">
             <section class="page-content" data-translate="pageContentSection">
-            <h1 data-translate="ezGraderTitle">EZ Grader</h1>
-            <p data-translate="introParagraph">Use this easy-to-use Ez-Grader tool to calculate your percentage and letter grade based on the total questions and number of wrong answers.</p>
+            <h1 data-translate="ezGraderTitle">Livellatrice EZ</h1>
+            <p data-translate="introParagraph">Usa questo strumento facile da usare per calcolare la percentuale e il voto in lettere in base al totale delle domande e al numero di risposte sbagliate.</p>
             <div class="input-section centered-section" data-translate="inputSection">
-                <h2 data-translate="calculateGradeHeading">Calculate Grade</h2>
-                <button id="setGradeScaleBtn" class="primary-btn">SET GRADE SCALE</button>
+                <h2 data-translate="calculateGradeHeading">Calcola Voto</h2>
+                <button id="setGradeScaleBtn" class="primary-btn">IMPOSTA SCALA DI VALUTAZIONE</button>
                 <br><br>
                 <div class="grade-input-group">
-                    <label for="totalQuestions" data-translate="labelTotalQuestions">Total Questions:</label>
-                    <input type="number" id="totalQuestions" placeholder="e.g., 100" min="1" data-translate="totalQuestionsInput">
+                    <label for="totalQuestions" data-translate="labelTotalQuestions">Domande Total:</label>
+                    <input type="number" id="totalQuestions" placeholder="es., 100" min="1" data-translate="totalQuestionsInput">
                 </div>
                 <div class="grade-input-group">
-                    <label for="wrongQuestions" data-translate="labelWrongQuestions">Wrong Questions:</label>
-                    <input type="number" id="wrongQuestions" placeholder="e.g., 5" min="0" data-translate="wrongQuestionsInput">
+                    <label for="wrongQuestions" data-translate="labelWrongQuestions">Domande Sbagliate:</label>
+                    <input type="number" id="wrongQuestions" placeholder="es., 5" min="0" data-translate="wrongQuestionsInput">
                 </div>
                 <div class="button-group" data-translate="buttonGroupCalculate">
-                    <button id="calculateGradeBtn" class="primary-btn" data-translate="calculateGradeButton">Calculate Grade</button>
+                    <button id="calculateGradeBtn" class="primary-btn" data-translate="calculateGradeButton">Calcola Voto</button>
                 </div>
             </div>
             <div class="gpa-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
-                <h2 data-translate="gradeSummaryHeading">Grade Summary</h2>
+                <h2 data-translate="gradeSummaryHeading">Riepilogo Voto</h2>
                 <div class="gpa-box" data-translate="percentageBox">
-                    <span data-translate="percentageLabel">Percentage</span>
+                    <span data-translate="percentageLabel">Percentuale</span>
                     <span id="percentageDisplay" data-translate="percentageDisplay">0.00%</span>
                 </div>
                 <div class="gpa-box" data-translate="letterGradeBox">
-                    <span data-translate="letterGradeLabel">Letter Grade</span>
-                    <span id="letterGradeDisplay" data-translate="letterGradeDisplay">N/A</span>
+                    <span data-translate="letterGradeLabel">Voto in Lettere</span>
+                    <span id="letterGradeDisplay" data-translate="letterGradeDisplay">N/D</span>
                 </div>
                 <div class="button-group" data-translate="buttonGroupReset">
-                    <button onclick="resetForm()" class="secondary-btn" data-translate="resetButton">Reset</button>
+                    <button onclick="resetForm()" class="secondary-btn" data-translate="resetButton">Reimposta</button>
                 </div>
             </div>
             <div class="content-section centered-section">
                 <p style="text-align: left;">
-                    This EZ Grader is an easy to use grading calculator designed to convert test results into percentages and letter grades quickly. Instead of manually dividing correct answers by the total number of questions, you just need to enter the total questions and the number wrong. Our easy grader instantly shows the grade and makes your calculations simpler. 
+                    Questa Livellatrice EZ è un calcolatore di valutazione facile da usare, progettato per convertire rapidamente i risultati dei test in percentuali e voti in lettere. Invece di dividere manualmente le risposte corrette per il numero totale di domande, devi solo inserire il totale delle domande e il numero di risposte sbagliate. Il nostro strumento mostra istantaneamente il voto e semplifica i calcoli.
                 </p>
             </div>
             <section class="how-to-use-section centered-section" data-translate="howToUseSection">
-                <h2 data-translate="howToUseHeading">How to Use the EZ Grade Calculator</h2>
+                <h2 data-translate="howToUseHeading">Come Usare il Calcolatore di Voto EZ</h2>
                 <div class="how-to-use-container" data-translate="howToUseContainer">
                     <div class="step" data-translate="step1">
                         <div class="step-icon" data-translate="step1Icon">
                             <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
                         </div>
-                        <h3 data-translate="step1Title">Step 1: Total Questions</h3>
-                        <p data-translate="step1Description">Enter the total number of questions in the exam or assignment.</p>
+                        <h3 data-translate="step1Title">Passo 1: Domande Total</h3>
+                        <p data-translate="step1Description">Inserisci il numero totale di domande nell'esame o compito.</p>
                     </div>
                     <div class="step" data-translate="step2">
                         <div class="step-icon" data-translate="step2Icon">
                             <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
                         </div>
-                        <h3 data-translate="step2Title">Step 2: Wrong Questions</h3>
-                        <p data-translate="step2Description">Enter the number of questions that students answered incorrectly.</p>
+                        <h3 data-translate="step2Title">Passo 2: Domande Sbagliate</h3>
+                        <p data-translate="step2Description">Inserisci il numero di domande a cui gli studenti hanno risposto in modo errato.</p>
                     </div>
                     <div class="step" data-translate="step3">
                         <div class="step-icon" data-translate="step3Icon">
                             <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
                         </div>
-                        <h3 data-translate="step3Title">Step 3: Calculate</h3>
-                        <p data-translate="step3Description">Click the Calculate button, and this tool will display your grades in either letter or percentage format.</p>
+                        <h3 data-translate="step3Title">Passo 3: Calcola</h3>
+                        <p data-translate="step3Description">Clicca il pulsante Calcola, e questo strumento visualizzerà i tuoi voti in formato lettera o percentuale.</p>
                     </div>
                 </div>
             </section>
-
             <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
-                <h2 data-translate="whyChooseUsHeading">Why Use GPACalculatorcollege EZ Grader?</h2>
+                <h2 data-translate="whyChooseUsHeading">Perché Usare la Livellatrice EZ di GPACalculatorcollege?</h2>
                 <div class="feature-row left-text-right-image" data-translate="featureRow1">
                     <div class="feature-text" data-translate="feature1Text">
-                        <h3 data-translate="feature1Title">Saves Time</h3>
-                        <p data-translate="feature1Description">Teachers spend hours grading tests and assignments. But with the help of our EZ Grader, each paper can be graded in seconds.</p>
+                        <h3 data-translate="feature1Title">Risparmia Tempo</h3>
+                        <p data-translate="feature1Description">Gli insegnanti passano ore a correggere test e compiti. Ma con l'aiuto della nostra Livellatrice EZ, ogni compito può essere corretto in pochi secondi.</p>
                     </div>
                 </div>
                 <div class="feature-row right-text-left-image" data-translate="featureRow2">
                     <div class="feature-text" data-translate="feature2Text">
-                        <h3 data-translate="feature2Title">Prevents Mistakes</h3>
-                        <p data-translate="feature2Description">Manual math can lead to errors. One miscalculation could unfairly affect a student’s grade. EZ Grade Calculator ensures 100% accuracy.</p>
+                        <h3 data-translate="feature2Title">Previene gli Errori</h3>
+                        <p data-translate="feature2Description">La matematica manuale può portare a errori. Un errore di calcolo potrebbe influire ingiustamente sul voto di uno studente. Il calcolatore di voti EZ garantisce una precisione del 100%.</p>
                     </div>
                 </div>
                 <div class="feature-row left-text-right-image" data-translate="featureRow3">
                     <div class="feature-text" data-translate="feature3Text">
-                        <h3 data-translate="feature3Title">Easy for Students Too</h3>
-                        <p data-translate="feature3Description">Students can also use this EZ Grader to check their performance right after a test. For example, if they remember how many questions they got wrong, they can instantly know their score.</p>
+                        <h3 data-translate="feature3Title">Facile Anche per gli Studenti</h3>
+                        <p data-translate="feature3Description">Gli studenti possono anche utilizzare questa Livellatrice EZ per verificare il proprio rendimento subito dopo un test. Ad esempio, se ricordano quante domande hanno sbagliato, possono conoscere immediatamente il loro punteggio.</p>
                     </div>
                 </div>
             </section>
-
             <div class="content-section centered-section" data-translate="contentSection1">
-                <h2 data-translate="whatIsLetterGradeHeading">How EZ Grader Makes Grading Simple?</h2>
+                <h2 data-translate="whatIsLetterGradeHeading">Come la Livellatrice EZ Semplifica la Valutazione?</h2>
                 <p data-translate="whatIsLetterGradeParagraph">
-                    Grading tests, quizzes, and assignments manually can be time-consuming. EZ Grader simplifies this process by turning complex calculations into a few quick inputs. Here’s how it makes grading simple:
+                    Valutare manualmente test, quiz e compiti può richiedere molto tempo. La Livellatrice EZ semplifica questo processo trasformando calcoli complessi in pochi input rapidi. Ecco come semplifica la valutazione:
                 </p>
-
-                <h3 data-translate="instantCalculationHeading">Instant Calculation</h3>
+                <h3 data-translate="instantCalculationHeading">Calcolo Istantaneo</h3>
                 <p data-translate="instantCalculationParagraph">
-                    Instead of calculating percentages and converting them to letter grades manually, you just enter the total number of questions and the number of incorrect answers. Our tool instantly generates:
+                    Invece di calcolare manualmente le percentuali e convertirle in voti in lettere, basta inserire il numero totale di domande e il numero di risposte errate. Il nostro strumento genera istantaneamente:
                 </p>
                 <ul>
-                    <li>The number of correct answers</li>
-                    <li>The percentage score</li>
-                    <li>The letter grade</li>
+                    <li>Il numero di risposte corrette</li>
+                    <li>Il punteggio percentuale</li>
+                    <li>Il voto in lettere</li>
                 </ul>
-
-                <h3 data-translate="eliminatesManualMathHeading">Eliminates Manual Math</h3>
+                <h3 data-translate="eliminatesManualMathHeading">Elimina la Matematica Manuale</h3>
                 <p data-translate="eliminatesManualMathParagraph">
-                    For example, if a quiz has 40 questions and a student gets 7 wrong, calculating the percentage manually would require:
+                    Ad esempio, se un quiz ha 40 domande e uno studente ne sbaglia 7, per calcolare manualmente la percentuale sarebbe necessario:
                 </p>
                 <div class="math-equation" data-translate="mathEquation">
-                    Percentage = 40 − 740 × 100 = 82.5%
+                    Percentuale = (40 − 7) / 40 × 100 = 82.5%
                 </div>
                 <p data-translate="mathExplanationParagraph">
-                    Our ez grade calculator does this automatically and provides you with the correct grade answers.
+                    Il nostro calcolatore di voti EZ lo fa automaticamente e ti fornisce le risposte corrette.
                 </p>
-
-                <h3 data-translate="exampleHeading">Example: Easy Grader in Action</h3>
+                <h3 data-translate="exampleHeading">Esempio: Livellatrice EZ in Azione</h3>
                 <table class="grade-table" data-translate="gradeTable">
                     <thead data-translate="gradeTableHead">
                         <tr>
-                            <th data-translate="totalQuestionsHeader">Total Questions</th>
-                            <th data-translate="wrongAnswersHeader">Wrong Answers</th>
-                            <th data-translate="correctAnswersHeader">Correct Answers</th>
-                            <th data-translate="percentageHeader">Percentage</th>
-                            <th data-translate="letterGradeHeader">Letter Grade</th>
+                            <th data-translate="totalQuestionsHeader">Domande Total</th>
+                            <th data-translate="wrongAnswersHeader">Risposte Sbagliate</th>
+                            <th data-translate="correctAnswersHeader">Risposte Corrette</th>
+                            <th data-translate="percentageHeader">Percentuale</th>
+                            <th data-translate="letterGradeHeader">Voto in Lettere</th>
                         </tr>
                     </thead>
                     <tbody data-translate="gradeTableBody">
@@ -326,98 +319,94 @@
                 </table>
             </div>
             <div class="content-section centered-section" data-translate="contentSection1">
-                <h2 data-translate="whatIsLetterGradeHeading">Digital Easy Grader vs. Old-School Grade Chart</h2>
-                <p data-translate="whatIsLetterGradeParagraph">Grading has come a long way. While traditional methods worked in the past, ezgrader make the process faster, easier, and more accurate. Let’s compare the two approaches:</p>
-
-                <h3 data-translate="instantCalculationHeading">Old-School Grade Chart</h3>
+                <h2 data-translate="whatIsLetterGradeHeading">Livellatrice Digitale EZ vs. Tabella dei Voti Tradizionale</h2>
+                <p data-translate="whatIsLetterGradeParagraph">La valutazione ha fatto molta strada. Mentre in passato i metodi tradizionali funzionavano, la Livellatrice EZ rende il processo più rapido, semplice e preciso. Confrontiamo i due approcci:</p>
+                <h3 data-translate="instantCalculationHeading">Tabella dei Voti della Vecchia Scuola</h3>
                 <ul class="comparison-list">
-                    <li>Teachers used printed charts or grade wheels to determine scores.</li>
-                    <li>Required manual lookup for each student’s correct answers.</li>
-                    <li>Prone to human error and miscalculations.</li>
-                    <li>Time-consuming, especially with large classes.</li>
+                    <li>Gli insegnanti utilizzavano tabelle stampate o ruote di valutazione per determinare i punteggi.</li>
+                    <li>Richiedevano la ricerca manuale delle risposte corrette di ogni studente.</li>
+                    <li>Soggetta a errori umani e calcoli errati.</li>
+                    <li>Richiede molto tempo, soprattutto con classi numerose.</li>
                 </ul>
-                <p data-translate="instantCalculationExample">Example: For a 50-question test, a teacher had to manually calculate percentages for 30+ students; sometimes it takes hours.</p>
-
-                <h3 data-translate="eliminatesManualMathHeading">Digital EZ Grader</h3>
+                <p data-translate="instantCalculationExample">Esempio: Per un test di 50 domande, un insegnante doveva calcolare manualmente le percentuali per più di 30 studenti; a volte ci vogliono ore.</p>
+                <h3 data-translate="eliminatesManualMathHeading">Livellatrice Digitale EZ</h3>
                 <ul class="comparison-list">
-                    <li>Enter the total questions and wrong answers.</li>
-                    <li>Get correct answers, percentage, and letter grade instantly.</li>
-                    <li>Works for any test size, from small quizzes to full exams.</li>
-                    <li>Eliminates errors and saves time.</li>
-                    <li>Accessible on any device: laptop, tablet, or smartphone.</li>
+                    <li>Inserisci il numero totale di domande e le risposte errate.</li>
+                    <li>Ottieni istantaneamente risposte corrette, percentuale e voto.</li>
+                    <li>Funziona per qualsiasi dimensione del test, dai quiz più piccoli agli esami completi.</li>
+                    <li>Elimina gli errori e fa risparmiare tempo.</li>
+                    <li>Accessibile da qualsiasi dispositivo: laptop, tablet o smartphone.</li>
                 </ul>
-
-                <h3 data-translate="exampleHeading">Why Digital Wins</h3>
+                <h3 data-translate="exampleHeading">Perché il Digitale Vince</h3>
                 <table class="grade-table" data-translate="gradeTable">
                     <thead data-translate="gradeTableHead">
                         <tr>
-                            <th data-translate="featureHeader">Feature</th>
-                            <th data-translate="oldSchoolHeader">Old-School Chart</th>
-                            <th data-translate="digitalGraderHeader">Digital EZ Grader</th>
+                            <th data-translate="featureHeader">Caratteristica</th>
+                            <th data-translate="oldSchoolHeader">Tabella della Vecchia Scuola</th>
+                            <th data-translate="digitalGraderHeader">Livellatrice Digitale EZ</th>
                         </tr>
                     </thead>
                     <tbody data-translate="gradeTableBody">
                         <tr>
-                            <td data-translate="speedFeature">Speed</td>
-                            <td data-translate="speedOld">Slow</td>
-                            <td data-translate="speedDigital">Instant</td>
+                            <td data-translate="speedFeature">Velocità</td>
+                            <td data-translate="speedOld">Lento</td>
+                            <td data-translate="speedDigital">Istantaneo</td>
                         </tr>
                         <tr>
-                            <td data-translate="accuracyFeature">Accuracy</td>
-                            <td data-translate="accuracyOld">Risk of human error</td>
-                            <td data-translate="accuracyDigital">100% accurate</td>
+                            <td data-translate="accuracyFeature">Precisione</td>
+                            <td data-translate="accuracyOld">Rischio di errore umano</td>
+                            <td data-translate="accuracyDigital">100% accurato</td>
                         </tr>
                         <tr>
-                            <td data-translate="adaptabilityFeature">Adaptability</td>
-                            <td data-translate="adaptabilityOld">Fixed scale, limited</td>
-                            <td data-translate="adaptabilityDigital">Works for any test size</td>
+                            <td data-translate="adaptabilityFeature">Adattabilità</td>
+                            <td data-translate="adaptabilityOld">Scala fissa, limitata</td>
+                            <td data-translate="adaptabilityDigital">Funziona per qualsiasi dimensione del test</td>
                         </tr>
                         <tr>
-                            <td data-translate="accessibilityFeature">Accessibility</td>
-                            <td data-translate="accessibilityOld">Physical chart only</td>
-                            <td data-translate="accessibilityDigital">Any device, anytime</td>
+                            <td data-translate="accessibilityFeature">Accessibilità</td>
+                            <td data-translate="accessibilityOld">Solo tabella fisica</td>
+                            <td data-translate="accessibilityDigital">Qualsiasi dispositivo, in qualsiasi momento</td>
                         </tr>
                         <tr>
-                            <td data-translate="easeOfUseFeature">Ease of Use</td>
-                            <td data-translate="easeOfUseOld">Learning curve</td>
-                            <td data-translate="easeOfUseDigital">Extremely simple</td>
+                            <td data-translate="easeOfUseFeature">Facilità d'Uso</td>
+                            <td data-translate="easeOfUseOld">Curva di apprendimento</td>
+                            <td data-translate="easeOfUseDigital">Estremamente semplice</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="faq-section centered-section" data-translate="faqSection">
-                <h2 data-translate="faqHeading">Frequently Asked Questions</h2>
+                <h2 data-translate="faqHeading">Domande Frequenti</h2>
                 <div class="faq-item" data-translate="faqItem1">
-                    <h3 data-translate="faqQuestion1">Can I use this easy grade calculator for any type of test?</h3>
-                    <p data-translate="faqAnswer1">Absolutely! It works for quizzes, homework, class tests, or final exams of any size, from small 10-question quizzes to large 200-question exams.</p>
+                    <h3 data-translate="faqQuestion1">Posso usare questo calcolatore di voti per qualsiasi tipo di test?</h3>
+                    <p data-translate="faqAnswer1">Certamente! Funziona per quiz, compiti, verifiche in classe o esami finali di qualsiasi dimensione, da piccoli quiz da 10 domande a esami più complessi da 200 domande.</p>
                 </div>
                 <div class="faq-item" data-translate="faqItem2">
-                    <h3 data-translate="faqQuestion2">Can this grading calculator handle multiple students at once?</h3>
-                    <p data-translate="faqAnswer2">No, it calculates one score at a time. Teachers can quickly repeat the process for multiple students, saving hours of grading work compared to manual calculations.</p>
+                    <h3 data-translate="faqQuestion2">Questo calcolatore di voti può gestire più studenti contemporaneamente?</h3>
+                    <p data-translate="faqAnswer2">No, calcola un punteggio alla volta. Gli insegnanti possono ripetere rapidamente il processo per più studenti, risparmiando ore di lavoro di valutazione rispetto ai calcoli manuali.</p>
                 </div>
                 <div class="faq-item" data-translate="faqItem3">
-                    <h3 data-translate="faqQuestion3">Is it possible to adjust the grading scale on this calculator to align with my school’s system?</h3>
-                    <p data-translate="faqAnswer3">Yes. By using the “Set Grade Scale” option, you can customize the percentage thresholds for each letter grade. This is especially useful for schools with unique grading systems or plus/minus scales (e.g., A-, B+, etc.).</p>
+                    <h3 data-translate="faqQuestion3">È possibile adattare la scala di valutazione di questo calcolatore al sistema scolastico?</h3>
+                    <p data-translate="faqAnswer3">Sì. Utilizzando l’opzione “Imposta Scala di Valutazione”, è possibile personalizzare le soglie percentuali per ogni voto in lettere. Questo è particolarmente utile per le scuole con sistemi di valutazione unici o scale di più/meno (ad esempio, A-, B+, ecc.).</p>
                 </div>
                 <div class="faq-item" data-translate="faqItem4">
-                    <h3 data-translate="faqQuestion4">What happens if a student gets all the answers correct?</h3>
-                    <p data-translate="faqAnswer4">If the “Total Wrong” is zero, our calculator will automatically display a 100% score, instantly confirming a perfect result on the test or assignment.</p>
+                    <h3 data-translate="faqQuestion4">Cosa succede se uno studente dà tutte le risposte corrette?</h3>
+                    <p data-translate="faqAnswer4">Se il “Totale Sbagliato” è zero, il nostro calcolatore visualizzerà automaticamente un punteggio del 100%, confermando immediatamente un risultato perfetto nel test o compito.</p>
                 </div>
             </div>
         </section>
     </main>
     {% include 'footer.html' %}
-
     <div id="gradeScaleModal" class="modal-container">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2 style="text-align: center;">Set Custom Grade Scale</h2>
-            <p style="text-align: center;">Enter the minimum percentage for each letter grade.</p>
+            <h2 style="text-align: center;">Imposta Scala di Valutazione Personalizzata</h2>
+            <p style="text-align: center;">Inserisci la percentuale minima per ogni voto in lettere.</p>
             <table class="grade-scale-table">
                 <thead>
                     <tr>
-                        <th>Grade</th>
-                        <th>Min. Percentage</th>
+                        <th>Voto</th>
+                        <th>Min. Percentuale</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -580,11 +569,10 @@
                 </tbody>
             </table>
             <div class="modal-footer">
-                <button id="saveGradeScaleBtn" class="primary-btn">Save</button>
+                <button id="saveGradeScaleBtn" class="primary-btn">Salva</button>
             </div>
         </div>
     </div>
-
     <script data-translate="scriptTag">
         document.addEventListener('DOMContentLoaded', () => {
             const totalQuestionsInput = document.getElementById('totalQuestions');
@@ -593,13 +581,12 @@
             const gradeSummarySection = document.getElementById('gradeSummarySection');
             const percentageDisplay = document.getElementById('percentageDisplay');
             const letterGradeDisplay = document.getElementById('letterGradeDisplay');
-
-            // Modal elements
+            // Elementi modale
             const setGradeScaleBtn = document.getElementById('setGradeScaleBtn');
             const gradeScaleModal = document.getElementById('gradeScaleModal');
             const closeModalBtn = document.querySelector('.close-btn');
             const saveGradeScaleBtn = document.getElementById('saveGradeScaleBtn');
-            
+
             const gradeValues = {
                 Aplus: document.getElementById('gradeAplusValue'),
                 A: document.getElementById('gradeAValue'),
@@ -615,9 +602,7 @@
                 Dminus: document.getElementById('gradeDminusValue'),
                 F: document.getElementById('gradeFValue')
             };
-
             const gradesInOrder = ['Aplus', 'A', 'Aminus', 'Bplus', 'B', 'Bminus', 'Cplus', 'C', 'Cminus', 'Dplus', 'D', 'Dminus', 'F'];
-
             let customGradeScale = {
                 Aplus: 97, A: 93, Aminus: 90,
                 Bplus: 87, B: 83, Bminus: 80,
@@ -625,7 +610,6 @@
                 Dplus: 67, D: 63, Dminus: 60,
                 F: 0
             };
-
             function loadGradeScale() {
                 const savedScale = localStorage.getItem('gradeScale');
                 if (savedScale) {
@@ -633,7 +617,6 @@
                 }
                 updateGradeValues();
             }
-
             function updateGradeValues() {
                 for (const grade of gradesInOrder) {
                     if (gradeValues[grade]) {
@@ -641,7 +624,6 @@
                     }
                 }
             }
-
             function getLetterGrade(percentage) {
                 if (percentage >= customGradeScale.Aplus) return 'A+';
                 if (percentage >= customGradeScale.A) return 'A';
@@ -657,35 +639,28 @@
                 if (percentage >= customGradeScale.Dminus) return 'D-';
                 return 'F';
             }
-
             function calculateGrade() {
                 const totalQuestions = parseInt(totalQuestionsInput.value) || 0;
                 const wrongQuestions = parseInt(wrongQuestionsInput.value) || 0;
-
                 if (isNaN(totalQuestions) || totalQuestions <= 0 || wrongQuestions < 0 || wrongQuestions > totalQuestions) {
-                    percentageDisplay.textContent = 'Invalid Input';
-                    letterGradeDisplay.textContent = 'N/A';
+                    percentageDisplay.textContent = 'Input Non Valido';
+                    letterGradeDisplay.textContent = 'N/D';
                     return;
                 }
-
                 const correctQuestions = totalQuestions - wrongQuestions;
                 const percentage = (correctQuestions / totalQuestions) * 100;
                 const letterGrade = getLetterGrade(percentage);
-
                 percentageDisplay.textContent = percentage.toFixed(2) + '%';
                 letterGradeDisplay.textContent = letterGrade;
             }
-
             function adjustGrades(currentGrade, increment) {
                 const currentIndex = gradesInOrder.indexOf(currentGrade);
                 let currentValue = parseInt(gradeValues[currentGrade].textContent);
-                
-                // Adjust current grade's value
+
+                // Regola il valore del voto corrente
                 currentValue += increment;
-
                 if (currentValue < 0 || currentValue > 100) return;
-
-                // Adjust the next grade based on the current one
+                // Regola il voto successivo in base a quello corrente
                 if (increment === 1 && currentIndex > 0) {
                     const prevGrade = gradesInOrder[currentIndex - 1];
                     const prevValue = parseInt(gradeValues[prevGrade].textContent);
@@ -699,72 +674,59 @@
                         currentValue = nextValue + 1;
                     }
                 }
-
                 if (currentValue < 0) currentValue = 0;
                 if (currentValue > 100) currentValue = 100;
-
                 customGradeScale[currentGrade] = currentValue;
                 updateGradeValues();
             }
-
             function saveGradeScale() {
                 localStorage.setItem('gradeScale', JSON.stringify(customGradeScale));
-                alert('Grade scale saved successfully!');
+                alert('Scala di valutazione salvata con successo!');
                 gradeScaleModal.style.display = 'none';
                 calculateGrade();
             }
-
-            // Event listeners
+            // Ascoltatori di eventi
             calculateGradeBtn.addEventListener('click', (event) => {
                 event.preventDefault();
                 calculateGrade();
                 gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
             });
-
             totalQuestionsInput.addEventListener('input', calculateGrade);
             wrongQuestionsInput.addEventListener('input', calculateGrade);
-
-            // Modal event listeners
+            // Ascoltatori di eventi per la modale
             setGradeScaleBtn.addEventListener('click', () => {
                 gradeScaleModal.style.display = 'flex';
                 loadGradeScale();
             });
-
             closeModalBtn.addEventListener('click', () => {
                 gradeScaleModal.style.display = 'none';
             });
-
             saveGradeScaleBtn.addEventListener('click', saveGradeScale);
-
             window.onclick = function(event) {
                 if (event.target == gradeScaleModal) {
                     gradeScaleModal.style.display = 'none';
                 }
             }
-
-            // Stepper buttons event listeners
+            // Ascoltatori di eventi per i pulsanti del selezionatore
             document.querySelectorAll('.up-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const grade = event.target.dataset.grade;
                     adjustGrades(grade, 1);
                 });
             });
-
             document.querySelectorAll('.down-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const grade = event.target.dataset.grade;
                     adjustGrades(grade, -1);
                 });
             });
-
             window.resetForm = function() {
                 totalQuestionsInput.value = '';
                 wrongQuestionsInput.value = '';
                 percentageDisplay.textContent = '0.00%';
-                letterGradeDisplay.textContent = 'N/A';
+                letterGradeDisplay.textContent = 'N/D';
             };
-
-            // Toggle functionality for FAQ items
+            // Funzionalità di toggle per le domande frequenti
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const header = item.querySelector('h3');
@@ -778,8 +740,7 @@
                     }
                 });
             });
-
-            // Initial load of grade scale
+            // Caricamento iniziale della scala di valutazione
             loadGradeScale();
         });
     </script>

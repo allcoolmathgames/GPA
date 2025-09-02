@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title data-translate="pageTitle">Semester Grade Calculator</title>
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calcolatrice dei voti del semestre</title>
     <meta name="description"
-        content="Calculate your semester grades quickly with the help of our Semester Grade Calculator. Get your overall semester performance with ease."
+        content="Calcola rapidamente i tuoi voti semestrali con l'aiuto del nostro Calcolatore dei Voti Semestrali. Ottieni facilmente il tuo rendimento complessivo del semestre."
         data-translate="metaDescription">
-    <meta name="keywords" content="Semester Grade Calculator, Grade Calculations, Calculate Semester Grade, test grade calculator, weighted grade calculator, unweighted grade calculator">
+    <meta name="keywords" content="Calcolatrice voti semestre, calcolo voti, calcolare voto semestre, calcolatore voti ponderati, calcolatore voti non ponderati">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
-    
-    <link rel="canonical" href="https://gpacalculatorcollege.com/semester-grade-calculator">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/calcolatrice-voti-semestre">
     <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
     <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
     <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
@@ -19,10 +19,9 @@
     <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
     <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
     <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
-    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
     <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
     <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
-    
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,280 +31,260 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
 </head>
-<body data-lang="en" data-translate="body">
+<body data-lang="it" data-translate="body">
     {% include 'header.html' %}
-
     <main style="position: relative; top: -55px;">
         <section class="page-content" data-translate="pageContentSection">
-            <h1 data-translate="gradeCalculatorTitle">Semester Grade Calculator</h1>
-
-            <p>Use this simple Semester Grade Calculator to find out your current grade and what you need on your final.</p>
+            <h1 data-translate="gradeCalculatorTitle">Calcolatrice dei voti del semestre</h1>
+            <p>Usa questa semplice Calcolatrice dei Voti del Semestre per scoprire il tuo voto attuale e cosa ti serve per l'esame finale.</p>
             <br>
             <section class="input-section">
-                <h2>Calculate Semester Grade</h2>
-                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">This semester grade calculator will help you calculate your semester grades based on your quarterly grades and final grade weighting percentages.</p>
+                <h2>Calcola il voto del semestre</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Questa calcolatrice dei voti semestrali ti aiuterà a calcolare i tuoi voti semestrali in base ai voti trimestrali e alle percentuali di peso del voto finale.</p>
                 <table class="course-input-table" >
                     <thead>
                         <tr>
-                            <th>Assessment</th>
-                            <th>Grade (%)</th>
-                            <th>Weight (%)</th>
+                            <th>Valutazione</th>
+                            <th>Voto (%)</th>
+                            <th>Peso (%)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>First Quarter</td>
-                            <td><input type="number" id="grade1" placeholder="e.g., 33"></td>
-                            <td><input type="number" id="weight1" placeholder="e.g., 33"></td>
+                            <td>Primo Trimestre</td>
+                            <td><input type="number" id="grade1" placeholder="es., 33"></td>
+                            <td><input type="number" id="weight1" placeholder="es., 33"></td>
                         </tr>
                         <tr>
-                            <td>Second Quarter</td>
-                            <td><input type="number" id="grade2" placeholder="e.g., 22"></td>
-                            <td><input type="number" id="weight2" placeholder="e.g., 22"></td>
+                            <td>Secondo Trimestre</td>
+                            <td><input type="number" id="grade2" placeholder="es., 22"></td>
+                            <td><input type="number" id="weight2" placeholder="es., 22"></td>
                         </tr>
                         <tr>
-                            <td>Final Exam</td>
-                            <td><input type="number" id="grade3" placeholder="e.g., 32"></td>
-                            <td><input type="number" id="weight3" placeholder="e.g., 45"></td>
+                            <td>Esame Finale</td>
+                            <td><input type="number" id="grade3" placeholder="es., 32"></td>
+                            <td><input type="number" id="weight3" placeholder="es., 45"></td>
                         </tr>
                     </tbody>
                 </table>
-
                 <div class="button-group">
-                    <button class="primary-btn" onclick="calculateAndScroll()">Calculate</button>
+                    <button class="primary-btn" onclick="calculateAndScroll()">Calcola</button>
                 </div>
             </section>
-
             <div class="grade-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
-                <h2 data-translate="gradeSummaryHeading">Grade Summary</h2>
+                <h2 data-translate="gradeSummaryHeading">Riepilogo voto</h2>
                 <div class="grade-box" data-translate="gradeBox">
-                    <span data-translate="currentGradeLabel">Current Grade</span>
+                    <span data-translate="currentGradeLabel">Voto attuale</span>
                     <span id="currentGradeDisplay" data-translate="currentGradeDisplay">0.00%</span>
                 </div>
                 <div class="button-group" data-translate="buttonGroupReset">
-                    <a href="/semester-grade-calculator"><button class="secondary-btn" data-translate="resetAssessmentsButton">Reset All Assessments</button></a>
+                    <a href="/calcolatrice-voti-semestre"><button class="secondary-btn" data-translate="resetAssessmentsButton">Reimposta tutte le valutazioni</button></a>
                 </div>
             </div>
-
             <section class="content-section centered-section">
-        <p style="text-align: left;">This Semester <a href="https://gpacalculatorcollege.com/grade-calculator">Grade Calculator</a>, also known as a quarter grade calculator, helps you to calculate your overall grade for a semester by combining the results of different assignments, quizzes, projects, midterms, and final exams according to their weight percentages.</p>
-
-    </section>
-
-
+                <p style="text-align: left;">Questo <a href="https://gpacalculatorcollege.com/it/grade-calculator">Calcolatore dei Voti</a>, noto anche come calcolatore dei voti trimestrali, ti aiuta a calcolare il voto complessivo di un semestre combinando i risultati di diversi compiti, quiz, progetti, esami di metà semestre ed esami finali in base alle rispettive percentuali di peso.</p>
+            </section>
             <section class="how-to-use-section centered-section" data-translate="howToUseSection">
-        <h2 data-translate="howToUseHeading">How To Use the Semester Grade Calculator?</h2>
-        <div class="how-to-use-container" data-translate="howToUseContainer">
-            <p>Just follow these simple steps to use this semester exam calculator:</p>
-            <div class="step" data-translate="step1">
-                <div class="step-icon" data-translate="step1Icon">
-                    <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                <h2 data-translate="howToUseHeading">Come usare il calcolatore dei voti semestrali?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <p>Segui questi semplici passaggi per usare questo calcolatore degli esami semestrali:</p>
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step1Title">1° Trimestre</span></h3>
+                        <p><span data-translate="step1Description">Inserisci il "Voto" e la "Percentuale del voto semestrale" del primo trimestre.</span></p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step2Title">2° Trimestre</span></h3>
+                        <p><span data-translate="step2Description">Inserisci il "Voto" e la "Percentuale del voto semestrale" del secondo trimestre.</span></p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step3Title">Esame Finale</span></h3>
+                        <p><span data-translate="step3Description">Inserisci il "Voto" e la "Percentuale del voto semestrale" dell'esame finale.</span></p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step4Title">Calcola</span></h3>
+                        <p><span data-translate="step4Description">Dopo aver inserito tutte queste informazioni, clicca sul pulsante "Calcola il voto del semestre". Otterrai il tuo "Voto del semestre" nell'ultima scheda.</span></p>
+                    </div>
                 </div>
-                <h3><span data-translate="step1Title">1st Quarter</span></h3>
-                <p><span data-translate="step1Description">Enter the "Grade" and "Per Of Sem Grade" of quarter 1.</span></p>
-            </div>
-            <div class="step" data-translate="step2">
-                <div class="step-icon" data-translate="step2Icon">
-                    <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
-                </div>
-                <h3><span data-translate="step2Title">2nd Quarter</span></h3>
-                <p><span data-translate="step2Description">Enter the "Grade" and "Per Of Sem Grade" of quarter 2.</span></p>
-            </div>
-            <div class="step" data-translate="step3">
-                <div class="step-icon" data-translate="step3Icon">
-                    <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
-                </div>
-                <h3><span data-translate="step3Title">Final Exam</span></h3>
-                <p><span data-translate="step3Description">Enter the "Grade" and "Per Of Sem Grade" of the final Exam.</span></p>
-            </div>
-            <div class="step" data-translate="step4">
-                <div class="step-icon" data-translate="step4Icon">
-                    <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
-                </div>
-                <h3><span data-translate="step4Title">Calculate</span></h3>
-                <p><span data-translate="step4Description">After giving all of this information then click on the button "Calculate Semester Grade". You will get your "Semester Grade" in the last tab.</span></p>
-            </div>
-        </div>
-    </section>
-            
+            </section>
+
             <section class="content-section centered-section">
-        <h2>Why Use Our Calculator?</h2>
-        <div class="feature-row">
-            <div class="feature-text">
-                <h3>Saves Time and Effort</h3>
-                <p>No need to manually calculate weighted averages. Just enter your grades and weights, and the calculator does the rest in seconds.</p>
-            </div>
-        </div>
-        <div class="feature-row">
-            <div class="feature-text">
-                <h3>Accuracy</h3>
-                <p>Weighted grades can get tricky, especially when different components (quizzes, homework, exams) all carry different percentages. But our calculator eliminates human error and ensures 100% accurate results.</p>
-            </div>
-        </div>
-        <div class="feature-row">
-            <div class="feature-text">
-                <h3>User-Friendly and Free</h3>
-                <p>Our semester grade calculator is free and easy to use. No complex formulas or spreadsheets needed, just enter your data and click “calculate.”</p>
-            </div>
-        </div>
-    </section>
-            
+                <h2>Perché usare la nostra calcolatrice?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Risparmia tempo e fatica</h3>
+                        <p>Non c'è bisogno di calcolare manualmente le medie ponderate. Basta inserire i tuoi voti e pesi, e la calcolatrice farà il resto in pochi secondi.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Precisione</h3>
+                        <p>I voti ponderati possono diventare complicati, soprattutto quando componenti diverse (quiz, compiti, esami) hanno percentuali diverse. Ma la nostra calcolatrice elimina l'errore umano e garantisce risultati accurati al 100%.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Intuitiva e gratuita</h3>
+                        <p>La nostra calcolatrice dei voti semestrali è gratuita e facile da usare. Non servono formule complesse o fogli di calcolo, basta inserire i tuoi dati e cliccare su "Calcola".</p>
+                    </div>
+                </div>
+            </section>
+
             <div class="content-section centered-section">
-    <h2>How to Calculate Semester Grade?</h2>
-    <p>
-        A semester grade can be calculated by using the weighted average method. Every assignment, test, quiz, project, and exam carries a certain percentage (weight) toward the final grade. Also, use the <a href="https://gpacalculatorcollege.com/final-grade-calculator">final grade calculator</a> to know what grades you need for your final exams.
-    </p>
+                <h2>Come calcolare il voto del semestre?</h2>
+                <p>
+                    Il voto di un semestre può essere calcolato utilizzando il metodo della media ponderata. Ogni compito, verifica, quiz, progetto ed esame ha una certa percentuale (peso) sul voto finale. Inoltre, utilizza il <a href="https://gpacalculatorcollege.com/it/final-grade-calculator">calcolatore del voto finale</a> per sapere quali voti ti servono per i tuoi esami finali.
+                </p>
+                <h3>Conoscere i componenti del voto e i pesi</h3>
+                <p>
+                    Di solito, il programma del tuo professore o del tuo corso ti fornisce una ripartizione. Ad esempio:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Compiti a casa: 20%</li>
+                    <li>Quiz: 15%</li>
+                    <li>Esame di metà semestre: 25%</li>
+                    <li>Esame finale: 30%</li>
+                    <li>Partecipazione in classe: 10%</li>
+                </ul>
+                <h3>Convertire le percentuali in decimali</h3>
+                <ul style="padding-left: 30px;">
+                    <li>20% → 0.20</li>
+                    <li>15% → 0.15</li>
+                    <li>25% → 0.25</li>
+                    <li>30% → 0.30</li>
+                    <li>10% → 0.10</li>
+                </ul>
+                <h3>Moltiplicare ogni voto per il suo peso</h3>
+                <p>
+                    Supponiamo che uno studente abbia i seguenti voti:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Compiti a casa = 85%</li>
+                    <li>Quiz = 90%</li>
+                    <li>Esame intermedio = 80%</li>
+                    <li>Esame finale = 70%</li>
+                    <li>Partecipazione = 100%</li>
+                </ul>
+                <p>
+                    Ora moltiplica ciascuno per il suo peso:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Compiti a casa: 85 × 0.20 = 17.0</li>
+                    <li>Quiz: 90 × 0.15 = 13.5</li>
+                    <li>Esame intermedio: 80 × 0.25 = 20.0</li>
+                    <li>Esame finale: 70 × 0.30 = 21.0</li>
+                    <li>Partecipazione: 100 × 0.10 = 10.0</li>
+                </ul>
+                <h3>Sommare tutti i punteggi ponderati</h3>
+                <p>
+                    17.0 + 13.5 + 20.0 + 21.0 + 10.0 = 81.5%
+                </p>
+                <h3>Convertire in voto in lettere (facoltativo)</h3>
+                <p>
+                    Molte scuole utilizzano una scala standard di lettere:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>A = 90–100%</li>
+                    <li>B = 80–89%</li>
+                    <li>C = 70–79%</li>
+                    <li>D = 60–69%</li>
+                    <li>F = Sotto il 60%</li>
+                </ul>
+                <p>
+                    Quindi, 81.5% = B
+                </p>
+                <h3>Formula per il voto del semestre</h3>
+                <p>
+                    Voto finale del semestre = (Voto 1 × Peso 1) + (Voto 2 × Peso 2) + …
+                </p>
+                <p>
+                    Questi calcoli manuali possono richiedere troppo tempo; usa semplicemente il nostro calcolatore semestrale per calcolare rapidamente il voto del semestre.
+                </p>
+            </div>
 
-    <h3>Know the Grade Components & Weights</h3>
-    <p>
-        Your professor or course syllabus usually gives you the breakdown. For example:
-    </p>
-    <ul style="padding-left: 30px;">
-        <li>Homework: 20%</li>
-        <li>Quizzes: 15%</li>
-        <li>Midterm Exam: 25%</li>
-        <li>Final Exam: 30%</li>
-        <li>Class Participation: 10%</li>
-    </ul>
-
-    <h3>Convert Percentages into Decimals</h3>
-    <ul style="padding-left: 30px;">
-        <li>20% → 0.20</li>
-        <li>15% → 0.15</li>
-        <li>25% → 0.25</li>
-        <li>30% → 0.30</li>
-        <li>10% → 0.10</li>
-    </ul>
-
-    <h3>Multiply Each Grade by Its Weight</h3>
-    <p>
-        Suppose a student has the following grades:
-    </p>
-    <ul style="padding-left: 30px;">
-        <li>Homework = 85%</li>
-        <li>Quizzes = 90%</li>
-        <li>Midterm = 80%</li>
-        <li>Final Exam = 70%</li>
-        <li>Participation = 100%</li>
-    </ul>
-    <p>
-        Now multiply each by its weight:
-    </p>
-    <ul style="padding-left: 30px;">
-        <li>Homework: 85 × 0.20 = 17.0</li>
-        <li>Quizzes: 90 × 0.15 = 13.5</li>
-        <li>Midterm: 80 × 0.25 = 20.0</li>
-        <li>Final Exam: 70 × 0.30 = 21.0</li>
-        <li>Participation: 100 × 0.10 = 10.0</li>
-    </ul>
-
-    <h3>Add All Weighted Scores Together</h3>
-    <p>
-        17.0 + 13.5 + 20.0 + 21.0 + 10.0 = 81.5%
-    </p>
-
-    <h3>Convert to Letter Grade (Optional)</h3>
-    <p>
-        Many schools use a standard letter scale:
-    </p>
-    <ul style="padding-left: 30px;">
-        <li>A = 90–100%</li>
-        <li>B = 80–89%</li>
-        <li>C = 70–79%</li>
-        <li>D = 60–69%</li>
-        <li>F = Below 60%</li>
-    </ul>
-    <p>
-        So, 81.5% = B
-    </p>
-
-    <h3>Formula for Semester Grade</h3>
-    <p>
-        Final Semester Grade = (Grade 1 × Weight 1) + (Grade 2 × Weight 2) + …
-    </p>
-    <p>
-        These manual calculations can take up too much time; simply use our semester calculator to calculate the semester grade quickly.
-    </p>
-</div>
-
-            
             <section class="content-section centered-section">
+                <h2>Che cosa è un voto semestrale?</h2>
+                <p style="text-align: left;">Il voto semestrale è il voto finale che uno studente ottiene alla fine di un semestre (metà di un anno accademico, solitamente 15–18 settimane). Riflette il rendimento dello studente in tutti i corsi, tra cui:
+                <ul style="padding-left: 30px; position: relative; top: -20px;">
+                    <li>Compiti a casa</li>
+                    <li>Quiz</li>
+                    <li>Esami (intermedi e finali)</li>
+                    <li>Progetti</li>
+                    <li>Partecipazione in classe</li>
+                    <li>Presenza (a volte)</li>
+                </ul>
+                </p>
+                <h3>Formula per il voto del semestre (formula della media ponderata)</h3>
+                <div class="formula">
+                    Voto del semestre = (Voto1 × Peso1) + (Voto2 × Peso2) + ... + (VotoN × PesoN)
+                </div>
+                <p>Dove i pesi sono in forma decimale (ad esempio, 20% = 0.20).</p>
+                <p><b>Esempio:</b><br>85 (0.20) + 90 (0.15) + 80 (0.25) + 70 (0.30) + 100 (0.10) = 81.5</p>
+            </section>
 
-        <h2>What is a Semester Grade?</h2>
-        <p style="text-align: left;">A semester grade is the final grade that a student earns at the end of a semester (half of an academic year, usually 15–18 weeks). It reflects a student’s performance across all coursework, including:
-        <ul style="padding-left: 30px; position: relative; top: -20px;">
-            <li>Homework</li>
-            <li>Quizzes</li>
-            <li>Exams (midterm & final)</li>
-            <li>Projects</li>
-            <li>Class participation</li>
-            <li>Attendance (sometimes)</li>
-        </ul>
-        </p>
-        <h3>Formula for Semester Grade (Weighted Average Formula)</h3>
-        <div class="formula">
-            Semester Grade = (Grade1 x Weight1) + (Grade2 x Weight2) + ... + (Graden x Weightn)
-        </div>
-        <p>Where weights are in decimal form (e.g., 20% = 0.20).</p>
-        <p><b>Example:</b><br>85 (0.20) + 90 (0.15) + 80 (0.25) + 70 (0.30) + 100 (0.10) = 81.5</p>
-
-    </section>
-            
             <section class="faq-section centered-section">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Who can benefit from a semester grade calculator?</h3>
+                <h2>Domande frequenti</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Chi può trarre vantaggio da un calcolatore dei voti semestrali?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Studenti</b> – per monitorare i progressi e stabilire obiettivi.<br>
+                                <b>Insegnanti</b> – per spiegare la ripartizione dei voti agli studenti.<br>
+                                <b>Genitori</b> – per comprendere meglio il rendimento dei propri figli.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Questo calcolatore semestrale può essere utilizzato per studi universitari o post-universitari?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Sì. Puoi usare questo calcolatore per qualsiasi livello, inclusi studi universitari e post-universitari, purché tu inserisca correttamente i voti e i loro pesi.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Un voto più alto in un semestre comporta sempre una media dei voti più alta?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Sì. Voti semestrali più alti si convertono in punti più alti, il che aumenta la tua media dei voti (GPA) del semestre e, in definitiva, la tua media dei voti (GPA) cumulativa. Puoi controllare la tua media dei voti (GPA) complessiva con l'aiuto di un calcolatore GPA.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>La media dei voti (GPA) semestrale è diversa dalla media dei voti (GPA) cumulativa?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>GPA semestrale:</b> Media di un semestre.<br>
+                                <b>GPA cumulativa:</b> Media di tutti i GPA semestrali combinati nel tuo percorso accademico.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>
-                        <b>Students</b> – to track progress and set goals.<br>
-                        <b>Teachers</b> – to explain grade breakdowns to students.<br>
-                        <b>Parents</b> – to better understand their child’s performance.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Can this semester calculator be used for graduate or post-grad studies?</h3>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Yes. You can use this semester test calculator for any level, including graduate and post-graduate studies, as long as you enter the grades and their weights correctly.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Does a higher semester grade always mean a higher GPA?</h3>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Yes. Higher semester grades convert into higher grade points, which increases your semester GPA and ultimately your cumulative GPA. You can check your overall grade point average (GPA) with the help of a GPA calculator.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Is semester GPA different from cumulative GPA?</h3>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        <b>Semester GPA:</b> Average for one semester.<br>
-                        <b>Cumulative GPA:</b> Average of all semester GPAs combined over your academic program.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+            </section>
         </section>
     </main>
-    
-    {% include 'footer.html' %}
 
+    {% include 'footer.html' %}
 <script>
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
@@ -320,33 +299,28 @@
             }
         });
     });
-
     let autoCalculateEnabled = true;
-    let userDeletedFinalWeight = false; // new flag
-
-    // Add event listeners to all input fields
+    let userDeletedFinalWeight = false; // nuovo flag
+    // Aggiungi listener a tutti i campi di input
     document.getElementById('grade1').addEventListener('input', calculateGrade);
     document.getElementById('weight1').addEventListener('input', calculateGrade);
     document.getElementById('grade2').addEventListener('input', calculateGrade);
     document.getElementById('weight2').addEventListener('input', calculateGrade);
     document.getElementById('grade3').addEventListener('input', calculateGrade);
-
     const weight3Input = document.getElementById('weight3');
-
-    // Track user actions on weight3
+    // Tieni traccia delle azioni dell'utente su weight3
     weight3Input.addEventListener('input', function () {
         if (this.value.trim() === '') {
-            // Agar user manually delete kare
+            // Se l'utente cancella manualmente
             userDeletedFinalWeight = true;
             autoCalculateEnabled = false;
         } else {
-            // Agar user manually kuch likhe
+            // Se l'utente inserisce manualmente qualcosa
             userDeletedFinalWeight = false;
             autoCalculateEnabled = false;
         }
         calculateGrade();
     });
-
     function calculateGrade() {
         let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
         let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
@@ -354,46 +328,39 @@
         let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
         let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
         let weight3 = parseFloat(weight3Input.value) || 0;
-        
 
-        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        // Calcolo automatico solo se l'utente non ha cancellato
         if (autoCalculateEnabled && !userDeletedFinalWeight) {
             let totalWeights = weight1 + weight2;
             weight3 = 100 - totalWeights;
             weight3Input.value = weight3.toFixed(2);
         }
-
-        // Check for invalid inputs
+        // Controlla input non validi
         if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
-            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            document.getElementById('currentGradeDisplay').textContent = "Errore: Input non valido";
             return;
         }
-
         let weightedGrade1 = (grade1 * weight1) / 100;
         let weightedGrade2 = (grade2 * weight2) / 100;
         let weightedGrade3 = (grade3 * weight3) / 100;
         let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
-
         document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
-        
-    }
 
-    // Initial auto-fill only if user didn’t delete
+    }
+    // Riempimento automatico iniziale solo se l'utente non ha cancellato
     window.onload = function () {
         if (!userDeletedFinalWeight) calculateGrade();
     };
-
     function calculateAndScroll() {
-    calculateGrade(); // Pehle calculate function ko call karega
-    
-    // Phir smoothly scroll karega result section tak
+    calculateGrade(); // Prima chiama la funzione di calcolo
+
+    // Poi scorri dolcemente verso la sezione dei risultati
     const resultSection = document.getElementById('gradeSummarySection');
     if (resultSection) {
         resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 </script>
-
     <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
 </body>
 </html>

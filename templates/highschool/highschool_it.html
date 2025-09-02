@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>High School GPA Calculator | Calculate High School GPA</title>
-    <meta name="description" content="Use this high school GPA calculator to calculate your high school grade point average. No sign-up required. Free, fast, and easy to use.">
-    
+    <meta name="robots" content="index, follow">
+    <title>Calcolatore GPA per le scuole superiori | Calcola la tua media dei voti</title>
+    <meta name="description" content="Utilizza questo calcolatore per calcolare la tua media dei voti delle scuole superiori. Non è richiesta alcuna registrazione. Gratuito, veloce e facile da usare.">
     <link rel="icon" href="/static/img/favicon.png" type="image/png">
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <meta name="keywords" content="GPA calculator, calculate GPA, how to calculate GPA, what is my GPA, grade point average calculator, online GPA calculator, 4.0 GPA scale, credit hour GPA calculator, GPA calculator uf">
-    <link rel="canonical" href="https://gpacalculatorcollege.com/highschool-gpa">
-    
+    <meta name="keywords" content="calcolatore GPA, calcolare GPA, come calcolare GPA, qual è il mio GPA, calcolatore media voti, calcolatore GPA online, scala GPA 4.0, calcolatore GPA con crediti, calcolatore GPA scuola superiore">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/calcolatore-gpa-scuola-superiore">
 
-    <!-- Hreflang Tags (Added Here) -->
+    <!-- Hreflang Tags -->
     <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
     <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
     <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
@@ -23,10 +20,8 @@
     <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
     <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
     <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
-    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/calcolatore-gpa-scuola-superiore"/>
     <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
-
-
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,13 +35,11 @@
             width: 40px;
             height: 22px;
         }
-
         .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-
         .slider {
             position: absolute;
             cursor: pointer;
@@ -56,61 +49,60 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 22px; /* Adjusted to match new height */
+            border-radius: 22px;
         }
-
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px; /* Reduced height */
-            width: 14px; /* Reduced width */
+            height: 14px;
+            width: 14px;
             left: 4px;
             bottom: 4px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
         }
-
         input:checked + .slider {
             background-color: #2196F3;
         }
-
         input:checked + .slider:before {
-            transform: translateX(18px); /* Adjusted to match new width */
+            transform: translateX(18px);
         }
     </style>
 </head>
-<body data-lang="en">
+<body data-lang="it">
     {% include 'header.html' %}
     <main style="position: relative; top: -55px;">
         <section class="page-content">
-            <h1>Highschool GPA Calculator</h1>
-            <p>Our High School GPA Calculator helps students calculate their grade point average based on their course grades and credit hours.</p>
+            <h1>Calcolatore GPA per le scuole superiori</h1>
+            <p>Il nostro calcolatore GPA per le scuole superiori aiuta gli studenti a calcolare la loro media dei voti in base ai voti dei corsi e ai crediti formativi.</p>
             <br>
             <div class="input-section centered-section">
-                <h2 style="position: relative; top: -35px;">Calculate Highschool GPA</h2>
+                <h2 style="position: relative; top: -35px;">Calcola GPA delle scuole superiori</h2>
                 <div class="weighted-toggle-container" style="position: relative; top: -25px; display: flex; justify-content: flex-end; align-items: center;">
                     <label class="switch">
                         <input type="checkbox" id="weightedToggle" checked>
+                        <span class="slider"></span>
                     </label>
+                    <span style="margin-left: 10px;">Ponderato</span>
                 </div>
                 <table class="course-input-table" style="position: relative; top: -35px;">
                     <thead>
                         <tr>
-                            <th>Course</th>
-                            <th>Credits</th>
-                            <th>Grade</th>
-                            <th class="weight-column">Course Type</th>
+                            <th>Corso</th>
+                            <th>Crediti</th>
+                            <th>Voto</th>
+                            <th class="weight-column">Tipo di corso</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody id="courseTableBody">
                         <tr>
-                            <td><input type="text" name="courseName" placeholder="e.g., Math 101"></td>
-                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                            <td><input type="text" name="courseName" placeholder="es., Matematica 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3"></td>
                             <td>
                                 <select name="grade">
-                                    <option value="" disabled selected>Select Grade</option>
+                                    <option value="" disabled selected>Seleziona voto</option>
                                     <option value="4.0">A</option>
                                     <option value="3.7">A-</option>
                                     <option value="3.3">B+</option>
@@ -126,10 +118,10 @@
                             </td>
                             <td class="weight-column">
                                 <select name="weight">
-                                    <option value="0">Regular</option>
+                                    <option value="0">Regolare</option>
                                     <option value="0.5">Honors</option>
                                     <option value="1.0">AP / IB</option>
-                                    <option value="1.0">College</option>
+                                    <option value="1.0">Universitario</option>
                                 </select>
                             </td>
                             <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
@@ -137,178 +129,155 @@
                     </tbody>
                 </table>
                 <div class="button-group" style="position: relative; top: -35px;">
-                    <button id="addMoreCourseBtn" class="secondary-btn">Add More Courses</button>
-                    <button id="calculateGpaBtn" class="primary-btn">Calculate GPA</button>
+                    <button id="addMoreCourseBtn" class="secondary-btn">Aggiungi altri corsi</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Calcola GPA</button>
                 </div>
             </div>
             <div class="gpa-summary-section centered-section" id="gpaSummarySection">
-                <h2>GPA Summary</h2>
+                <h2>Riepilogo GPA</h2>
                 <div class="gpa-box">
-                    <span>Current GPA</span>
+                    <span>GPA Attuale</span>
                     <span id="currentGpaDisplay">0.00</span>
                 </div>
                 <div class="button-group">
-                    <a href="/highschool-gpa"><button id="resetCoursesButton" class="secondary-btn">Reset All Courses</button></a>
+                    <a href="/calcolatore-gpa-scuola-superiore"><button id="resetCoursesButton" class="secondary-btn">Reimposta tutti i corsi</button></a>
                 </div>
             </div>
-
             <div class="content-section centered-section">
-    <p style="text-align: left;">
-Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Calculator</a> helps students calculate their grade point average based on their course grades and credit hours. High school students use this tool to track their academic performance and plan for college admission and scholarship eligibility.
-
-    </p>
-</div>
-           <section class="how-to-use-section centered-section">
-    <h2>How to Use the High School GPA Calculator?</h2>
-    <div class="how-to-use-container">
-
-        <div class="step">
-            <div class="step-icon">
-                <i class="fa-solid fa-1"></i>
-            </div>
-            <h3 style="text-decoration: none;"><span>Step 1: Enter Course Name</span></h3>
-            <p style="text-align: left;"><span>First, you have to enter the course name.</span></p>
-        </div>
-
-        <div class="step">
-            <div class="step-icon">
-                <i class="fa-solid fa-2"></i>
-            </div>
-            <h3 style="text-decoration: none;"><span>Step 2: Select Grades</span></h3>
-            <p style="text-align: left;"><span>Select the grade you earned in each subject (such as A, B, C, etc.).</span></p>
-        </div>
-
-        <div class="step">
-            <div class="step-icon">
-                <i class="fa-solid fa-3"></i>
-            </div>
-            <h3 style="text-decoration: none;"><span>Step 3: Enter Credit Hours</span></h3>
-            <p style="text-align: left;"><span>Enter the credit hours for each class (typically between 1 and 4 hours).</span></p>
-        </div>
-
-        <div class="step">
-            <div class="step-icon">
-                <i class="fa-solid fa-4"></i>
-            </div>
-            <h3 style="text-decoration: none;"><span>Step 4: Choose Course Type</span></h3>
-            <p style="text-align: left;"><span>This is an optional step for weighted and unweighted GPA calculations.</span></p>
-        </div>
-
-        <div class="step">
-            <div class="step-icon">
-                <i class="fa-solid fa-5"></i>
-            </div>
-            <h3 style="text-decoration: none;"><span>Step 5: Calculate GPA</span></h3>
-            <p style="text-align: left;"><span>After giving all inputs, just hit the “Calculate High School GPA” button to get your results.</span></p>
-        </div>
-
-    </div>
-</section>
-
-            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
-    <h2 data-translate="whyChooseUsHeading">Why Use Our High School GPA Calculator?</h2>
-
-    <div class="feature-row" data-translate="featureRow1">
-        <div class="feature-text" data-translate="feature1Text">
-            <h3 data-translate="feature1Title">Add Multiple Subjects/Courses</h3>
-            <p data-translate="feature1Description" style="text-align: left;">
-                You can enter multiple courses from your school schedule, such as Math, English, Science, and History. For each course, you simply enter the grade earned and the credit hours.
-            </p>
-        </div>
-    </div>
-
-    <div class="feature-row" data-translate="featureRow2">
-        <div class="feature-text" data-translate="feature2Text">
-            <h3 data-translate="feature2Title">No Sign-Ups Required</h3>
-            <p data-translate="feature2Description" style="text-align: left;">
-                Use the calculator instantly—no account creation, no personal details, and no registration required.
-            </p>
-        </div>
-    </div>
-
-    <div class="feature-row" data-translate="featureRow3">
-        <div class="feature-text" data-translate="feature3Text">
-            <h3 data-translate="feature3Title">Option to Choose Course Type</h3>
-            <p data-translate="feature3Description" style="text-align: left;">
-                Select course types like Regular, Honors, AP (Advanced Placement), or IB (International Baccalaureate) to get a more accurate GPA based on course difficulty.
-            </p>
-        </div>
-    </div>
-</section>
-
-        
-
-            <div class="content-section centered-section">
-    <h2>How Do I Calculate High School GPA?</h2>
-    <p style="text-align: left;">
-        Calculating high school GPA is simple once you understand the steps. Most schools use a 4.0 scale, where an A is worth 4.0 points, a B is 3.0, a C is 2.0, a D is 1.0, and an F is 0. Follow these steps to calculate high school grade point average manually.
-    </p>
-    <ul style="text-align: left;">
-        <li>Write down your classes and the grades you received.</li>
-        <li>Convert each grade into points using the GPA scale.</li>
-        <li>For example, if you got an A in Math, that’s 4.0 points.</li>
-        <li>Multiply each grade point by the credit hours for that class.</li>
-        <li>If Math is worth 3 credits, then 4.0 × 3 = 12 grade points.</li>
-        <li>Do this for all your classes.</li>
-        <li>Add all the grade points together.</li>
-        <li>Add all the credit hours together.</li>
-        <li>Divide the total grade points by the total credit hours.</li>
-    </ul>
-    <p style="text-align: left;">
-        Manual calculations will take your time; simply use our GPA calculator high school to make calculations quick and easy.
-    </p>
-</div>
-
-            <div class="content-section centered-section">
-                <h2>Who Can Use This GPA Calculator?</h2>
-
-                <h3>High School Students</h3>
                 <p style="text-align: left;">
-                    High school students can use this calculator to track their academic performance, set academic goals, and prepare for college applications. It helps them stay informed about their progress and identify areas where improvement is needed.
+                    Il nostro <a href="https://gpacalculatorcollege.com/it/gpa-calculator">Calcolatore GPA</a> per le scuole superiori aiuta gli studenti a calcolare la loro media dei voti in base ai voti dei corsi e ai crediti formativi. Gli studenti delle scuole superiori utilizzano questo strumento per monitorare il loro rendimento scolastico e pianificare l'ammissione all'università e l'idoneità alle borse di studio.
                 </p>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Come usare il calcolatore GPA per le scuole superiori?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 1: Inserisci il nome del corso</span></h3>
+                        <p style="text-align: left;"><span>Per prima cosa, devi inserire il nome del corso.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 2: Seleziona i voti</span></h3>
+                        <p style="text-align: left;"><span>Seleziona il voto ottenuto in ogni materia (ad esempio A, B, C, ecc.).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 3: Inserisci i crediti formativi</span></h3>
+                        <p style="text-align: left;"><span>Inserisci i crediti formativi per ogni corso (solitamente tra 1 e 4 ore).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 4: Scegli il tipo di corso</span></h3>
+                        <p style="text-align: left;"><span>Questo è un passaggio facoltativo per i calcoli ponderati e non ponderati.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 5: Calcola GPA</span></h3>
+                        <p style="text-align: left;"><span>Dopo aver inserito tutti i dati, premi il pulsante "Calcola GPA delle scuole superiori" per ottenere i risultati.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Perché usare il nostro calcolatore GPA per le scuole superiori?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Aggiungi più materie/corsi</h3>
+                        <p style="text-align: left;">
+                            Puoi inserire più corsi dal tuo programma scolastico, come Matematica, Inglese, Scienze e Storia. Per ogni corso, inserisci semplicemente il voto ottenuto e i crediti formativi.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Nessuna registrazione richiesta</h3>
+                        <p style="text-align: left;">
+                            Usa il calcolatore all'istante: non è richiesta la creazione di un account, l'inserimento di dati personali o una procedura di registrazione.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Opzione per scegliere il tipo di corso</h3>
+                        <p style="text-align: left;">
+                            Seleziona i tipi di corso come Regolare, Honors, AP (Advanced Placement) o IB (International Baccalaureate) per ottenere una GPA più accurata in base alla difficoltà del corso.
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-                <h3>Teachers and Counselors</h3>
+            <div class="content-section centered-section">
+                <h2>Come calcolo la media dei voti delle scuole superiori?</h2>
                 <p style="text-align: left;">
-                    Teachers and counselors can use this tool to help students monitor their academic standing, provide guidance on course selection, and support college or scholarship planning.
+                    Calcolare la media dei voti delle scuole superiori è semplice una volta compresi i passaggi. La maggior parte delle scuole utilizza una scala da 4.0, dove una A vale 4.0 punti, una B 3.0, una C 2.0, una D 1.0 e una F 0. Segui questi passaggi per calcolare manualmente la media dei voti delle scuole superiori.
                 </p>
-
-                <h3>Parents</h3>
+                <ul style="text-align: left;">
+                    <li>Annota i tuoi corsi e i voti che hai ricevuto.</li>
+                    <li>Converti ogni voto in punti utilizzando la scala GPA.</li>
+                    <li>Ad esempio, se hai preso una A in Matematica, sono 4.0 punti.</li>
+                    <li>Moltiplica ogni voto per i crediti formativi di quel corso.</li>
+                    <li>Se Matematica vale 3 crediti, allora 4.0 × 3 = 12 punti.</li>
+                    <li>Fai lo stesso per tutti i tuoi corsi.</li>
+                    <li>Somma tutti i voti.</li>
+                    <li>Somma tutti i crediti formativi.</li>
+                    <li>Dividi il totale dei voti per il totale dei crediti formativi.</li>
+                </ul>
                 <p style="text-align: left;">
-                    Parents can use the GPA calculator high school to stay involved in their child’s academic progress. It helps them understand how grades impact overall performance and allows them to support their child in setting academic goals and preparing for college.
+                    I calcoli manuali richiedono tempo; usa semplicemente il nostro calcolatore GPA per le scuole superiori per effettuare calcoli in modo rapido e semplice.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Chi può usare questo calcolatore?</h2>
+                <h3>Studenti delle scuole superiori</h3>
+                <p style="text-align: left;">
+                    Gli studenti delle scuole superiori possono usare questo calcolatore per monitorare il loro rendimento scolastico, stabilire obiettivi accademici e prepararsi per le domande di ammissione all'università. Li aiuta a rimanere informati sui loro progressi e a identificare le aree in cui è necessario migliorare.
+                </p>
+                <h3>Insegnanti e consulenti</h3>
+                <p style="text-align: left;">
+                    Insegnanti e consulenti possono usare questo strumento per aiutare gli studenti a monitorare il loro rendimento scolastico, fornire indicazioni sulla scelta dei corsi e supportare la pianificazione dell'università o delle borse di studio.
+                </p>
+                <h3>Genitori</h3>
+                <p style="text-align: left;">
+                    I genitori possono usare il calcolatore GPA per le scuole superiori per rimanere coinvolti nel progresso accademico dei propri figli. Li aiuta a capire come i voti influiscono sul rendimento complessivo e consente loro di supportare i propri figli nella definizione degli obiettivi accademici e nella preparazione per l'università.
                 </p>
             </div>
             <div class="faq-section centered-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-        <h3>What are credit hours, and how do I know them?</h3>
-        <p style="text-align: left;">
-            Credit hours represent the weight of a course. Most high school classes are 1 credit, but some (like labs or electives) might be 0.5 or more.
-        </p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Why is calculating my High School GPA important?</h3>
-        <p style="text-align: left;">
-            Calculating your high school GPA is important because it shows your overall academic performance. Colleges, scholarship programs, and even some job applications often use grade point average to evaluate how well you’ve done in school.
-        </p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Can this tool help me improve my GPA?</h3>
-        <p style="text-align: left;">
-            No, this tool does not help you to improve your grade point average. But this helps you to track your GPA. You can use our <a href="https://gpacalculatorcollege.com/gpa-planning">GPA planning calculator</a> to improve it.
-        </p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Do I need to sign up to use the High School GPA Calculator?</h3>
-        <p style="text-align: left;">
-            No, our calculator is free and doesn’t require any registration or login.
-        </p>
-    </div>
-
-</div>
+                <h2>Domande frequenti</h2>
+                <div class="faq-item">
+                    <h3>Cosa sono i crediti formativi e come faccio a conoscerli?</h3>
+                    <p style="text-align: left;">
+                        I crediti formativi rappresentano il peso di un corso. La maggior parte dei corsi delle scuole superiori vale 1 credito, ma alcuni (come laboratori o corsi opzionali) potrebbero valere 0,5 o più.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Perché è importante calcolare la mia media dei voti (GPA) delle scuole superiori?</h3>
+                    <p style="text-align: left;">
+                        Calcolare la media dei voti (GPA) delle scuole superiori è importante perché mostra il rendimento scolastico complessivo. Università, programmi di borse di studio e persino alcune candidature per lavoro spesso utilizzano la media dei voti per valutare i risultati scolastici.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Questo strumento può aiutarmi a migliorare la mia media dei voti (GPA)?</h3>
+                    <p style="text-align: left;">
+                        No, questo strumento non aiuta a migliorare la media dei voti. Ma aiuta a tenere traccia della media dei voti (GPA). Puoi utilizzare il nostro <a href="https://gpacalculatorcollege.com/it/gpa-planning">calcolatore di pianificazione della media dei voti (GPA)</a> per migliorarla.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Devo registrarmi per utilizzare il calcolatore della media dei voti delle scuole superiori?</h3>
+                    <p style="text-align: left;">
+                        No, il nostro calcolatore è gratuito e non richiede alcuna registrazione o accesso.
+                    </p>
+                </div>
+            </div>
         </section>
     </main>
     {% include 'footer.html' %}
@@ -323,11 +292,11 @@ Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Ca
             function addCourseRow() {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td><input type="text" name="courseName" placeholder="e.g., Math 101"></td>
-                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                    <td><input type="text" name="courseName" placeholder="es., Matematica 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3"></td>
                     <td>
                         <select name="grade">
-                            <option value="" disabled selected>Select Grade</option>
+                            <option value="" disabled selected>Seleziona voto</option>
                             <option value="4.0">A</option>
                             <option value="3.7">A-</option>
                             <option value="3.3">B+</option>
@@ -343,10 +312,10 @@ Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Ca
                     </td>
                     <td class="weight-column">
                         <select name="weight">
-                            <option value="0">Regular</option>
+                            <option value="0">Regolare</option>
                             <option value="0.5">Honors</option>
                             <option value="1.0">AP / IB</option>
-                            <option value="1.0">College</option>
+                            <option value="1.0">Universitario</option>
                         </select>
                     </td>
                     <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
@@ -407,7 +376,6 @@ Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Ca
                         select.disabled = false;
                     });
                 }
-
                 calculateGPA();
             }
 
@@ -424,6 +392,7 @@ Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Ca
                 const gpaSummarySection = document.getElementById('gpaSummarySection');
                 gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
             });
+
             gradeTableBody.addEventListener('input', (event) => {
                 const target = event.target;
                 if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
@@ -446,14 +415,11 @@ Our High School <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA Ca
 
             // Toggle functionality for FAQ items
             const faqItems = document.querySelectorAll('.faq-item');
-
             faqItems.forEach(item => {
                 const header = item.querySelector('h3');
                 const paragraph = item.querySelector('p');
-
                 // Set initial state to open
                 paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
-
                 header.addEventListener('click', () => {
                     if (paragraph.style.maxHeight === '0px') {
                         paragraph.style.maxHeight = paragraph.scrollHeight + 'px';

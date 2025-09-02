@@ -435,7 +435,7 @@ def email_contact_redirect():
 def templates_redirect():
     return redirect(url_for('home'), code=301)
 
-@app.route('/oldpath')
+@app.route('/www.gpacalculatorcollege.com')
 def oldpath_redirect():
     return redirect(url_for('home'), code=301)
 
