@@ -171,12 +171,23 @@ def middle_school_gpa_calculator(lang_code):
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
+# --- NEW ROUTES FOR SGPA to CGPA Converter ---
+@app.route('/sgpa-to-cgpa-calculator')
+def sgpa_to_cgpa_en():
+    template_name = get_template_name('sgpa_to_gpa/sgpatogpa', 'en')
+    session['lang_code'] = 'en'
+    return render_template(template_name, lang_code='en')
+
+@lang_routes.route('/sgpa-to-cgpa-calculator')
+def sgpa_to_cgpa(lang_code):
+    template_name = get_template_name('sgpa_to_gpa/sgpatogpa', lang_code)
+    session['lang_code'] = lang_code
+    return render_template(template_name, lang_code=lang_code)
 
 # --- Sitemap Route ---
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory(app.root_path, 'sitemap.xml')
-
 
 # --- Blog Routes (static) ---
 @blog_routes.route('/')
@@ -235,14 +246,12 @@ def calculate_gpa_from_courses():
         'D+': 1.3, 'D': 1.0, 'D-': 0.7,
         'F': 0.0
     }
-
     for course in courses_data:
         if 'grade' in course and course['grade'] in grade_map and \
            'credits' in course and isinstance(course['credits'], (int, float)):
             grade_points = grade_map[course['grade']] * course['credits']
             total_grade_points += grade_points
             total_credits += course['credits']
-
     if total_credits == 0:
         return 0.0
     return round(total_grade_points / total_credits, 2)
@@ -270,7 +279,6 @@ def add_course():
     
     if grade not in grade_map_keys:
         return jsonify({'status': 'error', 'message': 'Invalid Grade. Allowed grades are A+, A, A-, B+, B, B-', 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0, 'D-': 0.7, 'F': 0.0}), 400
-
     courses_data.append({'name': course_name, 'credits': credits, 'grade': grade})
     
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
@@ -331,12 +339,10 @@ def calculate_combined_gpa():
         old_gpa = float(data.get('oldGpa'))
         new_semester_credits = float(data.get('newSemesterCredits'))
         new_semester_gpa = float(data.get('newSemesterGpa'))
-
         if old_total_credits < 0 or old_gpa < 0 or new_semester_credits < 0 or new_semester_gpa < 0:
             return jsonify({'status': 'error', 'message': 'All credit and GPA values must be non-negative.'}), 400
         if old_gpa > 4.0 or new_semester_gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
-
         old_grade_points = old_total_credits * old_gpa
         new_grade_points = new_semester_credits * new_semester_gpa
         
@@ -357,14 +363,11 @@ def calculate_final_cumulative_gpa():
     try:
         total_credits = float(data.get('totalCredits'))
         gpa = float(data.get('gpa'))
-
         if total_credits < 0 or gpa < 0:
             return jsonify({'status': 'error', 'message': 'Credits and GPA must be non-negative.'}), 400
         if gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
-
         final_gpa = round(gpa, 2)
-
         return jsonify({'status': 'success', 'finalGpa': final_gpa})
     except (ValueError, TypeError):
         return jsonify({'status': 'error', 'message': 'Invalid input: Please provide valid numbers.'}), 400
@@ -385,7 +388,6 @@ def calculate_required_gpa():
             return jsonify({'status': 'error', 'message': 'All credit and GPA values must be non-negative, and Next Semester Credits must be greater than zero.'}), 400
         if goal_gpa > 4.0 or current_gpa > 4.0:
             return jsonify({'status': 'error', 'message': 'GPA cannot exceed 4.0.'}), 400
-
         desired_total_grade_points = (current_total_credits + next_semester_credits) * goal_gpa
         current_grade_points = current_total_credits * current_gpa
         
@@ -439,7 +441,6 @@ def templates_redirect():
 def oldpath_redirect():
     return redirect(url_for('home'), code=301)
 
-
 @redirect_routes.route('/blogs/time-management-tips-for-students')
 def blog_redirect():
     return redirect(url_for('blog_routes.blog_index'), code=301)
@@ -460,7 +461,6 @@ def gpa_calculator_redirect_en():
 @redirect_routes.route('/final-grade-calculator/')
 def final_grade_calculator_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
-
 # Trailing slash wali URL ko redirect karne ka naya route
 @app.route('/grade-calculator/')
 def grade_calculator_redirect_trailing_slash():
@@ -501,7 +501,6 @@ def high_school_gpa_calculator_redirect():
 @redirect_routes.route('/high-school-gpa-calculator/')
 def high_school_gpa_calculator_redirect_trailing_slash():
     return redirect(url_for('highschool_gpa_en'), code=301)
-
 
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/')
@@ -555,6 +554,47 @@ def blogs_index_redirect(lang_code):
 def blogs_post_redirect(lang_code, subpath):
     return redirect(url_for('blog_routes.blog_post', slug=subpath), code=301)
 
+# --- NEW REDIRECTS ADDED HERE ---
+@redirect_routes.route('/calcolatrice-voti-semestre/')
+def calcolatrice_voti_semestre_redirect():
+    return redirect(url_for('semester_grade_calculator_en'), code=301)
+
+@redirect_routes.route('/calcolatore-gpa-scuola-superiore/')
+def calcolatore_gpa_scuola_superiore_it_redirect():
+    return redirect(url_for('lang_routes.highschool_gpa', lang_code='it'), code=301)
+
+@redirect_routes.route('/calcolatrice-voto-finale')
+def calcolatrice_voto_finale_no_slash_redirect():
+    return redirect(url_for('final_grade_calculator_en'), code=301)
+
+@redirect_routes.route('/calcolatrice-media-voti/')
+def calcolatrice_media_voti_redirect():
+    return redirect(url_for('grade_calculator_en'), code=301)
+
+@redirect_routes.route('/calculateur-notes-semestrielles')
+def calculateur_notes_semestrielles_redirect():
+    return redirect(url_for('semester_grade_calculator_en'), code=301)
+
+@redirect_routes.route('/calcolatore-gpa')
+def calcolatore_gpa_redirect():
+    return redirect(url_for('gpa_calculator_en'), code=301)
+    
+@redirect_routes.route('/calcolatore-gpa-scuola-superiore')
+def calcolatore_gpa_scuola_superiore_redirect():
+    return redirect(url_for('highschool_gpa_en'), code=301)
+
+@redirect_routes.route('/calcolatrice-voto-finale/')
+def calcolatrice_voto_finale_slash_redirect():
+    return redirect(url_for('final_grade_calculator_en'), code=301)
+
+@redirect_routes.route('/calcolatrice-voto')
+def calcolatrice_voto_redirect():
+    return redirect(url_for('gpa_calculator_en'), code=301)
+    
+@redirect_routes.route('/sgpa-to-cgpa-calculator/')
+def sgpa_to_cgpa_redirect_trailing_slash():
+    return redirect(url_for('sgpa_to_cgpa_en'), code=301)
+# --- END OF NEW REDIRECTS ---
 
 # Register Blueprints
 app.register_blueprint(lang_routes)
