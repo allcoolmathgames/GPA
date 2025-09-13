@@ -32,20 +32,20 @@ def check_lang_code():
         return "Language not supported", 404
 
 # Home page route for ENGLISH (no lang_code in URL)
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def home():
     template_name = get_template_name('home/index', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
 # Home page route for other languages (with lang_code in URL)
-@lang_routes.route('/')
+@lang_routes.route('/', strict_slashes=False)
 def index(lang_code):
     template_name = get_template_name('home/index', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
-@app.route('/set-language/<lang_code>')
+@app.route('/set-language/<lang_code>', strict_slashes=False)
 def set_language(lang_code):
     if lang_code in SUPPORTED_LANGS:
         session['lang_code'] = lang_code
@@ -58,158 +58,158 @@ def set_language(lang_code):
     return redirect(url_for('home'))
 
 # GPA Calculator route for English (no lang_code in URL)
-@app.route('/gpa-calculator')
+@app.route('/gpa-calculator', strict_slashes=False)
 def gpa_calculator_en():
     template_name = get_template_name('gpacalculator/gpa-calculator', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
 # GPA Calculator route for all other languages (with lang_code in URL)
-@lang_routes.route('/gpa-calculator')
+@lang_routes.route('/gpa-calculator', strict_slashes=False)
 def gpa_calculator(lang_code):
     template_name = get_template_name('gpacalculator/gpa-calculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
-@app.route('/final-grade-calculator')
+@app.route('/final-grade-calculator', strict_slashes=False)
 def final_grade_calculator_en():
     template_name = get_template_name('finalgrade/finalgradecalculator', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/final-grade-calculator')
+@lang_routes.route('/final-grade-calculator', strict_slashes=False)
 def final_grade_calculator(lang_code):
     template_name = get_template_name('finalgrade/finalgradecalculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
 # --- Naye routes yahan add kiye gaye hain taake English ka URL theek ho ---
-@app.route('/prior-semester-gpa')
+@app.route('/prior-semester-gpa', strict_slashes=False)
 def prior_semester_gpa_en():
     template_name = get_template_name('prior-semester-gpa/prior-semester-gpa', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/prior-semester-gpa')
+@lang_routes.route('/prior-semester-gpa', strict_slashes=False)
 def prior_semester_gpa(lang_code):
     template_name = get_template_name('prior-semester-gpa/prior-semester-gpa', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
-@app.route('/highschool-gpa')
+@app.route('/highschool-gpa', strict_slashes=False)
 def highschool_gpa_en():
     template_name = get_template_name('highschool/highschool', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/highschool-gpa')
+@lang_routes.route('/highschool-gpa', strict_slashes=False)
 def highschool_gpa(lang_code):
     template_name = get_template_name('highschool/highschool', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
-@app.route('/grade-calculator')
+@app.route('/grade-calculator', strict_slashes=False)
 def grade_calculator_en():
     template_name = get_template_name('gradecalculator/gradecalculator', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/grade-calculator')
+@lang_routes.route('/grade-calculator', strict_slashes=False)
 def grade_calculator(lang_code):
     template_name = get_template_name('gradecalculator/gradecalculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
-@app.route('/gpa-planning')
+@app.route('/gpa-planning', strict_slashes=False)
 def gpa_planning_en():
     template_name = get_template_name('gpaplan/gpa-planning-calculator', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
     
-@lang_routes.route('/gpa-planning')
+@lang_routes.route('/gpa-planning', strict_slashes=False)
 def gpa_planning(lang_code):
     template_name = get_template_name('gpaplan/gpa-planning-calculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
 # --- New routes for Semester Grade Calculator ---
-@app.route('/semester-grade-calculator')
+@app.route('/semester-grade-calculator', strict_slashes=False)
 def semester_grade_calculator_en():
     template_name = get_template_name('samesterGradeCalcuator/samesterGradecalculator', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/semester-grade-calculator')
+@lang_routes.route('/semester-grade-calculator', strict_slashes=False)
 def semester_grade_calculator(lang_code):
     template_name = get_template_name('samesterGradeCalcuator/samesterGradecalculator', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
 # --- New routes for Ez-Grader ---
-@app.route('/ez-grader')
+@app.route('/ez-grader', strict_slashes=False)
 def ez_grader_en():
     template_name = get_template_name('ez/ez', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/ez-grader')
+@lang_routes.route('/ez-grader', strict_slashes=False)
 def ez_grader(lang_code):
     template_name = get_template_name('ez/ez', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
 # --- NEW ROUTES FOR MIDDLE SCHOOL GPA CALCULATOR ---
-@app.route('/middle-school-gpa-calculator')
+@app.route('/middle-school-gpa-calculator', strict_slashes=False)
 def middle_school_gpa_calculator_en():
     template_name = get_template_name('middleSchool/middleSchool', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/middle-school-gpa-calculator')
+@lang_routes.route('/middle-school-gpa-calculator', strict_slashes=False)
 def middle_school_gpa_calculator(lang_code):
     template_name = get_template_name('middleSchool/middleSchool', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
 # --- NEW ROUTES FOR SGPA to CGPA Converter ---
-@app.route('/sgpa-to-cgpa-calculator')
+@app.route('/sgpa-to-cgpa-calculator', strict_slashes=False)
 def sgpa_to_cgpa_en():
     template_name = get_template_name('sgpa_to_gpa/sgpatogpa', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/sgpa-to-cgpa-calculator')
+@lang_routes.route('/sgpa-to-cgpa-calculator', strict_slashes=False)
 def sgpa_to_cgpa(lang_code):
     template_name = get_template_name('sgpa_to_gpa/sgpatogpa', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
 # --- NEW ROUTES FOR SGPA to PERCENTAGE Converter ---
-@app.route('/sgpa-to-percentage-calculator')
+@app.route('/sgpa-to-percentage-calculator', strict_slashes=False)
 def sgpa_to_percentage_en():
     template_name = get_template_name('sgpatopercentage/sgpatopercentage', 'en')
     session['lang_code'] = 'en'
     return render_template(template_name, lang_code='en')
 
-@lang_routes.route('/sgpa-to-percentage-calculator')
+@lang_routes.route('/sgpa-to-percentage-calculator', strict_slashes=False)
 def sgpa_to_percentage(lang_code):
     template_name = get_template_name('sgpatopercentage/sgpatopercentage', lang_code)
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
     
-@app.route('/sitemap.xml')
+@app.route('/sitemap.xml', strict_slashes=False)
 def sitemap():
     return send_from_directory(app.root_path, 'sitemap.xml')
 
 # --- Blog Routes (static) ---
-@blog_routes.route('/')
+@blog_routes.route('/', strict_slashes=False)
 def blog_index():
     # Blogs pages mein 'lang_code' pass karne ki zaroorat nahi hai
     # kyunki inki translations nahi hain.
     lang_code = session.get('lang_code', 'en')
     return render_template('blogs/blog_index.html', lang_code=lang_code)
 
-@blog_routes.route('/<slug>')
+@blog_routes.route('/<slug>', strict_slashes=False)
 def blog_post(slug):
     lang_code = session.get('lang_code', 'en')
     blog_templates = {
@@ -226,22 +226,22 @@ def blog_post(slug):
         return "Blog Post Not Found", 404
 
 # --- Other Static Pages ---
-@static_pages.route('/privacy-policy')
+@static_pages.route('/privacy-policy', strict_slashes=False)
 def privacy_policy():
     lang_code = session.get('lang_code', 'en')
     return render_template('pages/privacy-policy.html', lang_code=lang_code)
 
-@static_pages.route('/terms-conditions')
+@static_pages.route('/terms-conditions', strict_slashes=False)
 def terms_conditions():
     lang_code = session.get('lang_code', 'en')
     return render_template('pages/terms-conditions.html', lang_code=lang_code)
 
-@static_pages.route('/about-us')
+@static_pages.route('/about-us', strict_slashes=False)
 def about_us():
     lang_code = session.get('lang_code', 'en')
     return render_template('pages/About-us.html', lang_code=lang_code)
 
-@static_pages.route('/contact')
+@static_pages.route('/contact', strict_slashes=False)
 def contact():
     # Yahan 'lang_code' ko session se le kar pass kiya gaya hai
     lang_code = session.get('lang_code', 'en')
@@ -420,220 +420,219 @@ def calculate_required_gpa():
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 # --- Redirects (Old, broken links) ---
-@redirect_routes.route('/en/')
+@redirect_routes.route('/en/', strict_slashes=False)
 def en_home_redirect():
     return redirect(url_for('home'), code=301)
     
-@redirect_routes.route('/pages/about-us/')
-@redirect_routes.route('/ur/pages/about-us/')
+@redirect_routes.route('/pages/about-us/', strict_slashes=False)
+@redirect_routes.route('/ur/pages/about-us/', strict_slashes=False)
 def pages_about_us_redirect():
     return redirect(url_for('static_pages.about_us'), code=301)
 
-@redirect_routes.route('/pages/terms-conditions/')
-@redirect_routes.route('/ur/pages/terms-conditions/')
+@redirect_routes.route('/pages/terms-conditions/', strict_slashes=False)
+@redirect_routes.route('/ur/pages/terms-conditions/', strict_slashes=False)
 def pages_terms_conditions_redirect():
     return redirect(url_for('static_pages.terms_conditions'), code=301)
 
-@redirect_routes.route('/pages/privacy-policy/')
-@redirect_routes.route('/ur/pages/privacy-policy/')
-@redirect_routes.route('/ur/pages/privacy-policy')
+@redirect_routes.route('/pages/privacy-policy/', strict_slashes=False)
+@redirect_routes.route('/ur/pages/privacy-policy/', strict_slashes=False)
+@redirect_routes.route('/ur/pages/privacy-policy', strict_slashes=False)
 def pages_privacy_policy_redirect():
     return redirect(url_for('static_pages.privacy_policy'), code=301)
 
-@redirect_routes.route('/gpacalculatorcollege@gmail.com')
+@redirect_routes.route('/gpacalculatorcollege@gmail.com', strict_slashes=False)
 def email_contact_redirect():
     return redirect(url_for('static_pages.contact'), code=301)
 
-@redirect_routes.route('/templates/index.html')
-@redirect_routes.route('/templates/prior-semester-final-gpa.html')
+@redirect_routes.route('/templates/index.html', strict_slashes=False)
+@redirect_routes.route('/templates/prior-semester-final-gpa.html', strict_slashes=False)
 def templates_redirect():
     return redirect(url_for('home'), code=301)
 
-@app.route('/www.gpacalculatorcollege.com')
+@app.route('/www.gpacalculatorcollege.com', strict_slashes=False)
 def oldpath_redirect():
     return redirect(url_for('home'), code=301)
 
-@redirect_routes.route('/blogs/time-management-tips-for-students')
+@redirect_routes.route('/blogs/time-management-tips-for-students', strict_slashes=False)
 def blog_redirect():
     return redirect(url_for('blog_routes.blog_index'), code=301)
 
-@redirect_routes.route('/final-gpa')
-@redirect_routes.route('/prior-semester-final-gpa')
+@redirect_routes.route('/final-gpa', strict_slashes=False)
+@redirect_routes.route('/prior-semester-final-gpa', strict_slashes=False)
 def prior_semester_final_gpa_redirect():
     return redirect(url_for('prior_semester_gpa_en'), code=301)
 
-@redirect_routes.route('/templates/gpa-planning-calculator.html')
+@redirect_routes.route('/templates/gpa-planning-calculator.html', strict_slashes=False)
 def templates_gpa_planning_calculator_redirect():
     return redirect(url_for('gpa_planning_en'), code=301)
 
-@redirect_routes.route('/en/gpa-calculator')
+@redirect_routes.route('/en/gpa-calculator', strict_slashes=False)
 def gpa_calculator_redirect_en():
     return redirect(url_for('gpa_calculator_en'), code=301)
 
-@redirect_routes.route('/final-grade-calculator/')
+@redirect_routes.route('/final-grade-calculator/', strict_slashes=False)
 def final_grade_calculator_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-# Trailing slash wali URL ko redirect karne ka naya route
-@app.route('/grade-calculator/')
+@app.route('/grade-calculator/', strict_slashes=False)
 def grade_calculator_redirect_trailing_slash():
     return redirect(url_for('grade_calculator_en'), code=301)
     
-@app.route('/prior-semester-gpa/')
+@app.route('/prior-semester-gpa/', strict_slashes=False)
 def prior_semester_gpa_redirect_trailing_slash():
     return redirect(url_for('prior_semester_gpa_en'), code=301)
 
-@redirect_routes.route('/gpa-calculator/')
+@redirect_routes.route('/gpa-calculator/', strict_slashes=False)
 def gpa_calculator_redirect():
     return redirect(url_for('gpa_calculator_en'), code=301)
 
-@redirect_routes.route('/rufinal-grade-calculator/')
+@redirect_routes.route('/rufinal-grade-calculator/', strict_slashes=False)
 def r_final_grade_calculator_redirect():
     return redirect(url_for('lang_routes.final_grade_calculator', lang_code='ru'), code=301)
 
-@redirect_routes.route('/gpa-planning/')
+@redirect_routes.route('/gpa-planning/', strict_slashes=False)
 def gpa_planning_redirect_no_lang():
     return redirect(url_for('gpa_planning_en'), code=301)
     
-@redirect_routes.route('/static/css/rtl.css')
+@redirect_routes.route('/static/css/rtl.css', strict_slashes=False)
 def css_redirect():
     return redirect(url_for('home'), code=301)
 
-@redirect_routes.route('/x-default/final-grade-calculator')
+@redirect_routes.route('/x-default/final-grade-calculator', strict_slashes=False)
 def x_default_final_grade_calculator_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/x-default/')
+@redirect_routes.route('/x-default/', strict_slashes=False)
 def x_default_home_redirect():
     return redirect(url_for('home'), code=301)
 
-@redirect_routes.route('/high-school-gpa-calculator')
+@redirect_routes.route('/high-school-gpa-calculator', strict_slashes=False)
 def high_school_gpa_calculator_redirect():
     return redirect(url_for('highschool_gpa_en'), code=301)
 
-@redirect_routes.route('/high-school-gpa-calculator/')
+@redirect_routes.route('/high-school-gpa-calculator/', strict_slashes=False)
 def high_school_gpa_calculator_redirect_trailing_slash():
     return redirect(url_for('highschool_gpa_en'), code=301)
 
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
-# @app.route('/blogs/')
+# @app.route('/blogs/', strict_slashes=False)
 # def blog_index_redirect_trailing_slash():
 #     return redirect(url_for('blog_routes.blog_index'), code=301)
 
-@app.route('/en/panning')
+@app.route('/en/panning', strict_slashes=False)
 def en_gpa_planning_redirect():
     return redirect(url_for('gpa_planning_en'), code=301)
     
-@app.route('/semester-grade-calculator/')
+@app.route('/semester-grade-calculator/', strict_slashes=False)
 def semester_grade_calculator_redirect():
     return redirect(url_for('semester_grade_calculator_en'), code=301)
 
 # New Ez-Grader redirects
-@redirect_routes.route('/ez-grader/')
+@redirect_routes.route('/ez-grader/', strict_slashes=False)
 def ez_grader_redirect_trailing_slash():
     return redirect(url_for('ez_grader_en'), code=301)
 
 # New Middle School redirects
-@redirect_routes.route('/middle-school-gpa-calculator/')
+@redirect_routes.route('/middle-school-gpa-calculator/', strict_slashes=False)
 def middle_school_gpa_calculator_redirect_trailing_slash():
     return redirect(url_for('middle_school_gpa_calculator_en'), code=301)
 
 # Naye redirect routes aapki request ke mutabiq
-@redirect_routes.route('/ez-grader/<path:subpath>')
+@redirect_routes.route('/ez-grader/<path:subpath>', strict_slashes=False)
 def ez_grader_catch_all_redirect(subpath):
     return redirect(url_for('ez_grader_en'), code=301)
 
-@lang_routes.route('/privacy-policy')
+@lang_routes.route('/privacy-policy', strict_slashes=False)
 def privacy_policy_redirect(lang_code):
     return redirect(url_for('static_pages.privacy_policy'), code=301)
 
-@lang_routes.route('/terms-conditions')
+@lang_routes.route('/terms-conditions', strict_slashes=False)
 def terms_conditions_redirect(lang_code):
     return redirect(url_for('static_pages.terms_conditions'), code=301)
 
-@lang_routes.route('/about-us')
+@lang_routes.route('/about-us', strict_slashes=False)
 def about_us_redirect(lang_code):
     return redirect(url_for('static_pages.about_us'), code=301)
 
-@lang_routes.route('/contact')
+@lang_routes.route('/contact', strict_slashes=False)
 def contact_redirect(lang_code):
     return redirect(url_for('static_pages.contact'), code=301)
 
-@lang_routes.route('/blogs/')
+@lang_routes.route('/blogs/', strict_slashes=False)
 def blogs_index_redirect(lang_code):
     return redirect(url_for('blog_routes.blog_index'), code=301)
 
-@lang_routes.route('/blogs/<path:subpath>')
+@lang_routes.route('/blogs/<path:subpath>', strict_slashes=False)
 def blogs_post_redirect(lang_code, subpath):
     return redirect(url_for('blog_routes.blog_post', slug=subpath), code=301)
 
 # --- NEW REDIRECTS ADDED HERE ---
-@redirect_routes.route('/calcolatrice-voti-semestre/')
+@redirect_routes.route('/calcolatrice-voti-semestre/', strict_slashes=False)
 def calcolatrice_voti_semestre_redirect():
     return redirect(url_for('semester_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatore-gpa-scuola-superiore/')
+@redirect_routes.route('/calcolatore-gpa-scuola-superiore/', strict_slashes=False)
 def calcolatore_gpa_scuola_superiore_it_redirect():
     return redirect(url_for('lang_routes.highschool_gpa', lang_code='it'), code=301)
 
-@redirect_routes.route('/calcolatrice-voto-finale')
+@redirect_routes.route('/calcolatrice-voto-finale', strict_slashes=False)
 def calcolatrice_voto_finale_no_slash_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatrice-media-voti/')
+@redirect_routes.route('/calcolatrice-media-voti/', strict_slashes=False)
 def calcolatrice_media_voti_redirect():
     return redirect(url_for('grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calculateur-notes-semestrielles')
+@redirect_routes.route('/calculateur-notes-semestrielles', strict_slashes=False)
 def calculateur_notes_semestrielles_redirect():
     return redirect(url_for('semester_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatore-gpa')
+@redirect_routes.route('/calcolatore-gpa', strict_slashes=False)
 def calcolatore_gpa_redirect():
     return redirect(url_for('gpa_calculator_en'), code=301)
     
-@redirect_routes.route('/calcolatore-gpa-scuola-superiore')
+@redirect_routes.route('/calcolatore-gpa-scuola-superiore', strict_slashes=False)
 def calcolatore_gpa_scuola_superiore_redirect():
     return redirect(url_for('highschool_gpa_en'), code=301)
 
-@redirect_routes.route('/calcolatrice-voto-finale/')
+@redirect_routes.route('/calcolatrice-voto-finale/', strict_slashes=False)
 def calcolatrice_voto_finale_slash_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatrice-voto')
+@redirect_routes.route('/calcolatrice-voto', strict_slashes=False)
 def calcolatrice_voto_redirect():
     return redirect(url_for('gpa_calculator_en'), code=301)
     
-@redirect_routes.route('/sgpa-to-cgpa-calculator/')
+@redirect_routes.route('/sgpa-to-cgpa-calculator/', strict_slashes=False)
 def sgpa_to_cgpa_redirect_trailing_slash():
     return redirect(url_for('sgpa_to_cgpa_en'), code=301)
     
 # NEW REDIRECTS FOR SGPA TO PERCENTAGE
-@redirect_routes.route('/sgpa-to-percentage-calculator/')
+@redirect_routes.route('/sgpa-to-percentage-calculator/', strict_slashes=False)
 def sgpa_to_percentage_redirect_trailing_slash():
     return redirect(url_for('sgpa_to_percentage_en'), code=301)
 
-@lang_routes.route('/calcolatrice-voti-semestre')
+@lang_routes.route('/calcolatrice-voti-semestre', strict_slashes=False)
 def it_semester_grade_calculator_redirect(lang_code):
     return redirect(url_for('lang_routes.semester_grade_calculator', lang_code=lang_code), code=301)
     
-@lang_routes.route('/calcolatrice-voto-finale')
+@lang_routes.route('/calcolatrice-voto-finale', strict_slashes=False)
 def it_final_grade_calculator_redirect(lang_code):
     return redirect(url_for('lang_routes.final_grade_calculator', lang_code=lang_code), code=301)
     
-@lang_routes.route('/calculateur-notes-semestrielles')
+@lang_routes.route('/calculateur-notes-semestrielles', strict_slashes=False)
 def fr_semester_grade_calculator_redirect(lang_code):
     return redirect(url_for('lang_routes.semester_grade_calculator', lang_code=lang_code), code=301)
 
-@lang_routes.route('/calcolatore-gpa')
+@lang_routes.route('/calcolatore-gpa', strict_slashes=False)
 def it_gpa_calculator_redirect(lang_code):
     return redirect(url_for('lang_routes.gpa_calculator', lang_code=lang_code), code=301)
 
-@lang_routes.route('/calcolatore-gpa-scuola-superiore')
+@lang_routes.route('/calcolatore-gpa-scuola-superiore', strict_slashes=False)
 def it_highschool_gpa_redirect(lang_code):
     return redirect(url_for('lang_routes.highschool_gpa', lang_code=lang_code), code=301)
     
-@lang_routes.route('/calcolatrice-voto')
+@lang_routes.route('/calcolatrice-voto', strict_slashes=False)
 def it_grade_calculator_redirect(lang_code):
     return redirect(url_for('lang_routes.grade_calculator', lang_code=lang_code), code=301)
 
