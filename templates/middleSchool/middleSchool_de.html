@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">GPA-Rechner für die Mittelschule</title>
+    <meta name="description" content="Mit diesem GPA-Rechner für die Mittelschule können Sie Ihren Notendurchschnitt für die Mittelschule mit nur einem Klick berechnen." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="GPA-Rechner, Notendurchschnitt berechnen, wie berechne ich den Notendurchschnitt, was ist mein GPA, Notendurchschnittsrechner, Online-GPA-Rechner, 4.0-GPA-Skala, GPA-Rechner nach Leistungspunkten, GPA-Rechner" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator" data-translate="canonicalLink">
+    
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="de" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">GPA-Rechner für die Mittelschule</h1>
+            <p data-translate="introParagraph">Verwenden Sie diesen GPA-Rechner für die Mittelschule, um Ihren Notendurchschnitt in der Mittelschule zu berechnen.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">GPA-Rechner für die Mittelschule</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Semester 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Kurs</th>
+                                    <th data-translate="tableHeaderGrade">Note</th>
+                                    <th data-translate="tableHeaderCredits">Leistungspunkte</th>
+                                    <th>Aktion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Kurs hinzufügen" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z. B. 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Weitere Klasse hinzufügen</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Weiteres Semester hinzufügen</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">GPA berechnen</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">GPA-Zusammenfassung</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Aktueller GPA</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Alle Kurse zurücksetzen</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Dieser <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA-Rechner</a> für die Mittelstufe hilft Schülern, ihren Notendurchschnitt anhand ihrer Kursnoten und Leistungspunkte zu berechnen. Mit diesem GPA-Rechner können Schüler ihre akademischen Leistungen verfolgen und sich auf die Zulassung zur High School oder zum College sowie auf Stipendien vorbereiten.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Wie benutzt man?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Schritt 1: Kursbezeichnung eingeben</h3>
+                        <p data-translate="step1Description">Zuerst müssen Sie die Kursbezeichnung eingeben.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Schritt 2: Noten auswählen</h3>
+                        <p data-translate="step2Description">Wählen Sie die Note aus, die Sie in jedem Fach erreicht haben (z. B. A, B, C usw.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Schritt 3: Leistungsstunden eingeben</h3>
+                        <p data-translate="step3Description">Geben Sie die Leistungsstunden für jeden Kurs ein (normalerweise zwischen 1 und 4 Stunden).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Schritt 4: Klicken Sie auf <b>GPA berechnen</b></h3>
+                        <p data-translate="step4Description">Nachdem Sie alle Angaben gemacht haben, klicken Sie einfach auf „GPA für die Mittelstufe berechnen“, um Ihre Ergebnisse zu erhalten.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Warum unseren GPA-Rechner für die Mittelschule verwenden?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Genauigkeit</h3>
+                        <p data-translate="feature1Description">Unser Tool liefert genaue Ergebnisse, indem es Ihre Noten und Leistungspunkte verwendet, sodass Sie sehen können, wie es um Ihre schulischen Leistungen steht.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Benutzerfreundliche Oberfläche</h3>
+                        <p data-translate="feature2Description">Wir haben die Oberfläche dieses Tools benutzerfreundlich gestaltet, damit jeder es leicht verwenden kann. Es sind keine technischen Fähigkeiten erforderlich, um dieses Tool zu nutzen.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Akademische Ziele verfolgen</h3>
+                        <p data-translate="feature3Description">Dieses Tool hilft Ihnen, sich auf Ihre akademischen Ziele zu konzentrieren. Durch regelmäßige Überprüfung Ihres GPA können Sie sehen, wie gut Sie abschneiden, Bereiche identifizieren, die Verbesserung benötigen, und kluge Entscheidungen treffen, um Ihre Noten zu verbessern.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Schnelle und sofortige Ergebnisse</h3>
+                        <p data-translate="feature4Description">Erhalten Sie Ihren berechneten GPA sofort! Geben Sie einfach Ihre Noten und Leistungspunkte ein – kein Warten, kein Laden, nur schnelle und zuverlässige Ergebnisse.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Kostenlos</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com ist 100% kostenlos – keine Anmeldung, keine versteckten Gebühren und keine Limits. Geben Sie einfach Ihre Noten und Leistungspunkte ein, um Ihren Notendurchschnitt sofort zu erhalten.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Was ist der Notendurchschnitt der Mittelschule?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    Der GPA (Grade Point Average) der Middle School ist eine Zahl, die Ihre allgemeine akademische Leistung während der Middle School angibt. Er wird berechnet, indem Ihre Buchstabennoten (z. B. A, B, C) in Notenpunkte auf einer Skala von 0,0 bis 4,0 umgerechnet und anschließend der Durchschnitt berechnet wird.
+                </p>
+                <h2 data-translate="formulaHeading">Formel</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        GPA der Mittelschule =
+                    </b>
+                    (Note1 × Leistungspunkt1 + Note2 × Leistungspunkt2 + … + NoteN × LeistungspunktN) ÷ (Leistungspunkt1 + Leistungspunkt2 + … + LeistungspunktN)
+                </p>
+                <h2 data-translate="scaleHeading">4.0-Skala, die vom Rechner verwendet wird</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Buchstabennote</th>
+                            <th data-translate="gpaValueHeader">GPA-Wert</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Unterschied zwischen dem GPA der Mittelschule und dem GPA der High School</h2>
+                <h3 data-translate="middleSchoolHeading">GPA der Mittelschule</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Zweck:</b> Hilft Schülern, Eltern und Lehrern in erster Linie dabei, ihren akademischen Fortschritt zu verfolgen.</li>
+                    <li><b>Auswirkung:</b> Wird von Hochschulen selten berücksichtigt, kann aber die Platzierung in Leistungskursen oder Leistungskursen beeinflussen, sobald Sie die High School besuchen.</li>
+                    <li><b>Benotungsskala:</b> In der Regel die Standard-4-Skala (A = 4, B = 3 usw.), ohne gewichtete Noten.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">GPA der High School</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Zweck:</b> Ein entscheidender Faktor für die Zulassung zum College, Stipendien und manchmal sogar für Jobchancen.</li>
+                    <li><b>Auswirkung:</b> Wirkt sich direkt auf College-Bewerbungen und Karrierechancen aus.</li>
+                    <li><b>Bewertungsskala:</b> Kann gewichtete GPAs (über 4,0) für Honours-, AP- oder IB-Kurse enthalten.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Berechnen Sie Ihren High-School-Notendurchschnitt mit unserem <a href="https://gpacalculatorcollege.com/de/highschool-gpa">GPA-Rechner für die High School</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Warum ist der Notendurchschnitt in der Mittelschule wichtig?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Auch wenn der Notendurchschnitt in der Mittelschule normalerweise nicht berücksichtigt wird, spielt er dennoch eine wichtige Rolle:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Fördert frühzeitig gute Gewohnheiten –</b> Wenn Sie lernen, wie der Notendurchschnitt funktioniert, bleiben Sie motiviert und organisiert.</li>
+                    <li><b>Highschool-Einstufung –</b> Viele Schulen entscheiden anhand Ihres Notendurchschnitts, ob Sie sich für Leistungskurse oder weiterführende Kurse in der Highschool qualifizieren.</li>
+                    <li><b>Selbstbewertung –</b> Sie gibt Schülern und Eltern einen klaren Überblick über Ihre akademischen Stärken und Verbesserungspotenziale.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Wie berechne ich den Notendurchschnitt der Mittelschule?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Die Berechnung Ihres Mittelschul-GPA ist einfach, sobald Sie die Schritte verstanden haben. So können Sie es manuell tun:
+                </p>
+                <h3 data-translate="step1Heading">1. Noten in Notenpunkte umrechnen</h3>
+                <p data-translate="step1Paragraph">
+                    Die meisten Mittelschulen verwenden die 4,0-GPA-Skala:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Beispiel:</i> Wenn Sie in Mathe eine 1 bekommen haben, entspricht das 4,0 Notenpunkten.
+                </p>
+                <h3 data-translate="step2Heading">2. Alle Notenpunkte zusammenzählen</h3>
+                <p data-translate="step2Paragraph">
+                    Notieren Sie die Notenpunkte für jedes Fach und addieren Sie sie anschließend.
+                    <br><br>
+                    Mathe = A = 4.0<br>
+                    Englisch = B = 3.0<br>
+                    Wissenschaft = A = 4.0<br>
+                    Geschichte = C = 2.0<br>
+                    <b>Gesamt = 13,0 Notenpunkte</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Teilen durch die Anzahl der Kurse</h3>
+                <p data-translate="step3Paragraph">
+                    Teilen Sie nun die Gesamtpunktzahl durch die Anzahl der Kurse.
+                    <br><br>
+                    GPA = Gesamtnotenpunkte ÷ Anzahl der Kurse
+                    <br><br>
+                    In unserem Beispiel:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Der GPA des Schülers beträgt also <b>3,25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Statt all diese Berechnungen durchzuführen, können Sie einen <a href="https://gpacalculatorcollege.com/de/gpa-calculator">Online-GPA-Rechner für die Mittelschule</a> verwenden, um Ergebnisse zu erhalten.
+                    <br><br>
+                    Verwandter Rechner: <a href="https://gpacalculatorcollege.com/de" data-translate="relatedCollegeCalculator">GPA-Rechner für Hochschulen</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Häufig gestellte Fragen</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Was ist ein guter Notendurchschnitt für die Mittelschule?</h3>
+                    <p data-translate="faqAnswer1">
+                        Ein guter Notendurchschnitt in der Mittelschule liegt normalerweise bei 3,0 bis 4,0 auf der Standard-4,0-Skala. Das bedeutet, dass Sie in Ihren Kursen hauptsächlich Einsen und Zweien haben.
+                        <br><br>
+                        <b>4.0 GPA</b> → Nur Einsen (hervorragende Leistung).<br>
+                        <b>3.5 GPA</b> → A und B (sehr gut).<br>
+                        <b>3.0 GPA</b> → Überwiegend B (gut und überdurchschnittlich).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Ist der Notendurchschnitt in der Mittelschule für das College wichtig?</h3>
+                    <p data-translate="faqAnswer2">
+                        Nein, der Notendurchschnitt der Mittelschule ist für die Zulassung zum College nicht direkt relevant. Colleges berücksichtigen in der Regel Ihren Notendurchschnitt der High School, Ihre standardisierten Testergebnisse, Ihre außerschulischen Aktivitäten und Ihre Aufsätze.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Kann der Notendurchschnitt der Mittelschule die Platzierung an der High School beeinflussen?</h3>
+                    <p data-translate="faqAnswer3">
+                        Ja, der Notendurchschnitt in der Mittelschule kann Ihre Platzierung in den Highschool-Klassen beeinflussen. Während Colleges die Noten der Mittelschule nicht berücksichtigen, verwenden viele Highschools sie, um zu entscheiden, mit welchem Kursniveau Sie beginnen.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semester ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Kurs</th>
+                                <th>Note</th>
+                                <th>Leistungspunkte</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Kurs hinzufügen"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z. B. 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Weitere Klasse hinzufügen</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Kurs hinzufügen"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z. B. 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Kurs hinzufügen"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z. B. 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

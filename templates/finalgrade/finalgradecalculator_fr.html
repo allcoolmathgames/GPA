@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculateur de note finale</title>
+    <meta name="description"
+        content="Ce calculateur de notes finales indique le score nécessaire à votre examen final pour atteindre votre note cible, ou votre note globale en fonction de votre score à l'examen final."
+        data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/fr/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="fr" data-translate="body">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Calculateur de note finale</h1>
+            <p style="text-align: center;">Utilisez ce calculateur pour savoir quelle note minimale vous devez obtenir à votre examen final pour atteindre la note souhaitée dans votre cours.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Entrez vos notes et pondérations</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Note souhaitée</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="ex. 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Sur</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Note actuelle</label>
+                            <input type="number" id="current_grade" min="0" placeholder="ex. 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Sur</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Poids de la note finale</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="ex. 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Sur</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Calculer la note finale requise</button>
+                    </div>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Note finale requise</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">Vous devez obtenir au moins :</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">Réinitialiser</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Comment utiliser le calculateur de note finale</h2>
+                <p>L'utilisation d'un calculateur de note finale est très simple et facile à utiliser, suivez simplement ces étapes pour le calculer sur le site Web <a href="/">gpacalculatorcollege.com</a> :</p>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3><span data-translate="step1Title">Note souhaitée</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step1Description">Saisissez la note souhaitée que vous voulez obtenir à la fin du semestre sur 100 ou un autre nombre.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3><span data-translate="step2Title">Note actuelle</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step2Description">Saisissez votre note actuelle que vous avez obtenue jusqu'à présent dans le cours, calculée sur la base de tous les devoirs, quiz, projets et examens complétés.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3><span data-translate="step3Title">Poids de la note finale</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step3Description">Saisissez le poids de la note finale sur 100, c'est-à-dire le pourcentage de votre note globale du cours que votre examen final, projet ou dernière évaluation vaut.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3><span data-translate="step4Title">Cliquez sur Calculer</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step4Description">Après avoir renseigné toutes les informations, cliquez sur le bouton « Calculer la note finale ».</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2 data-translate="whyUseHeading">Pourquoi utiliser notre calculateur de note finale ?</h2>
+                <p style="text-align: left;" data-translate="whyUseDescription">
+                    Notre calculateur possède une interface simple que tout le monde peut utiliser, sans compétence mathématique requise.
+                    Il vous suffit de saisir votre note finale souhaitée, la note actuelle et le poids de votre note de travail restant, puis de cliquer sur calculer pour voir les résultats instantanés.
+                </p>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature1Title">Facile à utiliser</h3>
+                        <p style="text-align: left;" data-translate="feature1Description">Notre calculateur possède une interface simple que tout le monde peut utiliser, sans compétence mathématique requise. Il vous suffit de saisir votre note finale souhaitée, la note actuelle et le poids de votre note de travail restant, puis de cliquer sur calculer pour voir les résultats instantanés.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature2Title">Calculs précis</h3>
+                        <p style="text-align: left;" data-translate="feature2Description">Notre calculateur utilise des formules précises pour vous garantir des résultats fiables à chaque fois. En prenant en compte la pondération exacte de vos travaux terminés et restants, il élimine les approximations et vous donne une vision précise de ce dont vous avez besoin pour atteindre votre objectif.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature3Title">Planifiez vos études</h3>
+                        <p style="text-align: left;" data-translate="feature3Description">Il vous aide à concentrer votre temps et votre énergie là où cela compte le plus. En connaissant exactement la note dont vous avez besoin pour les travaux à venir, vous pouvez créer un plan d'étude intelligent et éviter de perdre du temps sur des tâches à faible impact.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2 data-translate="index_whatIsFinalGradeCalcHeading">Qu'est-ce que le calculateur de note finale ?</h2>
+                <p data-translate="index_whatIsFinalGradeCalcParagraph">
+                    Ce <a href="https://gpacalculatorcollege.com/grade-calculator">calculateur de note finale</a> aide les étudiants à déterminer la note requise pour les devoirs ou examens restants afin d'obtenir la note globale souhaitée. Il calcule rapidement les notes requises en fonction des performances actuelles et de la pondération du travail restant.
+                </p>
+                <h2 data-translate="index_finalGradeFormulaHeading">Formule de calcul de la note finale, exemple</h2>
+                <p data-translate="index_finalGradeFormulaText">
+                    <b data-translate="index_formulaLabel">Formule :</b><br>
+                    <span data-translate="index_formulaText">Note finale = (Note actuelle × Pondération du travail terminé) + (Note souhaitée à l'examen final × Pondération du travail restant)</span>
+                    <br><br>
+                    <span data-translate="index_formulaVariables">
+                        Où :<br>
+                        Note actuelle = Votre note moyenne jusqu'à présent dans le cours<br>
+                        Poids du travail terminé = Pourcentage du cours déjà noté<br>
+                        Poids du travail restant = Pourcentage du cours restant à compléter (par exemple, examen final)
+                    </span>
+                </p>
+                <h2 data-translate="index_exampleHeading">Exemple :</h2>
+                <p>
+                    <b data-translate="index_exampleCurrentGrade">Note actuelle :</b> 85 %<br>
+                    <b data-translate="index_exampleCompletedWeight">Poids du travail terminé :</b> 70 %<br>
+                    <b data-translate="index_exampleFinalExamWeight">Poids de l’examen final :</b> 30 %<br>
+                    <b data-translate="index_exampleDesiredGrade">Note finale souhaitée :</b> 90 %
+                </p>
+                <h3 data-translate="index_formulaStepsHeading">Formule :</h3>
+                <p>
+                    <span data-translate="index_formulaStepsFormula">90 = ( 85 x 0,70 ) + ( Score d'examen requis x 0,30 )</span>
+                </p>
+                <h3 data-translate="index_stepByStepHeading">Étape par étape :</h3>
+                <ol data-translate="index_stepsList" style="padding-left: 30px;">
+                    <li data-translate="index_step1">85 x 0.70 = 59.5</li>
+                    <li data-translate="index_step2">90 - 59.5 = 30.5</li>
+                    <li data-translate="index_step3">30.5 ÷ 0.30 = 101.67</li>
+                </ol>
+                <p data-translate="index_resultText">
+                    Résultat : il vous faudrait environ <b>102 %</b> à l’examen final pour atteindre une note finale de 90 %, ce qui signifie que c’est mathématiquement impossible à moins qu’il n’y ait des crédits supplémentaires disponibles.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2 data-translate="useCasesHeading">Cas d'utilisation d'un calculateur de notes finales</h2>
+                <p data-translate="useCasesIntro">
+                    Voici quelques exemples d'utilisation du calculateur de notes finales :
+                </p>
+                <h3 data-translate="useCase1Heading">Planification des efforts d'étude</h3>
+                <p data-translate="useCase1Text">
+                    Ce calculateur vous aide à déterminer précisément la note que vous devez obtenir pour vos travaux restants, afin de planifier votre temps d'étude en conséquence.
+                </p>
+                <h3 data-translate="useCase2Heading">Fixation d'objectifs réalistes</h3>
+                <p data-translate="useCase2Text">
+                    Un calculateur de notes finales vous aide à fixer des objectifs académiques atteignables en vous indiquant si la note souhaitée est réaliste.
+                </p>
+                <h3 data-translate="useCase3Heading">Planification stratégique</h3>
+                <p data-translate="useCase3Text">
+                    Vous pouvez créer un plan d'action ciblé pour vos études. En connaissant précisément l'impact de chaque tâche restante sur votre note globale, vous pouvez décider où concentrer votre énergie pour obtenir les meilleurs résultats.
+                </p>
+                <h3 data-translate="useCase4Heading">Motivation</h3>
+                <p data-translate="useCase4Text">
+                    Il peut stimuler votre motivation en transformant des objectifs académiques vagues en objectifs clairs et atteignables. Connaître exactement la note que vous devez obtenir pour vos travaux restants vous donne un objectif précis à atteindre, ce qui rend vos séances d'étude plus enrichissantes.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2 data-translate="faqHeading">FAQ</h2>
+                <div class="faq-container">
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq1Question">Quelle note dois-je obtenir à mon examen final ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq1Answer">C’est la question la plus fréquente des étudiants : Quelle note dois-je obtenir à mon examen final avant l’examen final ? Vous pouvez la calculer grâce à notre calculateur de notes finales, en indiquant la note souhaitée, la note actuelle et la pondération de l’examen final.</p>
+                            <p><strong>Exemple :</strong><br>Note souhaitée : 90 %<br>Poids de l’examen final : 40 %<br>Note actuelle : 82 %<br>Le calculateur vous indiquera qu’il vous faut environ 98 % à l’examen final pour atteindre votre objectif.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq2Question">Est-ce que cela fonctionne pour calculer votre moyenne générale ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq2Answer">Bien que cela soit principalement destiné aux cours individuels, vous pouvez utiliser les résultats avec un <a href="/gpa-calculator">calculateur de moyenne générale</a> pour estimer votre moyenne générale.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq3Question">Est-ce que cela fonctionne pour n’importe quelle matière ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq3Answer">Oui, le calculateur fonctionne pour toute matière ou cours utilisant la notation pondérée.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq4Question">Que signifie 25 % de la note finale ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq4Answer">Si votre examen final ou projet compte pour 25 % de votre note finale, cela signifie qu'un quart de votre note globale proviendra de cette évaluation. Les 75 % restants seront basés sur vos devoirs, quiz, projets et tests précédents.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Veuillez entrer des nombres valides. Le poids de l\'examen final doit être compris entre 1 et 99.');
+                    return;
+                }
+
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('La valeur "sur" doit être un nombre positif.');
+                     return;
+                }
+                // Convertir les notes en pourcentage
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+                const remainingWeight = 100 - finalWeight;
+                if (remainingWeight <= 0) {
+                    alert('Le poids de l\'examen final doit être inférieur à 100%.');
+                    return;
+                }
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Vous devez obtenir plus de 100 % à l\'examen final, ce qui est impossible. Vous devrez abaisser votre note souhaitée.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Vous avez déjà atteint votre note souhaitée.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Pour atteindre votre objectif, voici la note requise.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

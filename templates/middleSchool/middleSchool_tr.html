@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Ortaokul Not Ortalaması Hesaplayıcısı</title>
+    <meta name="description" content="Bu ortaokul not ortalaması hesaplayıcısı, tek bir tıklamayla ortaokul not ortalamanızı hesaplamanıza olanak tanır." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="not ortalaması hesaplayıcı, not ortalaması hesapla, nasıl not ortalaması hesaplanır, not ortalamam kaç, not ortalaması hesaplama, çevrimiçi not ortalaması hesaplayıcı, 4.0 not ortalaması ölçeği, kredi saati not ortalaması hesaplayıcı, not ortalaması hesaplayıcı" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator">
+
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="tr" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Ortaokul Not Ortalaması Hesaplayıcısı</h1>
+            <p data-translate="introParagraph">Ortaokul not ortalamanızı hesaplamak için bu ortaokul not ortalaması hesaplayıcısını kullanın.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Ortaokul Not Ortalaması Hesaplayıcısı</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Dönem 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Ders</th>
+                                    <th data-translate="tableHeaderGrade">Not</th>
+                                    <th data-translate="tableHeaderCredits">Kredi</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Ders Ekle" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Başka Ders Ekle</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Başka Dönem Ekle</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Not Ortalamasını Hesapla</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Not Ortalaması Özeti</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Mevcut Not Ortalaması</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/tr/middle-school-gpa-calculator" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Tüm Dersleri Sıfırla</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Bu <a href="https://gpacalculatorcollege.com/tr/gpa-calculator">not ortalaması hesaplayıcı</a>, ortaokul öğrencilerinin ders notlarına ve kredi saatlerine göre not ortalamalarını hesaplamalarına yardımcı olur. Öğrenciler, akademik performanslarını takip etmek ve lise veya üniversiteye kabul ve burs başvurularını planlamak için bu ortaokul not ortalaması hesaplayıcısını kullanabilirler.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Nasıl Kullanılır?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Adım 1: Ders Adını Girin</h3>
+                        <p data-translate="step1Description">Öncelikle ders adını girmeniz gerekiyor.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Adım 2: Notları Seçin</h3>
+                        <p data-translate="step2Description">Her dersten aldığınız notu seçin (A, B, C vb.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Adım 3: Kredi Saatlerini Girin</h3>
+                        <p data-translate="step3Description">Her ders için kredi saatini girin (genellikle 1 ila 4 saat arasında).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Adım 4: <b>Not Ortalamasını Hesapla</b> Butonuna Tıklayın</h3>
+                        <p data-translate="step4Description">Tüm bilgileri girdikten sonra, sonuçlarınızı almak için “Not Ortalamasını Hesapla” butonuna tıklayın.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Neden Ortaokul Not Ortalaması Hesaplayıcımızı Kullanmalısınız?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Doğruluk</h3>
+                        <p data-translate="feature1Description">Aracımız, notlarınızı ve kredi saatlerinizi kullanarak doğru sonuçlar verir, böylece akademik performansınızı görebilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Kullanıcı Dostu Arayüz</h3>
+                        <p data-translate="feature2Description">Bu aracın arayüzünü kullanıcı dostu olarak tasarladık, böylece herkes kolayca kullanabilir. Teknik beceri gerektirmez.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Akademik Hedefleri Takip Edin</h3>
+                        <p data-translate="feature3Description">Bu araç, akademik hedeflerinize odaklanmanıza yardımcı olur. Not ortalamanızı düzenli olarak kontrol ederek, ne kadar iyi performans gösterdiğinizi görebilir, iyileştirilmesi gereken alanları belirleyebilir ve notlarınızı yükseltmek için akıllıca kararlar alabilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Anında ve Hızlı Sonuçlar</h3>
+                        <p data-translate="feature4Description">Not ortalamanızı anında hesaplayın! Sadece notlarınızı ve kredi saatlerinizi girin - bekleme yok, yükleme yok, sadece hızlı ve güvenilir sonuçlar.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Ücretsiz Kullanım</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com %100 ücretsizdir - kayıt gerektirmez, gizli ücret yoktur ve sınırsızdır. Sadece notlarınızı ve kredi saatlerinizi girin ve not ortalamanızı anında alın.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Ortaokul Not Ortalaması Hesaplayıcısı Nasıl Çalışır?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    Bu Ortaokul Not Ortalaması Hesaplayıcısı, girdiğiniz notları ve kredileri kullanarak belirli bir formülle ortalama not ortalamanızı hesaplar.
+                </p>
+                <h2 data-translate="formulaHeading">Formül</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        Ortaokul Not Ortalaması =
+                    </b>
+                    (not1 × kredi1 + not2 × kredi2 + … + notN × krediN) ÷ (kredi1 + kredi2 + … + krediN)
+                </p>
+                <h2 data-translate="scaleHeading">Hesaplayıcının Kullandığı 4.0 Ölçek</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Harf Notu</th>
+                            <th data-translate="gpaValueHeader">Not Ortalaması Değeri</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Ortaokul Not Ortalaması ile Lise Not Ortalaması Arasındaki Fark</h2>
+                <h3 data-translate="middleSchoolHeading">Ortaokul Not Ortalaması</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Amaç:</b> Öncelikle öğrencilerin, velilerin ve öğretmenlerin akademik ilerlemelerini takip etmelerine yardımcı olur.</li>
+                    <li><b>Etkisi:</b> Üniversiteler tarafından nadiren dikkate alınır, ancak liseye başladığınızda ileri veya onur sınıflarına yerleştirilmenizi etkileyebilir.</li>
+                    <li><b>Notlandırma Ölçeği:</b> Genellikle standart 4.0 ölçeği (A = 4, B = 3 vb.), ağırlıklı notlar olmadan.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">Lise Not Ortalaması</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Amaç:</b> Üniversiteye kabul, burs ve hatta bazen iş fırsatları için kritik bir faktördür.</li>
+                    <li><b>Etki:</b> Üniversite başvurularını ve kariyer fırsatlarını doğrudan etkiler.</li>
+                    <li><b>Notlandırma Ölçeği:</b> Onur, AP veya IB dersleri için ağırlıklı not ortalamalarını (4.0'ın üzerinde) içerebilir.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Lise not ortalamanızı <a href="https://gpacalculatorcollege.com/tr/highschool-gpa">Lise Not Ortalaması Hesaplayıcımız</a> ile hesaplayın.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Ortaokulda Not Ortalaması Neden Önemlidir?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Üniversiteler genellikle ortaokul not ortalamasına bakmasa da, yine de önemli bir rol oynar:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>İyi Alışkanlıkları Erken Yaşta Kazandırır –</b> Not ortalamasının nasıl çalıştığını öğrenmek, motivasyonunuzu ve düzeninizi korumanıza yardımcı olur.</li>
+                    <li><b>Lise Yerleştirme –</b> Birçok okul, lisede onur veya ileri sınıflara hak kazanıp kazanmadığınıza karar vermek için not ortalamanızı kullanır.</li>
+                    <li><b>Kendi Kendini Takip Etme –</b> Öğrencilere ve velilere akademik güçlü yönleriniz ve geliştirilmesi gereken alanlar hakkında net bir fikir verir.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Ortaokul Not Ortalamamı Nasıl Hesaplarım?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Adımları anladıktan sonra ortaokul not ortalamanızı hesaplamak kolaydır. İşte manuel olarak nasıl yapabileceğiniz:
+                </p>
+                <h3 data-translate="step1Heading">1. Notları Not Puanlarına Dönüştür</h3>
+                <p data-translate="step1Paragraph">
+                    Çoğu ortaokul 4.0'lık not ortalamasını kullanır:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Örnek:</i> Eğer Matematikten A aldıysanız, bu 4.0 notuna eşittir.
+                </p>
+                <h3 data-translate="step2Heading">2. Tüm Notları Toplayın</h3>
+                <p data-translate="step2Paragraph">
+                    Her dersin notlarını yazın ve ardından toplayın:
+                    <br><br>
+                    Matematik = A = 4.0<br>
+                    İngilizce = B = 3.0<br>
+                    Fen = A = 4.0<br>
+                    Tarih = C = 2.0<br>
+                    <b>Toplam = 13.0 not puanı</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Ders Sayısına Böl</h3>
+                <p data-translate="step3Paragraph">
+                    Şimdi toplam notu ders sayısına bölelim.
+                    <br><br>
+                    Not Ortalaması = Toplam Not Puanları ÷ Ders Sayısı
+                    <br><br>
+                    Örneğimizde:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Yani öğrencinin not ortalaması = <b>3.25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Tüm bu hesaplamaları yapmak yerine, sonuçları almak için çevrimiçi bir <a href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator">ortaokul not ortalaması hesaplayıcısı</a> kullanabilirsiniz.
+                    <br><br>
+                    İlgili: <a href="https://gpacalculatorcollege.com/tr" data-translate="relatedCollegeCalculator">Üniversite Not Ortalaması Hesaplayıcı</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Sıkça Sorulan Sorular</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Ortaokul İçin İyi Bir Not Ortalaması Nedir?</h3>
+                    <p data-translate="faqAnswer1">
+                        Ortaokulda iyi bir not ortalaması genellikle standart 4.0 ölçeğinde 3.0 ila 4.0 arasında kabul edilir. Bu, derslerinizde çoğunlukla B ve A notları aldığınız anlamına gelir.
+                        <br><br>
+                        <b>4.0 Not Ortalaması</b> → Tamamen A (mükemmel performans).<br>
+                        <b>3.5 Not Ortalaması</b> → A ve B (çok iyi).<br>
+                        <b>3.0 Not Ortalaması</b> → Çoğunlukla B (iyi ve ortalamanın üzerinde).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Ortaokul Not Ortalaması Üniversite İçin Önemli mi?</h3>
+                    <p data-translate="faqAnswer2">
+                        Hayır, ortaokul not ortalaması üniversiteye kabul için doğrudan önemli değildir. Üniversiteler genellikle lise not ortalamanıza, standart test puanlarınıza, ders dışı etkinliklerinize ve kompozisyonlarınıza bakar.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Ortaokul Not Ortalaması Lise Yerleştirmenizi Etkileyebilir mi?</h3>
+                    <p data-translate="faqAnswer3">
+                        Evet, ortaokul not ortalaması lise sınıflarındaki yerleştirmenizi etkileyebilir. Üniversiteler ortaokul notlarına bakmasa da, birçok lise hangi seviyeden başlayacağınıza karar vermek için notlarınızı kullanır.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Dönem ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Ders</th>
+                                <th>Not</th>
+                                <th>Kredi</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Ders Ekle"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Başka Ders Ekle</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Ders Ekle"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Ders Ekle"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="örn., 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

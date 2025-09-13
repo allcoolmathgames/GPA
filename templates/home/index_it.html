@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="it">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calcolatore GPA universitario - Conosci il tuo GPA universitario</title>
+    <meta name="description" content="Calcola facilmente la tua media dei voti universitari con il nostro calcolatore gratuito. Inserisci voti e crediti per ottenere risultati immediati, senza bisogno di registrarti." data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="calcolatore GPA, calcolare GPA, come calcolare GPA, qual è il mio GPA, calcolatore media voti, calcolatore GPA online, scala GPA 4.0, calcolatore GPA con crediti, calcolatore media universitaria" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it" data-translate="canonicalLink">
+
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+</head>
+<body data-lang="it" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calcolatore GPA universitario</h1>
+            <p data-translate="introParagraph">Usa questo <a href="/it/gpa-calculator" data-translate="gpaCalculatorLink" style="text-decoration: none;">Calcolatore GPA</a> per calcolare facilmente la tua media dei voti universitaria con un solo clic.</p>
+
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calcola GPA universitaria</h2>
+                <table class="course-input-table" data-translate="courseTable">
+                    <thead data-translate="tableHead">
+                        <tr>
+                            <th data-translate="tableHeaderCourse">Corso</th>
+                            <th data-translate="tableHeaderCredits">Crediti</th>
+                            <th data-translate="tableHeaderGrade">Voto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody" data-translate="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Aggiungi corso" data-translate="courseInput1"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3" data-translate="creditsInput1"></td>
+                            <td><select name="grade" data-translate="gradeSelect1"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Aggiungi corso" data-translate="courseInput2"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 4" data-translate="creditsInput2"></td>
+                            <td><select name="grade" data-translate="gradeSelect2"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Aggiungi corso" data-translate="courseInput3"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 2" data-translate="creditsInput3"></td>
+                            <td><select name="grade" data-translate="gradeSelect3"></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="addMoreCourseBtn" class="secondary-btn" data-translate="addMoreCoursesButton">Aggiungi altri corsi</button>
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calcola GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Riepilogo GPA</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">GPA Attuale</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Reimposta tutti i corsi</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Questo calcolatore della media dei voti (GPA) universitaria tiene traccia della tua media dei voti. Se sei al primo semestre o hai già frequentato l'università per qualche anno, questo strumento ti aiuta a calcolare la tua media dei voti.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Come usare il calcolatore GPA</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Passo 1: Inserisci i tuoi corsi</h3>
+                        <p data-translate="step1Description">Elenca ogni corso che hai seguito durante il semestre.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Passo 2: Aggiungi ore di credito</h3>
+                        <p data-translate="step2Description">Inserisci le ore di credito per ogni corso (solitamente da 1 a 4 ore).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Passo 3: Seleziona i tuoi voti</h3>
+                        <p data-translate="step3Description">Scegli il voto ottenuto per ogni corso (A, B, C, ecc.).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Passo 4: Clicca <b>Calcola GPA</b></h3>
+                        <p data-translate="step4Description">Premi il pulsante per vedere immediatamente il risultato della tua GPA.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Perché usare il nostro calcolatore GPA universitario?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Precisione</h3>
+                        <p data-translate="feature1Description">Il nostro strumento fornisce risultati accurati utilizzando i tuoi voti e crediti, così puoi vedere come stai andando nei tuoi studi.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interfaccia intuitiva</h3>
+                        <p data-translate="feature2Description">Abbiamo progettato l'interfaccia di questo strumento per essere intuitiva, in modo che tutti possano utilizzarlo facilmente. Non sono richieste competenze tecniche.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Monitora gli obiettivi accademici</h3>
+                        <p data-translate="feature3Description">Questo strumento ti aiuta a rimanere concentrato sui tuoi obiettivi accademici. Controllando regolarmente la tua GPA, puoi vedere come stai andando, individuare le aree che necessitano di miglioramento e prendere decisioni intelligenti per migliorare i tuoi voti.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Risultati immediati e rapidi</h3>
+                        <p data-translate="feature4Description">Ottieni la tua GPA calcolata all'istante! Inserisci semplicemente i tuoi voti e crediti: nessuna attesa, solo risultati rapidi e affidabili.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Gratuito</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com è 100% gratuito: nessuna registrazione, nessun costo nascosto e nessun limite. Inserisci i tuoi voti e crediti per ottenere la tua media dei voti all'istante.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="navigation-cards-section centered-section" data-translate="navigationCardsSection">
+                <h2 data-translate="moreToolsHeading">Altri strumenti GPA</h2>
+                <div class="cards-container" data-translate="cardsContainer">
+                    <div class="card" id="priorSemesterCard" data-translate="priorSemesterCard">
+                        <h3 data-translate="priorSemesterCardTitle">GPA semestri precedenti/finale</h3>
+                        <p data-translate="priorSemesterCardDescription">Calcola la tua GPA includendo i semestri precedenti o la tua GPA cumulativa finale.</p>
+                        <a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code=lang_code) }}" class="card-button" data-translate="goToCalculatorButton1">Vai al calcolatore</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard" data-translate="gpaPlanningCard">
+                        <h3 data-translate="gpaPlanningCardTitle">Pianificazione GPA</h3>
+                        <p data-translate="gpaPlanningCardDescription">Pianifica la tua GPA per i semestri futuri per raggiungere un obiettivo cumulativo.</p>
+                        <a href="{{ url_for('lang_routes.gpa_planning', lang_code=lang_code) }}" class="card-button" data-translate="goToCalculatorButton2">Vai al calcolatore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Cos'è la media dei voti (GPA) universitaria?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    La media dei voti universitaria è un numero che indica il rendimento accademico complessivo all'università. Si calcola convertendo i voti espressi in lettere (come A, B, o C) in numeri e calcolandone la media in base ai crediti formativi di ciascun corso.
+                    <br data-translate="whatIsGpaBreak">
+                    La GPA viene solitamente misurata su una <b>scala 4.0</b>, dove:
+                </p>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Voto in lettere</th>
+                            <th data-translate="gpaValueHeader">Valore GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="howToCalculateHeading">Come posso calcolare la mia media dei voti (GPA) universitaria?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Se conosci la formula, calcolare la GPA è molto semplice. La tua media dei voti si basa sui voti ottenuti in ogni corso e sul numero di crediti formativi di ogni corso.
+                </p>
+                <h2 data-translate="formulaHeading">Formula</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">GPA = (Punteggio Totale) ÷ (Crediti Formativi Totali)</b><br data-translate="formulaBreak">
+                    Salta i calcoli manuali e usa semplicemente il Calcolatore GPA universitario per ottenere il risultato in pochi secondi: veloce, preciso e senza problemi!
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="useCasesHeading">Casi d'uso di questo calcolatore</h2>
+                <h3 data-translate="useCaseStudentsHeading">Studenti universitari</h3>
+                <p data-translate="useCaseStudentsParagraph">
+                    Abbiamo creato questo sito web per gli studenti universitari che desiderano rimanere aggiornati sui propri progressi accademici. Che tu stia puntando a borse di studio, onorificenze o semplicemente a soddisfare i requisiti per la laurea, questo strumento ti aiuta a tenere traccia del tuo rendimento.
+                </p>
+                <h3 data-translate="useCaseProfessorsHeading">Docenti universitari</h3>
+                <p data-translate="useCaseProfessorsParagraph">
+                    I professori possono utilizzare lo strumento per controllare o verificare rapidamente la media dei voti di uno studente in base ai voti e ai crediti formativi. È un modo semplice ed efficiente per calcolare il rendimento accademico senza calcoli manuali.
+                </p>
+                <h3 data-translate="useCaseAdvisorsHeading">Relatori e tutor</h3>
+                <p data-translate="useCaseAdvisorsParagraph">
+                    Relatori e tutor possono utilizzare il Calcolatore GPA universitario per calcolare rapidamente il rendimento accademico di uno studente. Li aiuta a ottenere un quadro chiaro dei progressi di uno studente senza dover eseguire calcoli manuali.
+                </p>
+                <h3 data-translate="useCaseParentsHeading">Genitori</h3>
+                <p data-translate="useCaseParentsParagraph">
+                    I genitori possono utilizzare questo calcolatore per rimanere informati sui progressi accademici dei propri figli.
+                </p>
+                <h3 data-translate="useCaseCollegesHeading">Università</h3>
+                <p data-translate="useCaseCollegesParagraph">Viene spesso utilizzato dalle università per:</p>
+                <ul data-translate="useCaseCollegesList">
+                    <li data-translate="listAcademicStanding">Titolo di studio</li>
+                    <li data-translate="listGraduationEligibility">Idoneità alla laurea</li>
+                    <li data-translate="listScholarships">Borse di studio o aiuti finanziari</li>
+                    <li data-translate="listHonors">Qualifica di merito e iscrizione alla Dean's List</li>
+                    <li data-translate="listJobApplications">Domande di lavoro o tirocinio</li>
+                </ul>
+            </div>
+
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Domande frequenti</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Quanto è accurato questo calcolatore GPA universitario?</h3>
+                    <p data-translate="faqAnswer1">Questo calcolatore fornisce risultati accurati a condizione che si inseriscano i voti e i crediti corretti per ogni corso.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Posso usare questo calcolatore per più semestri?</h3>
+                    <p data-translate="faqAnswer2">Sì, puoi calcolare la GPA per un singolo semestre o combinare più semestri per trovare la tua media cumulativa.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Devo scaricare qualcosa?</h3>
+                    <p data-translate="faqAnswer3">No, lo strumento funziona online: basta aprire il calcolatore, inserire i tuoi dati e otterrai immediatamente la tua media dei voti.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem4">
+                    <h3 data-translate="faqQuestion4">I miei dati verranno salvati?</h3>
+                    <p data-translate="faqAnswer4">No, il calcolatore non memorizza alcun dato. Tutte le informazioni inserite rimangono private e vengono cancellate una volta usciti dalla pagina.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem5">
+                    <h3 data-translate="faqQuestion5">Cosa succede se commetto un errore durante l'inserimento dei voti?</h3>
+                    <p data-translate="faqAnswer5">Non preoccuparti, puoi modificare o reimpostare il modulo in qualsiasi momento per correggere i tuoi dati.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script data-translate="scriptTag">
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const gradeOptions = [
+                { value: '4.0', text: 'A' },
+                { value: '3.7', text: 'A–' },
+                { value: '3.3', text: 'B+' },
+                { value: '3.0', text: 'B' },
+                { value: '2.7', text: 'B–' },
+                { value: '2.3', text: 'C+' },
+                { value: '2.0', text: 'C' },
+                { value: '1.7', text: 'C–' },
+                { value: '1.3', text: 'D+' },
+                { value: '1.0', text: 'D' },
+                { value: '0.0', text: 'F' }
+            ];
+            function populateGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Seleziona voto';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
+                });
+            }
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Aggiungi corso" data-translate="newCourseInput"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3" data-translate="newCreditsInput"></td>
+                    <td><select name="grade" data-translate="newGradeSelect"></select></td>
+                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+                const newSelect = newRow.querySelector('select[name="grade"]');
+                populateGradeSelect(newSelect);
+            }
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        totalCredits += credits;
+                        totalGradePoints += credits * gradeValue;
+                    }
+                });
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]')) {
+                    calculateGPA();
+                }
+            });
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+            // Populate initial existing rows with grade options
+            const initialGradeSelects = document.querySelectorAll('select[name="grade"]');
+            initialGradeSelects.forEach(select => populateGradeSelect(select));
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>High School GPA-Rechner – Schneller, kostenloser und genauer Noten Tracker</title>
+    <meta name="description" content="Verwenden Sie diesen High-School-GPA-Rechner, um Ihren High-School-Notendurchschnitt zu berechnen. Keine Anmeldung erforderlich. Kostenlos, schnell und einfach zu bedienen.">
+    <meta name="keywords" content="High School GPA-Rechner, Notendurchschnitt berechnen, wie berechne ich GPA, was ist mein GPA, High School GPA-Rechner, Online-GPA-Rechner, 4.0 Skala, GPA-Rechner nach Kreditstunden, UF GPA-Rechner">
+
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Hreflang Tags (Added Here) -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/highschool-gpa"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/de/highschool-gpa">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+        .faq-item p {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.open p {
+            max-height: 500px;
+        }
+    </style>
+</head>
+
+<body data-lang="de">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>High School GPA-Rechner</h1>
+            <p>Unser High School GPA-Rechner hilft Schülern, ihren Notendurchschnitt anhand ihrer Kursnoten und Leistungspunkte zu berechnen. Schüler nutzen dieses Tool, um ihre akademischen Leistungen zu verfolgen und sich auf die Zulassung zum College und die Berechtigung für Stipendien vorzubereiten.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Notendurchschnitt der High School berechnen</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Kurs</th>
+                            <th>Kredite</th>
+                            <th>Note</th>
+                            <th class="weight-column">Kurstyp</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="z.B. Mathematik 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z.B. 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>Note auswählen</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">Normal</option>
+                                    <option value="0.5">Ehren</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">College</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Weitere Kurse hinzufügen</button>
+                    <button id="calculateGpaBtn" class="primary-btn">GPA berechnen</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>GPA-Zusammenfassung</h2>
+                <div class="gpa-box">
+                    <span>Aktueller GPA</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/highschool-gpa"><button id="resetCoursesButton" class="secondary-btn">Alle Kurse zurücksetzen</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section"></div>
+            <p style="text-align: left;">
+        Unser High School GPA-Rechner hilft Schülern, ihren Notendurchschnitt anhand ihrer Kursnoten und Leistungspunkte zu berechnen. Schüler nutzen dieses Tool, um ihre akademischen Leistungen zu verfolgen und sich auf die Zulassung zum College und die Berechtigung für Stipendien vorzubereiten.
+    </p>
+</div>
+            <section class="how-to-use-section centered-section">
+                <h2>Wie verwende ich den High School GPA-Rechner?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Schritt 1: Kursnamen eingeben</span></h3>
+                        <p style="text-align: left;"><span>Zuerst müssen Sie den Kursnamen eingeben.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Schritt 2: Noten auswählen</span></h3>
+                        <p style="text-align: left;"><span>Wählen Sie die Note aus, die Sie in jedem Fach erreicht haben (z.B. A, B, C usw.).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Schritt 3: Kreditstunden eingeben</span></h3>
+                        <p style="text-align: left;"><span>Geben Sie die Kreditstunden für jeden Kurs ein (normalerweise zwischen 1 und 4 Stunden).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Schritt 4: Kurstyp auswählen</span></h3>
+                        <p style="text-align: left;"><span>Dies ist ein optionaler Schritt für gewichtete und ungewichtete Berechnungen.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Schritt 5: GPA berechnen</span></h3>
+                        <p style="text-align: left;"><span>Nachdem Sie alle Eingaben gemacht haben, klicken Sie einfach auf die Schaltfläche „GPA berechnen“, um die Ergebnisse zu erhalten.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Warum unseren High School GPA-Rechner verwenden?</h2>
+                <div class="feature-row" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Mehrere Fächer/Kurse hinzufügen</h3>
+                        <p data-translate="feature1Description" style="text-align: left;">
+                            Mit diesem Tool können Sie mehrere Kurse aus Ihrem Stundenplan hinzufügen. Das bedeutet, dass Sie jedes Fach wie Mathematik, Englisch, Naturwissenschaften und Geschichte zusammen mit der erreichten Note und den Leistungspunkten für das jeweilige Fach eingeben können.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Keine Anmeldung erforderlich</h3>
+                        <p data-translate="feature2Description" style="text-align: left;">
+                            Einer der größten Vorteile unseres Rechners ist, dass keine Anmeldung erforderlich ist. Sie können das Tool sofort nutzen, ohne ein Konto zu erstellen, persönliche Daten einzugeben oder sich registrieren zu müssen.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Option zur Auswahl des Kurstyps</h3>
+                        <p data-translate="feature3Description" style="text-align: left;">
+                            Eine hilfreiche Funktion unseres High-School-GPA-Rechners ist die Möglichkeit, den Kurstyp auszuwählen, z.B. Regular, Honors, AP (Advanced Placement) oder IB (International Baccalaureate).
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Wie berechne ich den Notendurchschnitt der High School?</h2>
+                <p style="text-align: left;">
+                    Die Berechnung des High-School-Notendurchschnitts (GPA) ist einfach, sobald Sie die Schritte verstanden haben. Die meisten Schulen verwenden eine 4,0-Skala, wobei ein A 4,0 Punkte, ein B 3,0, ein C 2,0, ein D 1,0 und ein F 0 Punkte wert ist. Befolgen Sie diese Schritte, um den High-School-Notendurchschnitt manuell zu berechnen.
+                </p>
+                <ul style="text-align: left;">
+                    <li>Notieren Sie Ihre Kurse und die Noten, die Sie erhalten haben.</li>
+                    <li>Wandeln Sie jede Note mithilfe der GPA-Skala in Punkte um.</li>
+                    <li>Wenn Sie beispielsweise in Mathe eine 1 bekommen haben, sind das 4,0 Punkte.</li>
+                    <li>Multiplizieren Sie jeden Notenpunkt mit den Kreditstunden für diesen Kurs.</li>
+                    <li>Wenn Mathematik 3 Credits wert ist, dann sind 4,0 × 3 = 12 Notenpunkte.</li>
+                    <li>Machen Sie das für alle Ihre Klassen.</li>
+                    <li>Addieren Sie alle Notenpunkte.</li>
+                    <li>Addieren Sie alle Kreditstunden.</li>
+                    <li>Teilen Sie die Gesamtpunktzahl durch die Gesamtzahl der Kreditstunden.</li>
+                </ul>
+                <p style="text-align: left;">
+                    Manuelle Berechnungen nehmen Zeit in Anspruch. Verwenden Sie einfach unseren GPA-Rechner für die High School, um die Berechnungen schnell und einfach durchzuführen.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Wer kann diesen Rechner verwenden?</h2>
+                <h3>Schüler</h3>
+                <p style="text-align: left;">
+                    Mit diesem Rechner können Schüler ihre schulischen Leistungen verfolgen, akademische Ziele setzen und sich auf die Bewerbung an Hochschulen vorbereiten. Er hilft ihnen, über ihre Fortschritte informiert zu bleiben und Bereiche zu identifizieren, in denen Verbesserungsbedarf besteht.
+                </p>
+                <h3>Lehrer und Berater</h3>
+                <p style="text-align: left;">
+                    Lehrer und Berater können dieses Tool verwenden, um Schülern dabei zu helfen, ihren akademischen Status zu überwachen, sie bei der Kursauswahl zu beraten und sie bei der Planung ihres Studiums oder Stipendiums zu unterstützen.
+                </p>
+                <h3>Eltern</h3>
+                <p style="text-align: left;">
+                    Eltern können den GPA-Rechner für die High School nutzen, um den schulischen Fortschritt ihres Kindes im Blick zu behalten. Er hilft ihnen zu verstehen, wie sich Noten auf die Gesamtleistung auswirken, und ermöglicht es ihnen, ihr Kind bei der Festlegung akademischer Ziele und der Vorbereitung auf das College zu unterstützen.
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Häufig gestellte Fragen:</h2>
+                <div class="faq-item">
+                    <h3>Was sind Leistungspunkte und wie erfahre ich sie?</h3>
+                    <p style="text-align: left;">
+                        Die Leistungspunkte geben die Gewichtung eines Kurses an. Die meisten Highschool-Kurse umfassen 1 Leistungspunkt, manche (wie Labor- oder Wahlfächer) können jedoch 0,5 oder mehr Leistungspunkte umfassen.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Warum ist die Berechnung meines High School GPA wichtig?</h3>
+                    <p style="text-align: left;">
+                        Die Berechnung Ihres High-School-GPA ist wichtig, da er Ihre allgemeine akademische Leistung widerspiegelt. Hochschulen, Stipendienprogramme und sogar einige Bewerbungen verwenden häufig den Notendurchschnitt, um Ihre schulischen Leistungen zu bewerten.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Kann mir dieses Tool helfen, meinen Notendurchschnitt zu verbessern?</h3>
+                    <p style="text-align: left;">
+                        Nein, dieses Tool hilft Ihnen nicht, Ihren Notendurchschnitt zu verbessern. Es hilft Ihnen jedoch, Ihren GPA zu verfolgen. Sie können unseren GPA-Planungsrechner verwenden, um ihn zu verbessern.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Muss ich mich anmelden, um den High School GPA-Rechner zu verwenden?</h3>
+                    <p style="text-align: left;">
+                        Nein, unser Rechner ist kostenlos und erfordert keine Registrierung oder Anmeldung.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const weightedToggle = document.getElementById('weightedToggle');
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="z.B. Mathematik 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="z.B. 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>Note auswählen</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">Normal</option>
+                            <option value="0.5">Ehren</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">College</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                const isWeighted = weightedToggle ? weightedToggle.checked : false;
+
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = 0;
+
+                    if (isWeighted && weightSelect) {
+                        weightValue = parseFloat(weightSelect.value);
+                    }
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            function toggleWeightColumn() {
+                if (!weightedToggle) return;
+                const isChecked = weightedToggle.checked;
+                const weightColumns = document.querySelectorAll('.weight-column');
+                const weightSelects = document.querySelectorAll('select[name="weight"]');
+                weightColumns.forEach(column => {
+                    column.style.display = isChecked ? '' : 'none';
+                });
+                if (!isChecked) {
+                    weightSelects.forEach(select => {
+                        select.value = "0";
+                        select.disabled = true;
+                    });
+                } else {
+                    weightSelects.forEach(select => {
+                        select.disabled = false;
+                    });
+                }
+                calculateGPA();
+            }
+
+            if (addMoreCourseBtn) {
+                addMoreCourseBtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    addCourseRow();
+                    calculateGPA();
+                });
+            }
+
+            if (calculateGpaBtn) {
+                calculateGpaBtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    calculateGPA();
+                    const gpaSummarySection = document.getElementById('gpaSummarySection');
+                    if (gpaSummarySection) {
+                        gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            if (gradeTableBody) {
+                gradeTableBody.addEventListener('input', () => {
+                    calculateGPA();
+                });
+
+                gradeTableBody.addEventListener('click', (event) => {
+                    const target = event.target;
+                    if (target.closest('.delete-btn')) {
+                        event.preventDefault();
+                        target.closest('tr').remove();
+                        calculateGPA();
+                    }
+                });
+            }
+
+            // Initial setup
+            addCourseRow();
+            if (weightedToggle) {
+                weightedToggle.addEventListener('change', toggleWeightColumn);
+                toggleWeightColumn();
+            }
+
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                
+                // Add a class to indicate it should be open by default
+                item.classList.add('open');
+                
+                header.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

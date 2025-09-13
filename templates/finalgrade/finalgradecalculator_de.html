@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Endnotenrechner</title>
+    <meta name="description"
+        content="Dieser Endnotenrechner zeigt Ihnen die Note an, die Sie in Ihrer Abschlussprüfung benötigen, um Ihre Wunschnote zu erreichen, oder Ihre Gesamtnote basierend auf Ihrer Abschlussprüfungsnote."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/de/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+<body data-lang="de" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Endnotenrechner</h1>
+
+            <p style="text-align: center;">Ermitteln Sie mit diesem Rechner die Mindestnote, die Sie in Ihrer Abschlussprüfung benötigen, um die gewünschte Kursnote zu erreichen.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Geben Sie Ihre Noten und Gewichte ein</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Gewünschte Note</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="z.B. 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Von</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Aktuelle Note</label>
+                            <input type="number" id="current_grade" min="0" placeholder="z.B. 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Von</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Gewichtung der Abschlussprüfung</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="z.B. 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Von</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Endnote berechnen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Erforderliche Abschlussnote</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">Sie müssen mindestens erreichen:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">Zurücksetzen</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+    <h2 data-translate="howToUseHeading">So verwenden Sie den Endnotenrechner</h2>
+    <p>Die Verwendung des Notenrechners für die Abschlussnote ist kinderleicht. Befolgen Sie einfach die folgenden Schritte, um die Berechnung auf <a href="/">gpacalculatorcollege.com</a> durchzuführen:</p>
+    <div class="how-to-use-container" data-translate="howToUseContainer">
+        <div class="step" data-translate="step1">
+            <div class="step-icon">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <h3><span data-translate="step1Title">Gewünschte Note</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step1Description">Geben Sie Ihre gewünschte Note bis zum Semesterende (maximal 100 Punkte) oder eine andere Zahl ein.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step2">
+            <div class="step-icon">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <h3><span data-translate="step2Title">Aktuelle Note</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step2Description">Geben Sie Ihre aktuelle Note ein, die Sie bisher im Kurs basierend auf allen abgeschlossenen Aufgaben, Tests, Projekten und Prüfungen erreicht haben.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step3">
+            <div class="step-icon">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <h3><span data-translate="step3Title">Gewichtung der Abschlussnote</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step3Description">Geben Sie die Gewichtung der Abschlussnote (maximal 100 Punkte) ein. Dies ist der Prozentsatz Ihrer Abschlussprüfung, Ihres Projekts oder Ihrer letzten Prüfungsleistung an Ihrer Gesamtnote.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step4">
+            <div class="step-icon">
+                <i class="fa-solid fa-4"></i>
+            </div>
+            <h3><span data-translate="step4Title">Klicken Sie auf Berechnen</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step4Description">Nachdem Sie alle Informationen eingegeben haben, klicken Sie einfach auf die Schaltfläche „Endnote berechnen“.</span>
+            </p>
+        </div>
+    </div>
+</section>
+            
+            <section class="content-section centered-section">
+    <h2 data-translate="whyUseHeading">Warum unsere notendurchschnitt berechnen?</h2>
+    <p style="text-align: left;" data-translate="whyUseDescription">
+        Unser Rechner verfügt über eine einfache Benutzeroberfläche, die jeder ohne mathematische Kenntnisse verwenden kann. Geben Sie einfach Ihre gewünschte Abschlussnote, die aktuelle Note und die Gewichtung Ihrer verbleibenden Arbeitsnote ein und klicken Sie dann auf „Berechnen“, um sofort die Ergebnisse anzuzeigen.
+    </p>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature1Title">Benutzerfreundlich</h3>
+            <p style="text-align: left;" data-translate="feature1Description">Unser Rechner ist dank seiner benutzerfreundlichen Oberfläche für jeden leicht zu bedienen – auch ohne mathematische Vorkenntnisse. Geben Sie einfach Ihre gewünschte Abschlussnote, Ihre aktuelle Note und die Gewichtung Ihrer verbleibenden Prüfungsleistungen ein und klicken Sie auf „Berechnen“, um sofort die Ergebnisse anzuzeigen.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature2Title">Präzise Berechnungen</h3>
+            <p style="text-align: left;" data-translate="feature2Description">Unser Rechner verwendet präzise Formeln, um Ihnen stets zuverlässige Ergebnisse zu liefern. Durch die Berücksichtigung der genauen Gewichtung Ihrer abgeschlossenen und verbleibenden Kursarbeiten entfällt das Rätselraten und Sie erhalten ein realistisches Bild davon, was Sie zum Erreichen Ihres Ziels benötigen.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature3Title">Planen Sie Ihr Studium</h3>
+            <p style="text-align: left;" data-translate="feature3Description">Er hilft Ihnen, Ihre Zeit und Energie auf das Wesentliche zu konzentrieren. Wenn Sie die genaue Punktzahl kennen, die Sie für Ihre anstehenden Aufgaben benötigen, können Sie einen intelligenten Lernplan erstellen und Zeitverschwendung mit weniger wichtigen Aufgaben vermeiden.</p>
+        </div>
+    </div>
+</section>
+
+<div class="content-section centered-section">
+    <h2 data-translate="index_whatIsFinalGradeCalcHeading">Was ist der notendurchschnitt berechnen?</h2>
+    <p data-translate="index_whatIsFinalGradeCalcParagraph">
+        Dieser notendurchschnitt berechnen hilft Studierenden, die erforderliche Punktzahl für die verbleibenden Aufgaben oder Prüfungen zu ermitteln, um die gewünschte Gesamtnote zu erreichen. Er berechnet schnell die erforderlichen Noten basierend auf der aktuellen Leistung und dem Gewicht der verbleibenden Arbeit.
+    </p>
+
+    <h2 data-translate="index_finalGradeFormulaHeading">Final Grade Calculation: Formula and Example</h2>
+    <p data-translate="index_finalGradeFormulaText">
+        <b data-translate="index_formulaLabel">Formel:</b><br>
+        <span data-translate="index_formulaText">Abschlussnote = (Aktuelle Note × Gewicht der abgeschlossenen Arbeit) + (Gewünschte Abschlussprüfungsnote × Gewicht der verbleibenden Arbeit)</span>
+        <br><br>
+        <span data-translate="index_formulaVariables">
+            Wo:<br>
+            Aktuelle Note = Ihre bisherige Durchschnittsnote im Kurs<br>
+            Gewichtung der abgeschlossenen Arbeit = Prozentsatz des Kurses, der bereits benotet wurde<br>
+            Restarbeitsgewicht = Prozentsatz der noch zu erbringenden Studienleistung (z.B. Abschlussprüfung)
+        </span>
+    </p>
+
+    <h2 data-translate="index_exampleHeading">Beispiel:</h2>
+    <p>
+        <b data-translate="index_exampleCurrentGrade">Aktuelle Note:</b> 85 %<br>
+        <b data-translate="index_exampleCompletedWeight">Gewichtung der abgeschlossenen Arbeit:</b> 70 %<br>
+        <b data-translate="index_exampleFinalExamWeight">Gewichtung der Abschlussprüfung:</b> 30 %<br>
+        <b data-translate="index_exampleDesiredGrade">Gewünschte Abschlussnote:</b> 90 %
+    </p>
+
+    <h3 data-translate="index_formulaStepsHeading">Formel:</h3>
+    <p>
+        <span data-translate="index_formulaStepsFormula">90 = (85 x 0,70) + (Erforderliche Prüfungsnote x 0,30)</span>
+    </p>
+
+    <h3 data-translate="index_stepByStepHeading">Schritt für Schritt:</h3>
+    <ol data-translate="index_stepsList" style="padding-left: 30px;">
+        <li data-translate="index_step1">85 x 0,70 = 59,5</li>
+        <li data-translate="index_step2">90 - 59,5 = 30,5</li>
+        <li data-translate="index_step3">30,5 ÷ 0,30 = 101,67</li>
+    </ol>
+
+    <p data-translate="index_resultText">
+        Ergebnis: Um eine 90%ige Endnote zu erreichen, bräuchte man in der Abschlussprüfung etwa <b>102%</b>, was mathematisch unmöglich ist, es sei denn, es stehen Zusatzpunkte zur Verfügung.
+    </p>
+</div>
+
+<div class="content-section centered-section">
+    <h2 data-translate="useCasesHeading">Anwendungsfälle eines notendurchschnitt berechnen</h2>
+    <p data-translate="useCasesIntro">
+        Hier sind einige nützliche Beispiele für den Notenrechner für die Abschlussprüfung:
+    </p>
+
+    <h3 data-translate="useCase1Heading">Planung des Studienaufwands</h3>
+    <p data-translate="useCase1Text">
+        Mit diesem Rechner können Sie genau ermitteln, wie viele Punkte Sie für Ihre verbleibende Arbeit benötigen, damit Sie Ihre Lernzeit entsprechend planen können.
+    </p>
+
+    <h3 data-translate="useCase2Heading">Realistische Ziele setzen</h3>
+    <p data-translate="useCase2Text">
+        Ein Abschlussnotenrechner hilft Ihnen, erreichbare akademische Ziele zu setzen, indem er Ihnen zeigt, ob Ihre Wunschnote realistisch erreichbar ist.
+    </p>
+
+    <h3 data-translate="useCase3Heading">Strategische Planung</h3>
+    <p data-translate="useCase3Text">
+        Sie können einen zielgerichteten Lernplan erstellen. Wenn Sie genau wissen, wie stark sich jede verbleibende Aufgabe auf Ihre Gesamtnote auswirkt, können Sie entscheiden, worauf Sie Ihre Energie konzentrieren, um optimale Ergebnisse zu erzielen.
+    </p>
+
+    <h3 data-translate="useCase4Heading">Motivation</h3>
+    <p data-translate="useCase4Text">
+        Es kann Ihre Motivation steigern, indem es vage akademische Ziele in klare, erreichbare Ziele verwandelt. Wenn Sie genau wissen, welche Punktzahl Sie für Ihre verbleibenden Aufgaben benötigen, haben Sie einen konkreten Meilenstein, auf den Sie hinarbeiten können, und Ihre Lerneinheiten wirken zielgerichteter.
+    </p>
+</div>
+
+            <section class="faq-section centered-section">
+    <h2 data-translate="faqHeading">FAQs</h2>
+    <div class="faq-container">
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq1Question">Welche Note brauche ich für meine Abschlussprüfung?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq1Answer">Dies ist die am häufigsten gestellte Frage von Studierenden: Was brauche ich für meine Abschlussprüfung vor der Abiturprüfung? Mit unserem Notenrechner können Sie dies berechnen, indem Sie Ihre Wunschnote, Ihre aktuelle Note und die Gewichtung der Abschlussprüfung eingeben.</p>
+                <p><strong>Beispiel:</strong><br>Gewünschte Note: 90 %<br>Gewichtung der Abschlussprüfung: 40 %<br>Aktuelle Note: 82 %<br>Der Rechner zeigt, dass Sie bei der Abschlussprüfung etwa 98 % benötigen, um Ihr Ziel zu erreichen.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq2Question">Funktioniert es für die GPA-Berechnung?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq2Answer">Obwohl es sich hauptsächlich um einzelne Kurse handelt, können Sie die Ergebnisse mit einem <a href="/gpa-calculator">GPA Rechner</a> verwenden, um Ihren Gesamt-GPA zu schätzen.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq3Question">Kann ich den Rechner für jedes Fach verwenden?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq3Answer">Ja, der Rechner funktioniert für alle Fächer und Kurse mit gewichteter Benotung.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq4Question">Was bedeutet 25 % der Abschlussnote?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq4Answer">Wenn Ihre Abschlussprüfung oder Ihr Abschlussprojekt 25 % Ihrer Abschlussnote ausmacht, bedeutet dies, dass ein Viertel Ihrer Gesamtnote aus dieser Bewertung stammt. Die restlichen 75 % basieren auf Ihren bisherigen Aufgaben, Tests, Projekten und Prüfungen.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Bitte geben Sie gültige Zahlen ein. Die Gewichtung der Abschlussprüfung muss zwischen 1 und 99 liegen.');
+                    return;
+                }
+                
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('Der „von“-Wert muss eine positive Zahl sein.');
+                     return;
+                }
+
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('Die Gewichtung der Abschlussprüfung muss unter 100 % liegen.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Sie benötigen in der Abschlussprüfung mehr als 100 %, was unmöglich ist. Sie müssen Ihre Wunschnote senken.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Sie haben Ihre Wunschnote bereits erreicht.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Um Ihr Ziel zu erreichen, benötigen Sie diese Note.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

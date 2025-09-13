@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SGPA'dan CGPA Hesaplayıcısı</title>
+    <meta name="description" content="Dönem not ortalamanızı kümülatif not ortalamasına kolayca dönüştürmek için bu SGPA - CGPA hesaplayıcısını kullanın.">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="keywords" content="SGPA'dan CGPA, CGPA hesaplayıcı, CGPA hesapla, online CGPA hesaplayıcı, kümülatif GPA hesaplayıcı, 4.0 GPA ölçeği, 10.0 GPA ölçeği, 5.0 GPA ölçeği">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/sgpa-to-cgpa-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/sgpa-to-cgpa-calculator"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+    <style>
+        :root {
+            --primary-color: #f8f9fa;
+            --secondary-color: #e9ecef;
+            --accent-color: #007bff;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+            --primary-dark: #0056b3;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding: 20px 10px;
+        }
+        .page-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: var(--dark-text);
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        .centered-section {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .input-section, .gpa-summary-section, .content-section {
+            background: var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .method-switch {
+            display: flex;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: var(--primary-color);
+        }
+        .method-switch button {
+            flex: 1;
+            padding: 10px;
+            background: var(--secondary-color);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9em;
+        }
+        .method-switch button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+        .method {
+            display: none;
+        }
+        .method.active {
+            display: block;
+        }
+        .semester-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+        .semester-item input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+        #addSemester {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #addSemester:hover {
+            background: var(--primary-dark);
+        }
+        .gpa-summary-section {
+            display: block !important;
+            margin-top: 20px;
+        }
+        .scale-selector {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .scale-selector select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            font-size: 1em;
+        }
+        .gpa-box {
+            background: var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            margin: 15px 0;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .primary-btn, .secondary-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            width: 100%;
+        }
+        .primary-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        .secondary-btn {
+            background: var(--secondary-color);
+            color: var(--dark-text);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        table.grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        table.grade-table th, table.grade-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+        table.grade-table th {
+            background: var(--secondary-color);
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .faq-item p {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .method-switch {
+                flex-direction: row;
+            }
+            .semester-item {
+                flex-direction: row;
+                align-items: center;
+            }
+            .semester-item input {
+                flex: 1;
+                min-width: 0;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body data-lang="tr" style="position: relative; top: -55px;">
+    {% include 'header.html' %}
+    <main class="main-content">
+        <section class="page-content">
+            <h1>SGPA'dan CGPA Hesaplayıcısı</h1>
+            <p>Bu Dönem Not Ortalaması (SGPA) - Genel Not Ortalaması (CGPA) Hesaplayıcısı, dönem performansınızı genel akademik ortalamaya dönüştürmenize yardımcı olur.</p>
+            <div class="input-section centered-section">
+                <h2>CGPA Hesapla</h2>
+                <div class="scale-selector">
+                    <label for="scale">Not Ölçeği:</label>
+                    <select id="scale">
+                        <option value="4.0">4.0 Ölçeği</option>
+                        <option value="5.0">5.0 Ölçeği</option>
+                        <option value="10.0">10.0 Ölçeği</option>
+                    </select>
+                </div>
+                <div class="method-switch">
+                    <button class="active" data-method="method1">Yöntem 1: Bireysel SGPA'ları Girin</button>
+                    <button data-method="method2">Yöntem 2: Toplam SGPA ve Dönem Sayısını Girin</button>
+                </div>
+                <div class="method active" id="method1">
+                    <h3>Her Dönem İçin SGPA Girin</h3>
+                    <div id="semesters">
+                        <div class="semester-item">
+                            <input type="number" placeholder="SGPA (SGPA Girin)" step="0.1" min="0">
+                            <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="addSemester" class="secondary-btn">Dönem Ekle</button>
+                        <button id="calculate1" class="primary-btn">CGPA Hesapla</button>
+                    </div>
+                </div>
+                <div class="method" id="method2">
+                    <h3>Toplam SGPA ve Dönem Sayısını Girin</h3>
+                    <div class="form-group">
+                        <label for="totalSGPA">Toplam SGPA:</label>
+                        <input type="number" id="totalSGPA" placeholder="Tüm SGPA'larınızın Toplamını Girin" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalSemesters">Toplam Dönemler:</label>
+                        <input type="number" id="totalSemesters" placeholder="Toplam Dönem Sayısını Girin" min="1">
+                    </div>
+                    <div class="button-group">
+                        <button id="calculate2" class="primary-btn">CGPA Hesapla</button>
+                    </div>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>CGPA Özeti</h2>
+                <div class="gpa-box">
+                    <span>Mevcut CGPA</span>
+                    <span id="currentCgpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <button id="resetButton" class="secondary-btn">Tümünü Sıfırla</button>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Bu SGPA'dan CGPA'ya hesaplayıcı, dönem bazındaki SGPA'nızı kümülatif bir not ortalamasına dönüştürmenize yardımcı olur. İlk dönemde olsanız da, son sınıfta olsanız da, bu araç genel akademik performansınızı takip etmenize yardımcı olur.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>SGPA'dan CGPA'ya Dönüştürücü Nasıl Kullanılır</h2>
+                <div class="how-to-use-container">
+                    <p>Bu SGPA'dan CGPA'ya hesaplayıcısını kullanmak için şu basit adımları izleyin. SGPA'yı CGPA'ya dönüştürmek için iki seçenek sunuyoruz.</p>
+                    <div class="step">
+                        <h3>Bireysel SGPA'lar İçin</h3>
+                        <p>Bu SGPA hesaplayıcısına her dönemin SGPA'sını ayrı ayrı girmeniz gerekmektedir. Birden fazla dönem ekleyebilirsiniz.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Toplam SGPA İçin</h3>
+                        <p>Toplam SGPA'yı girmeniz gerekmektedir. İkinci alana toplam dönem sayısını girmeniz gerekmektedir.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Neden SGPA'dan CGPA'ya Hesaplayıcıyı Kullanmalısınız?</h2>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Doğruluk</h3>
+                        <p>Aracımız, SGPALarınızı ve seçilen not ölçeğini kullanarak doğru sonuçlar sağlar.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Kullanıcı Dostu Arayüz</h3>
+                        <p>Arayüz, sezgisel ve kullanımı kolay olacak şekilde tasarlanmıştır, teknik beceri gerektirmez.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Anında Sonuçlar</h3>
+                        <p>Sadece bir tıklama ile CGPA'nızı anında alın, size zaman ve çaba tasarrufu sağlar.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Ücretsiz Kullanım</h3>
+                        <p>Hesaplayıcı tamamen ücretsizdir, kayıt veya gizli ücret yoktur.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>SGPA ve CGPA Arasındaki Fark</h2>
+                <p>İşte dönem not ortalaması ile kümülatif not ortalaması arasındaki farkın hızlı referans tablosu:</p>
+                <div style="overflow-x: auto;">
+                    <table class="grade-table">
+                        <thead>
+                            <tr>
+                                <th>Bakış Açısı</th>
+                                <th>SGPA (Dönem Not Ortalaması)</th>
+                                <th>CGPA (Toplam Not Ortalaması)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Anlam</td>
+                                <td>Tek bir dönemde kazanılan ortalama not puanı</td>
+                                <td>Tamamlanan tüm yarıyıllardaki not ortalamaları</td>
+                            </tr>
+                            <tr>
+                                <td>Kapsam</td>
+                                <td>Sadece bir dönemle sınırlıdır</td>
+                                <td>Tüm akademik süreyi kapsar</td>
+                            </tr>
+                            <tr>
+                                <td>Kullanım Amacı</td>
+                                <td>Belirli bir yarıyıldaki performansın değerlendirilmesi</td>
+                                <td>Genel akademik performansın değerlendirilmesi</td>
+                            </tr>
+                            <tr>
+                                <td>Hesaplama</td>
+                                <td>Bir yarıyılın ders ve kredilerine göre</td>
+                                <td>Tüm SGPA'lara ve birden fazla yarıyılın kredilerine göre</td>
+                            </tr>
+                            <tr>
+                                <td>Formül</td>
+                                <td>SGPA = (Σ [Not Puanları × Ders Kredileri]) ÷ Toplam Krediler</td>
+                                <td>CGPA = (Σ [SGPA × Dönem Kredisi]) ÷ Toplam Kredi</td>
+                            </tr>
+                            <tr>
+                                <td>Güncellemeler</td>
+                                <td>Her dönem değişir</td>
+                                <td>Her yeni yarıyılın tamamlanmasından sonraki değişiklikler</td>
+                            </tr>
+                            <tr>
+                                <td>Önemi</td>
+                                <td>Dönem bazında ilerlemeyi takip etmeye yardımcı olur</td>
+                                <td>Sonuçlar, transkriptler, yerleştirmeler ve kabul için kullanılır</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2>SGPA'yı CGPA'ye Nasıl Dönüştürürsünüz?</h2>
+                <p>SGPA'yı (Dönem Not Ortalaması) CGPA'ya (Kümülatif Not Ortalaması) dönüştürmek, dönem bazındaki performansınızı tek bir genel not ortalamasında birleştirmeyi içerir.</p>
+                <h3>Tüm Dönemler Aynı Krediye Sahipse:</h3>
+                <ol>
+                    <li>Tüm SGPA'lerinizi toplayın.</li>
+                    <li>Toplamı dönem sayısına bölün.</li>
+                </ol>
+                <p><strong>Formül:</strong> CGPA = (SGPA'ların Toplamı) ÷ Toplam Dönem Sayısı</p>
+                <p><strong>Örnek:</strong> Eğer SGPA'larınız 8.2, 7.9, 8.5, ve 8.0 ise:<br>CGPA = (8.2 + 7.9 + 8.5 + 8.0) ÷ 4 = 8.15</p>
+                <h3>Yarıyılların Kredileri Farklıysa:</h3>
+                <ol>
+                    <li>Her bir SGPA'yı yarıyıl kredileriyle çarpın.</li>
+                    <li>Tüm sonuçları toplayın.</li>
+                    <li>Tüm yarıyılların toplam kredisine bölün.</li>
+                </ol>
+                <p><strong>Formül:</strong> CGPA = (Σ [SGPA × Semester Credits]) ÷ Toplam Krediler</p>
+                <p><strong>Örnek:</strong><br>
+                    1. Dönem: SGPA = 8.0, Kredi = 20<br>
+                    2. Dönem: SGPA = 7.5, Kredi = 22<br>
+                    3. Dönem: SGPA = 8.3, Kredi = 18<br><br>
+                    CGPA = (8.0×20 + 7.5×22 + 8.3×18) ÷ (20 + 22 + 18)<br>
+                    CGPA = (160 + 165 + 149.4) ÷ 60 = 7.92
+                </p>
+                <p>Manuel hesaplama çok zaman alabilir. En iyi yol, SGPA'den CGPA'ye hesaplayıcıyı kullanmaktır. Ayrıca, güncel dönem notlarınızı öğrenmek için dönem notu hesaplayıcısını da kullanabilirsiniz.</p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>SGPA ve CGPA için Yüzde Dönüşümleri</h2>
+                <p>Bazı okullar veya üniversiteler notları not puanları yerine yüzde olarak kullanır. Ayrıca, bir yere başvururken notlarınızı farklı bir formata değiştirmeniz gerekebilir. Bunu nasıl yapacağınız aşağıda açıklanmıştır:</p>
+                <h3>SGPA'yı Yüzdeye Dönüştürme</h3>
+                <ul>
+                    <li>SGPA'nız 10 puanlık bir ölçekteyse:<br>Yüzde = SGPA × 10<br>(Örnek: SGPA 8.2 → %82)</li>
+                    <li>SGPA'nız 4 puanlık bir ölçekteyse:<br>Yüzde = SGPA × 25 (yaklaşık)<br>(Örnek: SGPA 3.2 → %80)<br><em>Not: Bu, üniversitenize bağlı olarak değişiklik gösterebilir, bu nedenle yönergelerini tekrar kontrol edin.</em></li>
+                </ul>
+                <h3>CGPA'yı Yüzdeye Dönüştürme</h3>
+                <ul>
+                    <li>CGPA'nız 10 puanlık bir ölçekteyse:<br>Yüzde = CGPA × 10<br>(Örnek: CGPA 8.5 → %85)</li>
+                    <li>CGPA'nız 4 puanlık bir ölçekteyse:<br>Yüzde = CGPA × 25 (yaklaşık)<br>(Örnek: CGPA 3.4 → %85)<br><em>Not: Bu, üniversiteye göre değişiklik gösterebilir, bu nedenle resmi dönüştürme formüllerini kontrol ettiğinizden emin olun.</em></li>
+                </ul>
+            </div>
+            <div class="content-section centered-section">
+                <h2>SGPA'dan CGPA'ya Hesaplayıcı Nedir?</h2>
+                <p>SGPA'dan CGPA'ya dönüştürücü hesaplayıcı, öğrencilerin dönem not ortalamalarını (SGPA) ayrı dönemlerden toplam akademik performanslarını temsil eden kümülatif not ortalamasına (CGPA) dönüştürmelerine yardımcı olur.</p>
+                <h2>SGPA ve CGPA Nasıl Hesaplanır?</h2>
+                <p>Hem SGPA hem de CGPA bir notlandırma sistemi kullanır; genellikle 4.0 ölçeğine (ABD'de yaygın) veya 10.0 ölçeğine (Hindistan gibi ülkelerde kullanılır) dayanır. Bunları basit bir şekilde hesaplamak için şu adımları izleyin:</p>
+                <h3>SGPA (Dönem Not Ortalaması) Nasıl Hesaplanır?</h3>
+                <ol>
+                    <li>Öncelikle, her dersin notunu bulun. (Örneğin, 4.0 ölçeğinde A = 4 veya 10.0 ölçeğinde 9.)</li>
+                    <li>Notu, o dersin kredi sayısıyla çarpın.</li>
+                    <li>Bunu tüm dersleriniz için yapın ve ardından tüm sonuçları toplayın.</li>
+                    <li>Bu toplamı, tüm ders kredilerinin toplamına bölün.</li>
+                </ol>
+                <p><strong>Formül:</strong> SGPA = (Sum of [Grade Points × Credits]) ÷ Total Credits</p>
+                <h3>CGPA (Genel Not Ortalaması) Nasıl Hesaplanır?</h3>
+                <p>Farklı dönemlerin toplam kredileri farklıysa:</p>
+                <ol>
+                    <li>Her SGPA'yı o dönemin toplam kredisiyle çarpın.</li>
+                    <li>Tüm bu sonuçları toplayın.</li>
+                    <li>Tüm dönemlerin toplam kredi sayısına bölün.</li>
+                </ol>
+                <p>Her dönemin kredi sayısı aynıysa:</p>
+                <h3>Formül</h3>
+                <ul>
+                    <li>Sadece tüm SGPA'ları toplayın ve dönem sayısına bölün.</li>
+                </ul>
+                <p><strong>Formül:</strong> CGPA = (Sum of [SGPA × Semester Credits]) ÷ Total Credits</p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>SSS</h2>
+                <div class="faq-item">
+                    <h3>Bu hesap makinesini hem 10 puanlık hem de 4 puanlık notlandırma sistemlerinde kullanabilir miyim?</h3>
+                    <p>Evet! Hesap makinesi hem 10 puanlık hem de 4 puanlık notlandırma sistemlerinde kullanılabilir. Sadece tutarlı olduğunuzdan ve SGPA değerlerinizi üniversitenizin uyguladığı notlandırma sistemine göre girdiğinizden emin olun.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Bu hesap makinesi verilerimi saklıyor mu?</h3>
+                    <p>Hayır, verileriniz saklanmaz veya paylaşılmaz. Gizliliğiniz ve rahatınız için tüm hesaplamalar anında cihazınızda yapılır.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>CGPA'mı tekrar SGPA'ya dönüştürebilir miyim?</h3>
+                    <p>Hayır, CGPA kümülatif bir değerdir, bu nedenle tek tek SGPA değerlerini bulmak için tersine çeviremezsiniz. Ancak, genel akademik durumunuzu anlamak için kullanabilirsiniz.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const methodButtons = document.querySelectorAll('.method-switch button');
+            const methods = document.querySelectorAll('.method');
+            const currentCgpaDisplay = document.getElementById('currentCgpaDisplay');
+            const semestersDiv = document.getElementById('semesters');
+            const scaleSelector = document.getElementById('scale');
+            function showError(message) {
+                const errorNotification = document.createElement('div');
+                errorNotification.style.position = 'fixed';
+                errorNotification.style.top = '20px';
+                errorNotification.style.right = '20px';
+                errorNotification.style.padding = '12px 20px';
+                errorNotification.style.backgroundColor = '#e74c3c';
+                errorNotification.style.color = 'white';
+                errorNotification.style.borderRadius = '5px';
+                errorNotification.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                errorNotification.style.zIndex = '1000';
+                errorNotification.style.fontFamily = 'Poppins, sans-serif';
+                errorNotification.textContent = message;
+                document.body.appendChild(errorNotification);
+                setTimeout(() => {
+                    errorNotification.remove();
+                }, 3000);
+            }
+            function updateCGPA(cgpa) {
+                currentCgpaDisplay.textContent = cgpa.toFixed(2);
+            }
+            function clearAllFields() {
+                const activeMethod = document.querySelector('.method.active');
+                if (activeMethod.id === 'method1') {
+                    semestersDiv.innerHTML = '';
+                    addSemesterRow();
+                } else if (activeMethod.id === 'method2') {
+                    document.getElementById('totalSGPA').value = '';
+                    document.getElementById('totalSemesters').value = '';
+                }
+                currentCgpaDisplay.textContent = '0.00';
+            }
+            function calculateCGPA1() {
+                const scale = parseFloat(scaleSelector.value);
+                const inputs = document.querySelectorAll('#semesters input');
+                let sum = 0;
+                let count = 0;
+                let isValid = true;
+                inputs.forEach(input => {
+                    const sgpa = parseFloat(input.value);
+                    if (!isNaN(sgpa)) {
+                        if (sgpa > scale) {
+                            showError(`Hata: SGPA, seçilen ölçek için ${scale} değerinden büyük olamaz.`);
+                            isValid = false;
+                            return;
+                        }
+                        sum += sgpa;
+                        count++;
+                    }
+                });
+                if (isValid && count > 0) {
+                    const cgpa = sum / count;
+                    updateCGPA(cgpa);
+                } else if (count === 0) {
+                    showError('Hata: Lütfen en az bir SGPA girin.');
+                }
+            }
+            function calculateCGPA2() {
+                const scale = parseFloat(scaleSelector.value);
+                const totalSGPA = parseFloat(document.getElementById('totalSGPA').value);
+                const totalSemesters = parseFloat(document.getElementById('totalSemesters').value);
+                if (isNaN(totalSGPA) || isNaN(totalSemesters) || totalSemesters <= 0) {
+                    showError('Hata: Lütfen Toplam SGPA ve Dönemler için geçerli değerler girin.');
+                    return;
+                }
+                const maxPossibleSGPA = totalSemesters * scale;
+                if (totalSGPA > maxPossibleSGPA) {
+                    showError(`Hata: Toplam SGPA, ${totalSemesters} dönem için ${scale} ölçeğinde ${maxPossibleSGPA} değerinden büyük olamaz.`);
+                    return;
+                }
+                const cgpa = totalSGPA / totalSemesters;
+                updateCGPA(cgpa);
+            }
+            function addSemesterRow() {
+                const scale = parseFloat(scaleSelector.value);
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-item';
+                newSemester.innerHTML = `
+                    <input type="number" placeholder="SGPA (SGPA Girin)" step="0.1" min="0" max="${scale}">
+                    <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                `;
+                semestersDiv.appendChild(newSemester);
+                newSemester.querySelector('.remove-btn').addEventListener('click', () => {
+                    newSemester.remove();
+                    calculateCGPA1();
+                });
+                newSemester.querySelector('input').addEventListener('input', calculateCGPA1);
+            }
+            function updateMaxAttributes() {
+                const scale = parseFloat(scaleSelector.value);
+                const inputs = document.querySelectorAll('#semesters input');
+                inputs.forEach(input => {
+                    input.setAttribute('max', scale);
+                });
+            }
+            methodButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    methodButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    methods.forEach(method => method.classList.remove('active'));
+                    document.getElementById(button.dataset.method).classList.add('active');
+                    currentCgpaDisplay.textContent = '0.00';
+                });
+            });
+            document.getElementById('addSemester').addEventListener('click', addSemesterRow);
+            document.getElementById('calculate1').addEventListener('click', calculateCGPA1);
+            document.getElementById('calculate2').addEventListener('click', calculateCGPA2);
+            document.getElementById('resetButton').addEventListener('click', clearAllFields);
+            scaleSelector.addEventListener('change', () => {
+                clearAllFields();
+                updateMaxAttributes();
+            });
+            addSemesterRow();
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

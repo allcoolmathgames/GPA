@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculateur de moyenne générale au collège - Connaissez votre moyenne générale (GPA)</title>
+    <meta name="description" content="Calculez facilement votre moyenne générale universitaire grâce à notre calculateur gratuit. Saisissez vos notes et vos crédits pour obtenir des résultats instantanés, sans inscription." data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="calculateur GPA, calculer GPA, comment calculer GPA, quelle est ma GPA, calculateur de moyenne générale, calculateur GPA en ligne, échelle GPA 4.0, calculateur GPA par heure de crédit, calculateur GPA" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/fr" data-translate="canonicalLink">
+
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+</head>
+<body data-lang="fr" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calculateur de moyenne générale au collège</h1>
+            <p data-translate="introParagraph">Utilisez ce <a href="/fr/gpa-calculator" data-translate="gpaCalculatorLink" style="text-decoration: none;">calculateur de GPA</a> pour calculer facilement votre moyenne générale universitaire en un seul clic.</p>
+
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calculer la moyenne générale</h2>
+                <table class="course-input-table" data-translate="courseTable">
+                    <thead data-translate="tableHead">
+                        <tr>
+                            <th data-translate="tableHeaderCourse">Cours</th>
+                            <th data-translate="tableHeaderCredits">Crédits</th>
+                            <th data-translate="tableHeaderGrade">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody" data-translate="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Ajouter un cours" data-translate="courseInput1"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3" data-translate="creditsInput1"></td>
+                            <td><select name="grade" data-translate="gradeSelect1"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Ajouter un cours" data-translate="courseInput2"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 4" data-translate="creditsInput2"></td>
+                            <td><select name="grade" data-translate="gradeSelect2"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Ajouter un cours" data-translate="courseInput3"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 2" data-translate="creditsInput3"></td>
+                            <td><select name="grade" data-translate="gradeSelect3"></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="addMoreCourseBtn" class="secondary-btn" data-translate="addMoreCoursesButton">Ajouter plus de cours</button>
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calculer la moyenne générale</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Résumé de la moyenne générale</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Moyenne générale actuelle</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Réinitialiser tous les cours</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Ce calculateur de moyenne générale universitaire suit votre moyenne générale. Que vous soyez au premier semestre ou que vous ayez déjà quelques années d'études, cet outil vous aide à calculer votre moyenne générale.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Comment utiliser le calculateur de moyenne générale ?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Étape 1 : Entrez vos cours</h3>
+                        <p data-translate="step1Description">Énumérez chaque cours que vous avez suivi au cours du semestre.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Étape 2 : Ajoutez les heures de crédit</h3>
+                        <p data-translate="step2Description">Saisissez les heures de crédit pour chaque cours (généralement 1 à 4 heures).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Étape 3 : Sélectionnez vos notes</h3>
+                        <p data-translate="step3Description">Choisissez la note que vous avez obtenue pour chaque cours (A, B, C, etc.).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Étape 4 : Cliquez sur <b>Calculer la moyenne générale</b></h3>
+                        <p data-translate="step4Description">Appuyez sur le bouton pour voir instantanément votre moyenne générale.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Pourquoi utiliser notre calculateur de moyenne générale ?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Précision</h3>
+                        <p data-translate="feature1Description">Notre outil fournit des résultats précis grâce à vos notes et à vos crédits, vous permettant ainsi de suivre vos progrès dans vos études.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interface conviviale</h3>
+                        <p data-translate="feature2Description">Nous avons conçu l'interface de cet outil pour être conviviale et accessible à tous. Aucune compétence technique n'est requise. Tout est clairement indiqué et facile à comprendre, ce qui rend le processus rapide et sans stress, même si c'est votre première utilisation d'un calculateur de moyenne générale.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Suivi des objectifs académiques</h3>
+                        <p data-translate="feature3Description">Cet outil vous aide à rester concentré sur vos objectifs académiques. En consultant régulièrement votre moyenne générale, vous pouvez évaluer vos performances, identifier les points à améliorer et prendre des décisions éclairées pour améliorer vos notes. Que vous visiez des distinctions, des bourses ou l'obtention d'un diplôme, cet outil vous maintient sur la bonne voie.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Résultats instantanés et rapides</h3>
+                        <p data-translate="feature4Description">Obtenez votre moyenne générale calculée instantanément ! Il vous suffit de saisir vos notes et vos crédits : pas d'attente, pas de chargement, des résultats rapides et fiables.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Utilisation gratuite</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com est 100 % gratuit : aucune inscription, aucun frais caché et aucune limite. Saisissez simplement vos notes et vos crédits pour obtenir votre moyenne générale instantanément, à tout moment.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="navigation-cards-section centered-section" data-translate="navigationCardsSection">
+                <h2 data-translate="moreToolsHeading">Plus d'outils de calcul de moyenne générale</h2>
+                <div class="cards-container" data-translate="cardsContainer">
+                    <div class="card" id="priorSemesterCard" data-translate="priorSemesterCard">
+                        <h3 data-translate="priorSemesterCardTitle">Moyenne générale des semestres précédents/finale</h3>
+                        <p data-translate="priorSemesterCardDescription">Calculez votre moyenne générale en incluant les semestres précédents ou votre moyenne générale cumulative finale.</p>
+                        <a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code='fr') }}" class="card-button" data-translate="goToCalculatorButton1">Aller au calculateur</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard" data-translate="gpaPlanningCard">
+                        <h3 data-translate="gpaPlanningCardTitle">Planification de la moyenne générale</h3>
+                        <p data-translate="gpaPlanningCardDescription">Planifiez votre moyenne générale pour les semestres futurs afin d'atteindre une moyenne générale cumulative cible.</p>
+                        <a href="{{ url_for('lang_routes.gpa_planning', lang_code='fr') }}" class="card-button" data-translate="goToCalculatorButton2">Aller au calculateur</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Qu'est-ce que la moyenne générale au collège ?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    La moyenne pondérée cumulative (MPC) est un chiffre qui indique vos résultats scolaires globaux à l'université. Elle est calculée en convertissant vos notes (comme A, B ou C) en chiffres et en faisant la moyenne des crédits de chaque cours.
+                    <br data-translate="whatIsGpaBreak">
+                    La moyenne générale est généralement mesurée sur une échelle de <b>4,0</b>, où :
+                </p>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Note</th>
+                            <th data-translate="gpaValueHeader">Valeur GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="howToCalculateHeading">Comment calculer ma moyenne générale (GPA) à l'université ?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Si vous connaissez la formule, calculer votre moyenne générale est très simple. Votre moyenne générale est calculée à partir des notes obtenues dans chaque cours et du nombre d'heures de crédit correspondant à chaque cours.
+                </p>
+                <h2 data-translate="formulaHeading">Formule</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">GPA = Total des points ÷ Total des heures de crédit</b><br data-translate="formulaBreak">
+                    Oubliez les calculs manuels et utilisez simplement le calculateur de GPA pour obtenir votre résultat en quelques secondes : rapide, précis et simple !
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="useCasesHeading">Exemples d'utilisation de ce calculateur</h2>
+                <h3 data-translate="useCaseStudentsHeading">Étudiants</h3>
+                <p data-translate="useCaseStudentsParagraph">
+                    Ce site web est destiné aux étudiants souhaitant suivre leurs progrès scolaires. Que vous visiez une bourse, une distinction ou que vous souhaitiez simplement obtenir votre diplôme, il vous permet de suivre vos performances.
+                </p>
+                <h3 data-translate="useCaseProfessorsHeading">Professeurs d'université</h3>
+                <p data-translate="useCaseProfessorsParagraph">
+                    Les professeurs peuvent utiliser cet outil pour vérifier rapidement la moyenne générale d'un étudiant en fonction de ses notes et de ses crédits. C'est un moyen simple et efficace de calculer les performances scolaires sans calculs manuels.
+                </p>
+                <h3 data-translate="useCaseAdvisorsHeading">Conseillers et tuteurs</h3>
+                <p data-translate="useCaseAdvisorsParagraph">
+                    Les conseillers et tuteurs peuvent utiliser le calculateur de moyenne générale pour calculer rapidement les performances scolaires d'un étudiant. Il leur permet d'avoir une vision claire de ses progrès sans avoir à effectuer de calculs manuels.
+                </p>
+                <h3 data-translate="useCaseParentsHeading">Parents</h3>
+                <p data-translate="useCaseParentsParagraph">
+                    Les parents peuvent utiliser ce calculateur pour suivre les progrès scolaires de leur enfant.
+                </p>
+                <h3 data-translate="useCaseCollegesHeading">Universités</h3>
+                <p data-translate="useCaseCollegesParagraph">Ce terme est souvent utilisé par les universités pour :</p>
+                <ul data-translate="useCaseCollegesList">
+                    <li data-translate="listAcademicStanding">Niveau académique</li>
+                    <li data-translate="listGraduationEligibility">Admissibilité au diplôme</li>
+                    <li data-translate="listScholarships">Bourses ou aides financières</li>
+                    <li data-translate="listHonors">Mentions d'honneur et mentions du doyen</li>
+                    <li data-translate="listJobApplications">Candidatures à un emploi ou à un stage</li>
+                </ul>
+            </div>
+
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Foire aux questions</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Quelle est la précision de ce calculateur de moyenne générale ?</h3>
+                    <p data-translate="faqAnswer1">Ce calculateur fournit des résultats précis à condition que vous saisissiez les notes et les crédits corrects pour chaque cours.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Puis-je utiliser ce calculateur pour plusieurs semestres ?</h3>
+                    <p data-translate="faqAnswer2">Oui, vous pouvez calculer votre moyenne générale pour un seul semestre ou combiner plusieurs semestres pour obtenir votre moyenne cumulative.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Dois-je télécharger quelque chose ?</h3>
+                    <p data-translate="faqAnswer3">Non, l'outil fonctionne en ligne : ouvrez simplement le calculateur, saisissez vos informations et obtenez votre moyenne générale instantanément.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem4">
+                    <h3 data-translate="faqQuestion4">Mes informations seront-elles enregistrées ?</h3>
+                    <p data-translate="faqAnswer4">Non, le calculateur ne stocke aucune donnée. Toutes les informations que vous saisissez restent privées et sont effacées dès que vous quittez la page.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem5">
+                    <h3 data-translate="faqQuestion5">Que se passe-t-il si je fais une erreur en saisissant mes notes ?</h3>
+                    <p data-translate="faqAnswer5">Pas d'inquiétude, vous pouvez modifier ou réinitialiser le formulaire à tout moment pour corriger vos saisies.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script data-translate="scriptTag">
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const gradeOptions = [
+                { value: '4.0', text: 'A' },
+                { value: '3.7', text: 'A–' },
+                { value: '3.3', text: 'B+' },
+                { value: '3.0', text: 'B' },
+                { value: '2.7', text: 'B–' },
+                { value: '2.3', text: 'C+' },
+                { value: '2.0', text: 'C' },
+                { value: '1.7', text: 'C–' },
+                { value: '1.3', text: 'D+' },
+                { value: '1.0', text: 'D' },
+                { value: '0.0', text: 'F' }
+            ];
+            function populateGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Sélectionner une note';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
+                });
+            }
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Ajouter un cours" data-translate="newCourseInput"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3" data-translate="newCreditsInput"></td>
+                    <td><select name="grade" data-translate="newGradeSelect"></select></td>
+                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+                const newSelect = newRow.querySelector('select[name="grade"]');
+                populateGradeSelect(newSelect);
+            }
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        totalCredits += credits;
+                        totalGradePoints += credits * gradeValue;
+                    }
+                });
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]')) {
+                    calculateGPA();
+                }
+            });
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+            // Populate initial existing rows with grade options
+            const initialGradeSelects = document.querySelectorAll('select[name="grade"]');
+            initialGradeSelects.forEach(select => populateGradeSelect(select));
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

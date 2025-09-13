@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculadora de GPA da faculdade - Conheça seu GPA da faculdade</title>
+    <meta name="description" content="Calcule facilmente seu GPA universitário com nossa calculadora gratuita de GPA universitário. Insira notas e créditos para obter resultados instantâneos, sem necessidade de cadastro.">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <meta name="keywords" content="Calculadora de GPA da faculdade, como calcular GPA, qual é o meu GPA, calculadora de notas, calculadora de GPA online, escala de GPA 4.0, calculadora de GPA por crédito">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/pt/" />
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+</head>
+
+<body data-lang="pt">
+    {% include 'header.html' %}
+
+    <main class="main-content" style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculadora de GPA da faculdade</h1>
+            <p>Esta calculadora de GPA para faculdade monitora seu GPA. Se você está no primeiro semestre ou já tem alguns anos de faculdade, esta ferramenta ajuda a encontrar sua média de notas.</p>
+            
+            <div class="input-section centered-section">
+                <h2>Calcule seu GPA da faculdade</h2>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Créditos</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Adicionar curso"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex: 3"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Adicionar curso"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex: 4"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Adicionar curso"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex: 2"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Adicionar mais cursos</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Calcular GPA</button>
+                </div>
+            </div>
+
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Resumo do GPA</h2>
+                <div class="gpa-box">
+                    <span>GPA atual</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/pt/"><button class="secondary-btn">Reiniciar todos os cursos</button></a>
+                </div>
+            </div>
+<div class="content-section centered-section">
+    <p style="text-align: left;">
+Esta calculadora de média geral (GPA) para faculdade monitora seu GPA. Se você está no primeiro semestre ou já tem alguns anos de faculdade, esta ferramenta ajuda você a encontrar sua média geral (GPA) para a faculdade.
+    </p>
+</div>
+            <section class="how-to-use-section centered-section">
+                <h2>Como usar?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>Passo 1: Insira seus cursos</h3>
+                        <p>Liste cada curso que você fez no semestre.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>Passo 2: Adicionar créditos</h3>
+                        <p>Digite as horas de crédito para cada curso (geralmente de 1 a 4 horas).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>Passo 3: Selecione suas notas</h3>
+                        <p>Escolha a nota que você recebeu em cada curso (A, B, C, etc.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>Passo 4: Clique em “Calcular GPA”</h3>
+                        <p>Clique no botão de cálculo para ver seu GPA instantaneamente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="why-choose-us-section centered-section">
+                <h2>Por que usar nossa calculadora de GPA para faculdade?</h2>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Precisão</h3>
+                        <p>Nossa ferramenta fornece resultados precisos usando suas notas e horas de crédito, para que você possa ver como está seu desempenho nos estudos.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Interface amigável</h3>
+                        <p>Projetamos a interface desta ferramenta para ser intuitiva, para que todos possam usá-la facilmente. Não é necessário ter habilidades técnicas para utilizá-la. Tudo é claramente identificado e fácil de entender, tornando todo o processo rápido e tranquilo, mesmo que seja a primeira vez que você usa uma calculadora de GPA.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Acompanhe os objetivos acadêmicos</h3>
+                        <p>Esta ferramenta ajuda você a manter o foco em seus objetivos acadêmicos. Ao verificar seu GPA regularmente, você pode ver seu desempenho, identificar áreas que precisam ser melhoradas e tomar decisões inteligentes para melhorar suas notas. Seja para obter honrarias, bolsas de estudo ou requisitos para a formatura, esta ferramenta o mantém no caminho certo.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Resultados rápidos e instantâneos</h3>
+                        <p>Obtenha seu GPA calculado instantaneamente! Basta inserir suas notas e créditos sem espera, sem carregamento, apenas resultados rápidos e confiáveis na hora.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Livre para usar</h3>
+                        <p>O Gpacalculatorcollege.com é 100% gratuito, sem cadastros, taxas ocultas e sem limites. Basta inserir suas notas e créditos para obter sua média de notas instantaneamente, sempre que precisar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="navigation-cards-section centered-section">
+                <h2>Mais ferramentas de GPA</h2>
+                <div class="cards-container">
+                    <div class="card" id="priorSemesterCard">
+                        <h3>GPA do semestre anterior/GPA final</h3>
+                        <p>Calcule seu GPA incluindo semestres anteriores ou seu GPA cumulativo final.</p>
+                        <a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code='pt') }}" class="card-button">Ir para a calculadora</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard">
+                        <h3>Planejamento de GPA</h3>
+                        <p>Planeje seu GPA para o próximo semestre para alcançar um GPA cumulativo alvo.</p>
+                        <a href="{{ url_for('lang_routes.gpa_planning', lang_code='pt') }}" class="card-button">Ir para a calculadora</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>O que é GPA da faculdade?</h2>
+                <p>
+                    A Média de Notas da Faculdade é um número que mostra seu desempenho acadêmico geral na faculdade. É calculada convertendo suas notas (como A, B ou C) em números e calculando a média com base nas horas-crédito de cada disciplina.
+                    <br>
+                    O GPA geralmente é medido em uma escala de <b>4,0</b>, onde:
+                </p>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Nota</th>
+                            <th>Valor do GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>A</td><td>4.0</td></tr>
+                        <tr><td>A–</td><td>3.7</td></tr>
+                        <tr><td>B+</td><td>3.3</td></tr>
+                        <tr><td>B</td><td>3.0</td></tr>
+                        <tr><td>B–</td><td>2.7</td></tr>
+                        <tr><td>C+</td><td>2.3</td></tr>
+                        <tr><td>C</td><td>2.0</td></tr>
+                        <tr><td>C–</td><td>1.7</td></tr>
+                        <tr><td>D+</td><td>1.3</td></tr>
+                        <tr><td>D</td><td>1.0</td></tr>
+                        <tr><td>F</td><td>0.0</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>Como posso calcular meu GPA da faculdade?</h2>
+                <p>
+                    Se você conhece a fórmula, calcular o GPA é muito fácil. Sua média de notas é baseada nas notas que você recebe em cada curso e no número de horas-crédito que cada curso vale.
+                </p>
+
+                <h2>Fórmula</h2>
+                <p>
+                    <b>GPA = Total de Pontos de Nota ÷ Total de Horas de Crédito</b><br>
+                    Pule os cálculos manuais e simplesmente use a Calculadora de GPA da faculdade para obter seu resultado em segundos, rápido, preciso e sem complicações!
+                </p>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Casos de uso desta calculadora</h2>
+                <h3>Estudantes universitários</h3>
+                <p>
+                    Criamos este site para estudantes universitários que desejam acompanhar seu progresso acadêmico. Seja para obter bolsas de estudo, honrarias ou apenas atender aos requisitos de graduação, ele ajuda você a acompanhar seu desempenho.
+                </p>
+                <h3>Professores universitários</h3>
+                <p>
+                    Os professores podem usar a ferramenta para verificar rapidamente a média de notas de um aluno com base em suas notas e horas de crédito. É uma maneira simples e eficiente de calcular o desempenho acadêmico sem cálculos manuais.
+                </p>
+                <h3>Conselheiros e Tutores</h3>
+                <p>
+                    Orientadores e tutores podem usar a Calculadora de GPA da Faculdade para calcular rapidamente o desempenho acadêmico de um aluno. Ela os ajuda a ter uma visão clara do progresso do aluno sem a necessidade de cálculos manuais.
+                </p>
+                <h3>Mães</h3>
+                <p>
+                    Os pais podem usar esta calculadora para se manterem informados sobre o progresso acadêmico de seus filhos.
+                </p>
+                <h3>Faculdades</h3>
+                <p>É frequentemente usado por faculdades para:</p>
+                <ul style="padding-left: 35px;">
+                    <li>Situação acadêmica</li>
+                    <li>Elegibilidade para graduação</li>
+                    <li>Bolsas de estudo ou auxílio financeiro</li>
+                    <li>Qualificação de honras e lista do reitor</li>
+                    <li>Candidaturas a emprego ou estágio</li>
+                </ul>
+            </div>
+            
+            <div class="faq-section centered-section">
+                <h2>Perguntas frequentes</h2>
+
+                <div class="faq-item">
+                    <h3>Quão precisa é esta calculadora de GPA da faculdade?</h3>
+                    <p>Esta calculadora fornece resultados precisos, desde que você insira as notas e horas de crédito corretas para cada curso.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Posso usar esta calculadora para vários semestres?</h3>
+                    <p>Sim, você pode calcular o GPA de um único semestre ou combinar vários semestres para encontrar seu GPA cumulativo.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Preciso baixar alguma coisa?</h3>
+                    <p>Não, a ferramenta funciona on-line. Basta abrir a calculadora, inserir suas informações e obter sua média de notas instantaneamente.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Minhas informações serão salvas?</h3>
+                    <p>Não, a calculadora não armazena nenhum dado. Todas as informações inseridas permanecem privadas e são apagadas assim que você sai da página.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>E se eu cometer um erro ao inserir minhas notas?</h3>
+                    <p>Não se preocupe, você pode editar ou redefinir o formulário a qualquer momento para corrigir suas entradas.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+
+            const gradeOptions = [
+                { value: '4.0', text: 'A' },
+                { value: '3.7', text: 'A–' },
+                { value: '3.3', text: 'B+' },
+                { value: '3.0', text: 'B' },
+                { value: '2.7', text: 'B–' },
+                { value: '2.3', text: 'C+' },
+                { value: '2.0', text: 'C' },
+                { value: '1.7', text: 'C–' },
+                { value: '1.3', text: 'D+' },
+                { value: '1.0', text: 'D' },
+                { value: '0.0', text: 'F' }
+            ];
+
+            function populateGradeSelects() {
+                const gradeSelects = document.querySelectorAll('select[name="grade"]');
+                gradeSelects.forEach(select => {
+                    select.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecione uma nota';
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    select.appendChild(defaultOption);
+
+                    gradeOptions.forEach(optionData => {
+                        const option = document.createElement('option');
+                        option.value = optionData.value;
+                        option.textContent = optionData.text;
+                        select.appendChild(option);
+                    });
+                });
+            }
+
+            function populateSingleGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Selecione uma nota';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Adicionar curso"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex: 3"></td>
+                    <td><select name="grade"></select></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+                const newSelect = newRow.querySelector('select[name="grade"]');
+                populateSingleGradeSelect(newSelect);
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        totalCredits += credits;
+                        totalGradePoints += credits * gradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]')) {
+                    calculateGPA();
+                }
+            });
+
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+
+            // Populate initial existing rows with grade options
+            populateGradeSelects();
+
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+
+                // set initial state to open
+                if (paragraph) {
+                    paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                }
+
+                header.addEventListener('click', () => {
+                    if (paragraph) {
+                        if (paragraph.style.maxHeight === '0px' || paragraph.style.maxHeight === '0') {
+                            paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                        } else {
+                            paragraph.style.maxHeight = '0';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

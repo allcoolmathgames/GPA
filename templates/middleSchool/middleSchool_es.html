@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculadora de GPA de secundaria</title>
+    <meta name="description" content="Esta calculadora de GPA de escuela secundaria le permite calcular su promedio de calificaciones de la escuela secundaria con solo hacer un clic." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="Calculadora de GPA, calcular GPA, cómo calcular GPA, cuál es mi GPA, calculadora de promedio de calificaciones, calculadora de GPA en línea, escala de GPA 4.0, calculadora de GPA por horas de crédito" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator" data-translate="canonicalLink">
+    
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="es" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calculadora de GPA de secundaria</h1>
+            <p data-translate="introParagraph">Utilice esta calculadora de GPA de escuela secundaria para calcular su promedio de calificaciones en la escuela secundaria.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calculadora de GPA de secundaria</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Semestre 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Curso</th>
+                                    <th data-translate="tableHeaderGrade">Calificación</th>
+                                    <th data-translate="tableHeaderCredits">Créditos</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Agregar Curso" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ej. 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Agregar Otra Clase</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Agregar Otro Semestre</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calcular GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Resumen de GPA</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">GPA Actual</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Restablecer Todos los Cursos</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Esta <a href="https://gpacalculatorcollege.com/gpa-calculator">calculadora de GPA</a> para secundaria, ayuda a los estudiantes a calcular su promedio de calificaciones (GPA) basándose en las calificaciones de sus cursos y créditos. Pueden usar esta calculadora para monitorear su rendimiento académico y planificar su admisión a la preparatoria o la universidad, así como su elegibilidad para becas.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">¿Cómo utilizarlo?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Paso 1: Ingrese el nombre del curso</h3>
+                        <p data-translate="step1Description">Primero debes ingresar el nombre del curso.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Paso 2: Seleccionar calificaciones</h3>
+                        <p data-translate="step2Description">Seleccione la calificación que obtuvo en cada materia (por ejemplo, A, B, C, etc.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Paso 3: Ingrese horas de crédito</h3>
+                        <p data-translate="step3Description">Ingrese las horas de crédito para cada clase (normalmente entre 1 y 4 horas).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Paso 4: Haga clic en <b>Calcular GPA</b></h3>
+                        <p data-translate="step4Description">Después de proporcionar todos los datos, simplemente presione el botón “Calcular GPA de la escuela secundaria” para obtener sus resultados.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">¿Por qué usar nuestra calculadora de GPA de secundaria?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Precisión</h3>
+                        <p data-translate="feature1Description">Nuestra herramienta ofrece resultados precisos utilizando tus calificaciones y horas de crédito, para que puedas ver cómo te va en tus estudios.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interfaz fácil de usar</h3>
+                        <p data-translate="feature2Description">Diseñamos la interfaz de esta herramienta para que sea fácil de usar, de modo que todos puedan utilizarla sin problemas. No se requieren habilidades técnicas para usar esta herramienta.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Seguimiento de metas académicas</h3>
+                        <p data-translate="feature3Description">Esta herramienta te ayuda a mantener el enfoque en tus metas académicas. Al revisar tu GPA regularmente, puedes ver cómo te va, identificar áreas que necesitan mejora y tomar decisiones inteligentes para mejorar tus calificaciones.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Resultados instantáneos y rápidos</h3>
+                        <p data-translate="feature4Description">¡Obtén tu GPA calculado al instante! Solo ingresa tus calificaciones y horas de crédito: sin esperas, sin carga, resultados rápidos y confiables de inmediato.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Gratis</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com es 100% gratuito: sin registros, sin tarifas ocultas y sin límites. Solo ingresa tus calificaciones y horas de crédito para obtener tu promedio de calificaciones al instante.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">¿Qué es el GPA de la escuela secundaria?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    El promedio de calificaciones (GPA) de la escuela secundaria es un número que muestra tu rendimiento académico general durante la secundaria. Se calcula convirtiendo tus calificaciones con letras (como A, B, C) en puntos de calificación en una escala, generalmente de 0.0 a 4.0, y luego promediando las calificaciones.
+                </p>
+                <h2 data-translate="formulaHeading">Fórmula</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        GPA de la escuela secundaria =
+                    </b>
+                    (calificación1 × crédito1 + calificación2 × crédito2 + … + calificaciónN × créditoN) ÷ (crédito1 + crédito2 + … + créditoN)
+                </p>
+                <h2 data-translate="scaleHeading">Escala de 4.0 usada por la calculadora</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Calificación con letra</th>
+                            <th data-translate="gpaValueHeader">Valor de GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Diferencia entre el promedio de calificaciones de la escuela secundaria y el promedio de calificaciones de la escuela preparatoria</h2>
+                <h3 data-translate="middleSchoolHeading">GPA de la escuela secundaria</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Propósito:</b> Ayuda principalmente a estudiantes, padres y profesores a dar seguimiento al progreso académico.</li>
+                    <li><b>Impacto:</b> Rara vez considerado por las universidades, pero puede influir en la colocación en clases avanzadas o de honores una vez que se ingresa a la preparatoria.</li>
+                    <li><b>Escala de calificaciones:</b> Generalmente la escala estándar de 4.0 (A = 4, B = 3, etc.), sin calificaciones ponderadas.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">GPA de la escuela preparatoria</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Propósito:</b> Un factor crítico para la admisión a la universidad, las becas y, en ocasiones, incluso las oportunidades laborales.</li>
+                    <li><b>Impacto:</b> Afecta directamente las solicitudes de ingreso a la universidad y las oportunidades profesionales.</li>
+                    <li><b>Escala de calificaciones:</b> Puede incluir promedios ponderados (GPA) (superiores a 4.0) para cursos de honores, AP o IB.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Calcula tu promedio de calificaciones de la escuela preparatoria con nuestra <a href="https://gpacalculatorcollege.com/es/highschool-gpa">Calculadora de GPA de la escuela preparatoria</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">¿Por qué importa el GPA en la escuela secundaria?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Aunque las universidades no suelen fijarse en el promedio de calificaciones (GPA) de la escuela secundaria, este sigue teniendo un papel importante:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Desarrolla buenos hábitos desde temprano –</b> Aprender cómo funciona el promedio de calificaciones (GPA) te ayuda a mantenerte motivado y organizado.</li>
+                    <li><b>Colocación en la escuela preparatoria –</b> Muchas escuelas usan tu GPA para decidir si calificas para clases de honores o avanzadas en la preparatoria.</li>
+                    <li><b>Autoevaluación –</b> Ofrece a estudiantes y padres una visión clara de tus fortalezas académicas y áreas de mejora.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">¿Cómo calculo el GPA de la escuela secundaria?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Calcular tu promedio de calificaciones (GPA) de secundaria es sencillo una vez que entiendes los pasos. Aquí te explicamos cómo hacerlo manualmente:
+                </p>
+                <h3 data-translate="step1Heading">1. Convertir calificaciones en puntos de calificación</h3>
+                <p data-translate="step1Paragraph">
+                    La mayoría de las escuelas secundarias utilizan la escala GPA de 4.0:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Ejemplo:</i> Si obtuviste una A en Matemáticas, eso equivale a 4.0 puntos de calificación.
+                </p>
+                <h3 data-translate="step2Heading">2. Sumar todos los puntos de calificación</h3>
+                <p data-translate="step2Paragraph">
+                    Anota los puntos de calificación de cada materia y luego súmalos:
+                    <br><br>
+                    Matemáticas = A = 4.0<br>
+                    Inglés = B = 3.0<br>
+                    Ciencia = A = 4.0<br>
+                    Historia = C = 2.0<br>
+                    <b>Total = 13.0 puntos de calificación</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Dividir por el número de clases</h3>
+                <p data-translate="step3Paragraph">
+                    Ahora, divide el total de puntos de calificación por el número de clases:
+                    <br><br>
+                    GPA = Puntos totales de calificación ÷ Número de clases
+                    <br><br>
+                    En nuestro ejemplo:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Así que el GPA del estudiante es <b>3.25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    En lugar de hacer todos estos cálculos, puedes utilizar una <a href="https://gpacalculatorcollege.com/es/gpa-calculator">calculadora de GPA en línea</a> de la escuela secundaria para obtener resultados al instante.
+                    <br><br>
+                    Relacionado: <a href="https://gpacalculatorcollege.com/es" data-translate="relatedCollegeCalculator">Calculadora de GPA para la universidad</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Preguntas frecuentes</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">¿Cuál es un buen promedio (GPA) para la secundaria?</h3>
+                    <p data-translate="faqAnswer1">
+                        Un buen GPA en la secundaria suele estar entre 3.0 y 4.0 en la escala estándar de 4.0. Eso significa obtener principalmente calificaciones de B y A en las clases.
+                        <br><br>
+                        <b>4.0 GPA</b> → Excelentes calificaciones (excelente rendimiento).<br>
+                        <b>3.5 GPA</b> → A y B (muy bueno).<br>
+                        <b>3.0 GPA</b> → Mayoría de B (bueno y por encima del promedio).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">¿Importa el GPA de la secundaria para la universidad?</h3>
+                    <p data-translate="faqAnswer2">
+                        No, el GPA de la secundaria no influye directamente en la admisión a la universidad. Las universidades suelen considerar tu GPA de la preparatoria, calificaciones de los exámenes estandarizados, actividades extracurriculares y ensayos.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">¿Puede el GPA de la secundaria afectar la colocación en la preparatoria?</h3>
+                    <p data-translate="faqAnswer3">
+                        Sí, el GPA de la secundaria puede afectar la colocación en las clases de la preparatoria. Si bien las universidades no tienen en cuenta las calificaciones de la escuela secundaria, muchas escuelas secundarias las utilizan para decidir con qué nivel de cursos comenzarás.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semestre ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Curso</th>
+                                <th>Calificación</th>
+                                <th>Créditos</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Agregar Curso"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ej. 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Agregar Otra Clase</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Agregar Curso"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ej. 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Agregar Curso"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ej. 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculateur de notes | Calculez facilement vos notes</title>
+    <meta name="description"
+        content="Ce calculateur de notes vous permet de calculer votre note actuelle rapidement, précisément et facilement. Découvrez la note finale requise pour atteindre votre objectif.">
+    <meta name="keywords" content="Calculateur de notes, Calcul de notes, Calculer une note, Calculateur de notes de test, Calculateur de notes pondérées, Calculateur de notes non pondérées">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/fr/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="fr">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculateur de Notes</h1>
+            <p>Utilisez ce calculateur de notes pour calculer votre note actuelle facilement et rapidement.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calculez Votre Note</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Évaluation</th>
+                            <th>Score (%)</th>
+                            <th>Poids (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Ajouter une évaluation"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ex., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ex., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Ajouter une évaluation"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ex., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ex., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Ajouter une évaluation"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ex., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ex., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Ajouter d'autres évaluations</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Calculer la note</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Résumé de la Note</h2>
+                <div class="grade-box">
+                    <span>Note Actuelle</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Réinitialiser toutes les évaluations</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Comment utiliser notre calculateur ?</h2>
+                <div class="how-to-use-container">
+                    <p>Ce calculateur est très simple et facile à utiliser :</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Évaluations</h3>
+                        <p style="text-align: left;">Vous devez saisir le nom de chaque évaluation, par exemple : Évaluation 1, 2, 3, Devoirs, Examen, etc.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Score</h3>
+                        <p style="text-align: left;">Saisissez vos scores pour chaque évaluation, test de mathématiques ou autre examen du cours. Chaque entrée inclut généralement le pourcentage obtenu (10 %, 30 %, 50 %, etc.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Poids</h3>
+                        <p style="text-align: left;">Saisissez le poids du devoir dans la note globale du cours. Ce poids indique l'impact de chaque devoir sur votre note finale. Un examen final peut donc avoir une incidence bien plus importante qu'un simple devoir.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Calculer la note</h3>
+                        <p style="text-align: left;">Après avoir fourni toutes les informations, cliquez sur le bouton « Calculer la note » pour obtenir votre note.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section centered-section">
+                <h2>Avantages de notre calculateur de notes</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Gain de temps</h3>
+                        <p style="text-align: left;">Cet outil vous permet de calculer facilement vos notes. Vous n'avez donc plus à perdre votre temps avec des calculs manuels.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Facile à utiliser</h3>
+                        <p style="text-align: left;">Conçu avec une interface simple, cet outil vous permet de saisir vos notes et vos pondérations facilement, et d'obtenir vos résultats en quelques clics.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Précision</h3>
+                        <p style="text-align: left;">Le calculateur utilise des formules précises pour garantir l'exactitude de vos résultats, éliminant ainsi les risques d'erreurs liés aux calculs manuels.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Flexibilité</h3>
+                        <p style="text-align: left;">Le calculateur fonctionne avec différents systèmes de notation et matières, vous permettant d'ajuster les pondérations, les notes et les formats en fonction des exigences spécifiques de votre cours.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Qu'est-ce que le calculateur de notes ?</h2>
+                <p>
+                    Le calculateur de notes vous permet de déterminer rapidement votre note globale pour un cours ou une matière en combinant les notes des devoirs, quiz, examens et projets, en tenant souvent compte de leurs différentes pondérations.
+                    Il aide les étudiants à comprendre l'impact de chaque devoir sur leur note globale pondérée. La note globale d'un cours repose donc sur deux facteurs clés : la note de chaque devoir (<b>g</b>) et sa pondération (<b>w</b>). Grâce à cet outil, vous pouvez calculer votre note moyenne actuelle pour un cours à partir des devoirs réalisés au cours du semestre.
+                </p>
+                <h2>Calcul de la note pondérée : formule et exemple</h2>
+                <p>
+                    <b>Formule :</b><br>
+                    Note Pondérée = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)
+                    <br><br>
+                    Où :<br>
+                    g = note (en pourcentage ou en points) pour chaque tâche<br>
+                    w = pondération de chaque tâche (pourcentage ou points possibles)
+                </p>
+                <h2>Exemple :</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Évaluations</th>
+                            <th>Note (%)</th>
+                            <th>Poids (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Quiz</td><td>80</td><td>20</td></tr>
+                        <tr><td>Examen de mi-session</td><td>75</td><td>30</td></tr>
+                        <tr><td>Examen final</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Étapes :</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Multipliez chaque note par sa pondération :<br>Quiz : 80 × 20 = 1 600<br>Examen de mi-session : 75 × 30 = 2 250<br>Examen final : 90 × 50 = 4 500</li>
+                    <li>Additionnez les résultats : 1 600 + 2 250 + 4 500 = 8 350</li>
+                    <li>Divisez par la pondération totale : 8 350 ÷ 100 = 83,5 %</li>
+                </ol>
+                <p>
+                    Note pondérée : <b>83,5%</b> (<b>note B</b>)
+                </p>
+                <h2>Autres calculateurs à essayer :</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">Calculateur de GPA</a></li>
+                    <li><a href="/">Calculateur de GPA universitaire</a></li>
+                    <li><a href="/highschool-gpa">GPA du lycée</a></li>
+                    <li><a href="/final-grade-calculator">Calculateur de note finale</a></li>
+                </ul>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Conseils pour améliorer vos notes</h2>
+                <p>
+                    Si l'utilisation du calculateur de notes peut vous aider à suivre vos résultats scolaires, améliorer vos notes peut nécessiter une certaine stratégie. Voici quelques conseils pour améliorer vos notes.
+                </p>
+                <h3>Gérez votre temps</h3>
+                <p>
+                    Établissez un plan d'étude à l'avance, concentrez-vous sur les matières les plus difficiles et divisez votre travail en petites parties afin de ne pas avoir à vous précipiter avant les examens.
+                </p>
+                <h3>Demandez de l'aide rapidement</h3>
+                <p>
+                    Si vous avez des difficultés avec un sujet, demandez de l'aide immédiatement à votre professeur, à votre tuteur ou à vos camarades de classe au lieu d'attendre juste avant les examens.
+                </p>
+                <h3>Exercez-vous sur les sujets d'examen précédents</h3>
+                <p>
+                    Révisez les questions d'examens précédents pour vous familiariser avec le format, comprendre le type de questions posées et améliorer votre rapidité et votre précision.
+                </p>
+                <h3>Utilisez un calculateur de notes</h3>
+                <p>
+                    Suivez vos résultats actuels et déterminez les notes dont vous avez besoin pour les prochains devoirs ou examens afin d'atteindre votre objectif, ce qui vous permet de mieux planifier vos études.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2>FAQ</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Quelle est la différence entre un calculateur de notes simple et un calculateur de notes pondéré ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Un calculateur de notes simple traite tous les devoirs de manière égale, tandis qu’un calculateur de notes pondéré prend en compte l’importance (le poids) de chaque devoir dans votre note finale.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Quelle est la note de passage dans la plupart des écoles ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Dans de nombreux établissements, la note de passage est de 60 % ou la note D, mais cela peut varier selon l’établissement.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Tous les établissements utilisent-ils le même système de notation ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Non, les systèmes de notation varient selon le pays, l’État et l’établissement, donc vérifiez toujours la politique de notation de votre établissement.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Quel est le meilleur moyen d’améliorer rapidement mes notes ?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Concentrez-vous sur les matières où vous avez perdu le plus de points, demandez de l’aide à des enseignants ou à des tuteurs et utilisez un plan d’étude pour rester cohérent.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Ajouter une évaluation"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="ex., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="ex., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">حاسبة المعدل التراكمي للمدرسة المتوسطة</title>
+    <meta name="description" content="تساعد هذه الحاسبة للمرحلة الإعدادية طلابها على حساب معدلهم التراكمي بناءً على درجاتهم في المواد الدراسية وساعاتهم المعتمدة." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="حاسبة المعدل التراكمي, حساب المعدل التراكمي, كيفية حساب المعدل التراكمي, ما هو معدلي التراكمي, حاسبة المعدل التراكمي للمدرسة المتوسطة, حاسبة المعدل التراكمي عبر الإنترنت, مقياس المعدل التراكمي 4.0, حاسبة المعدل التراكمي بالساعات المعتمدة" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator" data-translate="canonicalLink">
+    
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+        body[dir="rtl"] .step-icon i {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+<body data-lang="ar" dir="rtl" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">حاسبة المعدل التراكمي للمدرسة المتوسطة</h1>
+            <p data-translate="introParagraph">استخدم حاسبة المعدل التراكمي للمدرسة المتوسطة هذه لحساب متوسط درجاتك في المدرسة المتوسطة.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">حاسبة المعدل التراكمي للمدرسة المتوسطة</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>الفصل الدراسي 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">المقرر</th>
+                                    <th data-translate="tableHeaderGrade">الدرجة</th>
+                                    <th data-translate="tableHeaderCredits">الساعات المعتمدة</th>
+                                    <th>إجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="أدخل المقرر" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">أ+</option>
+                                            <option value="4.0">أ</option>
+                                            <option value="3.7">أ-</option>
+                                            <option value="3.3">ب+</option>
+                                            <option value="3.0">ب</option>
+                                            <option value="2.7">ب-</option>
+                                            <option value="2.3">ج+</option>
+                                            <option value="2.0">ج</option>
+                                            <option value="1.7">ج-</option>
+                                            <option value="1.3">د+</option>
+                                            <option value="1.0">د</option>
+                                            <option value="0.7">د-</option>
+                                            <option value="0.0">راسب</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثلاً، 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">إضافة مقرر آخر</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">إضافة فصل دراسي آخر</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">حساب المعدل التراكمي</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">ملخص المعدل التراكمي</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">المعدل التراكمي الحالي</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">إعادة تعيين جميع المقررات</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: right;">
+                    تساعد هذه <a href="https://gpacalculatorcollege.com/gpa-calculator">الحاسبة</a> للمرحلة الإعدادية طلابها على حساب معدلهم التراكمي بناءً على درجاتهم في المواد الدراسية وساعاتهم المعتمدة. يمكن للطلاب استخدام هذه الحاسبة لمتابعة أدائهم الأكاديمي والتخطيط للالتحاق بالمدرسة الثانوية أو الجامعة والحصول على منحة دراسية.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">كيفية الاستخدام؟</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">الخطوة 1: أدخل اسم المقرر</h3>
+                        <p data-translate="step1Description">أولاً، أدخل اسم المقرر.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">الخطوة 2: اختر الدرجات</h3>
+                        <p data-translate="step2Description">اختر الدرجة التي حصلت عليها في كل مادة (مثل أ، ب، ج، إلخ).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">الخطوة 3: أدخل الساعات المعتمدة</h3>
+                        <p data-translate="step3Description">أدخل الساعات المعتمدة لكل مادة (عادةً ما بين ساعة و4 ساعات).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">الخطوة 4: انقر على <b>حساب المعدل التراكمي</b></h3>
+                        <p data-translate="step4Description">بعد إدخال جميع البيانات، انقر على زر "حساب المعدل التراكمي للمرحلة الإعدادية" للحصول على نتائجك.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">لماذا تستخدم حاسبة المعدل التراكمي للمدرسة المتوسطة الخاصة بنا؟</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">الدقة</h3>
+                        <p data-translate="feature1Description">تقدم أداتنا نتائج دقيقة باستخدام درجاتك والساعات المعتمدة، حتى تتمكن من رؤية أدائك الدراسي.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">واجهة مستخدم سهلة الاستخدام</h3>
+                        <p data-translate="feature2Description">صممنا واجهة هذه الأداة لتكون سهلة الاستخدام بحيث يمكن لأي شخص استخدامها بسهولة. لا تتطلب هذه الأداة أي مهارات تقنية.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">تتبع الأهداف الأكاديمية</h3>
+                        <p data-translate="feature3Description">تساعدك هذه الأداة على البقاء مركزًا على أهدافك الأكاديمية. من خلال التحقق من معدلك التراكمي بانتظام، يمكنك رؤية أدائك، وتحديد المجالات التي تحتاج إلى تحسين، واتخاذ قرارات ذكية لتحسين درجاتك.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">نتائج فورية وسريعة</h3>
+                        <p data-translate="feature4Description">احصل على معدلك التراكمي المحسوب فورًا! فقط أدخل درجاتك والساعات المعتمدة - لا انتظار، لا تحميل، فقط نتائج سريعة وموثوقة على الفور.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">مجاني الاستخدام</h3>
+                        <p data-translate="feature5Description">gpacalculatorcollege.com مجاني بنسبة 100% - لا تسجيل، لا رسوم خفية، ولا حدود. فقط أدخل درجاتك والساعات المعتمدة للحصول على معدلك التراكمي فورًا.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">ما هو المعدل التراكمي للمدرسة المتوسطة؟</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    المعدل التراكمي (GPA) في المرحلة الإعدادية هو رقم يُظهر أدائك الأكاديمي العام خلال المرحلة الإعدادية. يُحسب بتحويل درجاتك (مثل أ، ب، ج) إلى نقاط على مقياس يتراوح عادةً بين 0.0 و4.0، ثم حساب متوسطها.
+                </p>
+                <h2 data-translate="formulaHeading">الصيغة</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        المعدل التراكمي للمدرسة المتوسطة =
+                    </b>
+                    (الدرجة1 × الساعات المعتمدة1 + الدرجة2 × الساعات المعتمدة2 + … + الدرجةN × الساعات المعتمدةN) ÷ (الساعات المعتمدة1 + الساعات المعتمدة2 + … + الساعات المعتمدةN)
+                </p>
+                <h2 data-translate="scaleHeading">مقياس 4.0 المستخدم من قبل الحاسبة</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">الدرجة الحرفية</th>
+                            <th data-translate="gpaValueHeader">قيمة المعدل التراكمي</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">أ+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">أ</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">أ-</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">ب+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">ب</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">ب-</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">ج+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">ج</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">ج-</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">د+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">د</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">د-</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">راسب</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">الفرق بين المعدل التراكمي للمرحلة الإعدادية والمرحلة الثانوية</h2>
+                <h3 data-translate="middleSchoolHeading">المعدل التراكمي في المدرسة المتوسطة:</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>الهدف:</b> يُساعد الطلاب وأولياء الأمور والمعلمين بشكل أساسي على تتبع التقدم الأكاديمي.</li>
+                    <li><b>التأثير:</b> نادرًا ما تُؤخذ هذه الميزة بعين الاعتبار من قِبل الكليات، ولكنها قد تُؤثر على قبولك في فصول الدراسات العليا أو فصول التميز بعد الالتحاق بالمدرسة الثانوية.</li>
+                    <li><b>مقياس الدرجات:</b> عادةً ما يكون المقياس القياسي 4.0 (أ = 4، ب = 3، إلخ)، بدون درجات مُرجّحة.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">المعدل التراكمي في المدرسة الثانوية:</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>الغرض:</b> عامل حاسم في القبول الجامعي، والمنح الدراسية، وحتى فرص العمل أحيانًا.</li>
+                    <li><b>التأثير:</b> يؤثر بشكل مباشر على طلبات الالتحاق بالجامعة وفرص العمل.</li>
+                    <li><b>مقياس التقييم:</b> يمكن أن يشمل المعدل التراكمي المرجح (أعلى من 4.0) لمقررات الشرف، أو برنامج AP، أو البكالوريا الدولية.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    احسب معدلك التراكمي في المدرسة الثانوية باستخدام <a href="https://gpacalculatorcollege.com/ar/highschool-gpa">حاسبة المعدل التراكمي للمدرسة الثانوية</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">لماذا يعتبر المعدل التراكمي مهمًا في المدرسة المتوسطة؟</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    على الرغم من أن الكليات لا تنظر عادةً إلى المعدل التراكمي في المدرسة المتوسطة، إلا أنه لا يزال يلعب دورًا مهمًا:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>بناء عادات جيدة مبكرًا -</b> يساعدك تعلم كيفية حساب المعدل التراكمي على الحفاظ على حماسك وتنظيمك.</li>
+                    <li><b>القبول في المدرسة الثانوية -</b> تستخدم العديد من المدارس معدلك التراكمي لتحديد أهليتك للالتحاق بصفوف الشرف أو الصفوف المتقدمة في المدرسة الثانوية.</li>
+                    <li><b>التتبع الذاتي -</b> يُعطي الطلاب وأولياء الأمور صورة واضحة عن نقاط القوة الأكاديمية والمجالات التي تحتاج إلى تحسين.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">كيف أحسب المعدل التراكمي للمدرسة المتوسطة؟</h2>
+                <p data-translate="howToCalculateParagraph">
+                    حساب معدلك التراكمي في المرحلة الإعدادية سهلٌ بمجرد فهم الخطوات. إليك كيفية القيام بذلك يدويًا:
+                </p>
+                <h3 data-translate="step1Heading">1. تحويل الدرجات إلى نقاط الدرجات</h3>
+                <p data-translate="step1Paragraph">
+                    تستخدم معظم المدارس المتوسطة مقياس 4.0 GPA.
+                    <br><br>
+                    أ = 4.0<br>
+                    ب = 3.0<br>
+                    ج = 2.0<br>
+                    د = 1.0<br>
+                    راسب = 0.0
+                    <br><br>
+                    <i>مثال:</i> إذا حصلت على درجة (أ) في الرياضيات، فهذا يعادل 4.0 نقاط تقدير.
+                </p>
+                <h3 data-translate="step2Heading">2. جمع جميع نقاط الدرجات</h3>
+                <p data-translate="step2Paragraph">
+                    اكتب نقاط التقدير لكل مادة، ثم قم بجمعها معًا:
+                    <br><br>
+                    الرياضيات = أ = 4.0<br>
+                    الإنجليزية = ب = 3.0<br>
+                    العلوم = أ = 4.0<br>
+                    التاريخ = ج = 2.0<br>
+                    <b>المجموع = 13.0 نقطة تقدير</b>
+                </p>
+                <h3 data-translate="step3Heading">3. القسمة على عدد الفصول</h3>
+                <p data-translate="step3Paragraph">
+                    الآن، قسّم مجموع نقاط الدرجات على عدد الفصول:
+                    <br><br>
+                    المعدل التراكمي = مجموع نقاط التقدير ÷ عدد الفصول
+                    <br><br>
+                    في مثالنا،<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    لذا فإن المعدل التراكمي للطالب = <b>3.25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    بدلاً من القيام بكل هذه العمليات الحسابية، يمكنك استخدام <a href="https://gpacalculatorcollege.com/ar/gpa-calculator">حاسبة المعدل التراكمي عبر الإنترنت</a> للمدرسة المتوسطة للحصول على النتائج.
+                    <br><br>
+                    ذات صلة: <a href="https://gpacalculatorcollege.com/ar" data-translate="relatedCollegeCalculator">حاسبة المعدل التراكمي للكلية</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">الأسئلة الشائعة</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">ما هو المعدل التراكمي الجيد للمرحلة الإعدادية؟</h3>
+                    <p data-translate="faqAnswer1">
+                        يُعتبر المعدل التراكمي الجيد في المرحلة الإعدادية عادةً ما يتراوح بين 3.0 و4.0 على مقياس 4.0 القياسي. وهذا يعني عادةً الحصول على درجتي ب وأ في فصولك الدراسية.
+                        <br><br>
+                        <b>4.0 معدل تراكمي</b> ← أ (أداء ممتاز).<br>
+                        <b>3.5 معدل تراكمي</b> ← أ وب (جيد جدًا).<br>
+                        <b>3.0 معدل تراكمي</b> ← ب (جيد وفوق المتوسط).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">هل يؤثر المعدل التراكمي للمرحلة الإعدادية على القبول الجامعي؟</h3>
+                    <p data-translate="faqAnswer2">
+                        لا، لا يؤثر المعدل التراكمي للمرحلة الإعدادية مباشرةً على القبول الجامعي. عادةً ما تنظر الجامعات إلى المعدل التراكمي للمرحلة الثانوية، ونتائج الاختبارات المعيارية، والأنشطة اللامنهجية، والمقالات.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">هل يؤثر المعدل التراكمي للمرحلة الإعدادية على قبولك في المرحلة الثانوية؟</h3>
+                    <p data-translate="faqAnswer3">
+                        نعم، يمكن أن يؤثر المعدل التراكمي للمرحلة الإعدادية على قبولك في فصول المرحلة الثانوية. في حين أن الجامعات لا تنظر إلى درجات المرحلة الإعدادية، إلا أن العديد من المدارس الثانوية تستخدمها لتحديد مستوى المقررات الدراسية التي ستبدأ بها.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>الفصل الدراسي ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>المقرر</th>
+                                <th>الدرجة</th>
+                                <th>الساعات المعتمدة</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="أدخل المقرر"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">أ+</option>
+                                        <option value="4.0">أ</option>
+                                        <option value="3.7">أ-</option>
+                                        <option value="3.3">ب+</option>
+                                        <option value="3.0">ب</option>
+                                        <option value="2.7">ب-</option>
+                                        <option value="2.3">ج+</option>
+                                        <option value="2.0">ج</option>
+                                        <option value="1.7">ج-</option>
+                                        <option value="1.3">د+</option>
+                                        <option value="1.0">د</option>
+                                        <option value="0.7">د-</option>
+                                        <option value="0.0">راسب</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثلاً، 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">إضافة مقرر آخر</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="أدخل المقرر"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">أ+</option>
+                                <option value="4.0">أ</option>
+                                <option value="3.7">أ-</option>
+                                <option value="3.3">ب+</option>
+                                <option value="3.0">ب</option>
+                                <option value="2.7">ب-</option>
+                                <option value="2.3">ج+</option>
+                                <option value="2.0">ج</option>
+                                <option value="1.7">ج-</option>
+                                <option value="1.3">د+</option>
+                                <option value="1.0">د</option>
+                                <option value="0.7">د-</option>
+                                <option value="0.0">راسب</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثلاً، 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="أدخل المقرر"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">أ+</option>
+                            <option value="4.0">أ</option>
+                            <option value="3.7">أ-</option>
+                            <option value="3.3">ب+</option>
+                            <option value="3.0">ب</option>
+                            <option value="2.7">ب-</option>
+                            <option value="2.3">ج+</option>
+                            <option value="2.0">ج</option>
+                            <option value="1.7">ج-</option>
+                            <option value="1.3">د+</option>
+                            <option value="1.0">د</option>
+                            <option value="0.7">د-</option>
+                            <option value="0.0">راسب</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثلاً، 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

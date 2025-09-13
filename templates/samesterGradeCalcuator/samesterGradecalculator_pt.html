@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculadora de notas semestrais</title>
+    <meta name="description" content="Calcule suas notas semestrais rapidamente com a ajuda da nossa Calculadora de Notas Semestrais. Obtenha seu desempenho geral semestral com facilidade.">
+    <meta name="keywords" content="Calculadora de notas semestrais, cálculo de notas, calculadora de notas trimestrais, calculadora de notas finais">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculadora de notas semestrais</h1>
+            <p>Use esta Calculadora de Notas Semestrais simples para descobrir sua nota atual e o que você precisa em sua prova final.</p>
+            <br>
+            <section class="input-section">
+                <h2>Calculadora de notas semestrais</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Esta Calculadora de Notas Semestrais ajuda você a calcular suas notas semestrais com base em suas notas trimestrais e nas porcentagens de peso da nota final.</p>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>Avaliação</th>
+                            <th>Nota (%)</th>
+                            <th>Peso (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1º Trimestre</td>
+                            <td><input type="number" id="grade1" placeholder="ex., 33"></td>
+                            <td><input type="number" id="weight1" placeholder="ex., 33"></td>
+                        </tr>
+                        <tr>
+                            <td>2º Trimestre</td>
+                            <td><input type="number" id="grade2" placeholder="ex., 22"></td>
+                            <td><input type="number" id="weight2" placeholder="ex., 22"></td>
+                        </tr>
+                        <tr>
+                            <td>Prova Final</td>
+                            <td><input type="number" id="grade3" placeholder="ex., 32"></td>
+                            <td><input type="number" id="weight3" placeholder="ex., 45"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="calculateAndScroll()">>Calcular nota</button>
+                </div>
+            </section>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Resumo da nota</h2>
+                <div class="grade-box">
+                    <span>Nota atual</span>
+                    <span id="currentGradeDisplay">0,00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/semester-grade-calculator"><button class="secondary-btn">Redefinir todas as avaliações</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+        <p>Esta Calculadora de Notas Semestrais, também conhecida como calculadora de notas trimestrais, ajuda-o a calcular a sua nota global de um semestre, combinando os resultados de diferentes tarefas, questionários, projetos, testes intermédios e exames finais de acordo com as suas percentagens de peso.</p>
+
+    </section>
+            <section class="how-to-use-section centered-section">
+                <h2>Como usar a calculadora de notas semestrais?</h2>
+                <div class="how-to-use-container">
+                    <p>Basta seguir estes passos simples para usar esta calculadora de provas semestrais:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>1º Trimestre</h3>
+                        <p>Insira a "Nota" e a "Nota por Semestre" do 1º trimestre.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>2º Trimestre</h3>
+                        <p>Insira a "Nota" e a "Nota por Semestre" do 2º trimestre.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>Prova Final</h3>
+                        <p>Insira a "Nota" e a "Nota por Semestre" da prova final.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>Calcular</h3>
+                        <p>Após fornecer todas essas informações, clique no botão "Calcular Nota Semestre". Você verá sua "Nota Semestre" na última aba.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Por que usar nossa calculadora?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Economiza tempo e esforço</h3>
+                        <p>Não é necessário calcular médias ponderadas manualmente. Basta inserir suas notas e pesos, e a calculadora faz o resto em segundos.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Precisão</h3>
+                        <p>Notas ponderadas podem ser complicadas, especialmente quando diferentes componentes (testes, tarefas de casa, provas) têm porcentagens diferentes. Mas nossa calculadora elimina erros humanos e garante resultados 100% precisos.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Fácil de usar e gratuita</h3>
+                        <p>Nossa calculadora de notas semestrais é gratuita e fácil de usar. Não são necessárias fórmulas ou planilhas complexas, basta inserir seus dados e clicar em "calcular".</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Como calcular a nota do semestre?</h2>
+                <p>
+                    A nota semestral pode ser calculada usando o método da média ponderada. Cada tarefa, teste, quiz, projeto e prova tem uma porcentagem (peso) na nota final. Além disso, use a calculadora de nota final para saber quais notas você precisa para suas provas finais.
+                </p>
+                <h3>Conheça os Componentes e Pesos das Notas</h3>
+                <p>
+                    O seu professor ou o programa do curso geralmente fornecem o detalhamento. Por exemplo:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Tarefa de casa: 20%</li>
+                    <li>Provas: 15%</li>
+                    <li>Prova de meio de semestre: 25%</li>
+                    <li>Prova final: 30%</li>
+                    <li>Participação em aula: 10%</li>
+                </ul>
+                <h3>Converter porcentagens em decimais</h3>
+                <ul style="padding-left: 30px;">
+                    <li>20% → 0,20</li>
+                    <li>15% → 0,15</li>
+                    <li>25% → 0,25</li>
+                    <li>30% → 0,30</li>
+                    <li>10% → 0,10</li>
+                </ul>
+                <h3>Multiplique cada nota pelo seu peso</h3>
+                <p>
+                    Suponha que um aluno tenha as seguintes notas:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Tarefa de casa = 85%</li>
+                    <li>Provas = 90%</li>
+                    <li>Prova de meio de semestre = 80%</li>
+                    <li>Prova final = 70%</li>
+                    <li>Participação = 100%</li>
+                </ul>
+                <p>
+                    Agora multiplique cada nota pelo seu peso:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Tarefa de casa: 85 × 0,20 = 17,0</li>
+                    <li>Provas: 90 × 0,15 = 13,5</li>
+                    <li>Prova de meio de semestre: 80 × 0,25 = 20,0</li>
+                    <li>Prova final: 70 × 0,30 = 21,0</li>
+                    <li>Participação: 100 × 0,10 = 10,0</li>
+                </ul>
+                <h3>Adicione todas as pontuações ponderadas juntas</h3>
+                <p>
+                    17,0 + 13,5 + 20,0 + 21,0 + 10,0 = 81,5%
+                </p>
+                <h3>Converter para nota (opcional)</h3>
+                <p>
+                    Muitas escolas usam uma escala de letras padrão:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>A = 90–100%</li>
+                    <li>B = 80–89%</li>
+                    <li>C = 70–79%</li>
+                    <li>D = 60–69%</li>
+                    <li>F = Menos de 60%</li>
+                </ul>
+                <p>
+                    Então, 81,5% = B
+                </p>
+                <h3>Fórmula para Nota Semestral</h3>
+                <p>
+                    Nota do semestre final = (Nota 1 × Peso 1) + (Nota 2 × Peso 2) + …
+                </p>
+                <p>
+                    Esses cálculos manuais podem tomar muito tempo; basta usar nossa calculadora semestral para calcular a nota do semestre rapidamente.
+                </p>
+            </div>
+
+            <section class="content-section centered-section">
+                <h2>O que é uma nota semestral?</h2>
+                <p style="text-align: left;">A nota semestral é a nota final que um aluno obtém ao final de um semestre (metade de um ano letivo, geralmente de 15 a 18 semanas). Ela reflete o desempenho do aluno em todas as disciplinas, incluindo:
+                <ul style="padding-left: 30px; position: relative; top: -20px;">
+                    <li>Tarefas de casa</li>
+                    <li>Questionários</li>
+                    <li>Provas (intermediárias e finais)</li>
+                    <li>Projetos</li>
+                    <li>Participação nas aulas</li>
+                    <li>Assiduidade (às vezes)</li>
+                </ul>
+                </p>
+                <h3>Fórmula para nota semestral (fórmula da média ponderada)</h3>
+                <div class="formula">
+                    Nota semestral = (Nota1 × Peso1) + (Nota2 × Peso2) + ... + (NotaN × PesoN)
+                </div>
+                <p>Onde os pesos estão na forma decimal (por exemplo, 20% = 0,20).</p>
+                <p><b>Exemplo:</b><br>85 (0,20) + 90 (0,15) + 80 (0,25) + 70 (0,30) + 100 (0,10) = 81,5</p>
+                <p>Esta Calculadora de Notas Semestrais, também conhecida como calculadora de notas trimestrais, ajuda você a calcular sua nota geral de um semestre combinando os resultados de diferentes tarefas, questionários, projetos, provas intermediárias e exames finais de acordo com suas porcentagens de peso.</p>
+            </section>
+
+            <section class="faq-section centered-section">
+                <h2>Perguntas frequentes</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Quem pode se beneficiar de uma calculadora de notas semestrais?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Alunos</b> — para acompanhar o progresso e definir metas.<br>
+                                <b>Professores</b> — para explicar a distribuição das notas aos alunos.<br>
+                                <b>Pais</b> — para entender melhor o desempenho de seus filhos.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Esta calculadora semestral pode ser usada para estudos de graduação ou pós-graduação?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Sim. Você pode usar esta calculadora de provas semestrais para qualquer nível, incluindo graduação e pós-graduação, desde que insira as notas e seus pesos corretamente.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Uma nota semestral mais alta sempre significa um GPA mais alto?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Sim. Notas semestrais mais altas se convertem em notas mais altas, o que aumenta seu GPA semestral e, consequentemente, seu GPA cumulativo. Você pode verificar sua média geral de notas (GPA) com a ajuda de uma calculadora de GPA.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>O GPA semestral é diferente do GPA cumulativo?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>GPA semestral:</b> Média de um semestre.<br>
+                                <b>GPA cumulativo:</b> Média de todos os GPAs semestrais combinados ao longo do seu programa acadêmico.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+    <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
+        });
+    });
+
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
+    function calculateGrade() {
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3 = parseFloat(weight3Input.value) || 0;
+        
+
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
+            weight3Input.value = weight3.toFixed(2);
+        }
+
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            return;
+        }
+
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+        
+    }
+
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

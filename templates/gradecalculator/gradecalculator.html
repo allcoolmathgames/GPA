@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Grade Calculator | Weighted Grade Calculator</title>
+    <meta name="description"
+        content="This grade calculator allows you to calculate your current grade quickly, accurately, and easily. Find out the final exam score needed for your target grade."
+        data-translate="metaDescription">
+    <meta name="keywords" content="Grade Calculator, Grade Calculations, Calculate Grade, test grade calculator, weighted grade calculator, unweighted grade calculator">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="en" data-translate="body">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gradeCalculatorTitle">Grade Calculator</h1>
+            <p>Use this simple Grade Calculator to find out your current grade and what you need on your final.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="myAssessmentsHeading" style="position: relative; top: -35px;">Calculate Your Grade</h2>
+                <table class="course-input-table" data-translate="assessmentTable" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th data-translate="tableHeaderAssessment">Assessment</th>
+                            <th data-translate="tableHeaderScore">Score (%)</th>
+                            <th data-translate="tableHeaderWeight">Weight (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody" data-translate="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Assessment"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Assessment"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Add Assessment"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="e.g., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" data-translate="buttonGroupAddAssessment" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn" data-translate="addMoreAssessmentsButton">Add More
+                        Assessments</button>
+                    <button id="calculateGradeBtn" class="primary-btn" data-translate="calculateGradeButton">Calculate
+                        Grade</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
+                <h2 data-translate="gradeSummaryHeading">Grade Summary</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="currentGradeLabel">Current Grade</span>
+                    <span id="currentGradeDisplay" data-translate="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/grade-calculator"><button class="secondary-btn" data-translate="resetAssessmentsButton">Reset All Assessments</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">How To Use Our Calculator?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <p>The working of this calculator is very simple and easy to use:</p>
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step1Title">Assessments</span></h3>
+                        <p style="text-align: left;"><span data-translate="step1Description">You have to enter the name of each assessment, for example: Assessment 1, 2, 3, Homework, Exam, etc.</span></p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step2Title">Score</span></h3>
+                        <p style="text-align: left;"><span data-translate="step2Description">Enter your scores for each assessment, math, test, or other exam throughout the course. Each entry typically includes the earned percentage (10%, 30%, 50%, etc.)</span></p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step3Title">Weight</span></h3>
+                        <p style="text-align: left;"><span data-translate="step3Description">Enter the assignment’s weight in the overall course grade. The weight shows how much each assignment affects your final grade, meaning a final exam could count for much more than a small homework task.</span></p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span data-translate="step4Title">Calculate Grade</span></h3>
+                        <p style="text-align: left;"><span data-translate="step4Description">After giving all the information you have to click on the button of "Calculate Grade" and you will get your grade result.</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Benefits of Using Our Grade Calculator</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Saves Time</h3>
+                        <p style="text-align: left;">You can make grade calculation easily with the help of this tool. So you don’t have to waste your time on manual calculations.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Easy to Use</h3>
+                        <p style="text-align: left;">Designed with a simple layout, the tool lets you enter your scores and weights effortlessly, giving you results in just a few clicks.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Accuracy</h3>
+                        <p style="text-align: left;">The calculator uses precise formulas to ensure your results are correct, removing the chance of mistakes that can happen with manual calculations.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Flexibility</h3>
+                        <p style="text-align: left;">The school grade calculator works for different grading systems and subjects, letting you adjust weights, scores, and formats to match your specific course requirements.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section" data-translate="index_contentSection1">
+                <h2 data-translate="index_whatIsGradeCalcHeading">What Is Grade Calculator?</h2>
+                <p data-translate="index_whatIsGradeCalcParagraph">
+                    The grade calculator helps you quickly determine your overall grade in a course or subject by combining your scores from assignments, quizzes, exams, and projects, often factoring in their different weightages.
+                    It helps students figure out how each assignment affects their overall weighted grade in a course. This means a course’s overall grade is based on two key factors: each assignment’s grade (<b>g</b>) and the weight it carries (<b>w</b>). With this tool, you can work out your current average score in a course using the assignments you’ve completed so far in the semester.
+                </p>
+                <h2 data-translate="index_weightedGradeHeading">Weighted Grade Calculation: Formula and Example</h2>
+                <p data-translate="index_weightedGradeFormulaText">
+                    <b data-translate="index_formulaLabel">Formula:</b><br>
+                    <span data-translate="index_formulaText">Weighted Grade = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)</span>
+                    <br><br>
+                    <span data-translate="index_formulaVariables">
+                        Where:<br>
+                        g = grade (in percentage or points) for each task<br>
+                        w = weight of each task (percentage or points possible)
+                    </span>
+                </p>
+                <h2 data-translate="index_exampleHeading">Example:</h2>
+                <table class="grade-table" data-translate="index_exampleTable">
+                    <thead data-translate="index_exampleTableHead">
+                        <tr>
+                            <th data-translate="index_assessmentHeader">Assessments</th>
+                            <th data-translate="index_gradeHeader">Grade (%)</th>
+                            <th data-translate="index_weightHeader">Weight (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="index_exampleTableBody">
+                        <tr><td data-translate="index_quizzes">Quizzes</td><td>80</td><td>20</td></tr>
+                        <tr><td data-translate="index_midtermExam">Midterm Exam</td><td>75</td><td>30</td></tr>
+                        <tr><td data-translate="index_finalExam">Final Exam</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="index_stepsHeading">Steps:</h2>
+                <ol data-translate="index_stepsList" style="padding-left: 30px;">
+                    <li data-translate="index_step1">Multiply each grade by its weight:<br>Quizzes: 80 × 20 = 1600<br>Midterm Exam: 75 × 30 = 2250<br>Final Exam: 90 × 50 = 4500</li>
+                    <li data-translate="index_step2">Add the results: 1600 + 2250 + 4500 = 8350</li>
+                    <li data-translate="index_step3">Divide by the total weight: 8350 ÷ 100 = 83.5%</li>
+                </ol>
+                <p data-translate="index_resultText">
+                    Weighted Grade: <b>83.5%</b> (<b>B grade</b>)
+                </p>
+                <h2 data-translate="index_otherCalculatorsHeading">Other Calculators To Try:</h2>
+                <ul data-translate="index_otherCalculatorsList" style="padding-left: 30px;">
+                    <li data-translate="index_gpaCalculator"><a href="/gpa-calculator">GPA Calculator</a></li>
+                    <li data-translate="index_collegeGpaCalculator"><a href="/">College GPA Calculator</a></li>
+                    <li data-translate="index_highSchoolGpa"><a href="/highschool-gpa">High School GPA</a></li>
+                    <li data-translate="index_finalGradeCalculator"><a href="/final-grade-calculator">Final Grade Calculator</a></li>
+                </ul>
+            </div>
+
+            <div class="content-section centered-section" data-translate="index_contentSection2">
+                <h2 data-translate="index_tipsHeading">Tips To Improve Grades</h2>
+                <p data-translate="index_tipsIntro">
+                    While using the grade calculator can assist you in tracking your academic performance, improving your grades can require some strategy. Here are some tips to improve your grades.
+                </p>
+                <h3 data-translate="index_manageTimeHeading">Manage Your Time</h3>
+                <p data-translate="index_manageTimeText">
+                    Make a study plan ahead of time, focus more on subjects that are harder for you, and split your work into small parts so you don’t have to rush before exams.
+                </p>
+                <h3 data-translate="index_seekHelpHeading">Seek Help Early</h3>
+                <p data-translate="index_seekHelpText">
+                    If you’re struggling with a topic, ask your teacher, tutor, or classmates for help right away instead of waiting until just before exams.
+                </p>
+                <h3 data-translate="index_practiceHeading">Practice Past Papers</h3>
+                <p data-translate="index_practiceText">
+                    Work on previous exam questions to get familiar with the format, understand the types of questions asked, and improve your speed and accuracy.
+                </p>
+                <h3 data-translate="index_useCalculatorHeading">Use a Grade Calculator</h3>
+                <p data-translate="index_useCalculatorText">
+                    Keep track of your current scores and find out what grades you need on upcoming assignments or exams to reach your target, helping you plan your studies more effectively.
+                </p>
+            </div>
+
+            <section class="faq-section centered-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What’s the difference between a simple and a weighted grade calculator?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>A simple grade calculator treats all assignments equally, while a weighted grade calculator considers the importance (weight) of each assignment in your final grade.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is a passing grade in most schools?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>In many schools, a passing grade is 60% or a letter grade of D, but this can vary by institution.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do all schools use the same grading system?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, Grading systems vary by country, state, and institution, so always check your school’s grading policy.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is the best way to improve my grades quickly?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Focus on subjects where you’ve lost the most points, seek help from teachers or tutors, and use a study plan to stay consistent.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Add Assessment"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="e.g., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="e.g., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
+</body>
+</html>

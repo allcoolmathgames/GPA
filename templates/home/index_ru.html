@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Калькулятор среднего балла колледжа — узнайте средний балл своего колледжа</title>
+    <meta name="description" content="Рассчитайте свой средний балл (GPA) с помощью нашего бесплатного калькулятора. Введите оценки и зачётные часы, чтобы получить мгновенный результат. Регистрация не требуется.">
+    
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta name="keywords" content="Калькулятор среднего балла колледжа, как рассчитать GPA, какой у меня GPA, калькулятор оценок, онлайн-калькулятор GPA, шкала GPA 4.0, калькулятор GPA по кредитам">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/"/>
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+</head>
+
+<body data-lang="ru">
+    {% include 'header.html' %}
+
+    <main class="main-content" style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Калькулятор среднего балла колледжа</h1>
+            <p>Этот калькулятор среднего балла колледжа отслеживает ваш средний балл. Если вы учитесь в колледже на первом семестре или уже несколько лет, этот инструмент поможет вам рассчитать средний балл.</p>
+            
+            <div class="input-section centered-section">
+                <h2>Рассчитайте свой средний балл</h2>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>Курс</th>
+                            <th>Кредиты</th>
+                            <th>Оценка</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 4"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 2"></td>
+                            <td><select name="grade"></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Добавить больше курсов</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Рассчитать GPA</button>
+                </div>
+            </div>
+
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Сводка среднего балла</h2>
+                <div class="gpa-box">
+                    <span>Текущий средний балл</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/ru/"><button class="secondary-btn">Сбросить все курсы</button></a>
+                </div>
+            </div>
+<div class="content-section centered-section">
+    <p style="text-align: left;">
+Этот калькулятор среднего балла колледжа отслеживает ваш средний балл. Если вы учитесь в колледже на первом семестре или уже несколько лет, этот инструмент поможет вам рассчитать средний балл.
+    </p>
+</div>
+            <section class="how-to-use-section centered-section">
+                <h2>Как использовать?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>Шаг 1: Введите ваши курсы</h3>
+                        <p>Перечислите все курсы, которые вы прошли в этом семестре.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>Шаг 2: Добавить кредиты</h3>
+                        <p>Введите количество кредитных часов для каждого курса (обычно от 1 до 4 часов).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>Шаг 3: Выберите свои оценки</h3>
+                        <p>Выберите оценку, которую вы получили по каждому курсу (A, B, C и т. д.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>Шаг 4: Нажмите «Рассчитать GPA»</h3>
+                        <p>Нажмите кнопку «Рассчитать», чтобы мгновенно увидеть свой средний балл.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="why-choose-us-section centered-section">
+                <h2>Почему стоит использовать наш калькулятор GPA?</h2>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Точность</h3>
+                        <p>Наш инструмент дает точные результаты, используя ваши оценки и зачётные часы, чтобы вы могли увидеть, как идут дела в учебе.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Удобный интерфейс</h3>
+                        <p>Мы разработали удобный интерфейс этого инструмента, чтобы каждый мог легко им пользоваться. Для работы с ним не требуются технические навыки. Всё чётко обозначено и понятно, что делает весь процесс быстрым и лёгким, даже если вы впервые используете калькулятор среднего балла.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Отслеживание академических целей</h3>
+                        <p>Этот инструмент поможет вам сосредоточиться на своих академических целях. Регулярно проверяя средний балл, вы сможете оценить свои успехи, выявить области, требующие улучшения, и принять взвешенные решения для повышения оценок. Стремитесь ли вы к почётным дипломам, стипендиям или требованиям для получения диплома, этот инструмент поможет вам не сбиться с пути.</p>
+                    </div>
+                </div>
+
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Мгновенные и быстрые результаты</h3>
+                        <p>Получите расчётный средний балл мгновенно! Просто введите оценки и количество зачётных часов — без ожидания, без загрузки — только быстрые и надёжные результаты прямо сейчас.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Бесплатно для использования</h3>
+                        <p>Gpacalculatorcollege.com абсолютно бесплатный сайт без регистрации, скрытых платежей и ограничений. Просто введите свои оценки и количество зачётных часов, чтобы мгновенно узнать свой средний балл в любое удобное время.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="navigation-cards-section centered-section">
+                <h2>Больше инструментов GPA</h2>
+                <div class="cards-container">
+                    <div class="card" id="priorSemesterCard">
+                        <h3>GPA предыдущего семестра/конечный GPA</h3>
+                        <p>Рассчитайте свой средний балл, включая предыдущие семестры, или свой итоговый совокупный средний балл.</p>
+                        <a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code='ru') }}" class="card-button">Перейти к калькулятору</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard">
+                        <h3>Планирование GPA</h3>
+                        <p>Спланируйте свой средний балл в следующем семестре, чтобы достичь целевого совокупного среднего балла.</p>
+                        <a href="{{ url_for('lang_routes.gpa_planning', lang_code='ru') }}" class="card-button">Перейти к калькулятору</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Что такое средний балл колледжа?</h2>
+                <p>
+                    Средний балл аттестата об окончании колледжа — это число, отражающее вашу общую академическую успеваемость в колледже. Он рассчитывается путём перевода ваших буквенных оценок (например, A, B или C) в числовые и их усреднения на основе количества кредитных часов по каждому курсу.
+                    <br>
+                    GPA обычно измеряется по шкале <b>4.0</b>, где:
+                </p>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Оценка</th>
+                            <th>Значение GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>A</td><td>4.0</td></tr>
+                        <tr><td>A–</td><td>3.7</td></tr>
+                        <tr><td>B+</td><td>3.3</td></tr>
+                        <tr><td>B</td><td>3.0</td></tr>
+                        <tr><td>B–</td><td>2.7</td></tr>
+                        <tr><td>C+</td><td>2.3</td></tr>
+                        <tr><td>C</td><td>2.0</td></tr>
+                        <tr><td>C–</td><td>1.7</td></tr>
+                        <tr><td>D+</td><td>1.3</td></tr>
+                        <tr><td>D</td><td>1.0</td></tr>
+                        <tr><td>F</td><td>0.0</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>Как мне рассчитать свой средний балл колледжа?</h2>
+                <p>
+                    Если вы знаете формулу, то рассчитать средний балл (GPA) очень просто. Ваш средний балл рассчитывается на основе оценок, полученных вами по каждому курсу, и количества кредитных часов, которые он стоит.
+                </p>
+
+                <h2>Формула</h2>
+                <p>
+                    <b>GPA = Общее количество баллов ÷ Общее количество кредитных часов</b><br>
+                    Откажитесь от ручных расчётов и просто используйте GPA Calculator College, чтобы получить результат за считанные секунды — быстро, точно и без лишних хлопот!
+                </p>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Варианты использования этого калькулятора</h2>
+                <h3>Студенты колледжа</h3>
+                <p>
+                    Мы создали этот сайт для студентов колледжей, которые хотят быть в курсе своих академических успехов. Независимо от того, стремитесь ли вы к стипендиям, почётным дипломам или просто пытаетесь выполнить требования для окончания университета, он поможет вам отслеживать свои успехи.
+                </p>
+                <h3>Профессора колледжей</h3>
+                <p>
+                    Преподаватели могут использовать этот инструмент для быстрой проверки среднего балла студента на основе его оценок и количества зачётных часов. Это простой и эффективный способ рассчитать академическую успеваемость без ручного подсчёта.
+                </p>
+                <h3>Консультанты и наставники</h3>
+                <p>
+                    Консультанты и репетиторы могут использовать калькулятор среднего балла колледжа для быстрого расчета академической успеваемости студента. Он помогает им получить четкую картину прогресса студента без необходимости выполнять вычисления вручную.
+                </p>
+                <h3>Родители</h3>
+                <p>
+                    Родители могут использовать этот калькулятор, чтобы быть в курсе успеваемости своего ребенка.
+                </p>
+                <h3>Колледжи</h3>
+                <p>Колледжи часто используют его для:</p>
+                <ul style="padding-left: 35px;">
+                    <li>Академический статус</li>
+                    <li>Право на получение диплома</li>
+                    <li>Стипендии или финансовая помощь</li>
+                    <li>Дипломы с отличием и квалификация в списке декана</li>
+                    <li>Заявления о приеме на работу или стажировке</li>
+                </ul>
+            </div>
+            
+            <div class="faq-section centered-section">
+                <h2>Часто задаваемые вопросы</h2>
+
+                <div class="faq-item">
+                    <h3>Насколько точен этот калькулятор среднего балла колледжа?</h3>
+                    <p>Этот калькулятор дает точные результаты, если вы вводите правильные оценки и кредитные часы для каждого курса.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Могу ли я использовать этот калькулятор для нескольких семестров?</h3>
+                    <p>Да, вы можете рассчитать средний балл за один семестр или объединить несколько семестров, чтобы узнать свой совокупный средний балл.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Нужно ли мне что-то скачивать?</h3>
+                    <p>Нет, инструмент работает онлайн: просто откройте калькулятор, введите свои данные и мгновенно получите свой средний балл.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Будет ли сохранена моя информация?</h3>
+                    <p>Нет, калькулятор не хранит никаких данных. Вся введённая вами информация остаётся конфиденциальной и удаляется после того, как вы покидаете страницу.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Что делать, если я допустил ошибку при вводе оценок?</h3>
+                    <p>Не беспокойтесь, вы можете в любой момент отредактировать или сбросить форму, чтобы исправить свои записи.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+
+            const gradeOptions = [
+                { value: '4.0', text: 'A' },
+                { value: '3.7', text: 'A–' },
+                { value: '3.3', text: 'B+' },
+                { value: '3.0', text: 'B' },
+                { value: '2.7', text: 'B–' },
+                { value: '2.3', text: 'C+' },
+                { value: '2.0', text: 'C' },
+                { value: '1.7', text: 'C–' },
+                { value: '1.3', text: 'D+' },
+                { value: '1.0', text: 'D' },
+                { value: '0.0', text: 'F' }
+            ];
+
+            function populateGradeSelect(selectElement) {
+                selectElement.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Выберите оценку';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                gradeOptions.forEach(optionData => {
+                    const option = document.createElement('option');
+                    option.value = optionData.value;
+                    option.textContent = optionData.text;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3"></td>
+                    <td><select name="grade"></select></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+                const newGradeSelect = newRow.querySelector('select[name="grade"]');
+                populateGradeSelect(newGradeSelect);
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        totalCredits += credits;
+                        totalGradePoints += credits * gradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]')) {
+                    calculateGPA();
+                }
+            });
+
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+
+            // Populate initial existing rows with grade options
+            document.querySelectorAll('select[name="grade"]').forEach(select => {
+                populateGradeSelect(select);
+            });
+
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+
+                // set initial state to open
+                if (paragraph) {
+                    paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                }
+
+                header.addEventListener('click', () => {
+                    if (paragraph) {
+                        if (paragraph.style.maxHeight === '0px') {
+                            paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                        } else {
+                            paragraph.style.maxHeight = '0';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

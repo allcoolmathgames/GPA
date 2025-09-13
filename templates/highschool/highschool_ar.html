@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>حاسبة المعدل التراكمي للمدرسة الثانوية - أداة سريعة، مجانية ودقيقة لتتبع الدرجات</title>
+    <meta name="description" content="استخدم حاسبة المعدل التراكمي هذه لحساب معدلك التراكمي في المدرسة الثانوية. لا حاجة للتسجيل. مجانية، سريعة، وسهلة الاستخدام.">
+    <meta name="keywords" content="حاسبة المعدل التراكمي، حساب المعدل التراكمي، كيفية حساب المعدل التراكمي، ما هو معدلي التراكمي، حاسبة متوسط الدرجات، حاسبة المعدل التراكمي عبر الإنترنت، مقياس المعدل التراكمي 4.0، حاسبة المعدل التراكمي بالساعات المعتمدة، حاسبة المعدل التراكمي بجامعة فلوريدا">
+
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Hreflang Tags (Added Here) -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/highschool-gpa"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/highschool-gpa">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .why-choose-us-section h3,
+        .how-to-use-section h3{
+            text-align: right;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+
+<body data-lang="ar">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>حاسبة المعدل التراكمي للمدرسة الثانوية</h1>
+            <p>تساعد حاسبة المعدل التراكمي لمرحلة الثانوية العامة الطلاب على حساب معدلهم التراكمي بناءً على درجاتهم في المقررات الدراسية وساعاتهم المعتمدة. </p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">حساب المعدل التراكمي في المدرسة الثانوية</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>المادة</th>
+                            <th>الساعات المعتمدة</th>
+                            <th>الدرجة</th>
+                            <th class="weight-column">نوع المادة</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="مثال، رياضيات 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثال، 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>اختر الدرجة</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">عادي</option>
+                                    <option value="0.5">شرف</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">جامعي</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">أضف المزيد من المواد</button>
+                    <button id="calculateGpaBtn" class="primary-btn">حساب المعدل التراكمي</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>ملخص المعدل التراكمي</h2>
+                <div class="gpa-box">
+                    <span>المعدل التراكمي الحالي</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/highschool-gpa"><button id="resetCoursesButton" class="secondary-btn">إعادة تعيين كافة المواد</button></a>
+                </div>
+            </div>
+<div class="content-section centered-section">
+    <p style="text-align: left;">
+        تساعد حاسبة المعدل التراكمي لمرحلة الثانوية العامة الطلاب على حساب معدلهم التراكمي بناءً على درجاتهم في المقررات الدراسية وساعاتهم المعتمدة. يستخدم طلاب المرحلة الثانوية هذه الأداة لمتابعة أدائهم الأكاديمي والتخطيط للالتحاق بالجامعة وأهلية الحصول على المنح الدراسية.
+    </p>
+</div>
+
+            <section class="how-to-use-section centered-section">
+                <h2>كيفية استخدام حاسبة المعدل التراكمي للمدرسة الثانوية؟</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>الخطوة 1: أدخل اسم المقرر الدراسي</span></h3>
+                        <p style="text-align: right;"><span>أولاً، عليك إدخال اسم المقرر الدراسي.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>الخطوة 2: حدد الدرجات</span></h3>
+                        <p style="text-align: right;"><span>حدد الدرجة التي حصلت عليها في كل مادة (مثل A، B، C، وما إلى ذلك).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>الخطوة 3: أدخل الساعات المعتمدة</span></h3>
+                        <p style="text-align: right;"><span>أدخل الساعات المعتمدة لكل فصل دراسي (عادة ما تكون بين 1 إلى 4 ساعات).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>الخطوة 4: اختر نوع الدورة</span></h3>
+                        <p style="text-align: right;"><span>هذه خطوة اختيارية لحسابات المعدل التراكمي الموزونة وغير الموزونة.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>الخطوة 5: حساب المعدل التراكمي</span></h3>
+                        <p style="text-align: right;"><span>بعد إدخال جميع البيانات، ما عليك سوى الضغط على زر "حساب المعدل التراكمي في المدرسة الثانوية" للحصول على نتائجك.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">لماذا تستخدم حاسبة المعدل التراكمي للمدرسة الثانوية؟</h2>
+                <div class="feature-row" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">إضافة مواضيع/دورات متعددة</h3>
+                        <p data-translate="feature1Description" style="text-align: right;">
+                            تتيح لك هذه الأداة إضافة عدة مقررات دراسية من جدولك الدراسي. هذا يعني أنه يمكنك إدخال كل مادة دراسية، مثل الرياضيات واللغة الإنجليزية والعلوم والتاريخ، مع ذكر الدرجة التي حصلت عليها والساعات المعتمدة لكل مادة.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">لا يلزم التسجيل</h3>
+                        <p data-translate="feature2Description" style="text-align: right;">
+                            استخدم الآلة الحاسبة فورًا دون الحاجة إلى إنشاء حساب أو إدخال بيانات شخصية أو التسجيل.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">خيار اختيار نوع الدورة</h3>
+                        <p data-translate="feature3Description" style="text-align: right;">
+                            الميزة المفيدة لحاسبة المعدل التراكمي لمرحلة الثانوية العامة لدينا هي خيار اختيار نوع الدورة، مثل العادية، أو الشرف، أو AP (البرنامج المتقدم)، أو IB (البكالوريا الدولية) للحصول على معدل تراكمي أكثر دقة بناءً على صعوبة الدورة.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>كيف أحسب المعدل التراكمي في المدرسة الثانوية؟</h2>
+                <p style="text-align: right;">
+                    حساب المعدل التراكمي في المرحلة الثانوية سهلٌ بمجرد فهم الخطوات. تستخدم معظم المدارس مقياسًا من 4.0، حيث يُعادل A 4.0 نقاط، وB 3.0 نقاط، وC 2.0 نقاط، وD 1.0 نقاط، وF 0 نقاط. اتبع هذه الخطوات لحساب المعدل التراكمي في المرحلة الثانوية يدويًا.
+                </p>
+                <ul style="text-align: right;">
+                    <li>اكتب فصولك الدراسية والدرجات التي حصلت عليها.</li>
+                    <li>قم بتحويل كل درجة إلى نقاط باستخدام مقياس المعدل التراكمي.</li>
+                    <li>على سبيل المثال، إذا حصلت على درجة A في الرياضيات، فهذا يعني 4.0 نقاط.</li>
+                    <li>اضرب كل نقطة من نقاط الصف في الساعات المعتمدة لتلك الفئة.</li>
+                    <li>إذا كانت الرياضيات تساوي 3 نقاط، فإن 4.0 × 3 = 12 نقطة تقدير.</li>
+                    <li>افعل هذا لجميع فصولك الدراسية.</li>
+                    <li>قم بإضافة كافة نقاط الدرجة معًا.</li>
+                    <li>أضف جميع الساعات المعتمدة معًا.</li>
+                    <li>قسّم مجموع نقاط التقدير على مجموع الساعات المعتمدة.</li>
+                </ul>
+                <p style="text-align: right;">
+                    ستستغرق الحسابات اليدوية وقتك؛ ما عليك سوى استخدام حاسبة المعدل التراكمي الخاصة بالمدرسة الثانوية لإجراء الحسابات بسرعة وسهولة.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>من يمكنه استخدام هذه الآلة الحاسبة؟</h2>
+                <h3>طلاب المدارس الثانوية</h3>
+                <p style="text-align: right;">
+                    يمكن لطلاب المرحلة الثانوية استخدام هذه الآلة الحاسبة لمتابعة أدائهم الأكاديمي، وتحديد أهدافهم الأكاديمية، والتحضير للتقديم للجامعة. فهي تساعدهم على البقاء على اطلاع دائم بتقدمهم وتحديد الجوانب التي تحتاج إلى تحسين.
+                </p>
+                <h3>المعلمون والمستشارون</h3>
+                <p style="text-align: right;">
+                    يمكن للمعلمين والمستشارين استخدام هذه الأداة لمساعدة الطلاب على مراقبة مستواهم الأكاديمي، وتقديم الإرشادات بشأن اختيار الدورة الدراسية، ودعم التخطيط للكلية أو المنح الدراسية.
+                </p>
+                <h3>الآباء</h3>
+                <p style="text-align: right;">
+                    يمكن لأولياء الأمور استخدام حاسبة المعدل التراكمي في المدرسة الثانوية لمتابعة التقدم الأكاديمي لأبنائهم. فهي تساعدهم على فهم تأثير الدرجات على الأداء العام، وتسمح لهم بدعم أبنائهم في تحديد أهدافهم الأكاديمية والاستعداد للجامعة.
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>الأسئلة الشائعة</h2>
+                <div class="faq-item">
+                    <h3>ما هي الساعات المعتمدة وكيف أعرفها؟</h3>
+                    <p style="text-align: right;">
+                        تُمثل الساعات المعتمدة وزن المقرر الدراسي. معظم فصول المرحلة الثانوية تُحتسب بساعة معتمدة واحدة، ولكن بعضها (مثل المختبرات أو المقررات الاختيارية) قد يُحتسب بنصف ساعة معتمدة أو أكثر.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>لماذا يعد حساب معدلي التراكمي في المدرسة الثانوية أمرًا مهمًا؟</h3>
+                    <p style="text-align: right;">
+                        يُعدّ حساب معدلك التراكمي في المدرسة الثانوية أمرًا بالغ الأهمية لأنه يُظهر أدائك الأكاديمي العام. وغالبًا ما تستخدم الجامعات وبرامج المنح الدراسية، وحتى بعض طلبات التوظيف، المعدل التراكمي لتقييم أدائك الدراسي.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل يمكن لهذه الأداة أن تساعدني في تحسين معدلي التراكمي؟</h3>
+                    <p style="text-align: right;">
+                        لا، هذه الأداة لا تساعدك على تحسين معدلك التراكمي. لكنها تساعدك على تتبع معدلك التراكمي. يمكنك استخدام حاسبة تخطيط المعدل التراكمي لدينا لتحسينه.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل أحتاج إلى التسجيل لاستخدام حاسبة المعدل التراكمي في المدرسة الثانوية؟</h3>
+                    <p style="text-align: right;">
+                        لا، إن الآلة الحاسبة لدينا مجانية ولا تتطلب أي تسجيل أو تسجيل دخول.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="مثال، رياضيات 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="مثال، 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>اختر الدرجة</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">عادي</option>
+                            <option value="0.5">شرف</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">جامعي</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+            
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = parseFloat(weightSelect.value);
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+            
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+            
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
+                    calculateGPA();
+                }
+            });
+            
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+            
+            addCourseRow();
+            
+            // FAQ section JavaScript
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                
+                // Initially open all answers
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                paragraph.style.overflow = 'hidden';
+                paragraph.style.transition = 'max-height 0.3s ease-out';
+
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

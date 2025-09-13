@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculadora de GPA do Ensino Médio - Rastreador de notas rápido, gratuito e preciso</title>
+    <meta name="description" content="Use esta calculadora de GPA do ensino médio para calcular sua média de notas. Não é necessário cadastro. Grátis, rápido e fácil de usar.">
+    <meta name="keywords" content="calculadora de GPA, calcular GPA, como calcular o GPA, qual é o meu GPA, calculadora de média de notas, calculadora de GPA online, escala de GPA 4.0, calculadora de GPA por horas de crédito, calculadora de GPA de uf">
+
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Hreflang Tags (Added Here) -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/highschool-gpa"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/pt/highschool-gpa">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+
+<body data-lang="pt">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculadora de GPA do Ensino Médio</h1>
+            <p>Nossa Calculadora de Média Geral do Ensino Médio ajuda os alunos a calcular sua média de notas com base nas notas dos cursos e nas horas de crédito. Alunos do Ensino Médio usam esta ferramenta para monitorar seu desempenho acadêmico e planejar sua admissão na faculdade e a elegibilidade para bolsas de estudo.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calcular GPA do Ensino Médio</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Créditos</th>
+                            <th>Nota</th>
+                            <th class="weight-column">Tipo de Curso</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="ex., Matemática 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>Selecionar nota</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">Regular</option>
+                                    <option value="0.5">Honors</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">Universidade</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Adicionar mais cursos</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Calcular GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Resumo do GPA</h2>
+                <div class="gpa-box">
+                    <span>GPA atual</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/highschool-gpa"><button id="resetCoursesButton" class="secondary-btn">Reiniciar todos os cursos</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+    <p style="text-align: left;">
+        A nossa Calculadora de Média Geral do Ensino Secundário ajuda os alunos a calcular a sua média de notas com base nas notas dos cursos e nas horas de crédito. Os alunos do ensino secundário utilizam esta ferramenta para monitorizar o seu desempenho académico e planear a sua admissão na faculdade e a elegibilidade para bolsas de estudo.
+    </p>
+</div>
+            <section class="how-to-use-section centered-section">
+                <h2>Como usar a calculadora?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 1: Inserir o nome do curso</span></h3>
+                        <p style="text-align: left;"><span>Primeiro, você deve inserir o nome do curso.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 2: Selecionar nota</span></h3>
+                        <p style="text-align: left;"><span>Selecione a nota que você obteve em cada disciplina (como A, B, C, etc.).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 3: Inserir horas de crédito</span></h3>
+                        <p style="text-align: left;"><span>Insira as horas de crédito para cada aula (normalmente entre 1 e 4 horas).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 4: Escolher tipo de curso</span></h3>
+                        <p style="text-align: left;"><span>Esta é uma etapa opcional para cálculos ponderados e não ponderados.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 5: Calcular GPA</span></h3>
+                        <p style="text-align: left;"><span>Após inserir todos os dados, basta clicar no botão "Calcular GPA do Ensino Médio".</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Recursos da calculadora de GPA do Ensino Médio</h2>
+                <div class="feature-row" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Adicionar vários assuntos/cursos</h3>
+                        <p data-translate="feature1Description" style="text-align: left;">
+                            Esta ferramenta permite adicionar vários cursos do seu calendário escolar. Isso significa que você pode inserir cada disciplina, como Matemática, Inglês, Ciências e História, juntamente com a nota obtida e os créditos correspondentes a cada disciplina.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Não é necessário fazer inscrição</h3>
+                        <p data-translate="feature2Description" style="text-align: left;">
+                            Uma das melhores coisas sobre a nossa calculadora é que não é necessário cadastro. Você pode usar a ferramenta instantaneamente, sem criar uma conta, inserir dados pessoais ou passar por um processo de cadastro.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Opção para escolher o tipo de curso</h3>
+                        <p data-translate="feature3Description" style="text-align: left;">
+                            Um recurso útil da nossa calculadora de GPA do ensino médio é a opção de escolher o tipo de curso, como Regular, Honors, AP (Advanced Placement) ou IB (International Baccalaureate).
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Como calculo o GPA do ensino médio?</h2>
+                <p style="text-align: left;">
+                    Calcular o GPA do ensino médio é simples depois que você entende os passos. A maioria das escolas usa uma escala de 4,0, onde um A vale 4,0 pontos, um B vale 3,0, um C vale 2,0, um D vale 1,0 e um F vale 0. Siga estes passos para calcular a média de notas do ensino médio manualmente.
+                </p>
+                <ul style="text-align: left;">
+                    <li>Anote suas aulas e as notas que você recebeu.</li>
+                    <li>Converta cada nota em pontos usando a escala GPA.</li>
+                    <li>Por exemplo, se você tirou A em matemática, isso dá 4,0 pontos.</li>
+                    <li>Multiplique cada nota pelas horas de crédito daquela aula.</li>
+                    <li>Se matemática vale 3 créditos, então 4,0 × 3 = 12 pontos.</li>
+                    <li>Faça isso para todas as suas aulas.</li>
+                    <li>Some todos os pontos de nota.</li>
+                    <li>Some todas as horas de crédito.</li>
+                    <li>Divida o total de pontos de nota pelo total de horas de crédito.</li>
+                </ul>
+                <p style="text-align: left;">
+                    Cálculos manuais levarão seu tempo; basta usar nossa calculadora de GPA no ensino médio para fazer cálculos rápidos e fáceis.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Quem pode usar esta calculadora?</h2>
+                <h3>Estudantes do Ensino Médio</h3>
+                <p style="text-align: left;">
+                    Alunos do ensino médio podem usar esta calculadora para monitorar seu desempenho acadêmico, definir metas acadêmicas e se preparar para inscrições na faculdade. Ela os ajuda a se manterem informados sobre seu progresso e a identificar áreas em que é preciso melhorar.
+                </p>
+                <h3>Professores e conselheiros</h3>
+                <p style="text-align: left;">
+                    Professores e orientadores podem usar esta ferramenta para ajudar os alunos a monitorar seu desempenho acadêmico, fornecer orientação na seleção de cursos e dar suporte ao planejamento de faculdade ou bolsa de estudos.
+                </p>
+                <h3>Mães</h3>
+                <p style="text-align: left;">
+                    Os pais podem usar a calculadora de GPA do ensino médio para acompanhar o progresso acadêmico dos filhos. Ela os ajuda a entender como as notas impactam o desempenho geral e permite que apoiem os filhos na definição de metas acadêmicas e na preparação para a faculdade.
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Perguntas frequentes</h2>
+                <div class="faq-item">
+                    <h3>O que são horas de crédito e como posso conhecê-las?</h3>
+                    <p style="text-align: left;">
+                        Os créditos representam o peso de uma disciplina. A maioria das disciplinas do ensino médio vale 1 crédito, mas algumas (como laboratórios ou disciplinas eletivas) podem valer 0,5 ou mais.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Por que é importante calcular meu GPA do Ensino Médio?</h3>
+                    <p style="text-align: left;">
+                        Calcular seu GPA do ensino médio é importante porque mostra seu desempenho acadêmico geral. Faculdades, programas de bolsas de estudo e até mesmo alguns formulários de emprego costumam usar a média de notas para avaliar seu desempenho escolar.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Esta ferramenta pode me ajudar a melhorar meu GPA?</h3>
+                    <p style="text-align: left;">
+                        Não, esta ferramenta não ajuda você a melhorar sua média de notas. Mas ajuda você a monitorar seu GPA. Você pode usar nossa calculadora de planejamento de GPA para melhorá-lo.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Preciso me inscrever para usar a Calculadora de GPA do Ensino Médio?</h3>
+                    <p style="text-align: left;">
+                        Não, nossa calculadora é gratuita e não requer nenhum registro ou login.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="ex., Matemática 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>Selecionar nota</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">Regular</option>
+                            <option value="0.5">Honors</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">Universidade</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+            
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = parseFloat(weightSelect.value);
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+            
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+            
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
+                    calculateGPA();
+                }
+            });
+            
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+            
+            addCourseRow();
+            
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // Set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

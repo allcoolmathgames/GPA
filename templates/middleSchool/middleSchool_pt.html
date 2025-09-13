@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculadora de GPA do Ensino Fundamental</title>
+    <meta name="description" content="Esta calculadora de GPA do ensino fundamental permite que você calcule sua média de notas do ensino fundamental com apenas um clique." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="calculadora de GPA, calcular GPA, como calcular GPA, qual é o meu GPA, calculadora de média de notas, calculadora de GPA online, escala de GPA 4.0, calculadora de GPA por horas de crédito, calculadora de GPA" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator" data-translate="canonicalLink">
+    
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="pt" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calculadora de GPA do Ensino Fundamental</h1>
+            <p data-translate="introParagraph">Use esta calculadora de GPA do ensino fundamental para calcular sua média de notas no ensino fundamental.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calculadora de GPA do Ensino Fundamental</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Semestre 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Disciplina</th>
+                                    <th data-translate="tableHeaderGrade">Nota</th>
+                                    <th data-translate="tableHeaderCredits">Créditos</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Adicionar disciplina" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Adicionar outra disciplina</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Adicionar outro semestre</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calcular GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Resumo do GPA</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">GPA atual</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Redefinir todas as disciplinas</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Esta <a href="https://gpacalculatorcollege.com/gpa-calculator">calculadora de GPA</a> para o ensino fundamental II ajuda os alunos do ensino fundamental II a calcular sua média de notas com base nas notas dos cursos e nas horas de crédito. Os alunos podem usar esta calculadora de GPA para acompanhar seu desempenho acadêmico e planejar a admissão no ensino médio ou superior e a elegibilidade para bolsas de estudo.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Como usar?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Passo 1: Insira o nome do curso</h3>
+                        <p data-translate="step1Description">Primeiro, você precisa inserir o nome do curso.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Passo 2: Selecione as notas</h3>
+                        <p data-translate="step2Description">Selecione a nota obtida em cada disciplina (como A, B, C, etc.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Passo 3: Insira os créditos</h3>
+                        <p data-translate="step3Description">Insira os créditos para cada disciplina (normalmente entre 1 e 4 horas).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Passo 4: Clique em <b>Calcular GPA</b></h3>
+                        <p data-translate="step4Description">Após inserir todos os dados, clique no botão "Calcular o GPA do Ensino Fundamental II" para obter os resultados.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Por que usar nossa calculadora de GPA do Ensino Fundamental?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Precisão</h3>
+                        <p data-translate="feature1Description">Nossa ferramenta fornece resultados precisos usando suas notas e créditos, para que você possa ver como está seu desempenho nos estudos.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interface amigável</h3>
+                        <p data-translate="feature2Description">Projetamos a interface desta ferramenta para ser amigável, para que todos possam usá-la facilmente. Não são necessárias habilidades técnicas para utilizar esta ferramenta.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Acompanhe suas metas acadêmicas</h3>
+                        <p data-translate="feature3Description">Esta ferramenta ajuda você a se manter focado em suas metas acadêmicas. Ao verificar seu GPA regularmente, você pode ver como está seu desempenho, identificar áreas que precisam de melhoria e tomar decisões inteligentes para melhorar suas notas.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Resultados instantâneos e rápidos</h3>
+                        <p data-translate="feature4Description">Obtenha seu GPA calculado instantaneamente! Basta inserir suas notas e créditos - sem espera, sem carregamento, apenas resultados rápidos e confiáveis na hora.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Gratuito</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com é 100% gratuito - sem cadastros, sem taxas ocultas e sem limites. Basta inserir suas notas e créditos para obter sua média de notas instantaneamente.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">O que é o GPA do ensino fundamental?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    O GPA (Grade Point Average) do Ensino Fundamental II é um número que indica seu desempenho acadêmico geral durante o Ensino Fundamental II. Ele é calculado convertendo suas notas (como A, B, C) em pontos em uma escala, geralmente de 0,0 a 4,0, e depois calculando a média.
+                </p>
+                <h2 data-translate="formulaHeading">Fórmula</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        GPA do ensino fundamental =
+                    </b>
+                    (nota1 × crédito1 + nota2 × crédito2 + … + notaN × créditoN) ÷ (crédito1 + crédito2 + … + créditoN)
+                </p>
+                <h2 data-translate="scaleHeading">Escala 4.0 usada pela calculadora</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Nota</th>
+                            <th data-translate="gpaValueHeader">Valor do GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Diferença entre o GPA do Ensino Fundamental e o GPA do Ensino Médio</h2>
+                <h3 data-translate="middleSchoolHeading">GPA do ensino fundamental</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Objetivo:</b> Auxilia principalmente alunos, pais e professores a acompanhar o progresso acadêmico.</li>
+                    <li><b>Impacto:</b> Raramente considerado pelas faculdades, mas pode influenciar a colocação em turmas avançadas ou de alto nível após o ingresso no ensino médio.</li>
+                    <li><b>Escala de Notas:</b> Geralmente a escala padrão 4.0 (A = 4, B = 3, etc.), sem notas ponderadas.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">GPA do ensino médio</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Objetivo:</b> Um fator crítico para admissões em faculdades, bolsas de estudo e, às vezes, até oportunidades de emprego.</li>
+                    <li><b>Impacto:</b> Afeta diretamente as inscrições em faculdades e oportunidades de carreira.</li>
+                    <li><b>Escala de notas:</b> Pode incluir médias ponderadas (acima de 4,0) para cursos de honras, AP ou IB.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Calcule sua média de notas do ensino médio com nosso <a href="https://gpacalculatorcollege.com/pt/highschool-gpa">Calculadora de GPA do Ensino Médio</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Por que o GPA é importante no ensino fundamental?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Embora as faculdades normalmente não considerem o GPA do ensino fundamental, ele ainda desempenha um papel importante:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Crie bons hábitos desde cedo –</b> Aprender como o GPA funciona ajuda você a se manter motivado e organizado.</li>
+                    <li><b>Colocação no Ensino Médio –</b> Muitas escolas usam seu GPA para decidir se você se qualifica para disciplinas de honra ou avançadas no Ensino Médio.</li>
+                    <li><b>Automonitoramento –</b> Oferece aos alunos e pais uma visão clara dos pontos fortes acadêmicos e das áreas que precisam ser aprimoradas.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Como calculo o GPA do ensino fundamental?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Calcular seu GPA do ensino fundamental é simples depois que você entende os passos. Veja como fazer isso manualmente:
+                </p>
+                <h3 data-translate="step1Heading">1. Converter notas em pontos de nota</h3>
+                <p data-translate="step1Paragraph">
+                    A maioria das escolas de ensino fundamental usa a escala de GPA 4.0:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Exemplo:</i> Se você tirou A em matemática, isso equivale a 4,0 pontos de nota.
+                </p>
+                <h3 data-translate="step2Heading">2. Some todas as notas</h3>
+                <p data-translate="step2Paragraph">
+                    Anote as notas de cada disciplina e some-as:
+                    <br><br>
+                    Matemática = A = 4.0<br>
+                    Inglês = B = 3.0<br>
+                    Ciência = A = 4.0<br>
+                    História = C = 2.0<br>
+                    <b>Total = 13,0 pontos de nota</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Dividir pelo número de classes</h3>
+                <p data-translate="step3Paragraph">
+                    Agora, divida a nota total pelo número de aulas:
+                    <br><br>
+                    GPA = Total de pontos de nota ÷ Número de aulas
+                    <br><br>
+                    No nosso exemplo:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Então o GPA do aluno = <b>3,25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Em vez de fazer todos esses cálculos, você pode usar uma <a href="https://gpacalculatorcollege.com/pt/gpa-calculator">calculadora de GPA on-line</a> do ensino fundamental para obter resultados.
+                    <br><br>
+                    Relacionada: <a href="https://gpacalculatorcollege.com/pt" data-translate="relatedCollegeCalculator">Calculadora de GPA da faculdade</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Perguntas frequentes</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Qual é um bom GPA para o ensino fundamental?</h3>
+                    <p data-translate="faqAnswer1">
+                        Um bom GPA no ensino fundamental geralmente é considerado entre 3,0 e 4,0 na escala padrão de 4,0. Isso significa, principalmente, notas B e A nas disciplinas.
+                        <br><br>
+                        <b>4.0 GPA</b> → Notas A (excelente desempenho).<br>
+                        <b>3.5 GPA</b> → A e B (muito bom).<br>
+                        <b>3.0 GPA</b> → Geralmente B (bom e acima da média).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">O GPA do Ensino Fundamental II é importante para a faculdade?</h3>
+                    <p data-translate="faqAnswer2">
+                        Não, o GPA do Ensino Fundamental II não é diretamente relevante para a admissão na faculdade. As faculdades geralmente consideram o seu GPA do Ensino Médio, as notas dos testes padronizados, as atividades extracurriculares e as redações.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">O GPA do Ensino Fundamental II pode afetar a minha colocação no Ensino Médio?</h3>
+                    <p data-translate="faqAnswer3">
+                        Sim, o GPA do Ensino Fundamental II pode afetar a sua colocação nas turmas do Ensino Médio. Embora as faculdades não levem em conta as notas do Ensino Fundamental II, muitas escolas de Ensino Médio as utilizam para decidir em qual nível de curso você começará.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semestre ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Disciplina</th>
+                                <th>Nota</th>
+                                <th>Créditos</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Adicionar disciplina"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Adicionar outra disciplina</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Adicionar disciplina"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Adicionar disciplina"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex., 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>
