@@ -608,6 +608,10 @@ def sgpa_to_cgpa_redirect_trailing_slash():
     return redirect(url_for('sgpa_to_cgpa_en'), code=301)
     
 # NEW REDIRECTS FOR SGPA TO PERCENTAGE
+@redirect_routes.route('/sgpa-to-percentage/', strict_slashes=False)
+def sgpa_to_percentage_redirect():
+    return redirect(url_for('sgpa_to_percentage_en'), code=301)
+    
 @redirect_routes.route('/sgpa-to-percentage-calculator/', strict_slashes=False)
 def sgpa_to_percentage_redirect_trailing_slash():
     return redirect(url_for('sgpa_to_percentage_en'), code=301)
