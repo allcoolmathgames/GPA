@@ -473,6 +473,7 @@ def gpa_calculator_redirect_en():
 @redirect_routes.route('/final-grade-calculator/')
 def final_grade_calculator_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
+
 # Trailing slash wali URL ko redirect karne ka naya route
 @app.route('/grade-calculator/')
 def grade_calculator_redirect_trailing_slash():
@@ -611,6 +612,31 @@ def sgpa_to_cgpa_redirect_trailing_slash():
 @redirect_routes.route('/sgpa-to-percentage-calculator/')
 def sgpa_to_percentage_redirect_trailing_slash():
     return redirect(url_for('sgpa_to_percentage_en'), code=301)
+
+@lang_routes.route('/calcolatrice-voti-semestre')
+def it_semester_grade_calculator_redirect(lang_code):
+    return redirect(url_for('lang_routes.semester_grade_calculator', lang_code=lang_code), code=301)
+    
+@lang_routes.route('/calcolatrice-voto-finale')
+def it_final_grade_calculator_redirect(lang_code):
+    return redirect(url_for('lang_routes.final_grade_calculator', lang_code=lang_code), code=301)
+    
+@lang_routes.route('/calculateur-notes-semestrielles')
+def fr_semester_grade_calculator_redirect(lang_code):
+    return redirect(url_for('lang_routes.semester_grade_calculator', lang_code=lang_code), code=301)
+
+@lang_routes.route('/calcolatore-gpa')
+def it_gpa_calculator_redirect(lang_code):
+    return redirect(url_for('lang_routes.gpa_calculator', lang_code=lang_code), code=301)
+
+@lang_routes.route('/calcolatore-gpa-scuola-superiore')
+def it_highschool_gpa_redirect(lang_code):
+    return redirect(url_for('lang_routes.highschool_gpa', lang_code=lang_code), code=301)
+    
+@lang_routes.route('/calcolatrice-voto')
+def it_grade_calculator_redirect(lang_code):
+    return redirect(url_for('lang_routes.grade_calculator', lang_code=lang_code), code=301)
+
 
 # --- END OF NEW REDIRECTS ---
 
