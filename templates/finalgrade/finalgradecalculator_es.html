@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculadora de calificaciones finales</title>
+    <meta name="description"
+        content="Esta calculadora de calificaciones finales muestra la puntuación que necesitas en tu examen final para alcanzar tu calificación deseada, o tu calificación general en función de la puntuación de tu examen final."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/es/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+<body data-lang="es" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Calculadora de calificaciones finales</h1>
+
+            <p style="text-align: center;">Utilice esta calculadora para averiguar la calificación mínima que necesita en su examen final para lograr la calificación deseada del curso.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Ingrese sus calificaciones y ponderaciones</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Calificación deseada</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="e.g., 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">De</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Calificación actual</label>
+                            <input type="number" id="current_grade" min="0" placeholder="e.g., 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">De</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Ponderación del examen final</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="e.g., 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">De</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Calcular calificación final</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Calificación final requerida</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">Necesitas obtener al menos:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">Reiniciar</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+    <h2 data-translate="howToUseHeading">Cómo utilizar la calculadora de calificaciones finales</h2>
+    <p>Usar una calculadora de calificaciones finales es muy simple y fácil de usar, solo siga estos pasos para calcularlo en el sitio web <a href="/">gpacalculatorcollege.com</a>:</p>
+    <div class="how-to-use-container" data-translate="howToUseContainer">
+        <div class="step" data-translate="step1">
+            <div class="step-icon">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <h3><span data-translate="step1Title">Calificación deseada</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step1Description">Ingrese la calificación que desea obtener al final del semestre, sobre 100 u otras cifras.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step2">
+            <div class="step-icon">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <h3><span data-translate="step2Title">Calificación actual</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step2Description">Ingrese la calificación actual que ha obtenido hasta el momento en el curso, basada en todas las tareas, cuestionarios, proyectos y exámenes completados.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step3">
+            <div class="step-icon">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <h3><span data-translate="step3Title">Ponderación de la calificación final</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step3Description">Ingrese la ponderación de la calificación final sobre 100, el porcentaje de la calificación total del curso que representa su examen final, proyecto o última evaluación.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step4">
+            <div class="step-icon">
+                <i class="fa-solid fa-4"></i>
+            </div>
+            <h3><span data-translate="step4Title">Haga clic en "Calcular"</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step4Description">Después de proporcionar toda la información, simplemente presione el botón "Calcular calificación final".</span>
+            </p>
+        </div>
+    </div>
+</section>
+            
+            <section class="content-section centered-section">
+    <h2 data-translate="whyUseHeading">¿Por qué usar nuestra calculadora de calificaciones finales?</h2>
+    <p style="text-align: left;" data-translate="whyUseDescription">
+        Nuestra calculadora tiene una interfaz sencilla que cualquiera puede usar, sin necesidad de conocimientos matemáticos. Solo tienes que introducir la calificación final que deseas, la calificación actual y la ponderación de tu trabajo restante, y hacer clic en "Calcular" para ver los resultados al instante.
+    </p>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature1Title">Fácil de usar</h3>
+            <p style="text-align: left;" data-translate="feature1Description">Nuestra calculadora tiene una interfaz sencilla que cualquiera puede usar, sin necesidad de conocimientos matemáticos. Solo tienes que introducir la calificación final que deseas, la calificación actual y la ponderación de tu trabajo restante, y hacer clic en "Calcular" para ver los resultados al instante.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature2Title">Cálculos precisos</h3>
+            <p style="text-align: left;" data-translate="feature2Description">Nuestra calculadora utiliza fórmulas precisas para garantizar resultados fiables en todo momento. Al tener en cuenta la ponderación exacta de tu trabajo completado y restante, elimina las conjeturas y te ofrece una visión real de lo que necesitas para alcanzar tu objetivo.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature3Title">Planifica tus estudios</h3>
+            <p style="text-align: left;" data-translate="feature3Description">Te ayuda a concentrar tu tiempo y energía en lo que más importa. Al saber la calificación exacta que necesitas para tus próximos trabajos, puedes crear un plan de estudio inteligente y evitar perder tiempo en tareas de bajo impacto.</p>
+        </div>
+    </div>
+</section>
+
+<div class="content-section centered-section">
+    <h2 data-translate="index_whatIsFinalGradeCalcHeading">¿Qué es la Calculadora de Calificaciones Finales?</h2>
+    <p data-translate="index_whatIsFinalGradeCalcParagraph">
+        Esta calculadora de calificaciones finales ayuda a los estudiantes a determinar la puntuación que necesitan en las tareas o exámenes restantes para alcanzar la calificación general deseada. Calcula rápidamente la puntuación requerida según el rendimiento actual y la importancia del trabajo restante.
+    </p>
+
+    <h2 data-translate="index_finalGradeFormulaHeading">Cálculo de la Calificación Final: Fórmula y Ejemplo</h2>
+    <p data-translate="index_finalGradeFormulaText">
+        <b data-translate="index_formulaLabel">Fórmula:</b><br>
+        <span data-translate="index_formulaText">Calificación final = (Calificación actual × Ponderación del trabajo completado) + (Puntuación deseada del examen final × Ponderación del trabajo restante)</span>
+        <br><br>
+        <span data-translate="index_formulaVariables">
+            Donde:<br>
+            Calificación actual = Su puntuación promedio hasta el momento del curso<br>
+            Ponderación del trabajo completado = Porcentaje del curso ya calificado<br>
+            Ponderación del trabajo restante = Porcentaje de la calificación del curso que aún queda por completar (p. ej., examen final)
+        </span>
+    </p>
+
+    <h2 data-translate="index_exampleHeading">Ejemplo:</h2>
+    <p>
+        <b data-translate="index_exampleCurrentGrade">Calificación actual:</b> 85%<br>
+        <b data-translate="index_exampleCompletedWeight">Ponderación del trabajo completado:</b> 70%<br>
+        <b data-translate="index_exampleFinalExamWeight">Ponderación del examen final:</b> 30%<br>
+        <b data-translate="index_exampleDesiredGrade">Calificación final deseada:</b> 90%
+    </p>
+
+    <h3 data-translate="index_formulaStepsHeading">Fórmula:</h3>
+    <p>
+        <span data-translate="index_formulaStepsFormula">90 = (85 x 0,70) + (Puntuación del examen requerida x 0,30)</span>
+    </p>
+
+    <h3 data-translate="index_stepByStepHeading">Paso a paso:</h3>
+    <ol data-translate="index_stepsList" style="padding-left: 30px;">
+        <li data-translate="index_step1">85 x 0,70 = 59,5</li>
+        <li data-translate="index_step2">90 - 59,5 = 30,5</li>
+        <li data-translate="index_step3">30,5 ÷ 0,30 = 101,67</li>
+    </ol>
+
+    <p data-translate="index_resultText">
+        Resultado: Necesitarías aproximadamente un <b>102%</b> en el examen final para alcanzar una calificación final del 90%, lo que significa que es matemáticamente imposible a menos que haya créditos adicionales disponibles.
+    </p>
+</div>
+
+<div class="content-section centered-section">
+    <h2 data-translate="useCasesHeading">Usos de una calculadora de calificaciones finales</h2>
+    <p data-translate="useCasesIntro">
+        Aquí tienes algunos ejemplos útiles de calculadoras de calificaciones finales:
+    </p>
+
+    <h3 data-translate="useCase1Heading">Planificación del esfuerzo de estudio</h3>
+    <p data-translate="useCase1Text">
+        Esta calculadora te ayuda a calcular exactamente cuánto necesitas obtener en tus tareas pendientes, para que puedas planificar tu tiempo de estudio en consecuencia.
+    </p>
+
+    <h3 data-translate="useCase2Heading">Establecimiento de metas realistas</h3>
+    <p data-translate="useCase2Text">
+        Una calculadora de calificaciones finales te ayuda a establecer objetivos académicos alcanzables, mostrándote si la calificación deseada es realista.
+    </p>
+
+    <h3 data-translate="useCase3Heading">Planificación estratégica</h3>
+    <p data-translate="useCase3Text">
+        Puedes crear un plan de acción específico para tus estudios. Al saber exactamente cuánto afecta cada tarea pendiente a tu calificación general, puedes decidir dónde concentrar tu energía para obtener los mejores resultados.
+    </p>
+
+    <h3 data-translate="useCase4Heading">Motivación</h3>
+    <p data-translate="useCase4Text">
+        Puede aumentar tu motivación al convertir objetivos académicos vagos en objetivos claros y alcanzables. Ver exactamente la puntuación que necesitas en tus tareas pendientes te proporciona un objetivo específico al que aspirar, lo que hace que tus sesiones de estudio tengan un propósito más profundo.
+    </p>
+</div>
+
+            <section class="faq-section centered-section">
+    <h2 data-translate="faqHeading">Preguntas frecuentes</h2>
+    <div class="faq-container">
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq1Question">¿Qué calificación necesito en mi examen final?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq1Answer">Esta es la pregunta más frecuente de los estudiantes: ¿Qué necesito en mi examen final antes del examen final? Puedes calcularla usando nuestra calculadora de calificaciones finales, indicando la calificación deseada, la calificación actual y la ponderación del examen final.</p>
+                <p><strong>Ejemplo:</strong><br>Calificación deseada: 90%<br>Ponderación del examen final: 40%<br>Calificación actual: 82%<br>La calculadora mostrará que necesitas aproximadamente un 98% en el examen final para alcanzar tu objetivo.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq2Question">¿Funcionará para el cálculo del GPA?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq2Answer">Si bien es principalmente para cursos individuales, puedes usar los resultados con una <a href="/gpa-calculator">calculadora de GPA</a> para estimar tu GPA general.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq3Question">¿Puedo usarla para cualquier asignatura?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq3Answer">Sí, la calculadora funciona para cualquier asignatura o curso que utilice calificación ponderada.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq4Question">¿Qué significa el 25% de la calificación final?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq4Answer">Si tu examen o proyecto final representa el 25% de tu calificación final, significa que una cuarta parte de la calificación general del curso provendrá de esa evaluación. El 75% restante se basará en tus tareas, cuestionarios, proyectos y exámenes anteriores.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Por favor, ingrese números válidos. La ponderación del examen final debe estar entre 1 y 99.');
+                    return;
+                }
+                
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('El valor de "De" debe ser un número positivo.');
+                     return;
+                }
+
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('La ponderación del examen final debe ser inferior al 100%.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Necesitas más de 100% en el examen final, lo cual es imposible. Tendrás que bajar tu calificación deseada.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Ya has alcanzado tu calificación deseada.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Para alcanzar tu objetivo, esta es la calificación requerida.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

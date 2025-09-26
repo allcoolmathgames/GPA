@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calcolatore GPA della scuola media</title>
+    <meta name="description" content="Questo calcolatore del GPA per le scuole medie ti consente di calcolare la tua media dei voti delle scuole medie con un solo clic." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="calcolatore GPA, calcolare GPA, come calcolare GPA, qual è il mio GPA, calcolatore media dei voti, calcolatore GPA online, scala GPA 4.0, calcolatore GPA ore di credito, calcolatore GPA" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="it" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calcolatore GPA della scuola media</h1>
+            <p data-translate="introParagraph">Utilizza questo calcolatore della media dei voti per le scuole medie per calcolare la tua media dei voti alle scuole medie.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calcolatore GPA della scuola media</h2>
+                <div id="semestersContainer">
+                    <!-- Semestre 1 (Predefinito) -->
+                    <div class="semester-container">
+                        <h3>Semestre 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Corso</th>
+                                    <th data-translate="tableHeaderGrade">Voto</th>
+                                    <th data-translate="tableHeaderCredits">Crediti</th>
+                                    <th>Azione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Aggiungi corso" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es. 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Aggiungi un altro corso</button>
+                    </div>
+                </div>
+                <!-- Pulsante Aggiungi un altro semestre -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Aggiungi un altro semestre</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calcola GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Riepilogo GPA</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">GPA Attuale</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/it/middle-school-gpa-calculator" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Reimposta tutti i corsi</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Questo <a href="https://gpacalculatorcollege.com/it/gpa-calculator">calcolatore GPA</a> per le scuole medie aiuta gli studenti delle scuole medie a calcolare la loro media dei voti in base ai voti dei corsi e alle ore di credito. Gli studenti possono utilizzare questo calcolatore di GPA per la scuola media per monitorare il loro rendimento scolastico e pianificare l'ammissione alle scuole superiori o all'università e l'idoneità alle borse di studio.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Come si usa?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Passo 1: Inserisci il nome del corso</h3>
+                        <p data-translate="step1Description">Per prima cosa devi inserire il nome del corso.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Passo 2: Seleziona i voti</h3>
+                        <p data-translate="step2Description">Seleziona il voto ottenuto in ogni materia (ad esempio A, B, C, ecc.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Passo 3: Inserisci le ore di credito</h3>
+                        <p data-translate="step3Description">Inserisci le ore di credito per ogni corso (in genere tra 1 e 4 ore).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Passo 4: Clicca <b>Calcola GPA</b></h3>
+                        <p data-translate="step4Description">Dopo aver fornito tutti i dati, basta cliccare sul pulsante "Calcola GPA della scuola media" per ottenere i risultati.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Perché usare il nostro calcolatore GPA della scuola media?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Precisione</h3>
+                        <p data-translate="feature1Description">Il nostro strumento fornisce risultati accurati utilizzando i tuoi voti e le ore di credito, così puoi vedere come stai andando nei tuoi studi.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interfaccia user-friendly</h3>
+                        <p data-translate="feature2Description">Abbiamo progettato l'interfaccia di questo strumento per essere user-friendly in modo che tutti possano usarlo facilmente. Non sono richieste competenze tecniche per utilizzare questo strumento.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Monitora i tuoi obiettivi accademici</h3>
+                        <p data-translate="feature3Description">Questo strumento ti aiuta a rimanere concentrato sui tuoi obiettivi accademici. Controllando regolarmente il tuo GPA, puoi vedere come stai andando, individuare le aree che necessitano di miglioramento e prendere decisioni intelligenti per migliorare i tuoi voti.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Risultati istantanei e veloci</h3>
+                        <p data-translate="feature4Description">Ottieni il tuo GPA calcolato all'istante! Basta inserire i tuoi voti e le ore di credito - nessun attesa, nessun caricamento, risultati rapidi e affidabili subito.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Gratuito</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com è 100% gratuito - nessuna registrazione, nessuna tariffa nascosta e nessun limite. Basta inserire i tuoi voti e le ore di credito per ottenere la tua media dei voti all'istante.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Come funziona il calcolatore del GPA della scuola media?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    Questo calcolatore del GPA per la scuola media utilizza i voti e i crediti inseriti per calcolare il GPA medio con una formula predefinita.
+                </p>
+                <h2 data-translate="formulaHeading">Formula</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        Media dei voti della scuola media =
+                    </b>
+                    (voto1 × credito1 + voto2 × credito2 + … + votoN × credito) / (credito1 + credito2 + … + creditoN)
+                </p>
+                <h2 data-translate="scaleHeading">Scala 4.0 utilizzata dalla calcolatrice</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Voto in lettere</th>
+                            <th data-translate="gpaValueHeader">Valore GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Differenza tra GPA della scuola media e GPA della scuola superiore</h2>
+                <h3 data-translate="middleSchoolHeading">GPA della scuola media</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Scopo:</b> Aiuta principalmente studenti, genitori e insegnanti a monitorare i progressi accademici.</li>
+                    <li><b>Impatto:</b> Raramente preso in considerazione dalle università, ma può influenzare il posizionamento nelle classi avanzate o di merito una volta entrati alle superiori.</li>
+                    <li><b>Scala di valutazione:</b> Solitamente la scala standard 4.0 (A = 4, B = 3, ecc.), senza voti ponderati.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">GPA della scuola superiore</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Scopo:</b> Un fattore critico per l'ammissione all'università, le borse di studio e talvolta anche le opportunità di lavoro.</li>
+                    <li><b>Impatto:</b> Influisce direttamente sulle domande di ammissione all'università e sulle opportunità di carriera.</li>
+                    <li><b>Scala di valutazione:</b> Può includere GPA ponderati (superiori a 4.0) per corsi di laurea specialistica, AP o IB.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Calcola la tua media dei voti delle scuole superiori con il nostro <a href="https://gpacalculatorcollege.com/it/highschool-gpa">Calcolatore della media dei voti delle scuole superiori</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Perché la media dei voti è importante alle scuole medie?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Anche se di solito le università non prendono in considerazione la media dei voti delle scuole medie, questa gioca comunque un ruolo importante:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Crea buone abitudini fin da subito –</b> Imparare come funziona la media dei voti (GPA) aiuta a rimanere motivati ​​e organizzati.</li>
+                    <li><b>Inquadramento scolastico –</b> Molte scuole utilizzano la media dei voti (GPA) per decidere se si è idonei per corsi di specializzazione o avanzati alle superiori.</li>
+                    <li><b>Automonitoraggio –</b> Fornisce a studenti e genitori un quadro chiaro dei punti di forza accademici e delle aree che necessitano di miglioramento.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Come calcolo la media dei voti della scuola media?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Calcolare la media dei voti delle scuole medie è semplice una volta compresi i passaggi. Ecco come farlo manualmente:
+                </p>
+                <h3 data-translate="step1Heading">1. Converti i voti in punti voto</h3>
+                <p data-translate="step1Paragraph">
+                    La maggior parte delle scuole medie utilizza una scala GPA pari a 4.0:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Esempio:</i> Se hai preso un A in Matematica, ciò equivale a 4,0 punti.
+                </p>
+                <h3 data-translate="step2Heading">2. Somma tutti i punti di valutazione</h3>
+                <p data-translate="step2Paragraph">
+                    Annota i punteggi di ogni materia e poi sommali:
+                    <br><br>
+                    Matematica = A = 4.0<br>
+                    Inglese = B = 3.0<br>
+                    Scienza = A = 4.0<br>
+                    Storia = C = 2.0<br>
+                    <b>Totale = 13,0 punti di valutazione</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Dividi per il numero di classi</h3>
+                <p data-translate="step3Paragraph">
+                    Ora dividi il punteggio totale per il numero di lezioni:
+                    <br><br>
+                    GPA = Punteggio totale ÷ Numero di classi
+                    <br><br>
+                    Nel nostro esempio:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Quindi la media dei voti dello studente = <b>3,25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Invece di fare tutti questi calcoli, puoi usare un calcolatore online della media dei voti per le scuole medie per ottenere i risultati all'istante.
+                    <br><br>
+                    Correlati: <a href="https://gpacalculatorcollege.com/it" data-translate="relatedCollegeCalculator">Calcolatore GPA College</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Domande frequenti</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Qual è una buona media per la scuola media?</h3>
+                    <p data-translate="faqAnswer1">
+                        Una buona media dei voti alle scuole medie è solitamente considerata compresa tra 3,0 e 4,0 sulla scala standard del 4,0.
+                        Ciò significa che si ottengono prevalentemente voti B e A nelle materie.
+                        <br><br>
+                        <b>Media dei voti 4,0</b> → Tutti A (prestazioni eccellenti).<br>
+                        <b>Media dei voti 3,5</b> → A e B (ottimo).<br>
+                        <b>Media dei voti 3,0</b> → Prevalentemente B (buono e sopra la media).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">La media dei voti delle scuole medie è importante per l'università?</h3>
+                    <p data-translate="faqAnswer2">
+                        No, la media dei voti delle scuole medie non è direttamente rilevante per l'ammissione all'università. Le università in genere considerano la media dei voti delle scuole superiori, i punteggi dei test standardizzati, le attività extracurriculari e i saggi.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">La media dei voti delle scuole medie può influenzare il posizionamento nelle scuole superiori?</h3>
+                    <p data-translate="faqAnswer3">
+                        Sì, la media dei voti delle scuole medie può influenzare il posizionamento nelle classi delle scuole superiori. Sebbene le università non considerino i voti delle scuole medie, molte scuole superiori li utilizzano per decidere il livello di corso da cui iniziare.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Aggiungi un nuovo semestre
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semestre ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Corso</th>
+                                <th>Voto</th>
+                                <th>Crediti</th>
+                                <th>Azione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Aggiungi corso"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es. 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Aggiungi un altro corso</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Aggiungi listener per il pulsante "Rimuovi semestre"
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Aggiungi listener per il pulsante "Aggiungi un altro corso" nel nuovo semestre
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Aggiungi corso"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es. 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Aggiungi listener per il pulsante "Aggiungi un altro corso" predefinito
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Aggiungi corso"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es. 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Elimina una riga
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calcola GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Funzionalità di attivazione/disattivazione per gli elementi FAQ
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // Imposta lo stato iniziale su aperto
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

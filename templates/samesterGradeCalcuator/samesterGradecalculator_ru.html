@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Калькулятор оценок за семестр</title>
+    <meta name="description" content="Быстро рассчитайте свои семестровые оценки с помощью нашего калькулятора семестровых оценок. Легко оцените свою общую успеваемость за семестр.">
+    <meta name="keywords" content="Калькулятор оценок за семестр, расчет оценок, калькулятор четвертных оценок, калькулятор итоговых оценок">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Калькулятор оценок за семестр</h1>
+            <p>Используйте этот простой калькулятор оценок за семестр, чтобы узнать свою текущую оценку и то, что вам нужно на итоговом экзамене.</p>
+            <br>
+            <section class="input-section">
+                <h2>Калькулятор оценок за семестр</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Этот калькулятор оценок за семестр поможет вам рассчитать ваши семестровые оценки на основе ваших четвертных оценок и процентного веса итоговой оценки.</p>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>Оценка</th>
+                            <th>Оценка (%)</th>
+                            <th>Вес (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Первая четверть</td>
+                            <td><input type="number" id="grade1" placeholder="например, 33"></td>
+                            <td><input type="number" id="weight1" placeholder="например, 33"></td>
+                        </tr>
+                        <tr>
+                            <td>Вторая четверть</td>
+                            <td><input type="number" id="grade2" placeholder="например, 22"></td>
+                            <td><input type="number" id="weight2" placeholder="например, 22"></td>
+                        </tr>
+                        <tr>
+                            <td>Итоговый экзамен</td>
+                            <td><input type="number" id="grade3" placeholder="например, 32"></td>
+                            <td><input type="number" id="weight3" placeholder="например, 45"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="calculateAndScroll()">>Рассчитать оценку</button>
+                </div>
+            </section>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Итоговая оценка</h2>
+                <div class="grade-box">
+                    <span>Текущая оценка</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/semester-grade-calculator"><button class="secondary-btn">Сбросить все оценки</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+        <p>This Semester Grade Calculator, also known as a quarter grade calculator, helps you to calculate your overall grade for a semester by combining the results of different assignments, quizzes, projects, midterms, and final exams according to their weight percentages.</p>
+
+    </section>
+    <section class="content-section centered-section">
+        <p>Этот калькулятор оценок за семестр, также известный как калькулятор оценок за четверть, поможет вам рассчитать общую оценку за семестр, объединив результаты различных заданий, тестов, проектов, промежуточных и итоговых экзаменов в соответствии с их процентным весом.</p>
+
+    </section>
+            <section class="how-to-use-section centered-section">
+                <h2>Как пользоваться калькулятором оценок за семестр?</h2>
+                <div class="how-to-use-container">
+                    <p>Просто следуйте этим простым шагам, чтобы воспользоваться этим калькулятором для семестровых экзаменов:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>1-я четверть</h3>
+                        <p>Введите "Оценку" и "Процент от семестровой оценки" за 1-й квартал.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>2-й квартал</h3>
+                        <p>Введите "Оценку" и "Процент от семестровой оценки" за 2-й квартал.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>Итоговый экзамен</h3>
+                        <p>Введите "Оценку" и "Процент от семестровой оценки" итогового экзамена.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>Рассчитать</h3>
+                        <p>После ввода всей этой информации нажмите кнопку "Рассчитать семестровую оценку". Ваша оценка за семестр будет отображаться в последней вкладке.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Зачем использовать наш калькулятор?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Экономит время и силы</h3>
+                        <p>Не нужно вручную рассчитывать средневзвешенные значения. Просто введите свои оценки и веса, и калькулятор сделает всё остальное за секунды.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Точность</h3>
+                        <p>Вычисление средневзвешенных оценок может быть сложной задачей, особенно когда разные компоненты (тесты, домашние задания, экзамены) имеют разные процентные значения. Но наш калькулятор исключает человеческий фактор и гарантирует 100% точность результатов.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Удобный и бесплатный</h3>
+                        <p>Наш калькулятор оценок за семестр бесплатный и простой в использовании. Не нужно сложных формул или электронных таблиц — просто введите данные и нажмите «Рассчитать».</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Как рассчитать оценку за семестр?</h2>
+                <p>
+                    Оценку за семестр можно рассчитать методом средневзвешенного значения. Каждое задание, тест, контрольная работа, проект и экзамен имеют определённый процент (вес) в итоговой оценке. Также используйте калькулятор итоговой оценки, чтобы узнать, какие оценки вам нужны для выпускных экзаменов.
+                </p>
+                <h3>Узнайте компоненты оценки и их веса</h3>
+                <p>
+                    Обычно вы найдете подробную информацию в программе преподавателя или в учебном плане курса. Например:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Домашнее задание: 20%</li>
+                    <li>Контрольные тесты: 15%</li>
+                    <li>Промежуточный экзамен: 25%</li>
+                    <li>Итоговый экзамен: 30%</li>
+                    <li>Посещаемость занятий: 10%</li>
+                </ul>
+                <h3>Преобразование процентов в десятичные дроби</h3>
+                <ul style="padding-left: 30px;">
+                    <li>20% → 0.20</li>
+                    <li>15% → 0.15</li>
+                    <li>25% → 0.25</li>
+                    <li>30% → 0.30</li>
+                    <li>10% → 0.10</li>
+                </ul>
+                <h3>Умножьте каждый балл на его вес</h3>
+                <p>
+                    Предположим, что у студента следующие оценки:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Домашнее задание = 85%</li>
+                    <li>Тестовые задания = 90%</li>
+                    <li>Промежуточный экзамен = 80%</li>
+                    <li>Итоговый экзамен = 70%</li>
+                    <li>Участие = 100%</li>
+                </ul>
+                <p>
+                    Теперь умножьте каждый на его вес:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Домашнее задание: 85 × 0,20 = 17,0</li>
+                    <li>Тесты: 90 × 0,15 = 13,5</li>
+                    <li>Промежуточный: 80 × 0,25 = 20,0</li>
+                    <li>Итоговый экзамен: 70 × 0,30 = 21,0</li>
+                    <li>Участие: 100 × 0,10 = 10,0</li>
+                </ul>
+                <h3>Сложите все взвешенные оценки вместе</h3>
+                <p>
+                    17.0 + 13.5 + 20.0 + 21.0 + 10.0 = 81.5%
+                </p>
+                <h3>Преобразовать в буквенный класс (необязательно)</h3>
+                <p>
+                    Во многих школах используется стандартная буквенная шкала:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>A = 90–100%</li>
+                    <li>B = 80–89%</li>
+                    <li>C = 70–79%</li>
+                    <li>D = 60–69%</li>
+                    <li>F = Ниже 60%</li>
+                </ul>
+                <p>
+                    Таким образом, 81.5% = B
+                </p>
+                <h3>Формула для оценки за семестр</h3>
+                <p>
+                    Итоговая оценка за семестр = (Оценка 1 × Вес 1) + (Оценка 2 × Вес 2) + …
+                </p>
+                <p>
+                    Эти ручные расчеты могут занять слишком много времени; просто воспользуйтесь нашим семестровым калькулятором, чтобы быстро рассчитать оценку за семестр.
+                </p>
+            </div>
+
+            <section class="content-section centered-section">
+                <h2>Что такое семестровая оценка?</h2>
+                <p style="text-align: left;">Семестровая оценка — это итоговая оценка, которую студент получает в конце семестра (половины учебного года, обычно 15–18 недель). Она отражает успеваемость студента по всем предметам, включая:
+                <ul style="padding-left: 30px; position: relative; top: -20px;">
+                    <li>Домашнее задание</li>
+                    <li>Викторины</li>
+                    <li>Экзамены (промежуточные и итоговые)</li>
+                    <li>Проекты</li>
+                    <li>Участие в занятиях</li>
+                    <li>Посещаемость (иногда)</li>
+                </ul>
+                </p>
+                <h3>Формула для оценки за семестр (формула средневзвешенного значения)</h3>
+                <div class="formula">
+                    Семестровая оценка = (Оценка1 × Вес1) + (Оценка2 × Вес2) + ... + (ОценкаN × ВесN)
+                </div>
+                <p>Где веса указаны в десятичной форме (например, 20% = 0.20).</p>
+                <p><b>Пример:</b><br>85 (0.20) + 90 (0.15) + 80 (0.25) + 70 (0.30) + 100 (0.10) = 81.5</p>
+                <p>Этот калькулятор оценок за семестр, также известный как калькулятор четвертных оценок, помогает вам рассчитать общую оценку за семестр, объединив результаты различных заданий, викторин, проектов, промежуточных и итоговых экзаменов в соответствии с их процентным весом.</p>
+            </section>
+
+            <section class="faq-section centered-section">
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Кому будет полезен калькулятор оценок за семестр?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Студентам</b> — для отслеживания прогресса и постановки целей.<br>
+                                <b>Учителям</b> — для объяснения учащимся системы оценок.<br>
+                                <b>Родителям</b> — для лучшего понимания успеваемости своего ребёнка.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Можно ли использовать этот семестровый калькулятор для обучения в магистратуре или аспирантуре?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Да. Вы можете использовать этот калькулятор для семестрового теста для любого уровня, включая магистратуру и аспирантуру, при условии правильного ввода оценок и их весовых коэффициентов.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Всегда ли более высокая семестровая оценка означает более высокий средний балл?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Да. Более высокие оценки за семестр конвертируются в более высокие баллы, что повышает ваш средний балл за семестр и, в конечном итоге, ваш общий средний балл. Вы можете проверить свой средний балл (GPA) с помощью калькулятора среднего балла.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Отличается ли средний балл за семестр от совокупного среднего балла?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Средний балл за семестр:</b> Средний балл за один семестр.<br>
+                                <b>Совокупный средний балл:</b> Средний балл всех семестров по вашей учебной программе.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+<script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
+        });
+    });
+
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
+    function calculateGrade() {
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3 = parseFloat(weight3Input.value) || 0;
+        
+
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
+            weight3Input.value = weight3.toFixed(2);
+        }
+
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            return;
+        }
+
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+        
+    }
+
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

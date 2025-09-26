@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calculateur de moyenne générale au secondaire</title>
+    <meta name="description" content="Ce calculateur de moyenne pondérée cumulative (GPA) pour le collège vous permet de calculer votre moyenne pondérée cumulative au collège en un seul clic." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="calculateur de moyenne, calculer moyenne, comment calculer moyenne, quelle est ma moyenne, calculateur de moyenne pondérée cumulative, calculateur de moyenne en ligne, échelle 4.0, calculateur de moyenne avec crédits" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="fr" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Calculateur de moyenne générale au secondaire</h1>
+            <p data-translate="introParagraph">Utilisez ce calculateur de moyenne pondérée cumulative (GPA) au collège pour calculer votre moyenne pondérée cumulative au collège.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Calculateur de moyenne générale au secondaire</h2>
+                <div id="semestersContainer">
+                    <!-- Semestre 1 (Par défaut) -->
+                    <div class="semester-container">
+                        <h3>Semestre 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Cours</th>
+                                    <th data-translate="tableHeaderGrade">Note</th>
+                                    <th data-translate="tableHeaderCredits">Crédits</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Ajouter un cours" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Ajouter un autre cours</button>
+                    </div>
+                </div>
+                <!-- Bouton Ajouter un autre semestre -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Ajouter un autre semestre</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calculer la moyenne générale</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Résumé de la moyenne générale</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Moyenne actuelle</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/fr/middle-school-gpa-calculator" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Réinitialiser tous les cours</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Ce <a href="https://gpacalculatorcollege.com/fr/gpa-calculator">calculateur de moyenne pondérée cumulative</a> pour le collège aide les élèves à calculer leur moyenne pondérée cumulative en fonction de leurs notes et de leurs crédits. Les élèves peuvent utiliser ce calculateur de moyenne générale pour suivre leurs résultats scolaires et planifier leur admission au lycée ou à l'université, ainsi que leur admissibilité aux bourses.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Comment utiliser ?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Étape 1 : Saisir le nom du cours</h3>
+                        <p data-translate="step1Description">Tout d'abord, saisissez le nom du cours.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Étape 2 : Sélectionner les notes</h3>
+                        <p data-translate="step2Description">Sélectionnez la note obtenue dans chaque matière (par exemple, A, B, C, etc.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Étape 3 : Saisir les heures de crédit</h3>
+                        <p data-translate="step3Description">Saisissez les heures de crédit pour chaque cours (généralement entre 1 et 4 heures).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Étape 4 : Cliquez sur <b>Calculer la moyenne générale</b></h3>
+                        <p data-translate="step4Description">Après avoir saisi toutes les informations, cliquez sur le bouton « Calculer la moyenne générale » pour obtenir vos résultats.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Pourquoi utiliser notre calculateur de moyenne générale au secondaire ?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Précision</h3>
+                        <p data-translate="feature1Description">Notre outil donne des résultats précis en utilisant vos notes et vos heures de crédit, afin que vous puissiez voir comment vous vous en sortez dans vos études.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Interface conviviale</h3>
+                        <p data-translate="feature2Description">Nous avons conçu l'interface de cet outil pour qu'elle soit conviviale afin que tout le monde puisse l'utiliser facilement. Aucune compétence technique n'est requise pour utiliser cet outil.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Suivi des objectifs académiques</h3>
+                        <p data-translate="feature3Description">Cet outil vous aide à rester concentré sur vos objectifs académiques. En vérifiant régulièrement votre moyenne générale, vous pouvez voir comment vous vous en sortez, repérer les domaines qui nécessitent une amélioration et prendre des décisions intelligentes pour améliorer vos notes.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Résultats instantanés et rapides</h3>
+                        <p data-translate="feature4Description">Obtenez votre moyenne générale calculée instantanément ! Il suffit de saisir vos notes et vos heures de crédit - pas d'attente, pas de chargement, juste des résultats rapides et fiables immédiatement.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Gratuit</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com est 100 % gratuit - pas d'inscription, pas de frais cachés et pas de limites. Il suffit de saisir vos notes et vos heures de crédit pour obtenir votre moyenne générale instantanément.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Comment fonctionne le calculateur de moyenne générale au secondaire ?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    Ce calculateur de moyenne pondérée cumulative (GPA) pour le collège utilise les notes et les crédits que vous saisissez pour calculer votre moyenne pondérée cumulative (GPA) avec une formule définie.
+                </p>
+                <h2 data-translate="formulaHeading">Formule</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        Moyenne générale au secondaire =
+                    </b>
+                    (note1 × crédit1 + note2 × crédit2 + … + noteN × créditN) ÷ (crédit1 + crédit2 + … + créditN)
+                </p>
+                <h2 data-translate="scaleHeading">Échelle 4.0 utilisée par le calculateur</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Note littérale</th>
+                            <th data-translate="gpaValueHeader">Valeur de la moyenne</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Différence entre la moyenne générale au collège et celle au lycée</h2>
+                <h3 data-translate="middleSchoolHeading">Moyenne générale au collège</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Objectif :</b> Aide principalement les élèves, les parents et les enseignants à suivre les progrès scolaires.</li>
+                    <li><b>Impact :</b> Rarement prise en compte par les universités, mais elle peut influencer le placement dans des classes avancées ou de spécialisation une fois au lycée.</li>
+                    <li><b>Échelle de notation :</b> Généralement l'échelle standard 4.0 (A = 4, B = 3, etc.), sans pondération.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">Moyenne générale au lycée</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Objectif :</b> Un facteur déterminant pour l'admission à l'université, l'obtention de bourses et parfois même d'emplois.</li>
+                    <li><b>Impact :</b> Affecte directement les candidatures à l'université et les perspectives de carrière.</li>
+                    <li><b>Échelle de notation :</b> Peut inclure des moyennes pondérées (supérieures à 4.0) pour les cours de spécialisation, AP ou IB.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Calculez votre moyenne générale au lycée avec notre calculateur de moyenne générale au lycée.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Pourquoi la moyenne générale est-elle importante au collège ?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Même si les universités ne prennent généralement pas en compte la moyenne générale du collège, elle joue néanmoins un rôle important :
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Adoptez de bonnes habitudes dès le plus jeune âge –</b> Apprendre comment fonctionne la moyenne générale vous aide à rester motivé et organisé.</li>
+                    <li><b>Placement au lycée –</b> De nombreux établissements utilisent votre moyenne générale pour déterminer si vous êtes admissible aux cours de niveau avancé ou de spécialisation au lycée.</li>
+                    <li><b>Auto-suivi –</b> Il permet aux élèves et aux parents d'avoir une vision claire de leurs points forts et des points à améliorer.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Comment calculer la moyenne générale au collège ?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Calculer votre moyenne générale au collège est simple une fois les étapes comprises. Voici comment le faire manuellement :
+                </p>
+                <h3 data-translate="step1Heading">1. Convertir les notes en points de note</h3>
+                <p data-translate="step1Paragraph">
+                    La plupart des collèges utilisent l’échelle GPA de 4,0 :
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Exemple :</i> Si vous avez obtenu un A en mathématiques, cela équivaut à 4,0 points.
+                </p>
+                <h3 data-translate="step2Heading">2. Additionnez tous les points de note</h3>
+                <p data-translate="step2Paragraph">
+                    Notez les points de note pour chaque matière, puis additionnez-les :
+                    <br><br>
+                    Mathématiques = A = 4.0<br>
+                    Anglais = B = 3.0<br>
+                    Sciences = A = 4.0<br>
+                    Histoire = C = 2.0<br>
+                    <b>Total = 13,0 points de note</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Diviser par le nombre de cours</h3>
+                <p data-translate="step3Paragraph">
+                    Maintenant, divisez le total des points par le nombre de cours :
+                    <br><br>
+                    GPA = Total des points ÷ Nombre de cours
+                    <br><br>
+                    Dans notre exemple :<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Donc la moyenne générale de l’étudiant = <b>3,25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Au lieu de faire tous ces calculs, vous pouvez utiliser un calculateur de moyenne pondérée cumulative en ligne pour le collège pour obtenir des résultats instantanés.
+                    <br><br>
+                    En rapport : <a href="https://gpacalculatorcollege.com/fr/highschool-gpa" data-translate="relatedCollegeCalculator">Calculateur de moyenne générale (GPA) pour les collèges</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Questions fréquemment posées</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Quelle est une bonne moyenne générale au collège ?</h3>
+                    <p data-translate="faqAnswer1">
+                        Une bonne moyenne générale au collège se situe généralement entre 3,0 et 4,0 sur l'échelle standard de 4,0. Cela signifie généralement des B et des A dans vos cours.
+                        <br><br>
+                        <b>4,0 GPA</b> → Excellentes notes (A).<br>
+                        <b>3,5 GPA</b> → A et B (très bien).<br>
+                        <b>3,0 GPA</b> → Majorité de B (bien et au-dessus de la moyenne).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">La moyenne générale du collège compte-t-elle pour l'université ?</h3>
+                    <p data-translate="faqAnswer2">
+                        Non, la moyenne générale du collège n'a pas d'importance directe pour l'admission à l'université. Les universités prennent généralement en compte votre moyenne générale du lycée, les résultats aux tests standardisés, les activités extrascolaires et les dissertations.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">La moyenne générale du collège peut-elle influencer votre placement au lycée ?</h3>
+                    <p data-translate="faqAnswer3">
+                        Oui, la moyenne générale du collège peut influencer votre placement dans les classes du lycée. Bien que les universités ne prennent pas en compte les notes du collège, de nombreux lycées les utilisent pour déterminer le niveau de cours que vous commencerez.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Ajouter un nouveau semestre
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semestre ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Cours</th>
+                                <th>Note</th>
+                                <th>Crédits</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Ajouter un cours"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Ajouter un autre cours</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Ajouter un écouteur d'événement pour le bouton "Supprimer le semestre"
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Ajouter un écouteur d'événement pour le bouton "Ajouter un autre cours" dans le nouveau semestre
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Ajouter un cours"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Ajouter un écouteur d'événement pour le bouton "Ajouter un autre cours" par défaut
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Ajouter un cours"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Supprimer une ligne
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculer la moyenne générale
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Fonctionnalité de basculement pour les éléments FAQ
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // état initial ouvert
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

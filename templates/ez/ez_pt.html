@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">EZ Grader</title>
+    <meta name="description" content="Este EZ Grader é uma calculadora de notas fácil de usar, projetada para converter resultados de testes em porcentagens e notas alfabéticas rapidamente. Em vez de dividir manualmente as respostas corretas pelo número total de questões, você só precisa inserir o total de questões e o número de erros. Nosso corretor fácil mostra a nota instantaneamente e simplifica seus cálculos." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="ez grader, calculadora de notas, calculadora de porcentagem, respostas erradas, calcular porcentagem, nota a partir de respostas erradas, como calcular nota" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/pt/ez-grader" data-translate="canonicalLink">
+
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/ez-grader"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/ez-grader"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/ez-grader"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/ez-grader"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/ez-grader"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/ez-grader"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/ez-grader"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/ez-grader"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/ez-grader"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/ez-grader"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .grade-input-group {
+            margin-bottom: 15px;
+        }
+        .grade-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .grade-input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .primary-btn, .secondary-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .primary-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+        .secondary-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .gpa-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .gpa-box span {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        #percentageDisplay, #letterGradeDisplay {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            color: black;
+        }
+        .grade-stepper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-stepper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .input-stepper button {
+            width: 25px;
+            height: 25px;
+            border: none;
+            background: #ddd;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+        .input-stepper button:hover {
+            background: #ccc;
+        }
+        table.grade-scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table.grade-scale-table th, table.grade-scale-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table.grade-scale-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body data-lang="pt" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="ezGraderTitle">EZ Grader</h1>
+            <p data-translate="introParagraph">O EZ Grader é uma ferramenta de classificação simples que ajuda você a transformar instantaneamente os resultados dos testes em porcentagens e notas.</p>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGradeHeading">Como usar a Calculadora de Notas EZ?</h2>
+                <button id="setGradeScaleBtn" class="primary-btn">DEFINIR ESCALA DE NOTAS</button>
+                <br><br>
+                <div class="grade-input-group">
+                    <label for="totalQuestions" data-translate="labelTotalQuestions">Total de Questões: Insira o número total de questões da prova ou das tarefas.</label>
+                    <input type="number" id="totalQuestions" placeholder="ex., 100" min="1" data-translate="totalQuestionsInput">
+                </div>
+                <div class="grade-input-group">
+                    <label for="wrongQuestions" data-translate="labelWrongQuestions">Questões Erradas: Insira o número de questões que os alunos responderam incorretamente.</label>
+                    <input type="number" id="wrongQuestions" placeholder="ex., 5" min="0" data-translate="wrongQuestionsInput">
+                </div>
+                <div class="button-group" data-translate="buttonGroupCalculate">
+                    <button id="calculateGradeBtn" class="primary-btn" data-translate="calculateGradeButton">Calcular</button>
+                    <button id="setGradeScaleBtn" class="secondary-btn" data-translate="setGradeScaleButton">Definir Escala de Notas</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
+                <h2 data-translate="gradeSummaryHeading">Resumo da Nota</h2>
+                <div class="gpa-box" data-translate="percentageBox">
+                    <span data-translate="percentageLabel">Porcentagem</span>
+                    <span id="percentageDisplay" data-translate="percentageDisplay">0.00%</span>
+                </div>
+                <div class="gpa-box" data-translate="letterGradeBox">
+                    <span data-translate="letterGradeLabel">Nota Alfabética</span>
+                    <span id="letterGradeDisplay" data-translate="letterGradeDisplay">N/A</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <button onclick="resetForm()" class="secondary-btn" data-translate="resetButton">Redefinir</button>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Este EZ Grader é uma calculadora de notas fácil de usar, projetada para converter resultados de testes em porcentagens e notas alfabéticas rapidamente. Em vez de dividir manualmente as respostas corretas pelo número total de questões, você só precisa inserir o total de questões e o número de erros. Nosso corretor fácil mostra a nota instantaneamente e simplifica seus cálculos.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Como usar a Calculadora de Notas EZ?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Passo 1: Total de Questões</h3>
+                        <p data-translate="step1Description">Insira o número total de questões da prova ou das tarefas.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Passo 2: Questões Erradas</h3>
+                        <p data-translate="step2Description">Insira o número de questões que os alunos responderam incorretamente.</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Passo 3: Calcular</h3>
+                        <p data-translate="step3Description">Clique no botão Calcular e esta ferramenta exibirá suas notas em formato de letra ou porcentagem.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Por que usar o GPACalculatorcollege EZ Grader?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Economiza Tempo</h3>
+                        <p data-translate="feature1Description">Professores passam horas corrigindo provas e trabalhos. Mas com a ajuda do nosso ezgrader, cada prova pode ser corrigida em segundos.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Evita Erros</h3>
+                        <p data-translate="feature2Description">Matemática manual pode levar a erros. Um erro de cálculo pode afetar injustamente a nota de um aluno. A calculadora de notas EZ garante 100% de precisão.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Fácil também para os alunos</h3>
+                        <p data-translate="feature3Description">Os alunos também podem usar este corretor fácil para verificar seu desempenho logo após uma prova. Por exemplo, se eles se lembrarem de quantas questões erraram, poderão saber sua pontuação instantaneamente.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsLetterGradeHeading">Cálculo Instantâneo</h2>
+                <p data-translate="whatIsLetterGradeParagraph">
+                    Corrigir provas, questionários e tarefas manualmente pode ser demorado. O EZ Grader simplifica esse processo, transformando cálculos complexos em algumas entradas rápidas. Veja como ele simplifica a correção:
+                </p>
+                <h3 data-translate="instantCalculationHeading">Cálculo Instantâneo</h3>
+                <p data-translate="instantCalculationParagraph">
+                    Em vez de calcular porcentagens e convertê-las em notas manualmente, você simplesmente insere o número total de questões e o número de respostas incorretas. Nossa ferramenta gera instantaneamente:
+                </p>
+                <ul>
+                    <li>O número de respostas corretas</li>
+                    <li>A pontuação percentual</li>
+                    <li>A nota alfabética</li>
+                </ul>
+                <h3 data-translate="eliminatesManualMathHeading">Elimina a matemática manual</h3>
+                <p data-translate="eliminatesManualMathParagraph">
+                    Por exemplo, se um teste tiver 40 questões e um aluno errar 7, calcular a porcentagem manualmente exigiria: Porcentagem = 40 − 7/40 × 100 = 82.5%. Nossa calculadora de notas fácil faz isso automaticamente e fornece as respostas de notas corretas.
+                </p>
+                <div class="math-equation" data-translate="mathEquation">
+                    Porcentagem = 40 − 7/40 × 100 = 82.5%
+                </div>
+                <p data-translate="mathExplanationParagraph">
+                    Nossa calculadora de notas fácil faz isso automaticamente e fornece as respostas de notas corretas.
+                </p>
+                <h3 data-translate="exampleHeading">Exemplo: Easy Grader em ação</h3>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="totalQuestionsHeader">Total de perguntas</th>
+                            <th data-translate="wrongAnswersHeader">Respostas erradas</th>
+                            <th data-translate="correctAnswersHeader">Respostas corretas</th>
+                            <th data-translate="percentageHeader">Percentagem</th>
+                            <th data-translate="letterGradeHeader">Nota da letra</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr>
+                            <td data-translate="example1Total">50</td>
+                            <td data-translate="example1Wrong">8</td>
+                            <td data-translate="example1Correct">42</td>
+                            <td data-translate="example1Percentage">84%</td>
+                            <td data-translate="example1Grade">B</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="example2Total">30</td>
+                            <td data-translate="example2Wrong">5</td>
+                            <td data-translate="example2Correct">25</td>
+                            <td data-translate="example2Percentage">83%</td>
+                            <td data-translate="example2Grade">B</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="example3Total">40</td>
+                            <td data-translate="example3Wrong">2</td>
+                            <td data-translate="example3Correct">38</td>
+                            <td data-translate="example3Percentage">95%</td>
+                            <td data-translate="example3Grade">A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsLetterGradeHeading">Digital Easy Grader vs. Tabela de Notas Tradicional</h2>
+                <p data-translate="whatIsLetterGradeParagraph">
+                    A classificação evoluiu muito. Embora os métodos tradicionais funcionassem no passado, o ezgrader torna o processo mais rápido, fácil e preciso. Vamos comparar as duas abordagens:
+                </p>
+                <h3 data-translate="instantCalculationHeading">Tabela de Notas à Moda Antiga</h3>
+                <ul class="comparison-list">
+                    <li>Os professores usavam tabelas impressas ou rodas de notas para determinar as notas.</li>
+                    <li>Necessária consulta manual para as respostas corretas de cada aluno.</li>
+                    <li>Propenso a erros humanos e erros de cálculo.</li>
+                    <li>Demorado, especialmente com turmas grandes.</li>
+                </ul>
+                <p data-translate="instantCalculationExample">
+                    Exemplo: para um teste de 50 questões, um professor teve que calcular manualmente porcentagens para mais de 30 alunos; às vezes, isso leva horas.
+                </p>
+                <h3 data-translate="eliminatesManualMathHeading">Corretor Digital EZ</h3>
+                <ul class="comparison-list">
+                    <li>Insira o total de perguntas e respostas erradas.</li>
+                    <li>Obtenha respostas corretas, porcentagem e nota instantaneamente.</li>
+                    <li>Funciona para qualquer tamanho de teste, desde pequenos questionários até provas completas.</li>
+                    <li>Elimina erros e economiza tempo.</li>
+                    <li>Acessível em qualquer dispositivo: laptop, tablet ou smartphone.</li>
+                </ul>
+                <h3 data-translate="exampleHeading">Por que o digital vence</h3>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="featureHeader">Recurso</th>
+                            <th data-translate="oldSchoolHeader">Gráfico da velha escola</th>
+                            <th data-translate="digitalGraderHeader">Nivelador Digital EZ</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr>
+                            <td data-translate="speedFeature">Velocidade</td>
+                            <td data-translate="speedOld">Lenta</td>
+                            <td data-translate="speedDigital">Instantânea</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="accuracyFeature">Precisão</td>
+                            <td data-translate="accuracyOld">Risco de erro humano</td>
+                            <td data-translate="accuracyDigital">100% preciso</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="adaptabilityFeature">Adaptabilidade</td>
+                            <td data-translate="adaptabilityOld">Escala fixa, limitada</td>
+                            <td data-translate="adaptabilityDigital">Funciona para qualquer tamanho de teste</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="accessibilityFeature">Acessibilidade</td>
+                            <td data-translate="accessibilityOld">Somente gráfico físico</td>
+                            <td data-translate="accessibilityDigital">Qualquer dispositivo, a qualquer hora</td>
+                        </tr>
+                        <tr>
+                            <td data-translate="easeOfUseFeature">Facilidade de uso</td>
+                            <td data-translate="easeOfUseOld">Curva de aprendizado</td>
+                            <td data-translate="easeOfUseDigital">Extremamente simples</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Perguntas frequentes:</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Posso usar esta calculadora de notas fácil para qualquer tipo de teste?</h3>
+                    <p data-translate="faqAnswer1">Com certeza! Ela funciona para testes, tarefas de casa, provas de classe ou provas finais de qualquer tamanho, desde pequenos testes de 10 questões até grandes provas de 200 questões.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Esta calculadora de notas pode lidar com vários alunos ao mesmo tempo?</h3>
+                    <p data-translate="faqAnswer2">Não, ela calcula uma nota de cada vez. Os professores podem repetir o processo rapidamente para vários alunos, economizando horas de trabalho de correção em comparação com cálculos manuais.</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">É possível ajustar a escala de notas desta calculadora para alinhá-la ao sistema da minha escola?</h3>
+                    <p data-translate="faqAnswer3">Sim. Usando a opção "Definir Escala de Notas", você pode personalizar os limites percentuais para cada nota. Isso é especialmente útil para escolas com sistemas de notas exclusivos ou escalas de mais/menos (por exemplo, A-, B+, etc.).</p>
+                </div>
+                <div class="faq-item" data-translate="faqItem4">
+                    <h3 data-translate="faqQuestion4">O que acontece se um aluno acertar todas as respostas?</h3>
+                    <p data-translate="faqAnswer4">Se o "Total de Erros" for zero, nossa calculadora exibirá automaticamente uma pontuação de 100%, confirmando instantaneamente um resultado perfeito no teste ou tarefa.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Grade Scale Modal -->
+    <div id="gradeScaleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Definir Escala de Notas</h2>
+            <table class="grade-scale-table">
+                <thead>
+                    <tr>
+                        <th>Nota</th>
+                        <th>Porcentagem Mínima</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A+</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeAplusValue">97</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Aplus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Aplus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeAValue">93</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="A">&#9650;</button>
+                                    <button class="down-btn" data-grade="A">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>A-</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeAminusValue">90</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Aminus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Aminus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>B+</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeBplusValue">87</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Bplus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Bplus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeBValue">83</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="B">&#9650;</button>
+                                    <button class="down-btn" data-grade="B">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>B-</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeBminusValue">80</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Bminus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Bminus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>C+</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeCplusValue">77</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Cplus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Cplus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeCValue">73</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="C">&#9650;</button>
+                                    <button class="down-btn" data-grade="C">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>C-</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeCminusValue">70</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Cminus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Cminus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>D+</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeDplusValue">67</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Dplus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Dplus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeDValue">63</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="D">&#9650;</button>
+                                    <button class="down-btn" data-grade="D">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>D-</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeDminusValue">60</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="Dminus">&#9650;</button>
+                                    <button class="down-btn" data-grade="Dminus">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td>
+                            <div class="grade-stepper">
+                                <span class="grade-stepper-value" id="gradeFValue">0</span>
+                                <div class="input-stepper">
+                                    <button class="up-btn" data-grade="F">&#9650;</button>
+                                    <button class="down-btn" data-grade="F">&#9660;</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button id="saveGradeScaleBtn" class="primary-btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+    <script data-translate="scriptTag">
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalQuestionsInput = document.getElementById('totalQuestions');
+            const wrongQuestionsInput = document.getElementById('wrongQuestions');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const gradeSummarySection = document.getElementById('gradeSummarySection');
+            const percentageDisplay = document.getElementById('percentageDisplay');
+            const letterGradeDisplay = document.getElementById('letterGradeDisplay');
+
+            // Modal elements
+            const setGradeScaleBtn = document.getElementById('setGradeScaleBtn');
+            const gradeScaleModal = document.getElementById('gradeScaleModal');
+            const closeModalBtn = document.querySelector('.close-btn');
+            const saveGradeScaleBtn = document.getElementById('saveGradeScaleBtn');
+
+            const gradeValues = {
+                Aplus: document.getElementById('gradeAplusValue'),
+                A: document.getElementById('gradeAValue'),
+                Aminus: document.getElementById('gradeAminusValue'),
+                Bplus: document.getElementById('gradeBplusValue'),
+                B: document.getElementById('gradeBValue'),
+                Bminus: document.getElementById('gradeBminusValue'),
+                Cplus: document.getElementById('gradeCplusValue'),
+                C: document.getElementById('gradeCValue'),
+                Cminus: document.getElementById('gradeCminusValue'),
+                Dplus: document.getElementById('gradeDplusValue'),
+                D: document.getElementById('gradeDValue'),
+                Dminus: document.getElementById('gradeDminusValue'),
+                F: document.getElementById('gradeFValue')
+            };
+
+            const gradesInOrder = ['Aplus', 'A', 'Aminus', 'Bplus', 'B', 'Bminus', 'Cplus', 'C', 'Cminus', 'Dplus', 'D', 'Dminus', 'F'];
+
+            let customGradeScale = {
+                Aplus: 97, A: 93, Aminus: 90,
+                Bplus: 87, B: 83, Bminus: 80,
+                Cplus: 77, C: 73, Cminus: 70,
+                Dplus: 67, D: 63, Dminus: 60,
+                F: 0
+            };
+
+            function loadGradeScale() {
+                const savedScale = localStorage.getItem('gradeScale');
+                if (savedScale) {
+                    customGradeScale = JSON.parse(savedScale);
+                }
+                updateGradeValues();
+            }
+
+            function updateGradeValues() {
+                for (const grade of gradesInOrder) {
+                    if (gradeValues[grade]) {
+                        gradeValues[grade].textContent = customGradeScale[grade];
+                    }
+                }
+            }
+
+            function getLetterGrade(percentage) {
+                if (percentage >= customGradeScale.Aplus) return 'A+';
+                if (percentage >= customGradeScale.A) return 'A';
+                if (percentage >= customGradeScale.Aminus) return 'A-';
+                if (percentage >= customGradeScale.Bplus) return 'B+';
+                if (percentage >= customGradeScale.B) return 'B';
+                if (percentage >= customGradeScale.Bminus) return 'B-';
+                if (percentage >= customGradeScale.Cplus) return 'C+';
+                if (percentage >= customGradeScale.C) return 'C';
+                if (percentage >= customGradeScale.Cminus) return 'C-';
+                if (percentage >= customGradeScale.Dplus) return 'D+';
+                if (percentage >= customGradeScale.D) return 'D';
+                if (percentage >= customGradeScale.Dminus) return 'D-';
+                return 'F';
+            }
+
+            function calculateGrade() {
+                const totalQuestions = parseInt(totalQuestionsInput.value) || 0;
+                const wrongQuestions = parseInt(wrongQuestionsInput.value) || 0;
+                if (isNaN(totalQuestions) || totalQuestions <= 0 || wrongQuestions < 0 || wrongQuestions > totalQuestions) {
+                    percentageDisplay.textContent = 'Entrada Inválida';
+                    letterGradeDisplay.textContent = 'N/A';
+                    return;
+                }
+                const correctQuestions = totalQuestions - wrongQuestions;
+                const percentage = (correctQuestions / totalQuestions) * 100;
+                const letterGrade = getLetterGrade(percentage);
+                percentageDisplay.textContent = percentage.toFixed(2) + '%';
+                letterGradeDisplay.textContent = letterGrade;
+            }
+
+            function adjustGrades(currentGrade, increment) {
+                const currentIndex = gradesInOrder.indexOf(currentGrade);
+                let currentValue = parseInt(gradeValues[currentGrade].textContent);
+
+                currentValue += increment;
+                if (currentValue < 0 || currentValue > 100) return;
+
+                if (increment === 1 && currentIndex > 0) {
+                    const prevGrade = gradesInOrder[currentIndex - 1];
+                    const prevValue = parseInt(gradeValues[prevGrade].textContent);
+                    if (currentValue >= prevValue) {
+                        currentValue = prevValue - 1;
+                    }
+                } else if (increment === -1 && currentIndex < gradesInOrder.length - 1) {
+                    const nextGrade = gradesInOrder[currentIndex + 1];
+                    const nextValue = parseInt(gradeValues[nextGrade].textContent);
+                    if (currentValue <= nextValue) {
+                        currentValue = nextValue + 1;
+                    }
+                }
+
+                if (currentValue < 0) currentValue = 0;
+                if (currentValue > 100) currentValue = 100;
+
+                customGradeScale[currentGrade] = currentValue;
+                updateGradeValues();
+            }
+
+            function saveGradeScale() {
+                localStorage.setItem('gradeScale', JSON.stringify(customGradeScale));
+                alert('Escala de notas salva com sucesso!');
+                gradeScaleModal.style.display = 'none';
+                calculateGrade();
+            }
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            totalQuestionsInput.addEventListener('input', calculateGrade);
+            wrongQuestionsInput.addEventListener('input', calculateGrade);
+
+            setGradeScaleBtn.addEventListener('click', () => {
+                gradeScaleModal.style.display = 'flex';
+                loadGradeScale();
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                gradeScaleModal.style.display = 'none';
+            });
+
+            saveGradeScaleBtn.addEventListener('click', saveGradeScale);
+
+            window.onclick = function(event) {
+                if (event.target == gradeScaleModal) {
+                    gradeScaleModal.style.display = 'none';
+                }
+            }
+
+            document.querySelectorAll('.up-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const grade = event.target.dataset.grade;
+                    adjustGrades(grade, 1);
+                });
+            });
+
+            document.querySelectorAll('.down-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const grade = event.target.dataset.grade;
+                    adjustGrades(grade, -1);
+                });
+            });
+
+            window.resetForm = function() {
+                totalQuestionsInput.value = '';
+                wrongQuestionsInput.value = '';
+                percentageDisplay.textContent = '0.00%';
+                letterGradeDisplay.textContent = 'N/A';
+            };
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+
+            loadGradeScale();
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

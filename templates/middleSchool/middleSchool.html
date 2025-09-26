@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Middle School GPA Calculator</title>
+    <meta name="description" content="This middle school GPA calculator allows you to calculate your middle school grade point average by just making a single click." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="GPA calculator, calculate GPA, how to calculate GPA, what is my GPA, grade point average calculator, online GPA calculator, 4.0 GPA scale, credit hour GPA calculator, GPA calculator" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator">
+
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="en" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Middle School GPA Calculator</h1>
+            <p data-translate="introParagraph">Use this middle school GPA calculator to calculate your grade point average in middle school. </p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Middle School GPA Calculator</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Semester 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Course</th>
+                                    <th data-translate="tableHeaderGrade">Grade</th>
+                                    <th data-translate="tableHeaderCredits">Credits</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Add Course" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Add Another Class</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Add Another Semester</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Calculate GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">GPA Summary</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Current GPA</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Reset All Courses</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    This <a href="https://gpacalculatorcollege.com/gpa-calculator">GPA calculator</a> for middle school helps students in middle school to calculate their grade point average based on their course grades and credit hours. Students can use this middle school GPA calculator to track their academic performance and plan for high school or college admission and scholarship eligibility. 
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">How To Use?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Step 1: Enter Course Name</h3>
+                        <p data-translate="step1Description">First, you have to enter the course name.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Step 2: Select Grades</h3>
+                        <p data-translate="step2Description">Select the grade you earned in each subject (such as A, B, C, etc.)</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Step 3: Enter Credit Hours</h3>
+                        <p data-translate="step3Description">Enter the credit hours for each class (typically between 1 and 4 hours).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Step 4: Click <b>Calculate GPA</b></h3>
+                        <p data-translate="step4Description">After giving all inputs, just hit the “Calculate Middle School GPA” button to get your results.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Why Use Our Middle School GPA Calculator?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Accuracy</h3>
+                        <p data-translate="feature1Description">Our tool gives accurate results by using your grades and credit hours, so you can see how you're doing in your studies.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">User-Friendly Interface</h3>
+                        <p data-translate="feature2Description">We designed the interface of this tool to be user-friendly so that everyone can use it easily. No technical skills are required to utilize this tool.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Track Academic Goals</h3>
+                        <p data-translate="feature3Description">This tool helps you stay focused on your academic goals. By checking your GPA regularly, you can see how well you're doing, spot areas that need improvement, and make smart decisions to boost your grades.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Instant and Fast Results</h3>
+                        <p data-translate="feature4Description">Get your calculated GPA instantly! Just enter your grades and credit hours - no waiting, no loading, just quick and reliable results right away.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Free to Use</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com is 100% free - no sign-ups, no hidden fees, and no limits. Just enter your grades and credit hours to get your grade point average instantly.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+
+    <h2 data-translate="whatIsGpaHeading">How the Middle School GPA Calculator Works?</h2>
+    <p data-translate="whatIsGpaParagraph">
+        This Middle School GPA Calculator uses the grades and credits you enter to calculate your average GPA using a set formula.
+    </p>
+
+    <h2 data-translate="formulaHeading">Formula</h2>
+    <p data-translate="formulaParagraph">
+        <b data-translate="gpaFormula">
+            Middle School GPA = 
+        </b>
+        (grade1 × credit1 + grade2 × credit2 + … + gradeN × creditN) ÷ (credit1 + credit2 + … + creditN)
+    </p>
+
+    <h2 data-translate="scaleHeading">4.0 Scale Used by Calculator</h2>
+    <table class="grade-table" data-translate="gradeTable">
+        <thead data-translate="gradeTableHead">
+            <tr>
+                <th data-translate="letterGradeHeader">Letter Grade</th>
+                <th data-translate="gpaValueHeader">GPA Value</th>
+            </tr>
+        </thead>
+        <tbody data-translate="gradeTableBody">
+            <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+            <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+            <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+            <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+            <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+            <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+            <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+            <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+            <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+            <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+            <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+            <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+            <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+        </tbody>
+    </table>
+
+    <h2 data-translate="differenceHeading">Difference Between Middle School GPA vs. High School GPA</h2>
+
+    <h3 data-translate="middleSchoolHeading">Middle School GPA</h3>
+    <ul data-translate="middleSchoolPoints">
+        <li><b>Purpose:</b> Primarily helps students, parents, and teachers track academic progress.</li>
+        <li><b>Impact:</b> Rarely considered by colleges, but it may influence placement in advanced or honors classes once you enter high school.</li>
+        <li><b>Grading Scale:</b> Usually the standard 4.0 scale (A = 4, B = 3, etc.), without weighted grades.</li>
+    </ul>
+
+    <h3 data-translate="highSchoolHeading">High School GPA</h3>
+    <ul data-translate="highSchoolPoints">
+        <li><b>Purpose:</b> A critical factor for college admissions, scholarships, and sometimes even job opportunities.</li>
+        <li><b>Impact:</b> Directly affects college applications and career opportunities.</li>
+        <li><b>Grading Scale:</b> Can include weighted GPAs (above 4.0) for honors, AP, or IB courses.</li>
+    </ul>
+
+    <p data-translate="calculatorNote">
+        Calculate your high school grade point average with our High School GPA Calculator.
+    </p>
+
+</div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+
+    <h2 data-translate="whyGpaMatterHeading">Why Does GPA Matter in Middle School?</h2>
+    <p data-translate="whyGpaMatterParagraph">
+        Even though colleges don’t usually look at middle school GPA, it still plays an important role:
+    </p>
+    <ul data-translate="whyGpaMatterList">
+        <li><b>Builds Good Habits Early –</b> Learning how GPA works helps you stay motivated and organized.</li>
+        <li><b>High School Placement –</b> Many schools use your GPA to decide if you qualify for honors or advanced classes in high school.</li>
+        <li><b>Self-Tracking –</b> It gives students and parents a clear picture of academic strengths and areas that need improvement.</li>
+    </ul>
+
+    <h2 data-translate="howToCalculateHeading">How Do I Calculate Middle School GPA?</h2>
+    <p data-translate="howToCalculateParagraph">
+        Calculating your middle school GPA is simple once you understand the steps. Here’s how you can do it manually:
+    </p>
+
+    <h3 data-translate="step1Heading">1. Convert Grades into Grade Points</h3>
+    <p data-translate="step1Paragraph">
+        Most middle schools use the 4.0 GPA scale:
+        <br><br>
+        A = 4.0<br>
+        B = 3.0<br>
+        C = 2.0<br>
+        D = 1.0<br>
+        F = 0.0
+        <br><br>
+        <i>Example:</i> If you got an A in Math, that equals 4.0 grade points.
+    </p>
+
+    <h3 data-translate="step2Heading">2. Add Up All Grade Points</h3>
+    <p data-translate="step2Paragraph">
+        Write down the grade points for each subject, then add them together:
+        <br><br>
+        Math = A = 4.0<br>
+        English = B = 3.0<br>
+        Science = A = 4.0<br>
+        History = C = 2.0<br>
+        <b>Total = 13.0 grade points</b>
+    </p>
+
+    <h3 data-translate="step3Heading">3. Divide by the Number of Classes</h3>
+    <p data-translate="step3Paragraph">
+        Now, divide the total grade points by the number of classes:
+        <br><br>
+        GPA = Total Grade Points ÷ Number of Classes
+        <br><br>
+        In our example:<br>
+        13.0 ÷ 4 = <b>3.25</b><br>
+        So the student’s GPA = <b>3.25</b>
+    </p>
+
+    <p data-translate="calculatorNote">
+        Instead of doing all this math, you can use an online Middle School GPA Calculator to get results instantly.
+        <br><br>
+        Related: <a href=https://gpacalculatorcollege.com data-translate="relatedCollegeCalculator">GPA Calculator College</a>
+    </p>
+
+</div>
+
+            <div class="faq-section centered-section" data-translate="faqSection">
+    <h2 data-translate="faqHeading">Frequently Asked Questions</h2>
+
+    <div class="faq-item" data-translate="faqItem1">
+        <h3 data-translate="faqQuestion1">What Is a Good GPA for Middle School?</h3>
+        <p data-translate="faqAnswer1">
+            A good GPA in middle school is usually considered to be around 3.0 to 4.0 on the standard 4.0 scale.
+            That means mostly B’s and A’s in your classes.
+            <br><br>
+            <b>4.0 GPA</b> → Straight A’s (excellent performance).<br>
+            <b>3.5 GPA</b> → A’s and B’s (very good).<br>
+            <b>3.0 GPA</b> → Mostly B’s (good and above average).
+        </p>
+    </div>
+
+    <div class="faq-item" data-translate="faqItem2">
+        <h3 data-translate="faqQuestion2">Does Middle School GPA Matter for College?</h3>
+        <p data-translate="faqAnswer2">
+            No, middle school GPA does not directly matter for college admissions. Colleges typically look at your
+            high school GPA, standardized test scores, extracurricular activities, and essays.
+        </p>
+    </div>
+
+    <div class="faq-item" data-translate="faqItem3">
+        <h3 data-translate="faqQuestion3">Can Middle School GPA Affect High School Placement?</h3>
+        <p data-translate="faqAnswer3">
+            Yes, middle school GPA can affect your placement in high school classes. While colleges don’t look at
+            middle school grades, many high schools use them to decide which level of courses you’ll start with.
+        </p>
+    </div>
+</div>
+
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Semester ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Grade</th>
+                                <th>Credits</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Add Another Class</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Add Course"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="e.g., 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

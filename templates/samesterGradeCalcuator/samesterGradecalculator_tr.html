@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Dönem Notu Hesaplayıcı</title>
+    <meta name="description"
+        content="Dönem notunuzu hızlıca Dönem Notu Hesaplayıcı ile hesaplayın. Genel dönem performansınızı kolayca öğrenin."
+        data-translate="metaDescription">
+    <meta name="keywords" content="Dönem Notu Hesaplayıcı, Not Hesaplamaları, Dönem Notu Hesapla, sınav notu hesaplayıcı, ağırlıklı not hesaplayıcı, ağırlıksız not hesaplayıcı">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="tr" data-translate="body">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gradeCalculatorTitle">Dönem Notu Hesaplayıcı</h1>
+            <p>Mevcut notunuzu ve final sınavınızda neye ihtiyacınız olduğunu öğrenmek için bu basit Dönem Notu Hesaplayıcısını kullanın.</p>
+            <br>
+            <section class="input-section">
+                <h2>Dönem Notu Hesapla</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Bu dönem notu hesaplayıcı, çeyrek notlarınız ve final notu ağırlık yüzde oranlarına göre dönem notunuzu hesaplamanıza yardımcı olacaktır.</p>
+                <table class="course-input-table" >
+                    <thead>
+                        <tr>
+                            <th>Değerlendirme</th>
+                            <th>Not (%)</th>
+                            <th>Ağırlık (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Birinci Çeyrek</td>
+                            <td><input type="number" id="grade1" placeholder="örn., 33"></td>
+                            <td><input type="number" id="weight1" placeholder="örn., 33"></td>
+                        </tr>
+                        <tr>
+                            <td>İkinci Çeyrek</td>
+                            <td><input type="number" id="grade2" placeholder="örn., 22"></td>
+                            <td><input type="number" id="weight2" placeholder="örn., 22"></td>
+                        </tr>
+                        <tr>
+                            <td>Final Sınavı</td>
+                            <td><input type="number" id="grade3" placeholder="örn., 32"></td>
+                            <td><input type="number" id="weight3" placeholder="örn., 45"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="calculateAndScroll()">Hesapla</button>
+                </div>
+            </section>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection" data-translate="gradeSummarySection">
+                <h2 data-translate="gradeSummaryHeading">Not Özeti</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="currentGradeLabel">Mevcut Not</span>
+                    <span id="currentGradeDisplay" data-translate="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/tr/semester-grade-calculator"><button class="secondary-btn" data-translate="resetAssessmentsButton">Tüm Değerlendirmeleri Sıfırla</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+                <p style="text-align: left;">Bu Dönem <a href="https://gpacalculatorcollege.com/tr/grade-calculator">Not Hesaplayıcı</a>, diğer adıyla çeyrek not hesaplayıcısı, farklı ödev, quiz, proje, ara sınav ve final sınavlarının sonuçlarını ağırlık yüzdelerine göre birleştirerek bir yarıyıldaki genel notunuzu hesaplamanıza yardımcı olur.</p>
+            </section>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Dönem Sonu Not Hesaplayıcısı Nasıl Kullanılır?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <p>Bu dönem sonu sınav hesaplayıcısını kullanmak için şu basit adımları izleyin:</p>
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step1Title">1. Çeyrek</span></h3>
+                        <p><span data-translate="step1Description">1. çeyreğin "Notunu" ve "Dönem Başına Notunu" girin.</span></p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step2Title">2. Çeyrek</span></h3>
+                        <p><span data-translate="step2Description">2. çeyreğin "Notunu" ve "Dönem Başına Notunu" girin.</span></p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step3Title">Final Sınavı</span></h3>
+                        <p><span data-translate="step3Description">Final sınavının "Notunu" ve "Dönem Başına Notunu" girin.</span></p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3><span data-translate="step4Title">Hesapla</span></h3>
+                        <p><span data-translate="step4Description">Tüm bu bilgileri girdikten sonra "Dönem Sonu Notunu Hesapla" butonuna tıklayın. Son sekmede "Dönem Sonu Notunuzu" göreceksiniz.</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Hesap Makinemizi Neden Kullanmalısınız?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Zaman ve Emek Tasarrufu Sağlar</h3>
+                        <p>Ağırlıklı ortalamaları manuel olarak hesaplamanıza gerek yok. Sadece notlarınızı ve ağırlıklarınızı girin, gerisini hesap makinesi saniyeler içinde halleder.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Doğruluk</h3>
+                        <p>Ağırlıklı notlar, özellikle farklı bileşenlerin (sınavlar, ödevler, sınavlar) farklı yüzdelere sahip olması durumunda zor olabilir. Ancak hesap makinemiz insan hatasını ortadan kaldırır ve %100 doğru sonuçlar sağlar.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Kullanıcı Dostu ve Ücretsiz</h3>
+                        <p>Dönem notu hesap makinemiz ücretsiz ve kullanımı kolaydır. Karmaşık formüllere veya elektronik tablolara gerek yok, sadece verilerinizi girin ve "hesapla"ya tıklayın.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Dönem Notu Nasıl Hesaplanır?</h2>
+                <p>
+                    Dönem notu, ağırlıklı ortalama yöntemi kullanılarak hesaplanabilir. Her ödev, test, kısa sınav, proje ve sınavın dönem sonu notuna belirli bir yüzdesi (ağırlığı) vardır. Ayrıca, dönem sonu sınavlarınız için hangi notlara ihtiyacınız olduğunu öğrenmek için dönem sonu not hesaplayıcısını kullanın.
+                </p>
+                <h3>Not Bileşenlerini ve Ağırlıklarını Öğrenin</h3>
+                <p>
+                    Öğretmeniniz veya ders müfredatınız genellikle size bu dökümü verir. Örneğin:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Ödev: %20</li>
+                    <li>Kısa Sınavlar: 15%</li>
+                    <li>Ara Sınav: 25%</li>
+                    <li>Final Sınavı: 30%</li>
+                    <li>Ders Katılımı: 10%</li>
+                </ul>
+                <h3>Yüzdeleri Ondalık Sayılara Dönüştür</h3>
+                <ul style="padding-left: 30px;">
+                    <li>20% → 0.20</li>
+                    <li>15% → 0.15</li>
+                    <li>25% → 0.25</li>
+                    <li>30% → 0.30</li>
+                    <li>10% → 0.10</li>
+                </ul>
+                <h3>Her Notu Ağırlığıyla Çarp</h3>
+                <p>
+                    Bir öğrencinin aşağıdaki notlara sahip olduğunu varsayalım:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Ödev = %85</li>
+                    <li>Kısa Sınavlar = 90%</li>
+                    <li>Ara Sınav = 80%</li>
+                    <li>Final Sınavı = 70%</li>
+                    <li>Katılım = 100%</li>
+                </ul>
+                <p>
+                    Şimdi her birini ağırlığıyla çarpalım:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Ödev: 85 × 0.20 = 17.0</li>
+                    <li>Kısa Sınavlar: 90 × 0.15 = 13.5</li>
+                    <li>Ara Sınav: 80 × 0.25 = 20.0</li>
+                    <li>Final Sınavı: 70 × 0.30 = 21.0</li>
+                    <li>Katılım: 100 × 0.10 = 10.0</li>
+                </ul>
+                <h3>Tüm Ağırlıklı Puanları Toplayın</h3>
+                <p>
+                    17.0 + 13.5 + 20.0 + 21.0 + 10.0 = 81.5%
+                </p>
+                <h3>Harf Notuna Dönüştür (İsteğe Bağlı)</h3>
+                <p>
+                    Birçok okul standart bir harf ölçeği kullanır:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>A = 90-100%</li>
+                    <li>B = 80-89%</li>
+                    <li>C = 70-79%</li>
+                    <li>D = 60-69%</li>
+                    <li>F = 60'ın Altında%</li>
+                </ul>
+                <p>
+                    Yani, 81.5% = B
+                </p>
+                <h3>Dönem Notu Formülü</h3>
+                <p>
+                    Final Semester Grade = (Grade 1 × Weight 1) + (Grade 2 × Weight 2) + …
+                </p>
+                <p>
+                    Bu manuel hesaplamalar çok fazla zaman alabilir; dönem notunuzu hızlıca hesaplamak için dönem hesaplayıcımızı kullanabilirsiniz.
+                </p>
+            </div>
+
+            <section class="content-section centered-section">
+                <h2>Dönem Notu Nedir?</h2>
+                <p style="text-align: left;">Dönem notu, bir öğrencinin bir dönemin (genellikle 15-18 hafta süren bir akademik yılın yarısı) sonunda aldığı final notudur. Öğrencinin aşağıdakiler de dahil olmak üzere tüm derslerindeki performansını yansıtır:
+                <ul style="padding-left: 30px; position: relative; top: -20px;">
+                    <li>Ödevler</li>
+                    <li>Kısa sınavlar</li>
+                    <li>Sınavlar (ara sınav ve final)</li>
+                    <li>Projeler</li>
+                    <li>Ders katılımı</li>
+                    <li>Devam (bazen)</li>
+                </ul>
+                </p>
+                <h3>Dönem Notu Formülü (Ağırlıklı Ortalama Formülü)</h3>
+                <div class="formula">
+                    Semester Grade = (Grade1 x Weight1) + (Grade2 x Weight2) + ... + (Graden x Weightn)
+                </div>
+                <p>Ağırlıklar ondalık biçimdedir (örneğin, 20% = 0.20).</p>
+                <p><b>Örnek:</b><br>85 (0.20) + 90 (0.15) + 80 (0.25) + 70 (0.30) + 100 (0.10) = 81.5</p>
+            </section>
+
+            <section class="faq-section centered-section">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Dönem notu hesaplayıcısından kimler yararlanabilir?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Öğrenciler</b> – ilerlemeyi takip etmek ve hedefler belirlemek için.<br>
+                                <b>Öğretmenler</b> – öğrencilere not dağılımlarını açıklamak için.<br>
+                                <b>Veliler</b> – çocuklarının performansını daha iyi anlamak için.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bu dönem notu hesaplayıcısı lisansüstü veya doktora çalışmaları için kullanılabilir mi?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Evet. Notları ve ağırlıklarını doğru girdiğiniz sürece, lisansüstü ve doktora çalışmaları dahil olmak üzere bu dönem sınav hesaplayıcısını her seviyede kullanabilirsiniz.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Daha yüksek bir dönem notu her zaman daha yüksek bir not ortalaması anlamına gelir mi?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Evet. Daha yüksek dönem notları daha yüksek notlara dönüşür, bu da dönem not ortalamanızı ve dolayısıyla kümülatif not ortalamanızı artırır. Genel not ortalamanızı (GPA) bir GPA hesaplayıcısı yardımıyla kontrol edebilirsiniz.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Dönem not ortalaması, kümülatif not ortalamasından farklı mıdır?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Dönem not ortalaması:</b> Bir dönemin ortalaması.<br>
+                                <b>Kümülatif not ortalaması:</b> Akademik programınız boyunca tüm dönem not ortalamalarının ortalaması.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+<script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
+        });
+    });
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false;
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+    const weight3Input = document.getElementById('weight3');
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+    function calculateGrade() {
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3 = parseFloat(weight3Input.value) || 0;
+
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
+            weight3Input.value = weight3.toFixed(2);
+        }
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Hata: Geçersiz giriş";
+            return;
+        }
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+    }
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+    function calculateAndScroll() {
+    calculateGrade();
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="scriptMain"></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>حاسبة الدرجات الفصلية</title>
+    <meta name="description" content="احسب درجاتك الفصلية بسرعة باستخدام حاسبة درجات الفصل الدراسي. احصل على أدائك الفصلي الإجمالي بسهولة.">
+    <meta name="keywords" content="حاسبة الدرجات الفصلية, حساب الدرجات, حاسبة الدرجات الربع سنوية, حاسبة الدرجات النهائية">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        body, h1, h2, h3, p, table, th, td, input, button {
+            text-align: right;
+            direction: rtl;
+        }
+        .course-input-table th, .course-input-table td {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>حاسبة الدرجات الفصلية</h1>
+            <p>استخدم حاسبة الدرجات الفصلية البسيطة هذه لاكتشاف درجتك الحالية وما تحتاج إليه في امتحانك النهائي.</p>
+            <br>
+            <section class="input-section">
+                <h2>حاسبة الدرجات الفصلية</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">تساعدك حاسبة الدرجات الفصلية هذه على حساب درجاتك الفصلية بناءً على درجاتك الربع سنوية ونسب وزن الدرجة النهائية.</p>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>التقييم</th>
+                            <th>الدرجة (%)</th>
+                            <th>الوزن (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الربع الأول</td>
+                            <td><input type="number" id="grade1" placeholder="مثلاً، 33"></td>
+                            <td><input type="number" id="weight1" placeholder="مثلاً، 33"></td>
+                        </tr>
+                        <tr>
+                            <td>الربع الثاني</td>
+                            <td><input type="number" id="grade2" placeholder="مثلاً، 22"></td>
+                            <td><input type="number" id="weight2" placeholder="مثلاً، 22"></td>
+                        </tr>
+                        <tr>
+                            <td>الامتحان النهائي</td>
+                            <td><input type="number" id="grade3" placeholder="مثلاً، 32"></td>
+                            <td><input type="number" id="weight3" placeholder="مثلاً، 45"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="calculateAndScroll()">>احسب الدرجة</button>
+                </div>
+            </section>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>ملخص الدرجة</h2>
+                <div class="grade-box">
+                    <span>الدرجة الحالية</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/semester-grade-calculator"><button class="secondary-btn">إعادة تعيين جميع التقييمات</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+        <p>تساعدك حاسبة الدرجات الفصلية هذه، المعروفة أيضًا باسم حاسبة الدرجات الربع سنوية، على حساب درجتك الإجمالية للفصل الدراسي من خلال الجمع بين نتائج المهام المختلفة والاختبارات والمشاريع والاختبارات النصفية والنهائية وفقًا لنسب وزنها.</p>
+
+    </section>
+            <section class="how-to-use-section centered-section">
+                <h2>كيفية استخدام حاسبة الدرجات الفصلية؟</h2>
+                <div class="how-to-use-container">
+                    <p>اتبع هذه الخطوات البسيطة لاستخدام حاسبة امتحان الفصل الدراسي هذه:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>الربع الأول</h3>
+                        <p>أدخل "الدرجة" و"نسبة الدرجة الفصلية" للربع الأول.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>الربع الثاني</h3>
+                        <p>أدخل "الدرجة" و"نسبة الدرجة الفصلية" للربع الثاني.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>الامتحان النهائي</h3>
+                        <p>أدخل "الدرجة" و"نسبة الدرجة الفصلية" للامتحان النهائي.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>احسب</h3>
+                        <p>بعد إدخال جميع هذه المعلومات، انقر على زر "حساب درجة الفصل الدراسي". ستظهر لك "درجة الفصل الدراسي" في التبويب الأخير.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>لماذا تستخدم الآلة الحاسبة الخاصة بنا؟</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>يوفر الوقت والجهد</h3>
+                        <p>لا حاجة لحساب المتوسطات المرجحة يدويًا. ما عليك سوى إدخال درجاتك وأوزانك، وستقوم الآلة الحاسبة بالباقي في ثوانٍ.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>دقة</h3>
+                        <p>قد يكون حساب الدرجات الموزونة أمرًا صعبًا، خاصةً عندما تختلف نسب العناصر المختلفة (الاختبارات، الواجبات المنزلية، والامتحانات). لكن آلتنا الحاسبة تتجنب الأخطاء البشرية وتضمن نتائج دقيقة تمامًا.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>سهل الاستخدام ومجاني</h3>
+                        <p>حاسبة درجات الفصل الدراسي لدينا مجانية وسهلة الاستخدام. لا حاجة لأي معادلات أو جداول بيانات معقدة، فقط أدخل بياناتك وانقر على "احسب".</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>كيفية حساب درجة الفصل الدراسي؟</h2>
+                <p>
+                    يمكن حساب درجة الفصل الدراسي باستخدام طريقة المتوسط المرجح. لكل واجب، واختبار، وامتحان قصير، ومشروع، وامتحان نسبة مئوية معينة (وزن) تُحتسب في الدرجة النهائية. استخدم أيضًا حاسبة الدرجة النهائية لمعرفة الدرجات المطلوبة لامتحاناتك النهائية.
+                </p>
+                <h3>تعرف على مكونات الدرجة والأوزان</h3>
+                <p>
+                    عادةً ما يُقدّم لك أستاذك أو مُخطط المقرر الدراسي التفاصيل. على سبيل المثال:
+                </p>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li>الواجب المنزلي: 20%</li>
+                    <li>الاختبارات: 15%</li>
+                    <li>امتحان منتصف الفصل الدراسي: 25%</li>
+                    <li>الامتحان النهائي: 30%</li>
+                    <li>المشاركة في الفصل: 10%</li>
+                </ul>
+                <h3>تحويل النسب المئوية إلى أعداد عشرية</h3>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li>20% → 0.20</li>
+                    <li>15% → 0.15</li>
+                    <li>25% → 0.25</li>
+                    <li>30% → 0.30</li>
+                    <li>10% → 0.10</li>
+                </ul>
+                <h3>اضرب كل درجة في وزنها</h3>
+                <p>
+                    افترض أن الطالب لديه الدرجات التالية:
+                </p>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li>الواجب المنزلي = 85%</li>
+                    <li>الاختبارات = 90%</li>
+                    <li>منتصف الفصل الدراسي = 80%</li>
+                    <li>الامتحان النهائي = 70%</li>
+                    <li>المشاركة = 100%</li>
+                </ul>
+                <p>
+                    الآن اضرب كل واحد في وزنه:
+                </p>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li>الواجب المنزلي: 85 × 0.20 = 17.0</li>
+                    <li>الاختبارات: 90 × 0.15 = 13.5</li>
+                    <li>منتصف الفصل الدراسي: 80 × 0.25 = 20.0</li>
+                    <li>الامتحان النهائي: 70 × 0.30 = 21.0</li>
+                    <li>المشاركة: 100 × 0.10 = 10.0</li>
+                </ul>
+                <h3>إضافة جميع الدرجات المرجحة معًا</h3>
+                <p>
+                    17.0 + 13.5 + 20.0 + 21.0 + 10.0 = 81.5%
+                </p>
+                <h3>التحويل إلى درجة حرفية (اختياري)</h3>
+                <p>
+                    تستخدم العديد من المدارس مقياسًا حرفيًا قياسيًا:
+                </p>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li>A = 90–100%</li>
+                    <li>B = 80–89%</li>
+                    <li>C = 70–79%</li>
+                    <li>D = 60–69%</li>
+                    <li>F = أقل من 60%</li>
+                </ul>
+                <p>
+                    إذًا، 81.5% = B
+                </p>
+                <h3>صيغة الدرجة الفصلية</h3>
+                <p>
+                    الدرجة النهائية للفصل الدراسي = (الدرجة 1 × الوزن 1) + (الدرجة 2 × الوزن 2) + …
+                </p>
+                <p>
+                    يمكن أن تستغرق هذه الحسابات اليدوية الكثير من الوقت؛ لذا استخدم ببساطة حاسبة الفصل الدراسي لدينا لحساب الدرجة الفصلية بسرعة.
+                </p>
+            </div>
+
+            <section class="content-section centered-section">
+                <h2>ما هو الدرجة الفصلية؟</h2>
+                <p style="text-align: right;">علامة الفصل الدراسي هي العلامة النهائية التي يحصل عليها الطالب في نهاية الفصل الدراسي (نصف عام دراسي، عادةً من 15 إلى 18 أسبوعًا). وتعكس هذه العلامة أداء الطالب في جميع المقررات الدراسية، بما في ذلك:
+                <ul style="padding-right: 30px; position: relative; top: -20px; text-align: right;">
+                    <li>العمل في المنزل</li>
+                    <li>الاختبارات القصيرة</li>
+                    <li>الامتحانات (النصفية والنهائية)</li>
+                    <li>المشاريع</li>
+                    <li>المشاركة في الفصل</li>
+                    <li>الحضور (أحيانًا)</li>
+                </ul>
+                </p>
+                <h3>صيغة تقدير الفصل الدراسي (صيغة المتوسط المرجح)</h3>
+                <div class="formula" style="text-align: right;">
+                    الدرجة الفصلية = (الدرجة1 × الوزن1) + (الدرجة2 × الوزن2) + ... + (الدرجةN × الوزنN)
+                </div>
+                <p>حيث تكون الأوزان في شكل عدد عشري (على سبيل المثال، 20% = 0.20).</p>
+                <p><b>مثال:</b><br>85 (0.20) + 90 (0.15) + 80 (0.25) + 70 (0.30) + 100 (0.10) = 81.5</p>
+                <p>تساعدك حاسبة الدرجات الفصلية هذه، المعروفة أيضًا باسم حاسبة الدرجات الربع سنوية، على حساب درجتك الإجمالية للفصل الدراسي من خلال الجمع بين نتائج المهام المختلفة والاختبارات والمشاريع والاختبارات النصفية والنهائية وفقًا لنسب وزنها.</p>
+            </section>
+
+            <section class="faq-section centered-section">
+                <h2>الأسئلة الشائعة</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>من يمكنه الاستفادة من حاسبة الدرجات الفصلية؟</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>الطلاب</b> — لمتابعة التقدم ووضع الأهداف.<br>
+                                <b>المعلمون</b> — لشرح توزيع الدرجات للطلاب.<br>
+                                <b>الآباء</b> — لفهم أداء أبنائهم بشكل أفضل.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>هل يمكن استخدام حاسبة الفصل الدراسي هذه للدراسات العليا أو الدراسات العليا؟</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                نعم. يمكنك استخدام حاسبة الاختبارات الفصلية هذه لأي مستوى، بما في ذلك الدراسات العليا، شريطة إدخال الدرجات وأوزانها بشكل صحيح.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>هل يعني ارتفاع الدرجة الفصلية دائمًا ارتفاع المعدل التراكمي؟</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                نعم. تُحوَّل الدرجات الفصلية الأعلى إلى نقاط أعلى، مما يزيد من معدلك التراكمي في الفصل الدراسي، وبالتالي معدلك التراكمي. يمكنك التحقق من معدلك التراكمي العام (GPA) باستخدام حاسبة المعدل التراكمي.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>هل يختلف المعدل الفصلي عن المعدل التراكمي؟</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>المعدل التراكمي للفصل الدراسي:</b> المعدل الفصلي الواحد.<br>
+                                <b>المعدل التراكمي:</b> متوسط ​​جميع المعدلات التراكمية للفصل الدراسي مجتمعة خلال برنامجك الأكاديمي.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+    <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
+        });
+    });
+
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
+    function calculateGrade() {
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3 = parseFloat(weight3Input.value) || 0;
+        
+
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
+            weight3Input.value = weight3.toFixed(2);
+        }
+
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            return;
+        }
+
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+        
+    }
+
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

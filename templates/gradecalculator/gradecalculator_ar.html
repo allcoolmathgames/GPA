@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>حاسبة الدرجات | حاسبة الدرجات المرجحة</title>
+    <meta name="description"
+        content="تسمح لك حاسبة الدرجات هذه بحساب درجتك الحالية بسرعة ودقة وسهولة. اكتشف الدرجة التي تحتاجها في الامتحان النهائي لتحقيق هدفك.">
+    <meta name="keywords" content="حاسبة الدرجات، حساب الدرجات، حساب الدرجة، حاسبة درجات الاختبار، حاسبة الدرجات المرجحة، حاسبة الدرجات غير المرجحة">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        body[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        body[dir="rtl"] table {
+            direction: rtl;
+        }
+        body[dir="rtl"] th,
+        body[dir="rtl"] td {
+            text-align: right;
+        }
+        body[dir="rtl"] input {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
+</head>
+<body data-lang="ar">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>حاسبة الدرجات</h1>
+            <p>استخدم حاسبة الدرجات البسيطة هذه لمعرفة درجتك الحالية وما تحتاجه في اختبارك النهائي.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">احسب درجتك</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>التقييمات</th>
+                            <th>النتيجة (%)</th>
+                            <th>الوزن (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="أدخل اسم التقييم"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="مثلًا، 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="مثلًا، 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="أدخل اسم التقييم"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="مثلًا، 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="مثلًا، 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="أدخل اسم التقييم"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="مثلًا، 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="مثلًا، 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">أضف المزيد من التقييمات</button>
+                    <button id="calculateGradeBtn" class="primary-btn">احسب الدرجة</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>ملخص الدرجة</h2>
+                <div class="grade-box">
+                    <span>الدرجة الحالية</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">إعادة تعيين جميع التقييمات</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>كيفية استخدام الآلة الحاسبة لدينا؟</h2>
+                <div class="how-to-use-container">
+                    <p>طريقة استخدام هذه الحاسبة بسيطة وسهلة للغاية:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">التقييمات</h3>
+                        <p style="text-align: right;">أدخل اسم كل تقييم، على سبيل المثال: التقييم ١، ٢، ٣، الواجب المنزلي، الامتحان، إلخ.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">النتيجة</h3>
+                        <p style="text-align: right;">أدخل درجاتك في كل تقييم، رياضيات، اختبار، أو أي امتحان آخر خلال الدورة. عادةً ما يتضمن كل مدخل النسبة المئوية للدرجات (١٠٪، ٣٠٪، ٥٠٪، إلخ).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">الوزن</h3>
+                        <p style="text-align: right;">أدخل وزن الواجب في الدرجة الإجمالية للدورة. يوضح هذا الوزن مدى تأثير كل واجب على درجتك النهائية، مما يعني أن الامتحان النهائي قد يكون أكثر أهمية من مجرد واجب منزلي صغير.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">حساب الدرجة</h3>
+                        <p style="text-align: right;">بعد إدخال جميع المعلومات، انقر على زر "حساب الدرجة" وستحصل على نتيجتك.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>فوائد استخدام حاسبة الدرجات</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>توفير الوقت</h3>
+                        <p style="text-align: right;">يمكنك حساب الدرجات بسهولة باستخدام هذه الأداة، فلا داعي لإضاعة وقتك في الحسابات اليدوية.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>سهولة الاستخدام</h3>
+                        <p style="text-align: right;">بتصميمها البسيط، تتيح لك هذه الأداة إدخال درجاتك وأوزانها بكل سهولة، لتحصل على النتائج ببضع نقرات فقط.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>الدقة</h3>
+                        <p style="text-align: right;">تستخدم الآلة الحاسبة صيغًا دقيقة لضمان دقة نتائجك، مما يُجنّبك الأخطاء التي قد تحدث في الحسابات اليدوية.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>المرونة</h3>
+                        <p style="text-align: right;">تتوافق الآلة الحاسبة مع أنظمة تقييم ومواد دراسية مختلفة، مما يتيح لك تعديل الأوزان والدرجات والتنسيقات بما يتناسب مع متطلبات موادك الدراسية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>ما هي حاسبة الدرجات؟</h2>
+                <p style="text-align: right;">
+                    تساعدك حاسبة الدرجات على تحديد درجتك الإجمالية في أي مقرر أو مادة بسرعة من خلال جمع درجاتك من الواجبات والاختبارات القصيرة والامتحانات والمشاريع، مع مراعاة أوزانها المختلفة. تساعد هذه الحاسبة الطلاب على فهم كيفية تأثير كل واجب على درجتهم الإجمالية المرجحة في المقرر. هذا يعني أن الدرجة الإجمالية للمقرر تعتمد على عاملين رئيسيين: درجة كل واجب (g) ووزنه (w). باستخدام هذه الأداة، يمكنك حساب متوسط درجتك الحالية في أي مقرر باستخدام الواجبات التي أكملتها حتى الآن خلال الفصل الدراسي.
+                </p>
+                <h2>حساب الدرجة المرجحة: الصيغة والمثال</h2>
+                <p style="text-align: right;">
+                    <b>الصيغة:</b><br>
+                    <span>الدرجة المرجحة = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)</span>
+                    <br><br>
+                    <span>
+                        حيث:<br>
+                        g = الدرجة (بالنسبة المئوية أو النقاط) لكل مهمة<br>
+                        w = وزن كل مهمة (بالنسبة المئوية أو النقاط الممكنة)
+                    </span>
+                </p>
+                <h2>مثال:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>التقييمات</th>
+                            <th>درجة (٪)</th>
+                            <th>وزن (٪)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>الاختبارات القصيرة</td><td>80</td><td>20</td></tr>
+                        <tr><td>امتحان منتصف الفصل الدراسي</td><td>75</td><td>30</td></tr>
+                        <tr><td>الامتحان النهائي</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>خطوات:</h2>
+                <ol style="padding-right: 30px; text-align: right;">
+                    <li>اضرب كل درجة في وزنها:<br>الاختبارات: 80 × 20 = 1600<br>امتحان منتصف الفصل الدراسي: 75 × 30 = 2250<br>الامتحان النهائي: 90 × 50 = 4500</li>
+                    <li>أضف النتائج: 1600 + 2250 + 4500 = 8350</li>
+                    <li>اقسم على الوزن الإجمالي: 8350 ÷ 100 = 83.5%</li>
+                </ol>
+                <p style="text-align: right;">
+                    الدرجة المرجحة: <b>83.5%</b> (<b>درجة ب</b>)
+                </p>
+                <h2>آلات حاسبة أخرى يمكنك تجربتها:</h2>
+                <ul style="padding-right: 30px; text-align: right;">
+                    <li><a href="/gpa-calculator">حاسبة المعدل التراكمي</a></li>
+                    <li><a href="/">حاسبة المعدل التراكمي للجامعة</a></li>
+                    <li><a href="/highschool-gpa">معدل التراكمي في المدرسة الثانوية</a></li>
+                    <li><a href="/final-grade-calculator">حاسبة الدرجة النهائية</a></li>
+                </ul>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>نصائح لتحسين درجاتك</h2>
+                <p style="text-align: right;">
+                    مع أن استخدام حاسبة الدرجات قد يساعدك في متابعة أدائك الأكاديمي، إلا أن تحسين درجاتك يتطلب بعض التخطيط. إليك بعض النصائح لتحسين درجاتك.
+                </p>
+                <h3>نظم وقتك</h3>
+                <p style="text-align: right;">
+                    ضع خطة دراسية مُسبقًا، وركّز أكثر على المواد الأصعب عليك، وقسّم عملك إلى أجزاء صغيرة حتى لا تضطر إلى التسرع قبل الامتحانات.
+                </p>
+                <h3>اطلب المساعدة مُبكرًا</h3>
+                <p style="text-align: right;">
+                    إذا واجهت صعوبة في موضوع ما، فاطلب المساعدة من مُعلّمك أو مُدرّسك أو زملائك في الفصل فورًا بدلًا من الانتظار حتى قبل الامتحانات مباشرةً.
+                </p>
+                <h3>تدرب على أسئلة الامتحانات السابقة</h3>
+                <p style="text-align: right;">
+                    اعمل على أسئلة الامتحانات السابقة لتعتاد على شكلها، وفهم أنواع الأسئلة، وتحسين سرعتك ودقتك.
+                </p>
+                <h3>استخدم حاسبة الدرجات</h3>
+                <p style="text-align: right;">
+                    تابع درجاتك الحالية واكتشف الدرجات التي تحتاجها في الواجبات أو الامتحانات القادمة لتحقيق هدفك، مما يُساعدك على تخطيط دراستك بفعالية أكبر.
+                </p>
+            </div>
+
+            <section class="faq-section centered-section">
+                <h2>الأسئلة الشائعة</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>ما الفرق بين حاسبة الدرجات البسيطة وحاسبة الدرجات الموزونة؟</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p style="text-align: right;">تتعامل حاسبة الدرجات البسيطة مع جميع الواجبات بالتساوي، بينما تأخذ حاسبة الدرجات الموزونة في الاعتبار أهمية (وزن) كل واجب في درجتك النهائية.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>ما هي درجة النجاح في معظم المدارس؟</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p style="text-align: right;">في العديد من المدارس، تكون درجة النجاح 60% أو تقدير حرفي "D"، ولكن قد يختلف هذا من مؤسسة تعليمية إلى أخرى.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>هل تستخدم جميع المدارس نظام الدرجات نفسه؟</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p style="text-align: right;">لا، تختلف أنظمة الدرجات باختلاف البلد والولاية والمؤسسة التعليمية، لذا تحقق دائمًا من سياسة الدرجات في مدرستك.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>ما هي أفضل طريقة لتحسين درجاتي بسرعة؟</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p style="text-align: right;">ركّز على المواد التي خسرت فيها أكبر عدد من النقاط، واطلب المساعدة من المعلمين أو المدرسين الخصوصيين، واستخدم خطة دراسية للحفاظ على الاتساق.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="أدخل اسم التقييم"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="مثلًا، 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="مثلًا، 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

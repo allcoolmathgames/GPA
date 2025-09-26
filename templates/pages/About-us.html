@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="aboutUsTitle">About Us – GpaCalculatorCollege.com</title>
+    <meta name="description" data-translate="aboutUsDescription" content="Learn about GpaCalculatorCollege.com, our mission to simplify GPA calculations for college students.">
+    <meta name="keywords" data-translate="aboutUsKeywords" content="about us, GpaCalculatorCollege.com mission, GPA calculator, academic tools, student resources">
+    <meta name="robots" content="index, follow">
+
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/about-us">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main>
+        <section class="page-content">
+            <h1 data-translate="aboutUsHeading">About Us</h1>
+            <p style="text-align: left;">
+                Welcome to <a href="https://gpacalculatorcollege.com/">GpaCalculatorCollege.com</a> – your trusted online tool for calculating GPAs with ease and accuracy.
+                <br><br>
+                We understand how important your Grade Point Average (GPA) is in shaping your academic and professional future. That’s why we created a free, easy-to-use GPA calculator designed specifically for college students, educators, and anyone who wants a quick way to track academic performance.
+            </p>
+
+            <h2 data-translate="ourMissionHeading">Our Mission</h2>
+            <p data-translate="ourMissionText1">
+                Our mission is to make GPA calculation simple, stress-free, and accessible to everyone. Whether you're preparing for graduate school, applying for scholarships, or just want to stay on track with your grades, our website helps you take control of your academic journey.
+            </p>
+
+            <h2 data-translate="whyChooseHeading">Why Choose GpaCalculatorCollege.com?</h2>
+            <ul>
+                <li>Built with students in mind</li>
+                <li>Simple interface, professional results</li>
+                <li>Always up to date with the latest GPA scales and credit systems</li>
+                <li>Helpful resources and FAQs to guide you</li>
+                <li>Completely free to use</li>
+            </ul>
+
+                        <h2 data-translate="developedByHeading">Developed By</h2>
+            <p style="text-align: left;" data-translate="developerIntro">
+                This website was developed by <strong>Muhammad Aizazullah</strong>, a BS Computer Science student at FAST NUCES, Chiniot-Faisalabad campus. 
+                With a strong interest in web development and academic tools, he created GpaCalculatorCollege.com to help students calculate and manage their GPAs easily and accurately. 
+                His goal is to build simple yet impactful solutions that make student life more productive and stress-free.
+            </p>
+
+            <h2 data-translate="futurePlansHeading">Future Plans</h2>
+            <p data-translate="futurePlansText1">
+                We continually improve our tools and add new features. Soon, you’ll see additional calculators, grade conversion charts, and GPA improvement tips, all designed to help you excel in your academic goals.
+            </p>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+</body>
+</html>

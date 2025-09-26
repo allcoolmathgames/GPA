@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calcolatore GPA per le scuole superiori | Calcola la tua media dei voti</title>
+    <meta name="description" content="Utilizza questo calcolatore per calcolare la tua media dei voti delle scuole superiori. Non è richiesta alcuna registrazione. Gratuito, veloce e facile da usare.">
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="keywords" content="calcolatore GPA, calcolare GPA, come calcolare GPA, qual è il mio GPA, calcolatore media voti, calcolatore GPA online, scala GPA 4.0, calcolatore GPA con crediti, calcolatore GPA scuola superiore">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/highschool-gpa">
+
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/highschool-gpa"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/highschool-gpa"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/highschool-gpa"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/highschool-gpa"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/highschool-gpa"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/highschool-gpa"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/highschool-gpa"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/calcolatore-gpa-scuola-superiore"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/highschool-gpa"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+<body data-lang="it">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calcolatore GPA per le scuole superiori</h1>
+            <p>Il nostro calcolatore GPA per le scuole superiori aiuta gli studenti a calcolare la loro media dei voti in base ai voti dei corsi e ai crediti formativi.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calcola GPA delle scuole superiori</h2>
+                <div class="weighted-toggle-container" style="position: relative; top: -25px; display: flex; justify-content: flex-end; align-items: center;">
+                    <label class="switch">
+                        <input type="checkbox" id="weightedToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span style="margin-left: 10px;">Ponderato</span>
+                </div>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Corso</th>
+                            <th>Crediti</th>
+                            <th>Voto</th>
+                            <th class="weight-column">Tipo di corso</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="es., Matematica 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>Seleziona voto</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">Regolare</option>
+                                    <option value="0.5">Honors</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">Universitario</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Aggiungi altri corsi</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Calcola GPA</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Riepilogo GPA</h2>
+                <div class="gpa-box">
+                    <span>GPA Attuale</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="/calcolatore-gpa-scuola-superiore"><button id="resetCoursesButton" class="secondary-btn">Reimposta tutti i corsi</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Il nostro <a href="https://gpacalculatorcollege.com/it/gpa-calculator">Calcolatore GPA</a> per le scuole superiori aiuta gli studenti a calcolare la loro media dei voti in base ai voti dei corsi e ai crediti formativi. Gli studenti delle scuole superiori utilizzano questo strumento per monitorare il loro rendimento scolastico e pianificare l'ammissione all'università e l'idoneità alle borse di studio.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Come usare il calcolatore GPA per le scuole superiori?</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 1: Inserisci il nome del corso</span></h3>
+                        <p style="text-align: left;"><span>Per prima cosa, devi inserire il nome del corso.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 2: Seleziona i voti</span></h3>
+                        <p style="text-align: left;"><span>Seleziona il voto ottenuto in ogni materia (ad esempio A, B, C, ecc.).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 3: Inserisci i crediti formativi</span></h3>
+                        <p style="text-align: left;"><span>Inserisci i crediti formativi per ogni corso (solitamente tra 1 e 4 ore).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 4: Scegli il tipo di corso</span></h3>
+                        <p style="text-align: left;"><span>Questo è un passaggio facoltativo per i calcoli ponderati e non ponderati.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Passo 5: Calcola GPA</span></h3>
+                        <p style="text-align: left;"><span>Dopo aver inserito tutti i dati, premi il pulsante "Calcola GPA delle scuole superiori" per ottenere i risultati.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Perché usare il nostro calcolatore GPA per le scuole superiori?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Aggiungi più materie/corsi</h3>
+                        <p style="text-align: left;">
+                            Puoi inserire più corsi dal tuo programma scolastico, come Matematica, Inglese, Scienze e Storia. Per ogni corso, inserisci semplicemente il voto ottenuto e i crediti formativi.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Nessuna registrazione richiesta</h3>
+                        <p style="text-align: left;">
+                            Usa il calcolatore all'istante: non è richiesta la creazione di un account, l'inserimento di dati personali o una procedura di registrazione.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Opzione per scegliere il tipo di corso</h3>
+                        <p style="text-align: left;">
+                            Seleziona i tipi di corso come Regolare, Honors, AP (Advanced Placement) o IB (International Baccalaureate) per ottenere una GPA più accurata in base alla difficoltà del corso.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Come calcolo la media dei voti delle scuole superiori?</h2>
+                <p style="text-align: left;">
+                    Calcolare la media dei voti delle scuole superiori è semplice una volta compresi i passaggi. La maggior parte delle scuole utilizza una scala da 4.0, dove una A vale 4.0 punti, una B 3.0, una C 2.0, una D 1.0 e una F 0. Segui questi passaggi per calcolare manualmente la media dei voti delle scuole superiori.
+                </p>
+                <ul style="text-align: left;">
+                    <li>Annota i tuoi corsi e i voti che hai ricevuto.</li>
+                    <li>Converti ogni voto in punti utilizzando la scala GPA.</li>
+                    <li>Ad esempio, se hai preso una A in Matematica, sono 4.0 punti.</li>
+                    <li>Moltiplica ogni voto per i crediti formativi di quel corso.</li>
+                    <li>Se Matematica vale 3 crediti, allora 4.0 × 3 = 12 punti.</li>
+                    <li>Fai lo stesso per tutti i tuoi corsi.</li>
+                    <li>Somma tutti i voti.</li>
+                    <li>Somma tutti i crediti formativi.</li>
+                    <li>Dividi il totale dei voti per il totale dei crediti formativi.</li>
+                </ul>
+                <p style="text-align: left;">
+                    I calcoli manuali richiedono tempo; usa semplicemente il nostro calcolatore GPA per le scuole superiori per effettuare calcoli in modo rapido e semplice.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Chi può usare questo calcolatore?</h2>
+                <h3>Studenti delle scuole superiori</h3>
+                <p style="text-align: left;">
+                    Gli studenti delle scuole superiori possono usare questo calcolatore per monitorare il loro rendimento scolastico, stabilire obiettivi accademici e prepararsi per le domande di ammissione all'università. Li aiuta a rimanere informati sui loro progressi e a identificare le aree in cui è necessario migliorare.
+                </p>
+                <h3>Insegnanti e consulenti</h3>
+                <p style="text-align: left;">
+                    Insegnanti e consulenti possono usare questo strumento per aiutare gli studenti a monitorare il loro rendimento scolastico, fornire indicazioni sulla scelta dei corsi e supportare la pianificazione dell'università o delle borse di studio.
+                </p>
+                <h3>Genitori</h3>
+                <p style="text-align: left;">
+                    I genitori possono usare il calcolatore GPA per le scuole superiori per rimanere coinvolti nel progresso accademico dei propri figli. Li aiuta a capire come i voti influiscono sul rendimento complessivo e consente loro di supportare i propri figli nella definizione degli obiettivi accademici e nella preparazione per l'università.
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Domande frequenti</h2>
+                <div class="faq-item">
+                    <h3>Cosa sono i crediti formativi e come faccio a conoscerli?</h3>
+                    <p style="text-align: left;">
+                        I crediti formativi rappresentano il peso di un corso. La maggior parte dei corsi delle scuole superiori vale 1 credito, ma alcuni (come laboratori o corsi opzionali) potrebbero valere 0,5 o più.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Perché è importante calcolare la mia media dei voti (GPA) delle scuole superiori?</h3>
+                    <p style="text-align: left;">
+                        Calcolare la media dei voti (GPA) delle scuole superiori è importante perché mostra il rendimento scolastico complessivo. Università, programmi di borse di studio e persino alcune candidature per lavoro spesso utilizzano la media dei voti per valutare i risultati scolastici.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Questo strumento può aiutarmi a migliorare la mia media dei voti (GPA)?</h3>
+                    <p style="text-align: left;">
+                        No, questo strumento non aiuta a migliorare la media dei voti. Ma aiuta a tenere traccia della media dei voti (GPA). Puoi utilizzare il nostro <a href="https://gpacalculatorcollege.com/it/gpa-planning">calcolatore di pianificazione della media dei voti (GPA)</a> per migliorarla.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Devo registrarmi per utilizzare il calcolatore della media dei voti delle scuole superiori?</h3>
+                    <p style="text-align: left;">
+                        No, il nostro calcolatore è gratuito e non richiede alcuna registrazione o accesso.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const weightedToggle = document.getElementById('weightedToggle');
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="es., Matematica 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="es., 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>Seleziona voto</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">Regolare</option>
+                            <option value="0.5">Honors</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">Universitario</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                const isWeighted = weightedToggle.checked;
+
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = 0;
+
+                    if (isWeighted) {
+                        weightValue = parseFloat(weightSelect.value);
+                    }
+
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            function toggleWeightColumn() {
+                const isChecked = weightedToggle.checked;
+                const weightColumns = document.querySelectorAll('.weight-column');
+                const weightSelects = document.querySelectorAll('select[name="weight"]');
+
+                weightColumns.forEach(column => {
+                    column.style.display = isChecked ? '' : 'none';
+                });
+
+                if (!isChecked) {
+                    weightSelects.forEach(select => {
+                        select.value = "0";
+                        select.disabled = true;
+                    });
+                } else {
+                    weightSelects.forEach(select => {
+                        select.disabled = false;
+                    });
+                }
+                calculateGPA();
+            }
+
+            weightedToggle.addEventListener('change', toggleWeightColumn);
+
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
+                    calculateGPA();
+                }
+            });
+
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+
+            // Initial call to set column visibility and add first row
+            addCourseRow();
+            toggleWeightColumn();
+
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // Set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

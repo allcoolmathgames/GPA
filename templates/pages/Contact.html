@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="contactUsTitle">Contact Us – GradeWise</title>
+    <meta name="description" data-translate="contactUsDescription" content="Contact GradeWise for support, feedback, or inquiries. We are here to help you with your GPA calculations and academic questions.">
+    <meta name="keywords" data-translate="contactUsKeywords" content="contact GradeWise, GradeWise support, feedback, inquiry, academic help, GPA contact">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/contact">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main>
+        <section class="page-content">
+            <h1 data-translate="contactUsHeadingMain">Contact Us</h1>
+            <p data-translate="contactUsIntro">
+                We're here to help! Whether you have questions, feedback, or need assistance with our GPA calculators, feel free to reach out.
+            </p>
+
+            <h2 data-translate="getInTouchHeading">Get in Touch</h2>
+            <p data-translate="getInTouchText1">
+                The best way to contact us is via email. We strive to respond to all inquiries within 24-48 hours.
+            </p>
+            <ul class="contact-info">
+                <li><strong data-translate="emailLabel">Email:</strong> <a href="#">gpacalculatorcollege@gmail.com</a></li>
+                <li data-translate="addressLabel"><strong>Address:</strong>4 Washington Pl, New York, NY 10003, USA</li>
+            </ul>
+
+            <h2 data-translate="sendUsAMessageHeading">Send Us a Message</h2>
+            <p>
+                <b>Thank you for your interest in contacting us!</b>
+            </p>
+            <p>
+                Our online contact form is currently undergoing maintenance to improve its functionality. We appreciate your patience and apologize for any inconvenience this may cause.
+            </p>
+            <p>
+                In the meantime, we are fully available and ready to assist you via email. Please feel free to send us your questions, feedback, or any support requests directly to our official email address.
+            </p>
+            <p>
+                When you email us, please include as much detail as possible so we can help you efficiently. We typically respond to all emails within 24-48 business hours.
+            </p>
+            
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculadora de SGPA para porcentagem | Converta SGPA para Porcentagem</title>
+    <meta name="description" content="Converta seu SGPA para porcentagem com nossa calculadora/conversor de SGPA para porcentagem. Aprenda também a fórmula com exemplos.">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="keywords" content="SGPA para Porcentagem, Percentage calculator, calculate percentage, online percentage calculator, SGPA to percentage converter">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/sgpa-to-percentage">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/sgpa-to-percentage"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/sgpa-to-percentage"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+    <style>
+        :root {
+            --light-bg: #F2F2F2;
+            --primary-color: #EAE4D5;
+            --secondary-color: #B6B09F;
+            --dark-text: #333333;
+            --accent-color: #C83F12;
+            --primary-dark: #a73333;
+            --secondary-dark: #928a7b;
+            --heading-color: #222222;
+            --border-color: #e0e0e0;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --button-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding: 20px 10px;
+        }
+        .page-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: var(--heading-color);
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        .centered-section {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .input-section, .gpa-summary-section, .content-section {
+            background: var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        .method-switch {
+            display: flex;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: var(--light-bg);
+        }
+        .method-switch button {
+            flex: 1;
+            padding: 10px;
+            background: var(--secondary-color);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9em;
+        }
+        .method-switch button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+        .method {
+            display: none;
+        }
+        .method.active {
+            display: block;
+        }
+        .semester-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+        .semester-item input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .remove-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remove-btn:hover {
+            background: var(--primary-dark);
+        }
+        #addSemester {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #addSemester:hover {
+            background: var(--primary-dark);
+        }
+        .gpa-summary-section {
+            display: block !important;
+            margin-top: 20px;
+        }
+        .gpa-box {
+            background: var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            margin: 15px 0;
+        }
+        .gpa-box span {
+            display: block;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .primary-btn, .secondary-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            width: 100%;
+            box-shadow: var(--button-shadow);
+        }
+        .primary-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        .primary-btn:hover {
+            background: var(--primary-dark);
+        }
+        .secondary-btn {
+            background: var(--secondary-color);
+            color: var(--dark-text);
+        }
+        .secondary-btn:hover {
+            background: var(--secondary-dark);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        table.grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        table.grade-table th, table.grade-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+        table.grade-table th {
+            background: var(--secondary-color);
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .faq-item p {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .method-switch {
+                flex-direction: row;
+            }
+            .semester-item {
+                flex-direction: row;
+                align-items: center;
+            }
+            .semester-item input {
+                flex: 1;
+                min-width: 0;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body data-lang="pt-br">
+    {% include 'header.html' %}
+    <main class="main-content" style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculadora de SGPA para porcentagem</h1>
+            <p>Aqui está uma calculadora prática de SGPA para porcentagem que converte seu SGPA em porcentagem em segundos. Basta inserir seu SGPA, clicar em calcular e você obterá o resultado instantaneamente.</p>
+            <div class="input-section centered-section">
+                <h2>Calcule a Porcentagem</h2>
+                <div class="method-switch">
+                    <button class="active" data-method="method1">Simples</button>
+                    <button data-method="method2">Avançado</button>
+                </div>
+                <div class="method active" id="method1">
+                    <h3>Insira seu SGPA</h3>
+                    <div class="form-group">
+                        <label for="sgpa">Insira seu SGPA:</label>
+                        <input type="number" id="sgpa" placeholder="Insira seu SGPA" step="0.1" min="0" max="10">
+                    </div>
+                    <div class="button-group">
+                        <button id="calculate1" class="primary-btn">CALCULAR</button>
+                    </div>
+                </div>
+                <div class="method" id="method2">
+                    <h3>Insira o SGPA para Cada Semestre</h3>
+                    <div id="semesters">
+                        <div class="semester-item">
+                            <input type="number" placeholder="Insira o SGPA do Semestre" step="0.1" min="0" max="10">
+                            <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="addSemester" class="secondary-btn">+ Adicionar Novo Semestre</button>
+                        <button id="calculate2" class="primary-btn">CALCULAR</button>
+                    </div>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section">
+                <h2>Resultado:</h2>
+                <div class="gpa-box">
+                    <span>CGPA</span>
+                    <span id="cgpaDisplay">0.00</span>
+                </div>
+                <div class="gpa-box">
+                    <span>Porcentagem</span>
+                    <span id="percentageDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <button id="resetButton" class="secondary-btn">Reiniciar Tudo</button>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Aqui está uma calculadora prática de SGPA para porcentagem que converte seu SGPA em porcentagem em segundos. Basta inserir seu SGPA, clicar em calcular e você obterá o resultado instantaneamente.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Como usar esta calculadora de SGPA para porcentagem?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Modo Simples</h3>
+                        <p data-translate="step1Description">
+                            No modo simples, basta inserir seu SGPA.<br>
+                            Clique em <b>Calcular</b>.<br>
+                            Você obterá o SGPA em porcentagem.
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Modo Avançado</h3>
+                        <p data-translate="step2Description">
+                            Você pode somar o SGPA de vários semestres.<br>
+                            Clique em <b>Calcular</b>.<br>
+                            Você obterá o resultado do SGPA de vários semestres em uma porcentagem.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Por que usar esta calculadora?</h2>
+                <p>Aqui estão vários motivos pelos quais você precisa usar a ferramenta de conversão de SGPA para porcentagem da GPA Calculator College.</p>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Economiza tempo</h3>
+                        <p data-translate="feature1Description">Você pode economizar tempo convertendo rapidamente seu SGPA em porcentagem. Você não precisa fazer cálculos manuais; basta inserir seu SGPA e obterá resultados instantâneos.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Oferece Modos Avançados</h3>
+                        <p data-translate="feature2Description">A GPACalculatorCollege oferece dois modos para atender a diferentes necessidades:
+                            <strong>Modo Simples:</strong> Ideal para cálculos rápidos. Basta inserir seu SGPA ou obter a porcentagem instantaneamente.<br>
+                            <strong>Modo Avançado:</strong> Projetado para uso mais detalhado. Permite inserir vários semestres para obter um SGPA e uma porcentagem gerais precisos.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Precisão</h3>
+                        <p data-translate="feature3Description">Esta calculadora garante resultados precisos e confiáveis usando fórmulas padrão para conversão de SGPA e porcentagem.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="sgpaHeading">O que é SGPA?</h2>
+                <p data-translate="sgpaDescription">
+                    <strong>SGPA na íntegra:</strong> Semester Grade Point Average.
+                    Existem várias maneiras de calcular o desempenho acadêmico em escolas, faculdades e universidades, uma delas é a SGPA.
+                    Converter a SGPA em porcentagem costuma ser importante, especialmente ao final de um semestre ou ano letivo.
+                    Para obter uma boa nota final em seu curso, é importante manter uma boa SGPA ao longo do tempo.
+                    Isso não apenas ajuda a garantir melhores resultados, mas também fornece uma visão clara do seu progresso e destaca as áreas em que você precisa melhorar.
+                </p>
+                <h3 data-translate="howToCalculateSGPAHeading">Como calcular o SGPA?</h3>
+                <p data-translate="howToCalculateSGPADescription">
+                    Agora que você entende o conceito de SGPA e seu impacto na sua nota final, vamos prosseguir. Para calcular o SGPA, siga estes passos:
+                </p>
+                <ol>
+                    <li>Encontre os créditos de cada disciplina.</li>
+                    <li>Multiplique os créditos de cada disciplina pela nota obtida naquela disciplina.</li>
+                    <li>Some todos esses resultados.</li>
+                    <li>Divida o total pela soma de todos os créditos.</li>
+                    <li>O valor final obtido será seu SGPA.</li>
+                </ol>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection3">
+                <h2 data-translate="sgpaToPercentageHeading">Conversão de SGPA para Porcentagem</h2>
+                <p data-translate="sgpaToPercentageDescription">
+                    Para converter SGPA em porcentagem, você precisa de uma calculadora de SGPA para porcentagem para calcular sua pontuação, especialmente ao se candidatar a uma universidade estrangeira. A SGPA pode ser usada tanto para graduação quanto para pós-graduação para atender aos requisitos de admissão de uma universidade. É um sistema de notas seguido por muitas instituições de ensino em todo o mundo. Você também pode converter SGPA para CGPA com a ajuda da nossa <a href="https://gpacalculatorcollege.com/sgpa-to-cgpa-calculator">calculadora de SGPA para CGPA</a>.
+                </p>
+                <h3 data-translate="formulaHeading">Fórmula</h3>
+                <p data-translate="formulaDescription">
+                    Aqui está a fórmula simples usada para converter SGPA em porcentagem:
+                </p>
+                <p><strong>Porcentagem = (SGPA × 10) – 7.5</strong></p>
+                <h3 data-translate="exampleHeading">Exemplo</h3>
+                <p data-translate="exampleDescription">
+                    Como calcular o SGPA de um aluno e convertê-lo em porcentagem para os quatro semestres:
+                </p>
+                <ul>
+                    <li><strong>Primeiro Semestre:</strong> 5.0</li>
+                    <li><strong>Segundo Semestre:</strong> 4.2</li>
+                    <li><strong>Terceiro Semestre:</strong> 5.4</li>
+                    <li><strong>Quarto Semestre:</strong> 6.5</li>
+                </ul>
+                <p><strong>Solução:</strong></p>
+                <p>
+                    SGPA = (5.0 + 4.2 + 5.4 + 6.5) / 4 = 21.1 / 4 = 5.275<br>
+                    Porcentagem = (5.275 × 10) – 7.5 = 52.75 – 7.5 = <strong>45.25%</strong>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Perguntas frequentes</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Por que a conversão de SGPA para porcentagem é importante?</h3>
+                    <p data-translate="faqAnswer1">
+                        Ajuda a avaliar seu desempenho acadêmico em um formato comumente exigido para admissões, candidaturas a empregos ou bolsas de estudo.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Funciona para todas as universidades?</h3>
+                    <p data-translate="faqAnswer2">
+                        Embora funcione para a maioria das universidades, algumas instituições podem ter pequenas variações em sua fórmula de conversão. Sempre verifique as diretrizes da sua universidade.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Quanto é 6.83 SGPA em porcentagem?</h3>
+                    <p data-translate="faqAnswer3">
+                        A porcentagem de 6,83 SGPA é aproximadamente <strong>60.8%</strong>. Você também pode verificar isso usando nossa calculadora gratuita de SGPA para porcentagem.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem4">
+                    <h3 data-translate="faqQuestion4">Quanto é 7.24 SGPA em porcentagem?</h3>
+                    <p data-translate="faqAnswer4">
+                        Para converter um SGPA de 7.24 para porcentagem, usamos a fórmula:
+                        <strong>Porcentagem = (SGPA × 10) – 7.5</strong>
+                        <br>
+                        <strong>Passo a passo:</strong><br>
+                        Multiplique 7.24 por 10 → 7.24 × 10 = 72.4<br>
+                        Subtraia 7.5 → 72.4 – 7.5 = 64.9<br>
+                        Portanto, 7.24 SGPA é aproximadamente <strong>64.9%</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const methodButtons = document.querySelectorAll('.method-switch button');
+            const methods = document.querySelectorAll('.method');
+            const percentageDisplay = document.getElementById('percentageDisplay');
+            const cgpaDisplay = document.getElementById('cgpaDisplay');
+            const semestersDiv = document.getElementById('semesters');
+
+            function showError(message) {
+                const errorNotification = document.createElement('div');
+                errorNotification.style.position = 'fixed';
+                errorNotification.style.top = '20px';
+                errorNotification.style.right = '20px';
+                errorNotification.style.padding = '12px 20px';
+                errorNotification.style.backgroundColor = 'var(--accent-color)';
+                errorNotification.style.color = 'white';
+                errorNotification.style.borderRadius = '5px';
+                errorNotification.style.boxShadow = 'var(--box-shadow)';
+                errorNotification.style.zIndex = '1000';
+                errorNotification.style.fontFamily = 'Poppins, sans-serif';
+                errorNotification.textContent = message;
+                document.body.appendChild(errorNotification);
+                setTimeout(() => {
+                    errorNotification.remove();
+                }, 3000);
+            }
+
+            function updateResults(cgpa, percentage) {
+                cgpaDisplay.textContent = cgpa.toFixed(2);
+                percentageDisplay.textContent = percentage.toFixed(2) + '%';
+            }
+
+            function clearAllFields() {
+                const activeMethod = document.querySelector('.method.active');
+                if (activeMethod.id === 'method1') {
+                    document.getElementById('sgpa').value = '';
+                } else if (activeMethod.id === 'method2') {
+                    semestersDiv.innerHTML = '';
+                    addSemesterRow();
+                    addSemesterRow();
+                }
+                updateResults(0.00, 0.00);
+            }
+
+            function calculatePercentage1() {
+                const sgpa = parseFloat(document.getElementById('sgpa').value);
+                if (isNaN(sgpa) || sgpa < 0 || sgpa > 10) {
+                    showError('Erro: Por favor, insira um SGPA válido (0-10).');
+                    return;
+                }
+                const percentage = (sgpa * 10) - 7.5;
+                updateResults(sgpa, percentage);
+            }
+
+            function calculatePercentage2() {
+                const inputs = document.querySelectorAll('#semesters input');
+                let sum = 0;
+                let count = 0;
+                let isValid = true;
+                inputs.forEach(input => {
+                    const sgpa = parseFloat(input.value);
+                    if (!isNaN(sgpa) && sgpa >= 0 && sgpa <= 10) {
+                        sum += sgpa;
+                        count++;
+                    } else {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    showError('Erro: Por favor, insira valores de SGPA válidos (0-10) para todos os semestres.');
+                    return;
+                }
+                
+                if (count === 0) {
+                    showError('Erro: Por favor, insira pelo menos um SGPA.');
+                    return;
+                }
+
+                const cgpa = sum / count;
+                const percentage = (cgpa * 10) - 7.5;
+                updateResults(cgpa, percentage);
+            }
+
+            function addSemesterRow() {
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-item';
+                newSemester.innerHTML = `
+                    <input type="number" placeholder="Insira o SGPA do Semestre" step="0.1" min="0" max="10">
+                    <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                `;
+                semestersDiv.appendChild(newSemester);
+                newSemester.querySelector('.remove-btn').addEventListener('click', () => {
+                    newSemester.remove();
+                });
+            }
+
+            methodButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    methodButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    methods.forEach(method => method.classList.remove('active'));
+                    document.getElementById(button.dataset.method).classList.add('active');
+                    updateResults(0.00, 0.00);
+                });
+            });
+
+            document.getElementById('calculate1').addEventListener('click', calculatePercentage1);
+            document.getElementById('calculate2').addEventListener('click', calculatePercentage2);
+            document.getElementById('addSemester').addEventListener('click', addSemesterRow);
+            document.getElementById('resetButton').addEventListener('click', clearAllFields);
+
+            // Initial two semesters for 'Advance' mode
+            addSemesterRow();
+            addSemesterRow();
+            
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // Set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

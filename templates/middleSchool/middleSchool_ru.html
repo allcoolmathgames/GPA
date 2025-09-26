@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head data-translate="headSection">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Калькулятор среднего балла средней школы</title>
+    <meta name="description" content="Этот калькулятор среднего балла средней школы позволяет вам рассчитать средний балл вашей успеваемости в средней школе всего одним щелчком мыши." data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png" data-translate="faviconLink">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" data-translate="stylesheetLink">
+    <meta name="keywords" content="калькулятор среднего балла, рассчитать средний балл, как рассчитать средний балл, какой у меня средний балл, калькулятор среднего балла успеваемости, онлайн калькулятор среднего балла, шкала среднего балла 4.0, калькулятор среднего балла по зачётным часам" data-translate="metaKeywords">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator" data-translate="canonicalLink">
+    
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/middle-school-gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/middle-school-gpa-calculator"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" data-translate="fontPreconnect1">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-translate="fontPreconnect2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" data-translate="fontStylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-translate="fontawesomeStylesheet">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer data-translate="languageScript"></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" data-translate="googleVerificationMeta" />
+    <style>
+        .semester-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .semester-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .remove-semester-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #addSemesterBtn {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        /* Ensure FAQ items are open by default */
+        .faq-item {
+            margin-bottom: 15px;
+            display: block !important;
+        }
+    </style>
+</head>
+<body data-lang="ru" data-translate="bodyMain">
+    {% include 'header.html' %}
+    <main class="main-content" data-translate="mainContent" style="position: relative; top: -55px;">
+        <section class="page-content" data-translate="pageContentSection">
+            <h1 data-translate="gpaCalculatorTitle">Калькулятор среднего балла средней школы</h1>
+            <p data-translate="introParagraph">Используйте этот калькулятор среднего балла для средней школы, чтобы рассчитать свой средний балл в средней школе.</p>
+            <br>
+            <div class="input-section centered-section" data-translate="inputSection">
+                <h2 data-translate="calculateGpaHeading">Калькулятор среднего балла средней школы</h2>
+                <div id="semestersContainer">
+                    <!-- Semester 1 (Default) -->
+                    <div class="semester-container">
+                        <h3>Семестр 1</h3>
+                        <table class="course-input-table" data-translate="courseTable">
+                            <thead data-translate="tableHead">
+                                <tr>
+                                    <th data-translate="tableHeaderCourse">Курс</th>
+                                    <th data-translate="tableHeaderGrade">Оценка</th>
+                                    <th data-translate="tableHeaderCredits">Зачётные часы</th>
+                                    <th>Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="courseName" placeholder="Добавить курс" data-translate="courseInput1"></td>
+                                    <td>
+                                        <select name="grade" data-translate="gradeSelect1">
+                                            <option value="">--</option>
+                                            <option value="4.0">A</option>
+                                            <option value="3.7">A–</option>
+                                            <option value="3.3">B+</option>
+                                            <option value="3.0">B</option>
+                                            <option value="2.7">B–</option>
+                                            <option value="2.3">C+</option>
+                                            <option value="2.0">C</option>
+                                            <option value="1.7">C–</option>
+                                            <option value="1.3">D+</option>
+                                            <option value="1.0">D</option>
+                                            <option value="0.0">F</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3" data-translate="creditsInput1"></td>
+                                    <td><button class="delete-btn" data-translate="deleteButton"><i class="fa-solid fa-xmark" data-translate="deleteIcon"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-course-btn secondary-btn" data-translate="addMoreCoursesButton">Добавить ещё один предмет</button>
+                    </div>
+                </div>
+                <!-- Add Another Semester Button -->
+                <button id="addSemesterBtn" class="secondary-btn" data-translate="addSemesterButton">Добавить ещё один семестр</button>
+                <div class="button-group" data-translate="buttonGroupAddCourse">
+                    <button id="calculateGpaBtn" class="primary-btn" data-translate="calculateGpaButton">Рассчитать средний балл</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection" data-translate="gpaSummarySection">
+                <h2 data-translate="gpaSummaryHeading">Итоговый средний балл</h2>
+                <div class="gpa-box" data-translate="gpaBox">
+                    <span data-translate="currentGpaLabel">Текущий средний балл</span>
+                    <span id="currentGpaDisplay" data-translate="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group" data-translate="buttonGroupReset">
+                    <a href="/" data-translate="resetLink"><button class="secondary-btn" data-translate="resetCoursesButton">Сбросить все курсы</button></a>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Этот <a href="https://gpacalculatorcollege.com/gpa-calculator">калькулятор среднего балла</a> для средней школы помогает учащимся рассчитать средний балл на основе оценок по предметам и зачётных часов. Этот калькулятор среднего балла для средней школы поможет учащимся отслеживать свою успеваемость и планировать поступление в старшую школу или колледж, а также получение стипендии.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Как использовать?</h2>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon" data-translate="step1Icon">
+                            <i class="fa-solid fa-1" data-translate="step1IconFa"></i>
+                        </div>
+                        <h3 data-translate="step1Title">Шаг 1: Введите название курса</h3>
+                        <p data-translate="step1Description">Сначала введите название курса.</p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon" data-translate="step2Icon">
+                            <i class="fa-solid fa-2" data-translate="step2IconFa"></i>
+                        </div>
+                        <h3 data-translate="step2Title">Шаг 2: Выберите оценки</h3>
+                        <p data-translate="step2Description">Выберите оценку, полученную по каждому предмету (например, A, B, C и т. д.).</p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon" data-translate="step3Icon">
+                            <i class="fa-solid fa-3" data-translate="step3IconFa"></i>
+                        </div>
+                        <h3 data-translate="step3Title">Шаг 3: Введите количество зачётных часов</h3>
+                        <p data-translate="step3Description">Введите количество зачётных часов для каждого предмета (обычно от 1 до 4 часов).</p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon" data-translate="step4Icon">
+                            <i class="fa-solid fa-4" data-translate="step4IconFa"></i>
+                        </div>
+                        <h3 data-translate="step4Title">Шаг 4: Нажмите <b>Рассчитать средний балл</b></h3>
+                        <p data-translate="step4Description">После ввода всех данных нажмите кнопку «Рассчитать средний балл для средней школы», чтобы получить результаты.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section" data-translate="whyChooseUsSection">
+                <h2 data-translate="whyChooseUsHeading">Почему использовать наш калькулятор среднего балла средней школы?</h2>
+                <div class="feature-row left-text-right-image" data-translate="featureRow1">
+                    <div class="feature-text" data-translate="feature1Text">
+                        <h3 data-translate="feature1Title">Точность</h3>
+                        <p data-translate="feature1Description">Наш инструмент даёт точные результаты, используя ваши оценки и зачётные часы, чтобы вы могли видеть, как у вас обстоят дела с учёбой.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow2">
+                    <div class="feature-text" data-translate="feature2Text">
+                        <h3 data-translate="feature2Title">Удобный интерфейс</h3>
+                        <p data-translate="feature2Description">Мы разработали интерфейс этого инструмента так, чтобы им было легко пользоваться. Для использования этого инструмента не требуется технических навыков.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow3">
+                    <div class="feature-text" data-translate="feature3Text">
+                        <h3 data-translate="feature3Title">Отслеживание академических целей</h3>
+                        <p data-translate="feature3Description">Этот инструмент помогает вам оставаться сосредоточенным на ваших академических целях. Регулярно проверяя свой средний балл, вы можете видеть, как у вас обстоят дела, выявлять области, требующие улучшения, и принимать обоснованные решения для повышения ваших оценок.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image" data-translate="featureRow4">
+                    <div class="feature-text" data-translate="feature4Text">
+                        <h3 data-translate="feature4Title">Мгновенные и быстрые результаты</h3>
+                        <p data-translate="feature4Description">Получите рассчитанный средний балл мгновенно! Просто введите свои оценки и зачётные часы — без ожидания, без загрузки, сразу надёжные результаты.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image" data-translate="featureRow5">
+                    <div class="feature-text" data-translate="feature5Text">
+                        <h3 data-translate="feature5Title">Бесплатно</h3>
+                        <p data-translate="feature5Description">Gpacalculatorcollege.com на 100% бесплатен — без регистрации, без скрытых платежей и без ограничений. Просто введите свои оценки и зачётные часы, чтобы мгновенно получить средний балл.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section" data-translate="contentSection1">
+                <h2 data-translate="whatIsGpaHeading">Как работает калькулятор среднего балла средней школы?</h2>
+                <p data-translate="whatIsGpaParagraph">
+                    Этот калькулятор среднего балла для средней школы использует введённые вами оценки и зачётные часы для расчёта вашего среднего балла по заданной формуле.
+                </p>
+                <h2 data-translate="formulaHeading">Формула</h2>
+                <p data-translate="formulaParagraph">
+                    <b data-translate="gpaFormula">
+                        Средний балл средней школы =
+                    </b>
+                    (оценка1 × зачёт1 + оценка2 × зачёт2 + … + оценкаN × зачётN) ÷ (зачёт1 + зачёт2 + … + зачётN)
+                </p>
+                <h2 data-translate="scaleHeading">Шкала 4.0, используемая калькулятором</h2>
+                <table class="grade-table" data-translate="gradeTable">
+                    <thead data-translate="gradeTableHead">
+                        <tr>
+                            <th data-translate="letterGradeHeader">Буквенная оценка</th>
+                            <th data-translate="gpaValueHeader">Значение среднего балла</th>
+                        </tr>
+                    </thead>
+                    <tbody data-translate="gradeTableBody">
+                        <tr><td data-translate="gradeAPlus">A+</td><td data-translate="gradeAPlusValue">4.0</td></tr>
+                        <tr><td data-translate="gradeA">A</td><td data-translate="gradeAValue">4.0</td></tr>
+                        <tr><td data-translate="gradeAMinus">A–</td><td data-translate="gradeAMinusValue">3.7</td></tr>
+                        <tr><td data-translate="gradeBPlus">B+</td><td data-translate="gradeBPlusValue">3.3</td></tr>
+                        <tr><td data-translate="gradeB">B</td><td data-translate="gradeBValue">3.0</td></tr>
+                        <tr><td data-translate="gradeBMinus">B–</td><td data-translate="gradeBMinusValue">2.7</td></tr>
+                        <tr><td data-translate="gradeCPlus">C+</td><td data-translate="gradeCPlusValue">2.3</td></tr>
+                        <tr><td data-translate="gradeC">C</td><td data-translate="gradeCValue">2.0</td></tr>
+                        <tr><td data-translate="gradeCMinus">C–</td><td data-translate="gradeCMinusValue">1.7</td></tr>
+                        <tr><td data-translate="gradeDPlus">D+</td><td data-translate="gradeDPlusValue">1.3</td></tr>
+                        <tr><td data-translate="gradeD">D</td><td data-translate="gradeDValue">1.0</td></tr>
+                        <tr><td data-translate="gradeDMinus">D–</td><td data-translate="gradeDMinusValue">0.7</td></tr>
+                        <tr><td data-translate="gradeF">F</td><td data-translate="gradeFValue">0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2 data-translate="differenceHeading">Разница между средним баллом средней школы и средним баллом старшей школы</h2>
+                <h3 data-translate="middleSchoolHeading">Средний балл средней школы</h3>
+                <ul data-translate="middleSchoolPoints">
+                    <li><b>Назначение:</b> В первую очередь помогает учащимся, родителям и учителям отслеживать академический прогресс.</li>
+                    <li><b>Влияние:</b> Колледжи редко учитывают этот показатель, но он может повлиять на зачисление в старшие классы или классы для отличников после поступления в старшую школу.</li>
+                    <li><b>Шкала оценок:</b> Обычно стандартная шкала 4.0 (A = 4, B = 3 и т. д.), без взвешенных оценок.</li>
+                </ul>
+                <h3 data-translate="highSchoolHeading">Средний балл старшей школы</h3>
+                <ul data-translate="highSchoolPoints">
+                    <li><b>Назначение:</b> Решающий фактор при поступлении в колледж, получении стипендий, а иногда и при трудоустройстве.</li>
+                    <li><b>Влияние:</b> Непосредственно влияет на поступление в колледж и возможности карьерного роста.</li>
+                    <li><b>Шкала оценок:</b> Может включать взвешенный средний балл (выше 4.0) для курсов с отличием, курсов AP или IB.</li>
+                </ul>
+                <p data-translate="calculatorNote">
+                    Рассчитайте свой средний балл в старшей школе с помощью нашего <a href="http://gpacalculatorcollege.com/ru/highschool-gpa">калькулятора среднего балла старшей школы</a>.
+                </p>
+            </div>
+            <div class="content-section centered-section" data-translate="contentSection2">
+                <h2 data-translate="whyGpaMatterHeading">Почему средний балл важен в средней школе?</h2>
+                <p data-translate="whyGpaMatterParagraph">
+                    Несмотря на то, что колледжи обычно не смотрят на средний балл аттестата средней школы, он всё равно играет важную роль:
+                </p>
+                <ul data-translate="whyGpaMatterList">
+                    <li><b>Формирование полезных привычек с раннего возраста –</b> Понимание того, как работает средний балл, помогает сохранять мотивацию и организованность.</li>
+                    <li><b>Зачисление в старшую школу –</b> Многие школы используют ваш средний балл, чтобы определить, подходите ли вы для поступления в классы с отличием или в классы повышенной сложности.</li>
+                    <li><b>Самостоятельное отслеживание –</b> Даёт учащимся и родителям чёткое представление об академических сильных сторонах и областях, требующих улучшения.</li>
+                </ul>
+                <h2 data-translate="howToCalculateHeading">Как рассчитать средний балл средней школы?</h2>
+                <p data-translate="howToCalculateParagraph">
+                    Рассчитать средний балл (GPA) для средней школы легко, если вы понимаете, как это сделать. Вот как это можно сделать вручную:
+                </p>
+                <h3 data-translate="step1Heading">1. Оценки в баллы</h3>
+                <p data-translate="step1Paragraph">
+                    В большинстве средних школ используется шкала среднего балла 4,0:
+                    <br><br>
+                    A = 4.0<br>
+                    B = 3.0<br>
+                    C = 2.0<br>
+                    D = 1.0<br>
+                    F = 0.0
+                    <br><br>
+                    <i>Пример:</i> Если вы получили оценку «отлично» по математике, это соответствует 4,0 баллам.
+                </p>
+                <h3 data-translate="step2Heading">2. Сложите все баллы</h3>
+                <p data-translate="step2Paragraph">
+                    Запишите баллы по каждому предмету, а затем сложите их:
+                    <br><br>
+                    Математика = A = 4.0<br>
+                    Английский = B = 3.0<br>
+                    Наука = A = 4.0<br>
+                    История = C = 2.0<br>
+                    <b>Всего = 13,0 баллов</b>
+                </p>
+                <h3 data-translate="step3Heading">3. Разделить на количество классов</h3>
+                <p data-translate="step3Paragraph">
+                    Теперь разделите общую оценку на количество занятий:
+                    <br><br>
+                    Средний балл = Общее количество баллов ÷ Количество занятий
+                    <br><br>
+                    В нашем примере:<br>
+                    13.0 ÷ 4 = <b>3.25</b><br>
+                    Итак, средний балл студента = <b>3,25</b>
+                </p>
+                <p data-translate="calculatorNote">
+                    Вместо того чтобы выполнять все эти математические вычисления, вы можете воспользоваться <a href="https://gpacalculatorcollege.com/ru/gpa-calculator">онлайн-калькулятором среднего балла средней школы</a>, чтобы получить результаты.
+                    <br><br>
+                    Связанный: <a href="https://gpacalculatorcollege.com/ru" data-translate="relatedCollegeCalculator">Калькулятор среднего балла колледжа</a>
+                </p>
+            </div>
+            <div class="faq-section centered-section" data-translate="faqSection">
+                <h2 data-translate="faqHeading">Часто задаваемые вопросы</h2>
+                <div class="faq-item" data-translate="faqItem1">
+                    <h3 data-translate="faqQuestion1">Какой средний балл считается хорошим для средней школы?</h3>
+                    <p data-translate="faqAnswer1">
+                        Хорошим средним баллом в средней школе обычно считается средний балл от 3,0 до 4,0 по стандартной 4-балльной шкале. Это означает, что по предметам вы будете получать преимущественно оценки «хорошо» и «отлично».
+                        <br><br>
+                        <b>4.0 GPA</b> → Отличные результаты.<br>
+                        <b>3.5 GPA</b> → A и B (очень хорошо).<br>
+                        <b>3.0 GPA</b> → В основном оценки B (хорошо и выше среднего).
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem2">
+                    <h3 data-translate="faqQuestion2">Имеет ли значение средний балл средней школы для поступления в колледж?</h3>
+                    <p data-translate="faqAnswer2">
+                        Нет, средний балл средней школы не имеет прямого значения для поступления в колледж. Колледжи обычно учитывают средний балл старшей школы, результаты стандартизированных тестов, внеклассные занятия и эссе.
+                    </p>
+                </div>
+                <div class="faq-item" data-translate="faqItem3">
+                    <h3 data-translate="faqQuestion3">Может ли средний балл средней школы повлиять на поступление в старшую школу?</h3>
+                    <p data-translate="faqAnswer3">
+                        Да, средний балл аттестата в средней школе может повлиять на ваше зачисление в старшие классы. Хотя колледжи не учитывают оценки в средней школе, многие школы используют их при принятии решения о том, с какого уровня предметов вы начнёте.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const semestersContainer = document.getElementById('semestersContainer');
+            const addSemesterBtn = document.getElementById('addSemesterBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            // Add a new semester
+            addSemesterBtn.addEventListener('click', () => {
+                const semesterCount = semestersContainer.querySelectorAll('.semester-container').length + 1;
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-container';
+                newSemester.innerHTML = `
+                    <button class="remove-semester-btn"><i class="fa-solid fa-xmark"></i></button>
+                    <h3>Семестр ${semesterCount}</h3>
+                    <table class="course-input-table">
+                        <thead>
+                            <tr>
+                                <th>Курс</th>
+                                <th>Оценка</th>
+                                <th>Зачётные часы</th>
+                                <th>Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                                <td>
+                                    <select name="grade">
+                                        <option value="">--</option>
+                                        <option value="4.0">A</option>
+                                        <option value="3.7">A–</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B–</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C–</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3"></td>
+                                <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="add-course-btn secondary-btn">Добавить ещё один предмет</button>
+                `;
+                semestersContainer.appendChild(newSemester);
+                // Add event listener for the "Remove Semester" button
+                const removeSemesterBtn = newSemester.querySelector('.remove-semester-btn');
+                removeSemesterBtn.addEventListener('click', () => {
+                    newSemester.remove();
+                });
+                // Add event listener for the "Add Another Class" button in the new semester
+                const addCourseBtn = newSemester.querySelector('.add-course-btn');
+                addCourseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tableBody = newSemester.querySelector('tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                        <td>
+                            <select name="grade">
+                                <option value="">--</option>
+                                <option value="4.0">A</option>
+                                <option value="3.7">A–</option>
+                                <option value="3.3">B+</option>
+                                <option value="3.0">B</option>
+                                <option value="2.7">B–</option>
+                                <option value="2.3">C+</option>
+                                <option value="2.0">C</option>
+                                <option value="1.7">C–</option>
+                                <option value="1.3">D+</option>
+                                <option value="1.0">D</option>
+                                <option value="0.0">F</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3"></td>
+                        <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+            // Add event listener for the default "Add Another Class" button
+            document.querySelector('.add-course-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const semesterContainer = e.target.closest('.semester-container');
+                const tableBody = semesterContainer.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="Добавить курс"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="">--</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A–</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B–</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C–</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="например, 3"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+            // Delete a row
+            semestersContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+            // Calculate GPA
+            calculateGpaBtn.addEventListener('click', () => {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                document.querySelectorAll('.semester-container').forEach(semester => {
+                    const rows = semester.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const credits = parseFloat(row.querySelector('input[name="credits"]').value);
+                        const grade = parseFloat(row.querySelector('select[name="grade"]').value);
+                        if (!isNaN(credits) && !isNaN(grade)) {
+                            totalGradePoints += credits * grade;
+                            totalCredits += credits;
+                        }
+                    });
+                });
+                const gpa = totalCredits > 0 ? (totalGradePoints / totalCredits).toFixed(2) : '0.00';
+                currentGpaDisplay.textContent = gpa;
+            });
+            // Toggle functionality for FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                // set initial state to open
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer data-translate="mainScript"></script>
+</body>
+</html>

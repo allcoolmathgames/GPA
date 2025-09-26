@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Not Hesaplama | Not Hesaplamasını Kolayca Yapın</title>
+    <meta name="description"
+        content="Bu not hesaplayıcı, mevcut notunuzu hızlı, doğru ve kolay bir şekilde hesaplamanızı sağlar. Hedef notunuz için gereken final sınav puanını öğrenin.">
+    <meta name="keywords" content="Not Hesaplayıcı, Not Hesaplamaları, not hesaplama, test notu hesaplayıcı, ağırlıklı not hesaplayıcı, ağırlıksız not hesaplayıcı">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="tr">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Not Hesaplayıcı</h1>
+            <p>Mevcut notunuzu kolayca ve hızlıca hesaplamak için bu not hesaplayıcısını kullanın.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Notunuzu Hesaplayın</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Değerlendirme</th>
+                            <th>Puan (%)</th>
+                            <th>Ağırlık (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Değerlendirme Ekle"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="örn., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="örn., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Değerlendirme Ekle"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="örn., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="örn., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Değerlendirme Ekle"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="örn., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="örn., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Daha Fazla Değerlendirme Ekle</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Notu Hesapla</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Not Özeti</h2>
+                <div class="grade-box">
+                    <span>Mevcut Not</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Tüm Değerlendirmeleri Sıfırla</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Hesaplayıcı Nasıl Kullanılır?</h2>
+                <div class="how-to-use-container">
+                    <p>Bu hesaplayıcının kullanımı çok basit ve kolaydır:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Değerlendirmeler</span></h3>
+                        <p style="text-align: left;">Her değerlendirmenin adını girmeniz gerekir, örneğin: Değerlendirme 1, 2, 3, Ödev, Sınav vb.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Puan</span></h3>
+                        <p style="text-align: left;">Kurs boyunca her değerlendirme, matematik, test veya diğer sınav için puanlarınızı girin. Her giriş genellikle kazanılan yüzdeyi içerir (%10, %30, %50 vb.)</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Ağırlık</span></h3>
+                        <p style="text-align: left;">Ödevlerin genel ders notuna olan ağırlığını girin. Ağırlık, her ödevin final notunuzu ne kadar etkilediğini gösterir; yani bir final sınavı, küçük bir ödevden çok daha önemli olabilir.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Notu Hesapla</span></h3>
+                        <p style="text-align: left;">Tüm bilgileri girdikten sonra "Notu Hesapla" butonuna tıklamanız gerekir ve not sonucunuzu görebilirsiniz.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section centered-section">
+                <h2>Not Hesaplayıcımızı Kullanmanın Faydaları</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Zaman Kazandırır</h3>
+                        <p style="text-align: left;">Bu araç sayesinde not hesaplamasını kolayca yapabilirsiniz. Böylece manuel hesaplamalarla zaman kaybetmenize gerek kalmaz.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Kullanımı Kolay</h3>
+                        <p style="text-align: left;">Basit bir tasarıma sahip olan araç, puanlarınızı ve ağırlıklarınızı zahmetsizce girmenizi ve sonuçları sadece birkaç tıklamayla almanızı sağlar.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Doğruluk</h3>
+                        <p style="text-align: left;">Hesap makinesi, sonuçlarınızın doğru olmasını sağlamak için hassas formüller kullanır ve manuel hesaplamalarda oluşabilecek hata olasılığını ortadan kaldırır.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Esneklik</h3>
+                        <p style="text-align: left;">Not hesaplayıcı, farklı notlandırma sistemleri ve dersler için çalışır ve ağırlıkları, puanları ve formatları özel ders gereksinimlerinize uyacak şekilde ayarlamanıza olanak tanır.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Not Hesaplayıcı Nedir?</h2>
+                <p>
+                    Not hesaplayıcı, ödev, kısa sınav, sınav ve projelerden aldığınız puanları birleştirerek ve genellikle farklı ağırlıklarını hesaba katarak bir ders veya konudaki genel notunuzu hızlı bir şekilde belirlemenize yardımcı olur.
+                    Öğrencilerin her ödevin dersteki genel ağırlıklı notlarını nasıl etkilediğini anlamalarına yardımcı olur. Bu, bir dersin genel notunun iki temel faktöre bağlı olduğu anlamına gelir: her ödevin notu (<b>g</b>) ve taşıdığı ağırlık (<b>w</b>). Bu araçla, dönem içinde şimdiye kadar tamamladığınız ödevleri kullanarak bir dersteki mevcut ortalama puanınızı hesaplayabilirsiniz.
+                </p>
+                <h2>Ağırlıklı Not Hesaplaması: Formül ve Örnek</h2>
+                <p>
+                    <b>Formül:</b><br>
+                    Ağırlıklı Not = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)
+                    <br><br>
+                    Burada:<br>
+                    g = her görev için not (yüzde veya puan olarak)<br>
+                    w = her görevin ağırlığı (yüzde veya olası puan)
+                </p>
+                <h2>Örnek:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Değerlendirmeler</th>
+                            <th>Not (%)</th>
+                            <th>Ağırlık (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Sınavlar</td><td>80</td><td>20</td></tr>
+                        <tr><td>Vize Sınavı</td><td>75</td><td>30</td></tr>
+                        <tr><td>Final Sınavı</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Adımlar:</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Her notu ağırlığıyla çarpın:<br>Sınavlar: 80 × 20 = 1600<br>Vize Sınavı: 75 × 30 = 2250<br>Final Sınavı: 90 × 50 = 4500</li>
+                    <li>Sonuçları toplayın: 1600 + 2250 + 4500 = 8350</li>
+                    <li>Toplam ağırlığa bölün: 8350 ÷ 100 = %83,5</li>
+                </ol>
+                <p>
+                    Ağırlıklı Not: <b>%83.5</b> (<b>B notu</b>)
+                </p>
+                <h2>Deneyeceğiniz Diğer Hesaplayıcılar:</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">GNO Hesaplayıcı</a></li>
+                    <li><a href="/">Üniversite GNO Hesaplayıcı</a></li>
+                    <li><a href="/highschool-gpa">Lise GNO</a></li>
+                    <li><a href="/final-grade-calculator">Final Notu Hesaplayıcı</a></li>
+                </ul>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Notlarınızı İyileştirmek İçin İpuçları</h2>
+                <p>
+                    Not hesaplayıcısını kullanmak akademik performansınızı takip etmenize yardımcı olabilirken, notlarınızı iyileştirmek biraz strateji gerektirebilir. İşte notlarınızı iyileştirmek için bazı ipuçları.
+                </p>
+                <h3>Zamanınızı Yönetin</h3>
+                <p>
+                    Önceden bir çalışma planı yapın, sizin için zor olan konulara daha fazla odaklanın ve sınavlardan önce acele etmek zorunda kalmamak için çalışmanızı küçük parçalara bölün.
+                </p>
+                <h3>Erken Yardım Alın</h3>
+                <p>
+                    Bir konuda zorlanıyorsanız, sınavlardan hemen önce beklemek yerine öğretmeninizden, özel ders öğretmeninizden veya sınıf arkadaşlarınızdan hemen yardım isteyin.
+                </p>
+                <h3>Geçmiş Sınav Sorularını Çözün</h3>
+                <p>
+                    Formata aşina olmak, sorulan soru türlerini anlamak ve hızınızı ve doğruluğunuzu artırmak için önceki sınav soruları üzerinde çalışın.
+                </p>
+                <h3>Not Hesaplayıcı Kullanın</h3>
+                <p>
+                    Mevcut puanlarınızı takip edin ve hedefinize ulaşmak için yaklaşan ödev veya sınavlarda hangi notlara ihtiyacınız olduğunu öğrenin. Bu, çalışmalarınızı daha etkili bir şekilde planlamanıza yardımcı olur.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Basit ve ağırlıklı not hesaplayıcı arasındaki fark nedir?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Basit bir not hesaplayıcı tüm ödevleri eşit şekilde ele alırken, ağırlıklı not hesaplayıcı her ödevin final notunuzdaki önemini (ağırlığını) dikkate alır.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Çoğu okulda geçme notu nedir?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Birçok okulda geçme notu %60 veya harf notu (D)'dir, ancak bu kuruma göre değişiklik gösterebilir.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Tüm okullar aynı notlandırma sistemini mi kullanıyor?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Hayır, notlandırma sistemleri ülkeye, eyalete ve kuruma göre değişir, bu nedenle okulunuzun notlandırma politikasını her zaman kontrol edin.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Notlarımı hızlı bir şekilde iyileştirmenin en iyi yolu nedir?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>En çok puan kaybettiğiniz konulara odaklanın, öğretmenlerden veya özel ders öğretmenlerinden yardım alın ve tutarlı kalmak için bir çalışma planı kullanın.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Değerlendirme Ekle"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="örn., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="örn., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

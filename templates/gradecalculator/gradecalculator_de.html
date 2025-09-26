@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Notenrechner | Gewichteter Notenrechner</title>
+    <meta name="description"
+        content="Dieser Notenrechner ermöglicht es Ihnen, Ihre aktuelle Note schnell, genau und einfach zu berechnen. Finden Sie heraus, welche Note Sie in der Abschlussprüfung benötigen, um Ihre Zielnote zu erreichen.">
+    <meta name="keywords" content="Notenrechner, Notenberechnung, Note berechnen, Testnotenrechner, gewichteter Notenrechner, ungewichteter Notenrechner">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/de/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="de">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Notenrechner</h1>
+            <p>Nutzen Sie diesen einfachen Notenrechner, um Ihre aktuelle Note und die benötigte Note für Ihre Abschlussprüfung zu ermitteln.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Berechnen Sie Ihre Note</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Bewertung</th>
+                            <th>Note (%)</th>
+                            <th>Gewicht (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Bewertung hinzufügen"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="z. B., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="z. B., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Bewertung hinzufügen"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="z. B., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="z. B., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Bewertung hinzufügen"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="z. B., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="z. B., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Weitere Bewertungen hinzufügen</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Note berechnen</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Notenübersicht</h2>
+                <div class="grade-box">
+                    <span>Aktuelle Note</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Alle Bewertungen zurücksetzen</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Wie verwende ich unseren Rechner?</h2>
+                <div class="how-to-use-container">
+                    <p>Die Bedienung dieses Rechners ist kinderleicht:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Bewertungen</h3>
+                        <p style="text-align: left;">Geben Sie den Namen jeder Bewertung ein, z. B. Bewertung 1, 2, 3, Hausaufgabe, Prüfung usw.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Note</h3>
+                        <p style="text-align: left;">Geben Sie Ihre Punktzahl für jede Bewertung, Mathematikaufgabe, jeden Test oder jede andere Prüfung des Kurses ein. Jeder Eintrag enthält in der Regel den erreichten Prozentsatz (10 %, 30 %, 50 % usw.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Gewichtung</h3>
+                        <p style="text-align: left;">Geben Sie die Gewichtung der Aufgabe in der Gesamtnote ein. Die Gewichtung zeigt, wie stark sich jede Aufgabe auf Ihre Abschlussnote auswirkt. Eine Abschlussprüfung kann also deutlich mehr zählen als eine kleine Hausaufgabe.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Note berechnen</h3>
+                        <p style="text-align: left;">Nachdem Sie alle Informationen eingegeben haben, klicken Sie auf „Note berechnen“, um Ihr Notenergebnis zu erhalten.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Vorteile unseres Notenrechners</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Zeitersparnis</h3>
+                        <p style="text-align: left;">Mit diesem Tool können Sie Ihre Noten ganz einfach berechnen. So sparen Sie sich lästiges manuelles Rechnen.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Benutzerfreundlich</h3>
+                        <p style="text-align: left;">Das Tool ist übersichtlich gestaltet und ermöglicht Ihnen die mühelose Eingabe Ihrer Noten und Gewichtungen. Die Ergebnisse erhalten Sie mit nur wenigen Klicks.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Genauigkeit</h3>
+                        <p style="text-align: left;">Der Rechner verwendet präzise Formeln, um die Richtigkeit Ihrer Ergebnisse zu gewährleisten und Fehler, die bei manuellen Berechnungen auftreten können, auszuschließen.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Flexibilität</h3>
+                        <p style="text-align: left;">Der Rechner funktioniert mit verschiedenen Notensystemen und Fächern. Sie können Gewichtungen, Noten und Formate an Ihre individuellen Kursanforderungen anpassen.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Was ist der Notenrechner?</h2>
+                <p>
+                    Der Notenrechner hilft Ihnen, schnell Ihre Gesamtnote für einen Kurs oder ein Fach zu ermitteln. Er kombiniert Ihre Noten aus Aufgaben, Tests, Prüfungen und Projekten und berücksichtigt dabei oft deren unterschiedliche Gewichtung. So können Studierende herausfinden, wie sich jede Aufgabe auf ihre gewichtete Gesamtnote auswirkt. Die Gesamtnote eines Kurses basiert also auf zwei Schlüsselfaktoren: der Note (g) und der Gewichtung (w) jeder Aufgabe. Mit diesem Tool können Sie Ihre aktuelle Durchschnittsnote für einen Kurs anhand der bisher im Semester erledigten Aufgaben berechnen.
+                </p>
+                <h2>Berechnung der gewichteten Note: Formel und Beispiel</h2>
+                <p>
+                    <b>Formel:</b><br>
+                    <span>Gewichtete Note = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)</span>
+                    <br><br>
+                    <span>
+                        Wobei:<br>
+                        g = Note (in Prozent oder Punkten) für jede Aufgabe<br>
+                        w = Gewichtung jeder Aufgabe (mögliche Prozent- oder Punktangabe)
+                    </span>
+                </p>
+                <h2>Beispiel:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Bewertungen</th>
+                            <th>Grad (%)</th>
+                            <th>Gewicht (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Quiz</td><td>80</td><td>20</td></tr>
+                        <tr><td>Zwischenprüfung</td><td>75</td><td>30</td></tr>
+                        <tr><td>Abschlussprüfung</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Schritte:</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Multiplizieren Sie jede Klasse mit ihrem Gewicht:<br>Quizze: 80 × 20 = 1600<br>Zwischenprüfung: 75 × 30 = 2250<br>Abschlussprüfung: 90 × 50 = 4500</li>
+                    <li>Addieren Sie die Ergebnisse: 1600 + 2250 + 4500 = 8350</li>
+                    <li>Durch das Gesamtgewicht dividieren: 8350 ÷ 100 = 83,5 %</li>
+                </ol>
+                <p>
+                    Gewichtete Note: <b>83,5%</b> (<b>Note B</b>)
+                </p>
+                <h2>Andere Rechner zum Ausprobieren:</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">GPA Rechner</a></li>
+                    <li><a href="/">College GPA Rechner</a></li>
+                    <li><a href="/highschool-gpa">Notendurchschnitt der High School</a></li>
+                    <li><a href="/final-grade-calculator">Endnotenrechner</a></li>
+                </ul>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Tipps zur Notenverbesserung</h2>
+                <p>
+                    Der Notenrechner kann Ihnen zwar dabei helfen, Ihre akademischen Leistungen zu verfolgen, doch die Verbesserung Ihrer Noten erfordert möglicherweise eine gewisse Strategie. Hier sind einige Tipps zur Notenverbesserung.
+                </p>
+                <h3>Zeitmanagement</h3>
+                <p>
+                    Erstellen Sie im Voraus einen Lernplan, konzentrieren Sie sich stärker auf die Fächer, die Ihnen schwerer fallen, und teilen Sie Ihre Arbeit in kleinere Abschnitte auf, damit Sie vor Prüfungen nicht in Eile sind.
+                </p>
+                <h3>Holen Sie sich frühzeitig Hilfe</h3>
+                <p>
+                    Wenn Sie mit einem Thema Schwierigkeiten haben, bitten Sie Ihren Lehrer, Tutor oder Ihre Kommilitonen sofort um Hilfe, anstatt bis kurz vor den Prüfungen zu warten.
+                </p>
+                <h3>Üben Sie frühere Prüfungsaufgaben</h3>
+                <p>
+                    Bearbeiten Sie frühere Prüfungsfragen, um sich mit dem Format vertraut zu machen, die gestellten Fragen zu verstehen und Ihre Geschwindigkeit und Genauigkeit zu verbessern.
+                </p>
+                <h3>Nutzen Sie einen Notenrechner</h3>
+                <p>
+                    Behalten Sie Ihre aktuellen Noten im Auge und finden Sie heraus, welche Noten Sie für kommende Aufgaben oder Prüfungen benötigen, um Ihr Ziel zu erreichen. So können Sie Ihr Studium effektiver planen.
+                </p>
+            </div>
+
+            <section class="faq-section centered-section">
+                <h2>Häufig gestellte Fragen</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Was ist der Unterschied zwischen einem einfachen und einem gewichteten Notenrechner?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Ein einfacher Notenrechner behandelt alle Aufgaben gleich, während ein gewichteter Notenrechner die Wichtigkeit (Gewichtung) jeder Aufgabe in Ihrer Abschlussnote berücksichtigt.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Was ist an den meisten Schulen eine Bestehensnote?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>An vielen Schulen liegt die Bestehensnote bei 60 % oder der Note D, dies kann jedoch je nach Institution variieren.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Verwenden alle Schulen das gleiche Notensystem?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Nein. Notensysteme variieren je nach Land, Bundesland und Institution. Informieren Sie sich daher immer über die Notenrichtlinien Ihrer Schule.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Wie kann ich meine Noten am besten schnell verbessern?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Konzentrieren Sie sich auf die Fächer, in denen Sie die meisten Punkte verloren haben, holen Sie sich Hilfe von Lehrkräften oder Nachhilfelehrern und verwenden Sie einen Lernplan, um konsequent zu bleiben.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Bewertung hinzufügen"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="z. B., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="z. B., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

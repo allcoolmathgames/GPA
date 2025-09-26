@@ -1,0 +1,44 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3><span data-translate="footerAboutOurSite">Gpa Calculator College</span></h3>
+            <p data-translate="footerAboutOurSiteDesc">Your reliable tool for precise GPA calculations and academic planning.</p>
+            <p class="email-address">gpacalculatorcollege@gmail.com</p>
+        </div>
+
+        <div class="footer-column">
+            <h3><span data-translate="footerResources">Resources</span></h3>
+            <ul>
+                <li><a href="{{ url_for('lang_routes.index', lang_code=lang_code) }}" data-translate="gpaCalculatorTitle">Current Semester GPA</a></li>
+                <li><a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code=lang_code) }}" data-translate="priorSemesterCardTitle">Prior Semester GPA</a></li>
+                <li><a href="{{ url_for('lang_routes.gpa_planning', lang_code=lang_code) }}" data-translate="gpaPlanningCardTitle">GPA Planning</a></li>
+                <li><a href="{{ url_for('blog_routes.blog_index') }}" data-translate="footerBlogs">Blogs</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3><span data-translate="footerQuickLinks">Quick Links</span></h3>
+            <ul>
+                <li><a href="{{ url_for('static_pages.privacy_policy') }}" data-translate="footerPrivacyPolicy">Privacy Policy</a></li>
+                <li><a href="{{ url_for('static_pages.terms_conditions') }}" data-translate="footerTermsConditions">Terms & Conditions</a></li>
+                <li><a href="{{ url_for('static_pages.about_us') }}" data-translate="footerAboutUs">About Us</a></li>
+                <li><a href="{{ url_for('static_pages.contact') }}" data-translate="footerContact">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column social-icons">
+    <h3><span data-translate="footerKeepInTouch">Follow Us</span></h3>
+<div class="icons">
+    <a href="https://www.youtube.com/@Gpacalculatorcollege"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.instagram.com/gpacalculatorcollege/"><i class="fab fa-instagram"></i></a>
+    <a href="https://medium.com/@gpacalculatorcollege"><i class="fab fa-medium-m"></i></a>
+</div>
+
+</div>
+
+    </div>
+</footer>
+<div class="footer-bottom">
+    <span class="copyright" data-translate="copyright" id="currentYear" style="position: relative; top: -10px;">© 2025 Gpa Calculator College. All Rights Reserved.</span>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>

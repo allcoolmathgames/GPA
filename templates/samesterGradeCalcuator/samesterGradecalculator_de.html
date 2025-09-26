@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Semesternotenrechner</title>
+    <meta name="description" content="Berechnen Sie Ihre Semesternoten schnell mit Hilfe unseres Semesternotenrechners. Ermitteln Sie ganz einfach Ihre Gesamtleistung im Semester.">
+    <meta name="keywords" content="Semesternotenrechner, Notenberechnung, Viertelnotenrechner, Abschlussnotenrechner">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/de/semester-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/semester-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/semester-grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Semesternotenrechner</h1>
+            <p>Verwenden Sie diesen einfachen Semesternotenrechner, um Ihre aktuelle Note und das zu ermitteln, was Sie in Ihrer Abschlussprüfung benötigen.</p>
+            <br>
+            <section class="input-section">
+                <h2>Semesternotenrechner</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Dieser Semesternotenrechner hilft Ihnen, Ihre Semesternoten basierend auf Ihren Quartalsnoten und den prozentualen Gewichtungen der Abschlussnote zu berechnen.</p>
+                <table class="course-input-table">
+                    <thead>
+                        <tr>
+                            <th>Bewertung</th>
+                            <th>Note (%)</th>
+                            <th>Gewicht (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. Quartal</td>
+                            <td><input type="number" id="grade1" placeholder="z. B. 33"></td>
+                            <td><input type="number" id="weight1" placeholder="z. B. 33"></td>
+                        </tr>
+                        <tr>
+                            <td>2. Quartal</td>
+                            <td><input type="number" id="grade2" placeholder="z. B. 22"></td>
+                            <td><input type="number" id="weight2" placeholder="z. B. 22"></td>
+                        </tr>
+                        <tr>
+                            <td>Abschlussprüfung</td>
+                            <td><input type="number" id="grade3" placeholder="z. B. 32"></td>
+                            <td><input type="number" id="weight3" placeholder="z. B. 45"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="calculateAndScroll()">>Note berechnen</button>
+                </div>
+            </section>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Notenzusammenfassung</h2>
+                <div class="grade-box">
+                    <span>Aktuelle Note</span>
+                    <span id="currentGradeDisplay">0,00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/semester-grade-calculator"><button class="secondary-btn">Alle Bewertungen zurücksetzen</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+        <p>Dieser Semesternotenrechner, auch Viertelnotenrechner genannt, hilft Ihnen, Ihre Gesamtnote für ein Semester zu berechnen, indem er die Ergebnisse verschiedener Aufgaben, Tests, Projekte, Zwischen- und Abschlussprüfungen entsprechend ihrer prozentualen Gewichtung kombiniert.</p>
+
+    </section>
+            <section class="how-to-use-section centered-section">
+                <h2>So verwenden Sie den Semesternotenrechner</h2>
+                <div class="how-to-use-container">
+                    <p>Befolgen Sie einfach diese Schritte, um diesen Semesterprüfungsrechner zu verwenden:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3>1. Quartal</h3>
+                        <p>Geben Sie die "Note" und die "Semesternote" des 1. Quartals ein.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3>2. Quartal</h3>
+                        <p>Geben Sie die "Note" und die "Semesternote" des 2. Quartals ein.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3>Abschlussprüfung</h3>
+                        <p>Geben Sie die "Note" und die "Semesternote" der Abschlussprüfung ein.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3>Berechnen</h3>
+                        <p>Nachdem Sie alle Angaben gemacht haben, klicken Sie auf „Semesternote berechnen“. Im letzten Reiter wird Ihre Semesternote angezeigt.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Warum unseren Rechner verwenden?</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Spart Zeit und Aufwand</h3>
+                        <p>Keine manuelle Berechnung gewichteter Durchschnittswerte nötig. Geben Sie einfach Ihre Noten und Gewichtungen ein, und der Rechner erledigt den Rest in Sekundenschnelle.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Genauigkeit</h3>
+                        <p>Gewichtete Noten können knifflig sein, insbesondere wenn verschiedene Komponenten (Tests, Hausaufgaben, Prüfungen) unterschiedliche Prozentsätze haben. Unser Rechner eliminiert jedoch menschliche Fehler und sorgt für 100 % genaue Ergebnisse.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Benutzerfreundlich und kostenlos</h3>
+                        <p>Unser Semesternotenrechner ist kostenlos und einfach zu bedienen. Keine komplexen Formeln oder Tabellenkalkulationen erforderlich – geben Sie einfach Ihre Daten ein und klicken Sie auf „Berechnen“.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Wie berechnet man die Semesternote?</h2>
+                <p>
+                    Eine Semesternote kann mit der Methode des gewichteten Durchschnitts berechnet werden. Jede Aufgabe, jeder Test, jedes Quiz, jedes Projekt und jede Prüfung trägt einen bestimmten Prozentsatz (Gewicht) zur Endnote bei. Verwenden Sie außerdem den Abschlussnotenrechner, um zu wissen, welche Noten Sie für Ihre Abschlussprüfungen benötigen.
+                </p>
+                <h3>Kennen Sie die Güteklassenkomponenten und Gewichte</h3>
+                <p>
+                    Ihr Professor oder Ihr Kursplan geben Ihnen normalerweise eine Aufschlüsselung. Zum Beispiel:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Hausaufgaben: 20 %</li>
+                    <li>Tests: 15 %</li>
+                    <li>Zwischenprüfung: 25 %</li>
+                    <li>Abschlussprüfung: 30 %</li>
+                    <li>Mitarbeit im Unterricht: 10 %</li>
+                </ul>
+                <h3>Prozentsätze in Dezimalzahlen umwandeln</h3>
+                <ul style="padding-left: 30px;">
+                    <li>20 % → 0,20</li>
+                    <li>15 % → 0,15</li>
+                    <li>25 % → 0,25</li>
+                    <li>30 % → 0,30</li>
+                    <li>10 % → 0,10</li>
+                </ul>
+                <h3>Multiplizieren Sie jede Note mit ihrem Gewicht</h3>
+                <p>
+                    Angenommen, ein Schüler hat die folgenden Noten:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Hausaufgaben = 85 %</li>
+                    <li>Tests = 90 %</li>
+                    <li>Zwischenprüfung = 80 %</li>
+                    <li>Abschlussprüfung = 70 %</li>
+                    <li>Mitarbeit = 100 %</li>
+                </ul>
+                <p>
+                    Multiplizieren Sie nun jedes mit seinem Gewicht:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>Hausaufgaben: 85 × 0,20 = 17,0</li>
+                    <li>Tests: 90 × 0,15 = 13,5</li>
+                    <li>Zwischenprüfung: 80 × 0,25 = 20,0</li>
+                    <li>Abschlussprüfung: 70 × 0,30 = 21,0</li>
+                    <li>Mitarbeit: 100 × 0,10 = 10,0</li>
+                </ul>
+                <h3>Alle gewichteten Punktzahlen zusammenzählen</h3>
+                <p>
+                    17,0 + 13,5 + 20,0 + 21,0 + 10,0 = 81,5 %
+                </p>
+                <h3>In Buchstabennote umwandeln (optional)</h3>
+                <p>
+                    Viele Schulen verwenden eine Standardbuchstabenskala:
+                </p>
+                <ul style="padding-left: 30px;">
+                    <li>A = 90–100 %</li>
+                    <li>B = 80–89 %</li>
+                    <li>C = 70–79 %</li>
+                    <li>D = 60–69 %</li>
+                    <li>F = Unter 60 %</li>
+                </ul>
+                <p>
+                    Also, 81,5 % = B
+                </p>
+                <h3>Formel für die Semesternote</h3>
+                <p>
+                    Abschlussnote des Semesters = (Note 1 × Gewichtung 1) + (Note 2 × Gewichtung 2) + …
+                </p>
+                <p>
+                    Diese manuellen Berechnungen können zu viel Zeit in Anspruch nehmen. Nutzen Sie einfach unseren Semesterrechner, um schnell die Semesternote zu berechnen.
+                </p>
+            </div>
+
+            <section class="content-section centered-section">
+                <h2>Was ist eine Semesternote?</h2>
+                <p style="text-align: left;">Die Semesternote ist die Abschlussnote, die ein Student am Ende eines Semesters (ein halbes akademisches Jahr, in der Regel 15–18 Wochen) erhält. Sie spiegelt die Leistung eines Studenten in allen Kursen wider, darunter:
+                <ul style="padding-left: 30px; position: relative; top: -20px;">
+                    <li>Hausaufgaben</li>
+                    <li>Tests</li>
+                    <li>Prüfungen (Zwischenprüfung und Abschlussprüfung)</li>
+                    <li>Projekte</li>
+                    <li>Mitarbeit im Unterricht</li>
+                    <li>Anwesenheit (manchmal)</li>
+                </ul>
+                </p>
+                <h3>Formel für die Semesternote (gewichtete Durchschnittsformel)</h3>
+                <div class="formula">
+                    Semesternote = (Note1 × Gewichtung1) + (Note2 × Gewichtung2) + ... + (NoteN × GewichtungN)
+                </div>
+                <p>Wobei die Gewichte in Dezimalform angegeben sind (z. B. 20 % = 0,20).</p>
+                <p><b>Beispiel:</b><br>85 (0,20) + 90 (0,15) + 80 (0,25) + 70 (0,30) + 100 (0,10) = 81,5</p>
+                <p>Dieser Semesternotenrechner, auch Viertelnotenrechner genannt, hilft Ihnen, Ihre Gesamtnote für ein Semester zu berechnen, indem er die Ergebnisse verschiedener Aufgaben, Tests, Projekte, Zwischen- und Abschlussprüfungen entsprechend ihrer prozentualen Gewichtung kombiniert.</p>
+            </section>
+
+            <section class="faq-section centered-section">
+                <h2>Häufig gestellte Fragen</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Wer kann von einem Semesternotenrechner profitieren?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Schüler</b> — um Fortschritte zu verfolgen und Ziele zu setzen.<br>
+                                <b>Lehrer</b> — um Schülern die Notenaufschlüsselung zu erklären.<br>
+                                <b>Eltern</b> — um die Leistung ihres Kindes besser zu verstehen.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Kann dieser Semesterrechner für Master- und Postgraduiertenstudien verwendet werden?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Ja. Sie können diesen Semestertestrechner für alle Stufen verwenden, einschließlich Master- und Postgraduiertenstudien, solange Sie die Noten und deren Gewichtung korrekt eingeben.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bedeutet eine höhere Semesternote immer einen höheren Notendurchschnitt?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Ja. Höhere Semesternoten führen zu höheren Notenpunkten, was Ihren Semester-GPA und letztendlich Ihren Gesamt-GPA erhöht. Sie können Ihren Gesamt-Notendurchschnitt (GPA) mithilfe eines GPA-Rechners überprüfen.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Unterscheidet sich der Semester-GPA vom kumulativen GPA?</h3>
+                            
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <b>Semester-GPA:</b> Durchschnitt für ein Semester.<br>
+                                <b>Kumulativer GPA:</b> Durchschnitt aller Semester-GPAs Ihres Studiengangs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+    <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('h3');
+        const paragraph = item.querySelector('p');
+        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+        header.addEventListener('click', () => {
+            if (paragraph.style.maxHeight === '0px') {
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+            } else {
+                paragraph.style.maxHeight = '0';
+            }
+        });
+    });
+
+    let autoCalculateEnabled = true;
+    let userDeletedFinalWeight = false; // new flag
+
+    // Add event listeners to all input fields
+    document.getElementById('grade1').addEventListener('input', calculateGrade);
+    document.getElementById('weight1').addEventListener('input', calculateGrade);
+    document.getElementById('grade2').addEventListener('input', calculateGrade);
+    document.getElementById('weight2').addEventListener('input', calculateGrade);
+    document.getElementById('grade3').addEventListener('input', calculateGrade);
+
+    const weight3Input = document.getElementById('weight3');
+
+    // Track user actions on weight3
+    weight3Input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            // Agar user manually delete kare
+            userDeletedFinalWeight = true;
+            autoCalculateEnabled = false;
+        } else {
+            // Agar user manually kuch likhe
+            userDeletedFinalWeight = false;
+            autoCalculateEnabled = false;
+        }
+        calculateGrade();
+    });
+
+    function calculateGrade() {
+        let grade1 = parseFloat(document.getElementById('grade1').value) || 0;
+        let weight1 = parseFloat(document.getElementById('weight1').value) || 0;
+        let grade2 = parseFloat(document.getElementById('grade2').value) || 0;
+        let weight2 = parseFloat(document.getElementById('weight2').value) || 0;
+        let grade3 = parseFloat(document.getElementById('grade3').value) || 0;
+        let weight3 = parseFloat(weight3Input.value) || 0;
+        
+
+        // Auto-calc sirf tab chale jab user ne delete nahi kiya ho
+        if (autoCalculateEnabled && !userDeletedFinalWeight) {
+            let totalWeights = weight1 + weight2;
+            weight3 = 100 - totalWeights;
+            weight3Input.value = weight3.toFixed(2);
+        }
+
+        // Check for invalid inputs
+        if (isNaN(grade1) || isNaN(weight1) || isNaN(grade2) || isNaN(weight2) || isNaN(grade3) || isNaN(weight3)) {
+            document.getElementById('currentGradeDisplay').textContent = "Error: Invalid input";
+            return;
+        }
+
+        let weightedGrade1 = (grade1 * weight1) / 100;
+        let weightedGrade2 = (grade2 * weight2) / 100;
+        let weightedGrade3 = (grade3 * weight3) / 100;
+        let finalGrade = weightedGrade1 + weightedGrade2 + weightedGrade3;
+
+        document.getElementById('currentGradeDisplay').textContent = `${finalGrade.toFixed(2)}%`;
+        
+    }
+
+    // Initial auto-fill only if user didn’t delete
+    window.onload = function () {
+        if (!userDeletedFinalWeight) calculateGrade();
+    };
+
+    function calculateAndScroll() {
+    calculateGrade(); // Pehle calculate function ko call karega
+    
+    // Phir smoothly scroll karega result section tak
+    const resultSection = document.getElementById('gradeSummarySection');
+    if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

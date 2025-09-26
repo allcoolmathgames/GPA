@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Калькулятор итоговой оценки</title>
+    <meta name="description"
+        content="Этот калькулятор итоговой оценки показывает, какой балл вам нужен на финальном экзамене для достижения желаемой оценки по курсу, или вашу общую оценку на основе балла за итоговый экзамен."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+<body data-lang="ru" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Калькулятор итоговой оценки</h1>
+
+            <p style="text-align: center;">Воспользуйтесь этим калькулятором, чтобы узнать минимальный балл, который вам нужен на итоговом экзамене для получения желаемой оценки по курсу.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Введите ваши оценки и вес</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Желаемая оценка</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="напр., 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Из</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Текущая оценка</label>
+                            <input type="number" id="current_grade" min="0" placeholder="напр., 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Из</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Вес итогового экзамена</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="напр., 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Из</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Рассчитать итоговую оценку</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Требуемая итоговая оценка</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">Вам нужно набрать как минимум:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">Сбросить</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+    <h2 data-translate="howToUseHeading">Как использовать Калькулятор итоговой оценки</h2>
+    <p>Использовать калькулятор итоговых оценок очень просто. Просто выполните следующие шаги для расчёта на сайте <a href="/">gpacalculatorcollege.com</a>:</p>
+    <div class="how-to-use-container" data-translate="howToUseContainer">
+        <div class="step" data-translate="step1">
+            <div class="step-icon">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <h3><span data-translate="step1Title">Желаемая оценка</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step1Description">Введите желаемую оценку, которую вы хотите получить к концу семестра из 100 возможных или других чисел.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step2">
+            <div class="step-icon">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <h3><span data-translate="step2Title">Текущая оценка</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step2Description">Введите вашу текущую оценку, полученную на данный момент за курс на основе всех выполненных заданий, контрольных работ, проектов и экзаменов.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step3">
+            <div class="step-icon">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <h3><span data-translate="step3Title">Вес итоговой оценки</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step3Description">Введите вес итоговой оценки из 100, то есть процент от общей оценки по курсу, который соответствует вашему итоговому экзамену, проекту или итоговой аттестации.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step4">
+            <div class="step-icon">
+                <i class="fa-solid fa-4"></i>
+            </div>
+            <h3><span data-translate="step4Title">Нажмите «Рассчитать»</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step4Description">После ввода всей информации нажмите кнопку «Рассчитать итоговую оценку».</span>
+            </p>
+        </div>
+    </div>
+</section>
+            
+            <section class="content-section centered-section">
+    <h2 data-translate="whyUseHeading">Зачем использовать наш Калькулятор итоговой оценки?</h2>
+    <p style="text-align: left;" data-translate="whyUseDescription">
+        Наш калькулятор имеет простой интерфейс, которым может пользоваться любой, без специальных математических навыков. Просто введите желаемую итоговую оценку, текущую оценку и ваш вес оставшейся оценки за работу, а затем нажмите кнопку «Рассчитать», чтобы мгновенно увидеть результаты.
+    </p>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature1Title">Простота использования</h3>
+            <p style="text-align: left;" data-translate="feature1Description">Наш калькулятор имеет простой интерфейс, которым может пользоваться любой, без специальных математических навыков. Просто введите желаемую итоговую оценку, текущую оценку и ваш вес оставшейся оценки за работу, а затем нажмите кнопку «Рассчитать», чтобы мгновенно увидеть результаты.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature2Title">Точные расчеты</h3>
+            <p style="text-align: left;" data-translate="feature2Description">Наш калькулятор использует точные формулы, чтобы гарантировать получение надежных результатов каждый раз. Учитывая точный вес выполненной и оставшейся курсовой работы, он устраняет догадки и дает вам точную картину того, что вам нужно для достижения цели.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature3Title">Планируйте свою учебу</h3>
+            <p style="text-align: left;" data-translate="feature3Description">Это поможет вам сосредоточить свое время и энергию на самом важном. Зная точный необходимый балл за предстоящую работу, вы можете составить грамотный учебный план и не тратить время на малоэффективные задачи.</p>
+        </div>
+    </div>
+</section>
+
+<div class="content-section centered-section">
+    <h2 data-translate="index_whatIsFinalGradeCalcHeading">Что такое Калькулятор итоговой оценки?</h2>
+    <p data-translate="index_whatIsFinalGradeCalcParagraph">
+        Этот Калькулятор итоговой оценки помогает студентам определить необходимый балл за оставшиеся задания или экзамены для достижения желаемой общей оценки за курс. Он быстро рассчитывает требуемые баллы на основе текущей успеваемости и веса оставшейся работы.
+    </p>
+
+    <h2 data-translate="index_finalGradeFormulaHeading">Расчет итоговой оценки: формула и пример</h2>
+    <p data-translate="index_finalGradeFormulaText">
+        <b data-translate="index_formulaLabel">Формула:</b><br>
+        <span data-translate="index_formulaText">Итоговая оценка = (Текущая оценка × Вес выполненной работы) + (Желаемый балл за итоговый экзамен × Вес оставшейся работы)</span>
+        <br><br>
+        <span data-translate="index_formulaVariables">
+            Где:<br>
+            Текущая оценка = Ваш средний балл за курс<br>
+            Вес выполненной работы = Процент от оценки за курс, который ещё предстоит сдать (например, итоговый экзамен)<br>
+            Вес оставшейся работы = Процент от оценки за курс, который ещё предстоит сдать (например, итоговый экзамен)
+        </span>
+    </p>
+
+    <h2 data-translate="index_exampleHeading">Пример:</h2>
+    <p>
+        <b data-translate="index_exampleCurrentGrade">Текущая оценка:</b> 85%<br>
+        <b data-translate="index_exampleCompletedWeight">Вес выполненной работы:</b> 70%<br>
+        <b data-translate="index_exampleFinalExamWeight">Вес итогового экзамена:</b> 30%<br>
+        <b data-translate="index_exampleDesiredGrade">Желаемая итоговая оценка:</b> 90%
+    </p>
+
+    <h3 data-translate="index_formulaStepsHeading">Формула:</h3>
+    <p>
+        <span data-translate="index_formulaStepsFormula">90 = (85 x 0,70) + (Требуемый балл экзамена x 0.30)</span>
+    </p>
+
+    <h3 data-translate="index_stepByStepHeading">Пошагово:</h3>
+    <ol data-translate="index_stepsList" style="padding-left: 30px;">
+        <li data-translate="index_step1">85 x 0,70 = 59,5</li>
+        <li data-translate="index_step2">90 - 59,5 = 30,5</li>
+        <li data-translate="index_step3">30,5 ÷ 0,30 = 101,67</li>
+    </ol>
+
+    <p data-translate="index_resultText">
+        Результат: чтобы получить итоговую оценку 90%, вам понадобится набрать около <b>102%</b> на итоговом экзамене, а это означает, что математически это невозможно, если только у вас нет дополнительных баллов.
+    </p>
+</div>
+
+<div class="content-section centered-section">
+    <h2 data-translate="useCasesHeading">Варианты использования Калькулятор итоговой оценки</h2>
+    <p data-translate="useCasesIntro">
+        Вот несколько полезных примеров использования калькулятора оценок:
+    </p>
+
+    <h3 data-translate="useCase1Heading">Планирование учебной работы</h3>
+    <p data-translate="useCase1Text">
+        Этот калькулятор поможет вам точно рассчитать, сколько баллов вам нужно набрать за оставшуюся работу, чтобы вы могли соответствующим образом спланировать своё время на учёбу.
+    </p>
+
+    <h3 data-translate="useCase2Heading">Постановка реалистичных целей</h3>
+    <p data-translate="useCase2Text">
+        Калькулятор итоговой оценки поможет вам поставить достижимые академические цели, показав, насколько реалистично получить желаемую оценку.
+    </p>
+
+    <h3 data-translate="useCase3Heading">Стратегическое планирование</h3>
+    <p data-translate="useCase3Text">
+        Вы можете составить чёткий план обучения. Точно зная, насколько каждое оставшееся задание влияет на вашу общую оценку, вы сможете решить, на чём сосредоточить свою энергию для достижения наилучших результатов.
+    </p>
+
+    <h3 data-translate="useCase4Heading">Мотивация</h3>
+    <p data-translate="useCase4Text">
+        Он может повысить вашу мотивацию, превращая расплывчатые академические цели в чёткие и достижимые. Точное представление о необходимом балле за оставшуюся работу даёт вам чёткую цель, к которой нужно стремиться, делая учёбу более осмысленной.
+    </p>
+</div>
+
+            <section class="faq-section centered-section">
+    <h2 data-translate="faqHeading">Часто задаваемые вопросы</h2>
+    <div class="faq-container">
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq1Question">Какой балл мне нужен на итоговом экзамене?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq1Answer">Это самый часто задаваемый вопрос студентами: «Что мне нужно набрать на итоговом экзамене до итоговой аттестации?» Вы можете рассчитать это с помощью нашего калькулятора итоговой оценки, введя желаемую оценку, текущую оценку и вес итогового экзамена.</p>
+                <p><strong>Пример:</strong><br>Желаемая оценка: 90%<br>Вес итогового экзамена: 40%<br>Текущая оценка: 82%<br>Калькулятор покажет, что вам нужно набрать около 98% на итоговом экзамене для достижения вашей цели.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq2Question">Будет ли он работать для расчета среднего балла (GPA)?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq2Answer">Хотя он в основном предназначен для отдельных курсов, вы можете использовать результаты с <a href="/gpa-calculator">калькулятором GPA</a> для оценки вашего общего среднего балла (GPA).</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq3Question">Могу ли я использовать его для любого предмета?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq3Answer">Да, калькулятор работает для любого предмета или курса, где используется взвешенная система оценок.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq4Question">Что означает 25% от итоговой оценки?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq4Answer">Если ваш итоговый экзамен или проект составляет 25% вашей итоговой оценки, это означает, что одна четверть вашей общей оценки по курсу будет получена на основе этой аттестации. Остальные 75% будут основаны на ваших предыдущих заданиях, контрольных работах, проектах и тестах.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Пожалуйста, введите действительные числа. Вес итогового экзамена должен быть от 1 до 99.');
+                    return;
+                }
+                
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('Значение "Из" должно быть положительным числом.');
+                     return;
+                }
+
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('Вес итогового экзамена должен быть менее 100%.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Вам нужно набрать более 100% на итоговом экзамене, что невозможно. Вам придется снизить желаемую оценку.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Вы уже достигли своей желаемой оценки.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Для достижения вашей цели, это требуемая оценка.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

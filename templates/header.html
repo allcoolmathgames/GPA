@@ -1,0 +1,202 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+    #language-switcher {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: none;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--accent-color);
+        cursor: pointer;
+        padding: 8px 12px;
+    }
+    #language-switcher:focus {
+        outline: none;
+    }
+
+    /* ✅ Dropdown Styles */
+    .mega-dropdown {
+        display: none;
+        max-height: 70vh;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        background: #fff;
+        padding: 10px;
+        position: absolute;
+        z-index: 1000;
+        min-width: 240px;
+    }
+    .dropdown-menu.active .mega-dropdown {
+        display: block;
+    }
+
+    /* ✅ Force vertical stacking */
+    .mega-dropdown ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: block;   /* <-- Important */
+    }
+    .mega-dropdown ul li {
+        display: block;   /* <-- Force top-to-bottom */
+        width: 100%;
+        padding: 8px 12px;
+    }
+    .mega-dropdown ul li a {
+        display: block;
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .mega-dropdown ul li a:hover {
+        background: #f5f5f5;
+        color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+        .mega-dropdown {
+            position: relative;
+            width: 100%;
+        }
+        .mega-dropdown ul li {
+            padding: 6px 0;
+        }
+    }
+</style>
+
+<body>
+<header class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Gpa Calculator College Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+        <span data-translate="brandName" style="vertical-align: middle; position: relative; top: 1px; font-size: 20px;">Gpa Calculator College</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="nav-menu">
+        <ul>
+            <li>
+                <a href="{{ url_for('home') }}" class="active-link">
+                    <i class="fas fa-home"></i> <span>Home</span>
+                </a>
+            </li>
+            <li class="dropdown-menu">
+                <a href="#" class="dropdown-toggle">
+                    <i class="fas fa-calculator"></i> <span>Calculators</span> <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content mega-dropdown">
+                    <ul>
+                        <li><a href="{{ url_for('gpa_calculator_en') }}">GPA Calculator</a></li>
+                        <li><a href="{{ url_for('highschool_gpa_en') }}">High School GPA Calculator</a></li>
+                        <li><a href="{{ url_for('ez_grader_en') }}">EZ Grader</a></li>
+                        <li><a href="{{ url_for('grade_calculator_en') }}">Grade Calculator</a></li>
+                        <li><a href="{{ url_for('final_grade_calculator_en') }}">Final Grade Calculator</a></li>
+                        <li><a href="{{ url_for('semester_grade_calculator_en') }}">Semester Grade Calculator</a></li>
+                        <li><a href="{{ url_for('gpa_planning_en') }}">GPA Planning</a></li>
+                        <li><a href="{{ url_for('prior_semester_gpa_en') }}">Final GPA Calculator</a></li>
+                        <li><a href="{{ url_for('middle_school_gpa_calculator_en') }}">Middle School GPA Calculator</a></li>
+                        <li><a href="{{ url_for('sgpa_to_cgpa_en') }}">SGPA to CGPA Calculator</a></li>
+                        <li><a href="{{ url_for('sgpa_to_percentage_en') }}">SGPA to Percentage Calculator</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="/contact">
+                    <i class="fas fa-envelope"></i> <span>Contact Us</span>
+                </a>
+            </li>
+            <li class="language-switcher-container">
+                <select id="language-switcher" style="text-align: center;">
+                    <option value="en">EN</option>
+                    <option value="ar">AR</option>
+                    <option value="es">ES</option>
+                    <option value="de">DE</option>
+                    <option value="pt">PT</option>
+                    <option value="ru">RU</option>
+                    <option value="fr">FR</option>
+                    <option value="it">IT</option>
+                    <option value="tr">TR</option>
+                </select>
+            </li>
+            <li>
+                <button id="theme-toggle-btn" style="background:none; border:none; cursor:pointer; font-size: 20px; vertical-align: middle; color: var(--dark-text);">
+                    <span id="theme-icon">☀️</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        const languageSwitcher = document.getElementById('language-switcher');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        languageSwitcher.value = {{ lang_code | tojson }};
+        languageSwitcher.addEventListener('change', function() {
+            const selectedLang = this.value;
+            let currentPath = window.location.pathname;
+            if (currentPath.length > 1 && currentPath.endsWith('/')) {
+                currentPath = currentPath.slice(0, -1);
+            }
+            let pathSegments = currentPath.split('/').filter(p => p !== '');
+            let currentPage = '';
+            if (pathSegments.length > 0 && pathSegments[0].length === 2 && ['en','ar','es','de','pt','ru','fr','it','tr'].includes(pathSegments[0])) {
+                currentPage = '/' + pathSegments.slice(1).join('/');
+            } else {
+                currentPage = currentPath;
+            }
+            let newPath;
+            if (selectedLang === 'en') {
+                newPath = currentPage;
+            } else {
+                newPath = currentPage === '/' ? `/${selectedLang}` : `/${selectedLang}${currentPage}`;
+            }
+            window.location.href = newPath;
+        });
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('active');
+        });
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeIcon.textContent = savedTheme === 'dark-mode' ? '🌙' : '☀️';
+        } else {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '☀️';
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.replace('dark-mode', 'light-mode');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'light-mode');
+            } else {
+                body.classList.replace('light-mode', 'dark-mode');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'dark-mode');
+            }
+        });
+    });
+    </script>
+</header>
+</body>

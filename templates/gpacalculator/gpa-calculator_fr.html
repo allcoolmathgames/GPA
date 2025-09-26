@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculateur de Moyenne Pondérée Cumulative – Calculez Votre Moyenne</title>
+    <meta name="description" content="Utilisez ce calculateur de moyenne pondérée cumulative pour calculer rapidement votre moyenne générale. Rapide, précis et idéal pour les lycéens et les étudiants.">
+    <meta name="keywords" content="Calculateur de moyenne pondérée cumulative, calculer la moyenne générale, comment calculer la moyenne générale, quelle est ma moyenne générale, calculateur de moyenne pondérée cumulative, calculateur de moyenne pondérée cumulative en ligne, échelle GPA de 4.0, Heures de crédit Calculateur de moyenne générale, Calculateur de moyenne générale uf">
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/fr/gpa-calculator">
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/gpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/gpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/gpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/gpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/gpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/gpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/gpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/gpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/gpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/gpa-calculator"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+<body data-lang="fr">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculateur de Moyenne Pondérée Cumulative</h1>
+            <p>Utilisez ce calculateur de moyenne pondérée cumulative (MPC) pour calculer votre moyenne générale en fonction de votre matière, de vos crédits et de vos notes.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calculer la Moyenne</h2>
+                <div class="weighted-toggle-container" style="position: relative; top: -25px; display: flex; justify-content: flex-end; align-items: center;">
+                    <label for="weightedToggle" style="margin-right: 10px; font-weight: 500;">Notes Pondérées</label>
+                    <label class="switch">
+                        <input type="checkbox" id="weightedToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <br>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Cours</th>
+                            <th>Crédits</th>
+                            <th>Note</th>
+                            <th class="weight-column">Poids</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td><input type="text" name="courseName" placeholder="ex. Maths 101"></td>
+                            <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3"></td>
+                            <td>
+                                <select name="grade">
+                                    <option value="" disabled selected>Sélectionner la Note</option>
+                                    <option value="4.0">A</option>
+                                    <option value="3.7">A-</option>
+                                    <option value="3.3">B+</option>
+                                    <option value="3.0">B</option>
+                                    <option value="2.7">B-</option>
+                                    <option value="2.3">C+</option>
+                                    <option value="2.0">C</option>
+                                    <option value="1.7">C-</option>
+                                    <option value="1.3">D+</option>
+                                    <option value="1.0">D</option>
+                                    <option value="0.0">F</option>
+                                </select>
+                            </td>
+                            <td class="weight-column">
+                                <select name="weight">
+                                    <option value="0">Régulier</option>
+                                    <option value="0.5">Honneurs</option>
+                                    <option value="1.0">AP / IB</option>
+                                    <option value="1.0">Universitaire</option>
+                                </select>
+                            </td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreCourseBtn" class="secondary-btn">Ajouter Plus de Cours</button>
+                    <button id="calculateGpaBtn" class="primary-btn">Calculer la Moyenne</button>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Résumé de la Moyenne</h2>
+                <div class="gpa-box">
+                    <span>Moyenne Actuelle</span>
+                    <span id="currentGpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <a href="{{ url_for('lang_routes.gpa_calculator', lang_code='fr') }}"><button id="resetCoursesButton" class="secondary-btn">Réinitialiser Tous les Cours</button></a>
+                </div>
+            </div>
+            <section class="content-section centered-section">
+                <p style="text-align: left;">Ce calculateur de moyenne pondérée cumulative vous permet de calculer votre moyenne générale en fonction de vos matières, de vos crédits et de la note obtenue. Il vous permet également de calculer votre moyenne pondérée ou non pondérée.</p>
+            </section>
+            <section class="how-to-use-section centered-section">
+                <h2>Comment Utiliser le Calculateur de Moyenne Pondérée Cumulative</h2>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Étape 1 : Nom du Cours</span></h3>
+                        <p style="text-align: left;"><span>Entrez le nom du cours pour lequel vous souhaitez calculer la moyenne générale.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Étape 2 : Ajouter les Crédits</span></h3>
+                        <p style="text-align: left;"><span>À cette étape, vous devez entrer le nombre de crédits de chaque cours (par exemple, 3 pour un cours magistral, 1 pour un TP).</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Étape 3 : Entrez Vos Notes</span></h3>
+                        <p style="text-align: left;"><span>Entrez la note (A, B+, C, etc.) pour chaque cours.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Étape 4 : Ajouter un Cours</span></h3>
+                        <p style="text-align: left;"><span>Ajoutez vos autres cours.</span></p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-5"></i>
+                        </div>
+                        <h3 style="text-decoration: none;"><span>Étape 5 : Obtenez Votre Moyenne</span></h3>
+                        <p style="text-align: left;"><span>Le calculateur affiche instantanément votre moyenne générale du semestre.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Principales Caractéristiques de ce Calculateur de Moyenne Pondérée Cumulative</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Précision</h3>
+                        <p style="text-align: left;">Le calculateur de moyenne pondérée cumulative fournit des résultats précis en utilisant vos notes et vos crédits. Il suit les règles de notation des établissements scolaires, vous permettant ainsi d'obtenir une moyenne fiable et précise, reflétant vos véritables résultats scolaires.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Résultats Instantanés</h3>
+                        <p style="text-align: left;">Cet outil vous fournit des résultats rapides et instantanés une fois que vous avez saisi vos informations pour obtenir votre moyenne générale. Votre moyenne est mise à jour instantanément au fur et à mesure que vous entrez les notes et les crédits. C'est parfait pour tester comment l'amélioration d'une seule note peut influencer votre moyenne.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Interface Conviviale</h3>
+                        <p style="text-align: left;">Facile à utiliser, il fonctionne parfaitement sur tous les appareils. Inutile de changer d'onglet : toutes les fonctionnalités sont visibles sur un seul écran.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="navigation-cards-section centered-section">
+                <h2>Plus d'Outils de Moyenne</h2>
+                <div class="cards-container">
+                    <div class="card" id="priorSemesterCard">
+                        <h3>Moyenne des Semestres Précédents/Finale</h3>
+                        <p>Calculez votre moyenne générale incluant les semestres précédents ou votre moyenne cumulative finale.</p>
+                        <a href="{{ url_for('lang_routes.prior_semester_gpa', lang_code='fr') }}" class="card-button">Aller au Calculateur</a>
+                    </div>
+                    <div class="card" id="gpaPlanningCard">
+                        <h3>Planification de la Moyenne</h3>
+                        <p>Planifiez votre moyenne générale future pour atteindre une moyenne cumulative cible.</p>
+                        <a href="{{ url_for('lang_routes.gpa_planning', lang_code='fr') }}" class="card-button">Aller au Calculateur</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Qu'est-ce que la Moyenne Pondérée Cumulative ?</h2>
+                <p style="text-align: left;">
+                    L'abréviation de MPC est « Moyenne Pondérée Cumulative ». C'est un chiffre qui indique vos résultats scolaires. Les écoles, les collèges, les universités et même les employeurs l'utilisent pour mesurer votre performance académique. La plupart des collèges, universités, écoles et même employeurs utilisent la moyenne générale pour comprendre la performance académique d'une personne. Un calculateur de moyenne générale les aide à trouver rapidement et facilement la moyenne d'un étudiant.
+                </p>
+                <h2>Scores de Moyenne</h2>
+                <p>La plupart des collèges, universités, écoles et même employeurs utilisent la moyenne générale pour comprendre la performance académique d'une personne. Un <a href="/" style="text-decoration: none;">calculateur de moyenne générale</a> les aide à trouver rapidement et facilement la moyenne d'un étudiant.</p>
+                <ul style="text-align: left; padding-left: 50px;">
+                    <li><strong>4.0</strong> – Parfait, toujours de très bonnes notes</li>
+                    <li><strong>3.5 – 3.9</strong> – Très bien</li>
+                    <li><strong>3.0 – 3.4</strong> – Bon/Au-dessus de la moyenne</li>
+                    <li><strong>2.0 – 2.9</strong> – Moyenne</li>
+                    <li><strong>Moins de 2.0</strong> – Peut nécessiter une amélioration</li>
+                </ul>
+                <h2>Comprendre les Notes Alphabétiques et Leurs Équivalents Numériques</h2>
+                <p style="text-align: left;">Il est important d'apprendre comment les notes alphabétiques se convertissent en valeurs numériques sur une échelle de 4.0. La plupart des établissements américains observent cette norme de notation pour assurer la cohérence des résultats, pour analyser la performance dans diverses disciplines et cours pondérés par les crédits. Si vous utilisez ceci pour la planification de la moyenne au lycée, le suivi des semestres universitaires ou l'évaluation des crédits de transfert, ce tableau offre une clarté sur l'impact de vos notes individuelles sur votre classement académique final.</p>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Note Alphabétique</th>
+                            <th>Valeur MPC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>A</td><td>4.0</td></tr>
+                        <tr><td>A–</td><td>3.7</td></tr>
+                        <tr><td>B+</td><td>3.3</td></tr>
+                        <tr><td>B</td><td>3.0</td></tr>
+                        <tr><td>B–</td><td>2.7</td></tr>
+                        <tr><td>C+</td><td>2.3</td></tr>
+                        <tr><td>C</td><td>2.0</td></tr>
+                        <tr><td>C–</td><td>1.7</td></tr>
+                        <tr><td>D+</td><td>1.3</td></tr>
+                        <tr><td>D</td><td>1.0</td></tr>
+                        <tr><td>F</td><td>0.0</td></tr>
+                    </tbody>
+                </table>
+                <h2>Formule de Calcul de la Moyenne</h2>
+                <p style="text-align: left;">
+                    <strong>Formule :</strong> MPC = (Total des Points de Qualité) ÷ (Total des Heures de Crédit) <br>
+                    Les points de qualité de chaque cours sont calculés comme suit : Note × Heures de Crédit
+                </p>
+                <h3>Exemple :</h3>
+                <table class="gpa-example-table">
+                    <thead>
+                        <tr>
+                            <th>Cours</th>
+                            <th>Note</th>
+                            <th>Crédits</th>
+                            <th>Note</th>
+                            <th>Points de Qualité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maths 101</td>
+                            <td>A</td>
+                            <td>3</td>
+                            <td>4.0</td>
+                            <td>12.0</td>
+                        </tr>
+                        <tr>
+                            <td>Biologie 202</td>
+                            <td>B+</td>
+                            <td>4</td>
+                            <td>3.3</td>
+                            <td>13.2</td>
+                        </tr>
+                        <tr>
+                            <td>Histoire 101</td>
+                            <td>B</td>
+                            <td>2</td>
+                            <td>3.0</td>
+                            <td>6.0</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td>–</td>
+                            <td><strong>9</strong></td>
+                            <td>–</td>
+                            <td><strong>31.2</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MPC</strong></td>
+                            <td>–</td>
+                            <td>–</td>
+                            <td>–</td>
+                            <td><strong>3.47</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Qui Peut Utiliser ce Calculateur de Moyenne Pondérée Cumulative ?</h2>
+                <h3>Professeurs</h3>
+                <p style="text-align: left;">
+                    Peuvent utiliser cet outil pour vérifier rapidement et confirmer la performance académique des étudiants, en particulier lors de la notation ou du conseil aux étudiants sur leurs progrès.
+                </p>
+                <h3>Étudiants</h3>
+                <p style="text-align: left;">
+                    Si vous êtes au lycée, à l'université ou à l'université, et que vous souhaitez connaître votre moyenne générale. Vous pouvez utiliser cet outil pour calculer votre moyenne semestrielle ou globale.
+                </p>
+                <h3>Administrations</h3>
+                <p style="text-align: left;">
+                    Les administrateurs scolaires et universitaires peuvent utiliser le calculateur de moyenne pondérée cumulative pour examiner les dossiers des étudiants, générer des rapports académiques précis et garantir des normes de notation cohérentes entre les départements.
+                </p>
+                <h3>Parents</h3>
+                <p style="text-align: left;">
+                    Les parents peuvent utiliser le calculateur en ligne pour suivre les progrès académiques de leur enfant. Il les aide à comprendre comment leur enfant se comporte à l'école et les soutient dans la fixation d'objectifs académiques ou la préparation à l'université.
+                </p>
+                <h3>Tuteurs</h3>
+                <p style="text-align: left;">
+                    Les tuteurs peuvent utiliser cet outil pour surveiller les progrès académiques de leurs étudiants, fixer des objectifs d'apprentissage et ajuster les plans d'étude en fonction des résultats de la moyenne. Il les aide à fournir un meilleur encadrement et à suivre les améliorations au fil du temps.
+                </p>
+                <h2>Conseils pour Améliorer Votre Moyenne</h2>
+                <h3>Comment améliorer votre moyenne ?</h3>
+                <p style="text-align: left;">
+                    Améliorer votre moyenne nécessite une forte concentration, une planification et des choix académiques judicieux. Vous pouvez utiliser ces méthodes éprouvées pour améliorer votre efficacité et atteindre vos objectifs académiques.
+                </p>
+                <h3>Concentrez-vous sur les Cours à Crédits Élevés</h3>
+                <p style="text-align: left;">
+                    Restez sur les cours à crédits élevés pour obtenir des résultats optimaux. Les cours avec plus d'heures de crédit ont un impact significatif sur votre moyenne. Par exemple, un cours de sciences de 4 crédits contribuera plus lourdement à votre moyenne qu'un cours optionnel d'un crédit. Concentrez-vous davantage sur l'excellence dans ces cours en investissant du temps, des efforts et du dévouement supplémentaires dans les domaines ayant le plus d'impact.
+                </p>
+                <h3>Reprendre les Cours si Autorisé</h3>
+                <p style="text-align: left;">
+                    De nombreux établissements d'enseignement offrent aux étudiants la possibilité de reprendre les cours dans lesquels ils ont obtenu de mauvaises notes. Améliorer une note d'échec antérieure par une note plus élevée peut améliorer considérablement votre moyenne générale. Vous pouvez consulter la politique de reprise des cours de votre établissement pour vous assurer que les notes améliorées remplacent les notes originales.
+                </p>
+                <h3>Utiliser les Ressources d'Étude</h3>
+                <p style="text-align: left;">
+                    Il est toujours préférable de chercher de l'aide rapidement avant de prendre du retard. Vous pouvez utiliser les ressources de votre campus comme les centres de tutorat, les laboratoires d'écriture, les matériaux de bibliothèque ou les ateliers d'étude. Vous pouvez également consulter les professeurs pendant les heures de bureau ou rejoindre un groupe d'étude pour clarifier vos doutes et mieux comprendre. Des plateformes externes comme Khan Academy peuvent également vous aider dans des matières spécifiques.
+                </p>
+                <h3>Suivez Vos Progrès Souvent</h3>
+                <p style="text-align: left;">
+                    Un suivi régulier de votre moyenne aide à identifier les tendances académiques précoces pour améliorer la performance académique. Utilisez ce calculateur de moyenne après chaque examen ou évaluation majeure pour estimer votre moyenne du semestre. Un suivi régulier permet une planification académique stratégique et vous aide à rester sur la bonne voie pour les honneurs, les bourses ou l'éligibilité à l'obtention du diplôme.
+                </p>
+                <p style="text-align: left;">
+                    Pour plus de conseils, consultez ces stratégies académiques du Centre de Stratégies d'Apprentissage de l'Université Cornell.
+                </p>
+                <p style="text-align: left;">
+                    Souhaitez-vous obtenir votre diplôme avec mention ou être éligible à une bourse ? Vous pouvez cliquer ici pour accéder à notre Calculateur de Planification de Moyenne
+                </p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Questions Fréquemment Posées</h2>
+                <div class="faq-item">
+                    <h3>Comment calculer ma moyenne générale manuellement ?</h3>
+                    <p>Si vous souhaitez calculer votre moyenne générale manuellement, il vous suffit de multiplier la valeur de la note de chaque cours par ses heures de crédit pour obtenir les points de qualité. Ensuite, additionnez tous les points de qualité et divisez le total par le nombre d'heures de crédit prises. Cette méthode garantit une moyenne académique précise.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Puis-je calculer ma moyenne générale en pourcentages ?</h3>
+                    <p>Non, ce calculateur fonctionne uniquement avec des notes alphabétiques, et non avec des pourcentages. Vous devez convertir vos scores en pourcentage en notes alphabétiques standard selon l'échelle de notation de votre établissement. Ensuite, entrez la note alphabétique et les heures de crédit pour calculer une moyenne précise sur une échelle de 4.0.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Quelle échelle de moyenne cet outil utilise-t-il ?</h3>
+                    <p>Notre outil utilise l'échelle standard de 4.0 non pondérée, couramment utilisée dans les collèges et lycées américains. Les notes comme A, B+, et C sont converties en valeurs numériques entre 0.0 et 4.0 pour déterminer votre moyenne finale en fonction des heures de crédit.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Puis-je calculer une moyenne pondérée ?</h3>
+                    <p>Oui, vous pouvez calculer une moyenne pondérée grâce à notre outil—il vous permet d'inclure des niveaux de cours comme Honors ou AP, offrant une moyenne plus précise en fonction de la difficulté du cours.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Quelle est une bonne moyenne pour les bourses ?</h3>
+                    <p>Une moyenne de 3,5 ou plus est souvent considérée comme compétitive pour les bourses basées sur le mérite et le financement des études. Certains programmes considèrent les étudiants avec des notes plus basses mais avec de solides activités extrascolaires. Suivre régulièrement votre moyenne vous permet de rester éligible et concentré sur l'amélioration académique en travaillant plus dur dans les matières clés.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>À quelle fréquence dois-je utiliser un calculateur de moyenne ?</h3>
+                    <p>Vous devriez utiliser le calculateur de moyenne après chacun de vos examens et évaluations majeurs, aux mi-semestres, et à la fin de chaque semestre. Un suivi fréquent aide les étudiants à planifier et à fixer des objectifs académiques, à identifier les domaines à améliorer et à ajuster leur approche avant que les notes finales ne soient attribuées. Cela aide à une meilleure planification et performance.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Cela fonctionne-t-il pour les lycéens et les étudiants universitaires ?</h3>
+                    <p>Oui. Cet outil soutient les systèmes de notation des lycées et des universités qui suivent l'échelle de moyenne non pondérée de 4.0. Que vous prépariez votre admission à l'université ou que vous cherchiez à rester sur la bonne voie avec vos études, ce calculateur fournit des informations précises basées sur les notes et crédits spécifiques que vous entrez.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeTableBody = document.getElementById('courseTableBody');
+            const addMoreCourseBtn = document.getElementById('addMoreCourseBtn');
+            const calculateGpaBtn = document.getElementById('calculateGpaBtn');
+            const currentGpaDisplay = document.getElementById('currentGpaDisplay');
+            const weightedToggle = document.getElementById('weightedToggle');
+
+            function addCourseRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="courseName" placeholder="ex. Maths 101"></td>
+                    <td><input type="number" name="credits" step="0.1" min="0.5" placeholder="ex. 3"></td>
+                    <td>
+                        <select name="grade">
+                            <option value="" disabled selected>Sélectionner la Note</option>
+                            <option value="4.0">A</option>
+                            <option value="3.7">A-</option>
+                            <option value="3.3">B+</option>
+                            <option value="3.0">B</option>
+                            <option value="2.7">B-</option>
+                            <option value="2.3">C+</option>
+                            <option value="2.0">C</option>
+                            <option value="1.7">C-</option>
+                            <option value="1.3">D+</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                    </td>
+                    <td class="weight-column">
+                        <select name="weight">
+                            <option value="0">Régulier</option>
+                            <option value="0.5">Honneurs</option>
+                            <option value="1.0">AP / IB</option>
+                            <option value="1.0">Universitaire</option>
+                        </select>
+                    </td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                gradeTableBody.appendChild(newRow);
+            }
+
+            function calculateGPA() {
+                let totalGradePoints = 0;
+                let totalCredits = 0;
+                const rows = gradeTableBody.querySelectorAll('tr');
+                const isWeighted = weightedToggle.checked;
+
+                rows.forEach(row => {
+                    const creditsInput = row.querySelector('input[name="credits"]');
+                    const gradeSelect = row.querySelector('select[name="grade"]');
+                    const weightSelect = row.querySelector('select[name="weight"]');
+                    const credits = parseFloat(creditsInput.value);
+                    const gradeValue = parseFloat(gradeSelect.value);
+                    let weightValue = 0;
+
+                    if (isWeighted) {
+                        weightValue = parseFloat(weightSelect.value);
+                    }
+
+                    if (!isNaN(credits) && credits > 0 && !isNaN(gradeValue)) {
+                        const weightedGradeValue = gradeValue + weightValue;
+                        totalCredits += credits;
+                        totalGradePoints += credits * weightedGradeValue;
+                    }
+                });
+
+                if (totalCredits > 0) {
+                    const gpa = (totalGradePoints / totalCredits).toFixed(2);
+                    currentGpaDisplay.textContent = gpa;
+                } else {
+                    currentGpaDisplay.textContent = '0.00';
+                }
+            }
+
+            function toggleWeightColumn() {
+                const isChecked = weightedToggle.checked;
+                const weightColumns = document.querySelectorAll('.weight-column');
+                const weightSelects = document.querySelectorAll('select[name="weight"]');
+
+                weightColumns.forEach(column => {
+                    column.style.display = isChecked ? '' : 'none';
+                });
+
+                if (!isChecked) {
+                    weightSelects.forEach(select => {
+                        select.value = "0";
+                        select.disabled = true;
+                    });
+                } else {
+                    weightSelects.forEach(select => {
+                        select.disabled = false;
+                    });
+                }
+
+                calculateGPA();
+            }
+
+            weightedToggle.addEventListener('change', toggleWeightColumn);
+
+            addMoreCourseBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addCourseRow();
+            });
+
+            calculateGpaBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGPA();
+                const gpaSummarySection = document.getElementById('gpaSummarySection');
+                gpaSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            gradeTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="credits"]') || target.matches('select[name="grade"]') || target.matches('select[name="weight"]')) {
+                    calculateGPA();
+                }
+            });
+
+            gradeTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGPA();
+                }
+            });
+
+            addCourseRow();
+            toggleWeightColumn();
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

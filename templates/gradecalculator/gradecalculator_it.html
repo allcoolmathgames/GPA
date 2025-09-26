@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calcolatrice di voto | Calcola facilmente i voti</title>
+    <meta name="description"
+        content="Con questo calcolatore di voti puoi calcolare il tuo voto attuale in modo rapido, preciso e semplice. Scopri il punteggio finale dell'esame necessario per raggiungere il voto desiderato.">
+    <meta name="keywords" content="Calcolatrice dei voti, Calcoli dei voti, Calcola il voto, calcolatrice dei voti dei test, calcolatrice dei voti ponderati, calcolatrice dei voti non ponderati">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="it">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calcolatrice di Voto</h1>
+            <p>Utilizza questo calcolatore dei voti per calcolare il tuo voto attuale in modo semplice e veloce.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calcola il Tuo Voto</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Valutazione</th>
+                            <th>Punteggio (%)</th>
+                            <th>Peso (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Aggiungi Valutazione"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="es., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="es., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Aggiungi Valutazione"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="es., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="es., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Aggiungi Valutazione"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="es., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="es., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Aggiungi Altre Valutazioni</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Calcola Voto</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Riepilogo Voto</h2>
+                <div class="grade-box">
+                    <span>Voto Attuale</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Reimposta Tutte le Valutazioni</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Come Usare il Nostro Calcolatore?</h2>
+                <div class="how-to-use-container">
+                    <p>Il funzionamento di questa calcolatrice è molto semplice e facile da usare:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Valutazioni</h3>
+                        <p style="text-align: left;">Devi inserire il nome di ogni valutazione, ad esempio: Valutazione 1, 2, 3, Compiti, Esame, ecc.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Punteggio</h3>
+                        <p style="text-align: left;">Inserisci i tuoi punteggi per ogni valutazione, matematica, test o altro esame durante il corso. Ogni voce include in genere la percentuale ottenuta (10%, 30%, 50%, ecc.)</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Peso</h3>
+                        <p style="text-align: left;">Inserisci il peso del compito nel voto complessivo del corso. Il peso mostra quanto ogni compito influisca sul voto finale, il che significa che un esame finale potrebbe contare molto più di un piccolo compito.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Calcola il Voto</h3>
+                        <p style="text-align: left;">Dopo aver inserito tutte le informazioni, clicca sul pulsante "Calcola il Voto" e otterrai il risultato del voto.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section centered-section">
+                <h2>Vantaggi dell'utilizzo del nostro calcolatore di voti</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Risparmio di tempo</h3>
+                        <p style="text-align: left;">Con questo strumento puoi calcolare facilmente i voti. Non dovrai più perdere tempo con calcoli manuali.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Facile da usare</h3>
+                        <p style="text-align: left;">Progettato con un layout semplice, lo strumento ti consente di inserire punteggi e pesi senza sforzo, ottenendo risultati in pochi clic.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Precisione</h3>
+                        <p style="text-align: left;">Il calcolatore utilizza formule precise per garantire la correttezza dei risultati, eliminando la possibilità di errori che possono verificarsi con i calcoli manuali.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Flessibilità</h3>
+                        <p style="text-align: left;">Il calcolatore funziona con diversi sistemi di valutazione e materie, consentendoti di adattare pesi, punteggi e formati in base alle esigenze specifiche del tuo corso.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Cos'è il Calcolatore di Voti?</h2>
+                <p>
+                    Il calcolatore di voti ti aiuta a determinare rapidamente il tuo voto complessivo in un corso o in una materia combinando i punteggi di compiti, quiz, esami e progetti, spesso tenendo conto delle diverse ponderazioni.
+                    Aiuta gli studenti a capire come ogni compito influisce sul loro voto complessivo ponderato in un corso. Ciò significa che il voto complessivo di un corso si basa su due fattori chiave: il voto di ogni compito (<b>g</b>) e il peso che ha (<b>w</b>). Con questo strumento, puoi calcolare il tuo punteggio medio attuale in un corso utilizzando i compiti completati finora nel semestre.
+                </p>
+                <h2>Calcolo del Voto Ponderato: Formula ed Esempio</h2>
+                <p>
+                    <b>Formula:</b><br>
+                    Voto Ponderato = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)
+                    <br><br>
+                    Dove:<br>
+                    g = voto (in percentuale o punti) per ogni compito<br>
+                    w = peso di ogni compito (percentuale o punti possibili)
+                </p>
+                <h2>Esempio:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Valutazioni</th>
+                            <th>Grado (%)</th>
+                            <th>Peso (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Quiz</td><td>80</td><td>20</td></tr>
+                        <tr><td>Esame di metà semestre</td><td>75</td><td>30</td></tr>
+                        <tr><td>Esame finale</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Passaggi:</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Moltiplica ogni voto per il suo peso:<br>Quiz: 80 × 20 = 1600<br>Esame di metà semestre: 75 × 30 = 2250<br>Esame finale: 90 × 50 = 4500</li>
+                    <li>Somma i risultati: 1600 + 2250 + 4500 = 8350</li>
+                    <li>Dividi per il peso totale: 8350 ÷ 100 = 83.5%</li>
+                </ol>
+                <p>
+                    Voto Ponderato: <b>83,5%</b> (<b>voto B</b>)
+                </p>
+                <h2>Altri Calcolatori da Provare:</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">Calcolatrice GPA</a></li>
+                    <li><a href="/">Calcolatrice GPA Universitaria</a></li>
+                    <li><a href="/highschool-gpa">GPA Scuola Superiore</a></li>
+                    <li><a href="/final-grade-calculator">Calcolatrice Voto Finale</a></li>
+                </ul>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Suggerimenti per Migliorare i Voti</h2>
+                <p>
+                    Sebbene l'utilizzo del calcolatore dei voti possa aiutarti a monitorare il tuo rendimento scolastico, migliorare i voti può richiedere una strategia. Ecco alcuni suggerimenti per migliorare i tuoi voti.
+                </p>
+                <h3>Gestisci il Tuo Tempo</h3>
+                <p>
+                    Prepara un piano di studio in anticipo, concentrati maggiormente sulle materie che ritieni più difficili e suddividi il lavoro in piccole parti in modo da non dover correre prima degli esami.
+                </p>
+                <h3>Chiedi Aiuto in Anticipo</h3>
+                <p>
+                    Se hai difficoltà con un argomento, chiedi subito aiuto al tuo insegnante, tutor o compagni di classe invece di aspettare fino a poco prima degli esami.
+                </p>
+                <h3>Esercitati con i Compiti Passati</h3>
+                <p>
+                    Lavora su domande d'esame precedenti per familiarizzare con il formato, comprendere i tipi di domande poste e migliorare la tua velocità e precisione.
+                </p>
+                <h3>Usa un Calcolatore dei Voti</h3>
+                <p>
+                    Tieni traccia dei tuoi punteggi attuali e scopri quali voti ti servono per i prossimi compiti o esami per raggiungere il tuo obiettivo, aiutandoti a pianificare i tuoi studi in modo più efficace.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2>Domande Frequenti</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Qual è la differenza tra un calcolatore di voti semplice e uno ponderato?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Un calcolatore di voti semplice tratta tutti i compiti allo stesso modo, mentre un calcolatore di voti ponderato considera l'importanza (peso) di ogni compito nel voto finale.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Cos'è un voto di sufficienza nella maggior parte delle scuole?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>In molte scuole, un voto di sufficienza è pari al 60% o a una lettera D, ma questo può variare a seconda dell'istituto.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Tutte le scuole utilizzano lo stesso sistema di valutazione?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, i sistemi di valutazione variano a seconda del paese, dello stato e dell'istituto, quindi verifica sempre la politica di valutazione della tua scuola.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Qual è il modo migliore per migliorare rapidamente i miei voti?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Concentrati sulle materie in cui hai perso più punti, chiedi aiuto a insegnanti o tutor e usa un piano di studio per rimanere coerente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Aggiungi Valutazione"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="es., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="es., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

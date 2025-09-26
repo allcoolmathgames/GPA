@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Final Grade Calculator</title>
+    <meta name="description"
+        content="This final grade calculator shows the score needed on your final to reach your target grade, or your overall grade based on your final exam score."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+</html>
+
+<body data-lang="en" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Final Grade Calculator</h1>
+
+            <p style="text-align: center;">Use this calculator to find out the minimum grade you need on your final exam to achieve your desired course grade.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Enter Your Grades and Weights</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Desired Grade</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="e.g., 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Out of</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Current Grade</label>
+                            <input type="number" id="current_grade" min="0" placeholder="e.g., 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Out of</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Weight of Final</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="e.g., 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Out of</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Calculate Required Final Grade</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Required Final Grade</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">You need to score at least:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">Reset</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+    <h2 data-translate="howToUseHeading">How to Use the Final Grade Calculator</h2>
+    <p>Using a grade calculator final is very simple and easy to use, Just follow these steps to calculate it at <a href="/">gpacalculatorcollege.com</a> website:</p>
+    <div class="how-to-use-container" data-translate="howToUseContainer">
+        <div class="step" data-translate="step1">
+            <div class="step-icon">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <h3><span data-translate="step1Title">Desired Grade</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step1Description">Enter your desired grade want to get by the end of the semester out of 100 or other numbers.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step2">
+            <div class="step-icon">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <h3><span data-translate="step2Title">Current Grade</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step2Description">Enter your current grade that you’ve earned so far in the course based on all completed assignments, quizzes, projects, and exams.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step3">
+            <div class="step-icon">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <h3><span data-translate="step3Title">Weight Of Final</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step3Description">Enter the weight of the final out of 100, the percentage of your total course grade that your final exam, project, or last assessment is worth.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step4">
+            <div class="step-icon">
+                <i class="fa-solid fa-4"></i>
+            </div>
+            <h3><span data-translate="step4Title">Click Calculate</span></h3>
+            <p style="text-align: left;">
+                <span data-translate="step4Description">After giving all the information, just hit the button of “Calculate Final Grade”.</span>
+            </p>
+        </div>
+    </div>
+</section>
+            
+            <section class="content-section centered-section">
+    <h2 data-translate="whyUseHeading">Why Use Our Final Grade Calculator?</h2>
+    <p style="text-align: left;" data-translate="whyUseDescription">
+        Our calculator has a simple interface that anyone can use, no math skills required.
+        Just enter your desired final grade, the current grade, and your weight of your remaining work grade, then click calculate to see instant results.
+    </p>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature1Title">Easy to Use</h3>
+            <p style="text-align: left;" data-translate="feature1Description">Our calculator has a simple interface that anyone can use, no math skills required. Just enter your desired final grade, the current grade, and your weight of your remaining work grade, then click calculate to see instant results.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature2Title">Accurate Calculations</h3>
+            <p style="text-align: left;" data-translate="feature2Description">Our calculator uses precise formulas to ensure you get reliable results every time. By factoring in the exact weight of your completed and remaining coursework, it eliminates guesswork and gives you a true picture of what you need to achieve your goal.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature3Title">Plan Your Study</h3>
+            <p style="text-align: left;" data-translate="feature3Description">It helps you focus your time and energy where it matters most. By knowing the exact score you need on upcoming work, you can create a smart study plan and avoid wasting time on low-impact tasks.</p>
+        </div>
+    </div>
+</section>
+
+<div class="content-section centered-section">
+    <h2 data-translate="index_whatIsFinalGradeCalcHeading">What Is the Final Grade Calculator?</h2>
+    <p data-translate="index_whatIsFinalGradeCalcParagraph">
+        This final <a href="https://gpacalculatorcollege.com/grade-calculator">grade calculator</a> helps students determine the score they need on remaining assignments or exams to achieve a desired overall course grade. It quickly calculates the required marks based on current performance and the weight of remaining work. 
+    </p>
+
+    <h2 data-translate="index_finalGradeFormulaHeading">Final Grade Calculation: Formula and Example</h2>
+    <p data-translate="index_finalGradeFormulaText">
+        <b data-translate="index_formulaLabel">Formula:</b><br>
+        <span data-translate="index_formulaText">Final Grade = (Current Grade × Completed Work Weight) + (Desired Final Exam Score × Remaining Work Weight)</span>
+        <br><br>
+        <span data-translate="index_formulaVariables">
+            Where:<br>
+            Current Grade = Your average score so far in the course<br>
+            Completed Work Weight = Percentage of the course already graded<br>
+            Remaining Work Weight = Percentage of the course grade still to be completed (e.g., final exam)
+        </span>
+    </p>
+
+    <h2 data-translate="index_exampleHeading">Example:</h2>
+    <p>
+        <b data-translate="index_exampleCurrentGrade">Current Grade:</b> 85%<br>
+        <b data-translate="index_exampleCompletedWeight">Completed Work Weight:</b> 70%<br>
+        <b data-translate="index_exampleFinalExamWeight">Final Exam Weight:</b> 30%<br>
+        <b data-translate="index_exampleDesiredGrade">Desired Final Grade:</b> 90%
+    </p>
+
+    <h3 data-translate="index_formulaStepsHeading">Formula:</h3>
+    <p>
+        <span data-translate="index_formulaStepsFormula">90 = ( 85 x 0.70 ) + ( Required Exam Score x 0.30 )</span>
+    </p>
+
+    <h3 data-translate="index_stepByStepHeading">Step-by-Step:</h3>
+    <ol data-translate="index_stepsList" style="padding-left: 30px;">
+        <li data-translate="index_step1">85 x 0.70 = 59.5</li>
+        <li data-translate="index_step2">90 - 59.5 = 30.5</li>
+        <li data-translate="index_step3">30.5 ÷ 0.30 = 101.67</li>
+    </ol>
+
+    <p data-translate="index_resultText">
+        Result: You’d need about <b>102%</b> on the final exam to reach a 90% final grade, which means it’s mathematically impossible unless there’s extra credit available.
+    </p>
+</div>
+
+<div class="content-section centered-section">
+    <h2 data-translate="useCasesHeading">Use Cases of a Final Grade Calculator</h2>
+    <p data-translate="useCasesIntro">
+        Here are some useful cases of grade calculator final:
+    </p>
+
+    <h3 data-translate="useCase1Heading">Planning Study Effort</h3>
+    <p data-translate="useCase1Text">
+        This calculator helps you figure out exactly how much you need to score on your remaining work, so you can plan your study time accordingly.
+    </p>
+
+    <h3 data-translate="useCase2Heading">Setting Realistic Goals</h3>
+    <p data-translate="useCase2Text">
+        A final grade calculator helps you set achievable academic targets by showing whether your desired grade is realistically possible.
+    </p>
+
+    <h3 data-translate="useCase3Heading">Strategic Planning</h3>
+    <p data-translate="useCase3Text">
+        You can create a focused game plan for your studies. By knowing exactly how much each remaining task impacts your overall grade, you can decide where to concentrate your energy for the best results.
+    </p>
+
+    <h3 data-translate="useCase4Heading">Motivation</h3>
+    <p data-translate="useCase4Text">
+        It can boost your motivation by turning vague academic goals into clear, achievable targets. Seeing exactly what score you need on your remaining work gives you a specific milestone to aim for, making study sessions feel more purposeful.
+    </p>
+</div>
+
+            <section class="faq-section centered-section">
+    <h2 data-translate="faqHeading">FAQs</h2>
+    <div class="faq-container">
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq1Question">What Grade Do I Need on My Final?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq1Answer">This is the most asked question by students: What do I need on my final before the final exam? You can calculate it by using our grade calculator final, by giving it the desired grade, current grade, and weight of the final.</p>
+                <p><strong>Example:</strong><br>Desired Grade: 90%<br>Final Exam Weight: 40%<br>Current Grade: 82%<br>The calculator will show that you need about 98% on the final exam to reach your goal.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq2Question">Will it work for GPA calculation?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq2Answer">While it’s mainly for individual courses, you can use the results with a <a href="/gpa-calculator">GPA calculator</a> to estimate your overall GPA.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq3Question">Can I use it for any subject?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq3Answer">Yes, the calculator works for any subject or course that uses weighted grading.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq4Question">What Does 25% of Final Grade Mean?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq4Answer">If your final exam or project is worth 25% of your final grade, it means that one-quarter of your overall course grade will come from that assessment. The remaining 75% will be based on your previous assignments, quizzes, projects, and tests.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Please enter valid numbers. Final exam weight must be between 1 and 99.');
+                    return;
+                }
+                
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('Out of value must be a positive number.');
+                     return;
+                }
+
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('Final exam weight must be less than 100%.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'You need more than 100% in the final, which is impossible. You will have to lower your desired grade.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'You have already achieved your desired grade.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'To achieve your target, this is the required grade.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

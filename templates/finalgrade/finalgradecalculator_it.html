@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">Calcolatrice del Voto Finale</title>
+    <meta name="description" content="Questo calcolatore del voto finale mostra il punteggio necessario per raggiungere il voto finale prefissato, oppure il voto complessivo in base al punteggio dell'esame finale."
+        data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/it/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/calcolatrice-voto-finale"/>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="it" data-translate="body">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">Calcolatrice del Voto Finale</h1>
+            <p style="text-align: center;">Usa questo calcolatore per scoprire il voto minimo di cui hai bisogno all'esame finale per raggiungere il voto desiderato nel corso.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">Inserisci i tuoi voti e pesi</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">Voto Desiderato</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="es., 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Su</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">Voto Attuale</label>
+                            <input type="number" id="current_grade" min="0" placeholder="es., 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Su</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">Peso dell'Esame Finale</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="es., 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Su</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">Calcola Voto Finale Richiesto</button>
+                    </div>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">Voto Finale Richiesto</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">Devi ottenere almeno:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/calcolatrice-voto-finale"><button class="secondary-btn" data-translate="resetButton">Reimposta</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+                <h2 data-translate="howToUseHeading">Come Usare la Calcolatrice del Voto Finale</h2>
+                <p>Utilizzare una calcolatrice del voto finale è molto semplice e facile da usare, basta seguire questi passaggi per calcolarlo sul sito web <a href="/">gpacalculatorcollege.com</a>:</p>
+                <div class="how-to-use-container" data-translate="howToUseContainer">
+                    <div class="step" data-translate="step1">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3><span data-translate="step1Title">Voto Desiderato</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step1Description">Inserisci il voto che desideri ottenere entro la fine del semestre su una scala da 1 a 100 o su un altro valore.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step2">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3><span data-translate="step2Title">Voto Attuale</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step2Description">Inserisci il voto attuale che hai ottenuto finora nel corso, in base a tutti i compiti, quiz, progetti ed esami completati.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step3">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3><span data-translate="step3Title">Peso dell'Esame Finale</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step3Description">Inserisci il peso dell'esame finale su una scala da 1 a 100, ovvero la percentuale del voto totale del corso che il tuo esame finale, progetto o ultima valutazione vale.</span>
+                        </p>
+                    </div>
+                    <div class="step" data-translate="step4">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3><span data-translate="step4Title">Clicca su Calcola</span></h3>
+                        <p style="text-align: left;">
+                            <span data-translate="step4Description">Dopo aver inserito tutte le informazioni, clicca semplicemente sul pulsante "Calcola Voto Finale".</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2 data-translate="whyUseHeading">Perché Usare la Nostra Calcolatrice del Voto Finale?</h2>
+                <p style="text-align: left;" data-translate="whyUseDescription">
+                    La nostra calcolatrice ha un'interfaccia semplice che chiunque può usare, non sono richieste competenze matematiche.
+                    Basta inserire il voto finale desiderato, il voto attuale e il peso del lavoro rimanente, quindi cliccare su "Calcola" per vedere i risultati immediati.
+                </p>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature1Title">Facile da Usare</h3>
+                        <p style="text-align: left;" data-translate="feature1Description">La nostra calcolatrice ha un'interfaccia semplice che chiunque può usare, non sono richieste competenze matematiche. Basta inserire il voto finale desiderato, il voto attuale e il peso del lavoro rimanente, quindi cliccare su "Calcola" per vedere i risultati immediati.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature2Title">Calcoli Accurati</h3>
+                        <p style="text-align: left;" data-translate="feature2Description">La nostra calcolatrice utilizza formule precise per garantire risultati affidabili ogni volta. Considerando il peso esatto del lavoro completato e di quello rimanente, elimina le congetture e ti fornisce un quadro reale di ciò che ti serve per raggiungere il tuo obiettivo.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3 data-translate="feature3Title">Pianifica il Tuo Studio</h3>
+                        <p style="text-align: left;" data-translate="feature3Description">Ti aiuta a concentrare tempo ed energie dove più conta. Conoscendo il punteggio esatto di cui hai bisogno per il lavoro imminente, puoi creare un piano di studio intelligente ed evitare di perdere tempo in attività a basso impatto.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2 data-translate="index_whatIsFinalGradeCalcHeading">Cos'è la Calcolatrice del Voto Finale?</h2>
+                <p data-translate="index_whatIsFinalGradeCalcParagraph">
+                    Questa <a href="https://gpacalculatorcollege.com/it/calcolatrice-voto">calcolatrice del voto</a> aiuta gli studenti a determinare il punteggio necessario per i compiti o gli esami rimanenti per raggiungere il voto complessivo desiderato. Calcola rapidamente i voti richiesti in base al rendimento attuale e al peso del lavoro rimanente.
+                </p>
+                <h2 data-translate="index_finalGradeFormulaHeading">Calcolo del Voto Finale: Formula ed Esempio</h2>
+                <p data-translate="index_finalGradeFormulaText">
+                    <b data-translate="index_formulaLabel">Formula:</b><br>
+                    <span data-translate="index_formulaText">Voto Finale = (Voto Attuale × Peso del Lavoro Completato) + (Punteggio Desiderato dell'Esame Finale × Peso del Lavoro Rimanente)</span>
+                    <br><br>
+                    <span data-translate="index_formulaVariables">
+                        Dove:<br>
+                        Voto Attuale = Punteggio medio finora ottenuto nel corso<br>
+                        Peso del Lavoro Completato = Percentuale del corso già valutato<br>
+                        Peso del Lavoro Rimanente = Percentuale del voto del corso ancora da completare (ad esempio, esame finale)
+                    </span>
+                </p>
+                <h2 data-translate="index_exampleHeading">Esempio:</h2>
+                <p>
+                    <b data-translate="index_exampleCurrentGrade">Voto Attuale:</b> 85%<br>
+                    <b data-translate="index_exampleCompletedWeight">Peso del Lavoro Completato:</b> 70%<br>
+                    <b data-translate="index_exampleFinalExamWeight">Peso dell'Esame Finale:</b> 30%<br>
+                    <b data-translate="index_exampleDesiredGrade">Voto Finale Desiderato:</b> 90%
+                </p>
+                <h3 data-translate="index_formulaStepsHeading">Formula:</h3>
+                <p>
+                    <span data-translate="index_formulaStepsFormula">90 = (85 x 0.70) + (Punteggio Esame Richiesto x 0.30)</span>
+                </p>
+                <h3 data-translate="index_stepByStepHeading">Passo dopo Passo:</h3>
+                <ol data-translate="index_stepsList" style="padding-left: 30px;">
+                    <li data-translate="index_step1">85 x 0.70 = 59.5</li>
+                    <li data-translate="index_step2">90 - 59.5 = 30.5</li>
+                    <li data-translate="index_step3">30.5 ÷ 0.30 = 101.67</li>
+                </ol>
+                <p data-translate="index_resultText">
+                    Risultato: Per raggiungere un voto finale del 90%, sarebbe necessario ottenere circa il <b>102%</b> all'esame finale, il che significa che è matematicamente impossibile a meno che non ci siano crediti extra disponibili.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2 data-translate="useCasesHeading">Casi d'Uso di una Calcolatrice del Voto Finale</h2>
+                <p data-translate="useCasesIntro">
+                    Ecco alcuni esempi utili di calcolatrice del voto finale:
+                </p>
+                <h3 data-translate="useCase1Heading">Pianificazione dello Sforzo di Studio</h3>
+                <p data-translate="useCase1Text">
+                    Questa calcolatrice ti aiuta a capire esattamente quanto devi ottenere nel lavoro rimanente, in modo da poter pianificare il tuo tempo di studio di conseguenza.
+                </p>
+                <h3 data-translate="useCase2Heading">Definizione di Obiettivi Realistici</h3>
+                <p data-translate="useCase2Text">
+                    Una calcolatrice del voto finale ti aiuta a stabilire obiettivi accademici raggiungibili, mostrando se il voto desiderato è realisticamente possibile.
+                </p>
+                <h3 data-translate="useCase3Heading">Pianificazione Strategica</h3>
+                <p data-translate="useCase3Text">
+                    Puoi creare un piano di gioco mirato per i tuoi studi. Sapendo esattamente quanto ogni compito rimanente influisce sul tuo voto complessivo, puoi decidere dove concentrare le tue energie per ottenere i migliori risultati.
+                </p>
+                <h3 data-translate="useCase4Heading">Motivazione</h3>
+                <p data-translate="useCase4Text">
+                    Può aumentare la tua motivazione trasformando obiettivi accademici vaghi in obiettivi chiari e raggiungibili. Vedere esattamente quale punteggio devi ottenere nel lavoro rimanente ti fornisce un traguardo specifico da raggiungere, rendendo le sessioni di studio più significative.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2 data-translate="faqHeading">Domande Frequenti</h2>
+                <div class="faq-container">
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq1Question">Quale voto mi serve per l'esame finale?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq1Answer">Questa è la domanda più frequente tra gli studenti: cosa mi serve per l'esame finale prima dell'esame finale? Puoi calcolarlo utilizzando la nostra calcolatrice del voto finale, inserendo il voto desiderato, il voto attuale e il peso dell'esame finale.</p>
+                            <p><strong>Esempio:</strong><br>Voto Desiderato: 90%<br>Peso dell'Esame Finale: 40%<br>Voto Attuale: 82%<br>La calcolatrice mostrerà che ti serve circa il 98% all'esame finale per raggiungere il tuo obiettivo.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq2Question">Funziona per il calcolo della media dei voti (GPA)?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq2Answer">Sebbene sia principalmente per singoli corsi, puoi utilizzare i risultati insieme a un <a href="/calcolatrice-media-voti">calcolatore di media dei voti</a> per stimare la tua media complessiva.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq3Question">Posso usarlo per qualsiasi materia?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq3Answer">Sì, la calcolatrice funziona per qualsiasi materia o corso che utilizzi la valutazione ponderata.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3 data-translate="faq4Question">Cosa significa il 25% del voto finale?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-translate="faq4Answer">Se il tuo esame o progetto finale vale il 25% del voto finale, significa che un quarto del voto complessivo del corso deriverà da quella valutazione. Il restante 75% si baserà sui compiti, quiz, progetti e test svolti in precedenza.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validazione
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Inserisci numeri validi. Il peso dell\'esame finale deve essere compreso tra 1 e 99.');
+                    return;
+                }
+
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('Il valore "Su" deve essere un numero positivo.');
+                     return;
+                }
+
+                // Converti i voti in una base percentuale comune
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('Il peso dell\'esame finale deve essere inferiore al 100%.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Hai bisogno di più del 100% all\'esame finale, il che è impossibile. Dovrai abbassare il voto desiderato.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Hai già raggiunto il voto desiderato.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Per raggiungere il tuo obiettivo, questo è il voto richiesto.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

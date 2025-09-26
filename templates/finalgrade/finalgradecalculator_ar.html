@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title data-translate="pageTitle">حاسبة الدرجة النهائية</title>
+    <meta name="description"
+        content="تساعدك حاسبة الدرجة النهائية في معرفة الدرجة التي تحتاجها في الاختبار النهائي لتحقيق درجتك المرجوة، أو درجتك الإجمالية بناءً على درجتك في الاختبار النهائي."
+        data-translate="metaDescription">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ar/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+    
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+
+<body data-lang="ar" data-translate="body">
+    {% include 'header.html' %}
+
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" data-translate="pageContentSection" style="padding-top: 80px;">
+            <h1 data-translate="finalGradeCalculatorTitle">حاسبة الدرجة النهائية</h1>
+
+            <p style="text-align: center;">استخدم هذه الآلة الحاسبة لمعرفة الحد الأدنى من الدرجة التي تحتاجها في الاختبار النهائي لتحقيق الدرجة المطلوبة في الدورة.</p>
+            <br> <br>
+            <div class="input-section centered-section" data-translate="inputSection" style="position: relative; top: -35px;">
+                <h2 data-translate="calculatorInputsHeading">أدخل درجاتك وأوزانك</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade" data-translate="desiredGradeLabel">الدرجة المطلوبة</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="مثال: 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">من</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade" data-translate="currentGradeLabel">الدرجة الحالية</label>
+                            <input type="number" id="current_grade" min="0" placeholder="مثال: 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">من</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight" data-translate="finalExamWeightLabel">وزن الامتحان النهائي</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="مثال: 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">من</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn" data-translate="calculateFinalGradeButton">حساب الدرجة النهائية</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2 data-translate="resultHeading">الدرجة النهائية المطلوبة</h2>
+                <div class="grade-box" data-translate="gradeBox">
+                    <span data-translate="finalGradeLabelText">تحتاج إلى الحصول على ما لا يقل عن:</span>
+                    <span id="requiredFinalGradeDisplay" data-translate="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/final-grade-calculator"><button class="secondary-btn" data-translate="resetButton">إعادة ضبط</button></a>
+                </div>
+            </div>
+
+            <section class="how-to-use-section centered-section" data-translate="howToUseSection">
+    <h2 data-translate="howToUseHeading">كيفية استخدام حاسبة الدرجة النهائية</h2>
+    <p>إن استخدام حاسبة الدرجات النهائية بسيط للغاية وسهل الاستخدام، ما عليك سوى اتباع الخطوات التالية لحسابها على موقع <a href="/">gpacalculatorcollege.com</a>:</p>
+    <div class="how-to-use-container" data-translate="howToUseContainer">
+        <div class="step" data-translate="step1">
+            <div class="step-icon">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <h3><span data-translate="step1Title">الدرجة المطلوبة</span></h3>
+            <p style="text-align: right;">
+                <span data-translate="step1Description">أدخل الدرجة التي ترغب في الحصول عليها بنهاية الفصل الدراسي من ١٠٠ أو أي أرقام أخرى.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step2">
+            <div class="step-icon">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <h3><span data-translate="step2Title">الدرجة الحالية</span></h3>
+            <p style="text-align: right;">
+                <span data-translate="step2Description">أدخل درجتك الحالية التي حصلت عليها حتى الآن في المادة بناءً على جميع الواجبات والاختبارات والمشاريع والامتحانات المنجزة.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step3">
+            <div class="step-icon">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <h3><span data-translate="step3Title">وزن الدرجة النهائية</span></h3>
+            <p style="text-align: right;">
+                <span data-translate="step3Description">أدخل وزن الدرجة النهائية من ١٠٠، أي النسبة المئوية من إجمالي درجتك في المادة التي تعادل امتحانك النهائي أو مشروعك أو تقييمك الأخير.</span>
+            </p>
+        </div>
+        <div class="step" data-translate="step4">
+            <div class="step-icon">
+                <i class="fa-solid fa-4"></i>
+            </div>
+            <h3><span data-translate="step4Title">انقر على "حساب"</span></h3>
+            <p style="text-align: right;">
+                <span data-translate="step4Description">بعد إدخال جميع المعلومات، انقر على زر "حساب الدرجة النهائية".</span>
+            </p>
+        </div>
+    </div>
+</section>
+            
+            <section class="content-section centered-section">
+    <h2 data-translate="whyUseHeading">لماذا تستخدم حاسبة الدرجات النهائية لدينا؟</h2>
+    <p style="text-align: right;" data-translate="whyUseDescription">
+        تتميز آلتنا الحاسبة بواجهة استخدام بسيطة وسهلة الاستخدام، ولا تتطلب أي مهارات رياضية. ما عليك سوى إدخال درجتك النهائية المطلوبة، ودرجتك الحالية، ووزن درجة عملك المتبقية، ثم انقر على "حساب" لعرض النتائج الفورية.
+    </p>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature1Title">سهلة الاستخدام</h3>
+            <p style="text-align: right;" data-translate="feature1Description">تتميز آلتنا الحاسبة بواجهة استخدام بسيطة وسهلة الاستخدام، ولا تتطلب أي مهارات رياضية. ما عليك سوى إدخال درجتك النهائية المطلوبة، ودرجتك الحالية، ووزن درجة عملك المتبقية، ثم انقر على "حساب" لعرض النتائج الفورية.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature2Title">حسابات دقيقة</h3>
+            <p style="text-align: right;" data-translate="feature2Description">تستخدم آلتنا الحاسبة صيغًا دقيقة لضمان حصولك على نتائج موثوقة في كل مرة. من خلال احتساب الوزن الدقيق لأعمالك الدراسية المكتملة والمتبقية، تُغنيك عن التخمين وتُعطيك صورة واضحة لما تحتاجه لتحقيق هدفك.</p>
+        </div>
+    </div>
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3 data-translate="feature3Title">خطط لدراستك</h3>
+            <p style="text-align: right;" data-translate="feature3Description">تساعدك هذه الآلة على تركيز وقتك وطاقتك على الأمور الأكثر أهمية. من خلال معرفة الدرجة الدقيقة التي تحتاجها في العمل القادم، يمكنك إنشاء خطة دراسة ذكية وتجنب إضاعة الوقت في المهام البسيطة.</p>
+        </div>
+    </div>
+</section>
+
+<div class="content-section centered-section">
+    <h2 data-translate="index_whatIsFinalGradeCalcHeading">ما هي حاسبة الدرجات النهائية؟</h2>
+    <p data-translate="index_whatIsFinalGradeCalcParagraph">
+        تساعد هذه الحاسبة الطلاب على تحديد الدرجة المطلوبة في الواجبات أو الامتحانات المتبقية لتحقيق الدرجة الكلية المطلوبة. تحسب الدرجات المطلوبة بسرعة بناءً على الأداء الحالي ووزن الواجبات المتبقية.
+    </p>
+
+    <h2 data-translate="index_finalGradeFormulaHeading">حساب الدرجة النهائية: الصيغة والمثال</h2>
+    <p data-translate="index_finalGradeFormulaText">
+        <b data-translate="index_formulaLabel">صيغة:</b><br>
+        <span data-translate="index_formulaText">الدرجة النهائية = (الدرجة الحالية × وزن العمل المكتمل) + (الدرجة المطلوبة في الامتحان النهائي × وزن العمل المتبقي)</span>
+        <br><br>
+        <span data-translate="index_formulaVariables">
+            أين:<br>
+            الدرجة الحالية = متوسط درجاتك حتى الآن في المقرر.<br>
+            وزن الأعمال المنجزة = النسبة المئوية من المقرر الذي تم تقييمه بالفعل.<br>
+            وزن الأعمال المتبقية = النسبة المئوية من درجة المقرر التي لم تُنجز بعد (مثل: الامتحان النهائي).
+        </span>
+    </p>
+
+    <h2 data-translate="index_exampleHeading">مثال:</h2>
+    <p>
+        <b data-translate="index_exampleCurrentGrade">الدرجة الحالية:</b> 85%<br>
+        <b data-translate="index_exampleCompletedWeight">وزن العمل المنجز:</b> 70%<br>
+        <b data-translate="index_exampleFinalExamWeight">وزن الامتحان النهائي:</b> 30%<br>
+        <b data-translate="index_exampleDesiredGrade">الدرجة النهائية المطلوبة:</b> 90%
+    </p>
+
+    <h3 data-translate="index_formulaStepsHeading">صيغة:</h3>
+    <p>
+        <span data-translate="index_formulaStepsFormula">90 = ( 85 × 0.70 ) + ( درجة الامتحان المطلوبة × 0.30 )</span>
+    </p>
+
+    <h3 data-translate="index_stepByStepHeading">خطوة بخطوة:</h3>
+    <ol data-translate="index_stepsList" style="padding-right: 30px; text-align: right;">
+        <li data-translate="index_step1">85 × 0.70 = 59.5</li>
+        <li data-translate="index_step2">90 - 59.5 = 30.5</li>
+        <li data-translate="index_step3">30.5 ÷ 0.30 = 101.67</li>
+    </ol>
+
+    <p data-translate="index_resultText">
+        النتيجة: ستحتاج إلى حوالي <b>102%</b> في الاختبار النهائي للوصول إلى الدرجة النهائية 90%، وهو ما يعني أنه من المستحيل رياضياً ما لم تكن هناك نقاط إضافية متاحة.
+    </p>
+</div>
+
+<div class="content-section centered-section">
+    <h2 data-translate="useCasesHeading">حالات استخدام حاسبة الدرجة النهائية</h2>
+    <p data-translate="useCasesIntro">
+        فيما يلي بعض الحالات المفيدة لاستخدام حاسبة الدرجات النهائية:
+    </p>
+
+    <h3 data-translate="useCase1Heading">تخطيط جهد الدراسة</h3>
+    <p data-translate="useCase1Text">
+        تساعدك هذه الحاسبة على تحديد الدرجة المطلوبة بدقة في واجباتك المتبقية، مما يُمكّنك من تخطيط وقت دراستك وفقًا لذلك.
+    </p>
+
+    <h3 data-translate="useCase2Heading">وضع أهداف واقعية</h3>
+    <p data-translate="useCase2Text">
+        تساعدك حاسبة الدرجات النهائية على وضع أهداف أكاديمية قابلة للتحقيق من خلال توضيح مدى إمكانية تحقيق الدرجة المطلوبة.
+    </p>
+
+    <h3 data-translate="useCase3Heading">التخطيط الاستراتيجي</h3>
+    <p data-translate="useCase3Text">
+        يمكنك وضع خطة عمل مُركزة لدراستك. بمعرفة مدى تأثير كل مهمة متبقية على درجتك الإجمالية، يمكنك تحديد أين تُركز طاقتك لتحقيق أفضل النتائج.
+    </p>
+
+    <h3 data-translate="useCase4Heading">التحفيز</h3>
+    <p data-translate="useCase4Text">
+        يُمكنك تعزيز دافعيتك من خلال تحويل الأهداف الأكاديمية غير الواضحة إلى أهداف واضحة وقابلة للتحقيق. إن تحديد الدرجة المطلوبة بدقة في واجباتك المتبقية يمنحك هدفًا محددًا تسعى لتحقيقه، مما يجعل جلسات الدراسة أكثر فائدة.
+    </p>
+</div>
+
+            <section class="faq-section centered-section">
+    <h2 data-translate="faqHeading">الأسئلة الشائعة</h2>
+    <div class="faq-container">
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq1Question">ما هي الدرجة التي أحتاجها في اختباري النهائي؟</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq1Answer">هذا هو السؤال الأكثر شيوعًا بين الطلاب: ما الذي أحتاجه في امتحاني النهائي قبل الامتحان النهائي؟ يمكنك حسابه باستخدام حاسبة الدرجات النهائية لدينا، وذلك بإدخال الدرجة المطلوبة، والدرجة الحالية، ووزن الامتحان النهائي.</p>
+                <p><strong>مثال:</strong><br>الدرجة المطلوبة: 90%<br>وزن الامتحان النهائي: 40%<br>الدرجة الحالية: 82%<br>ستظهر لك الآلة الحاسبة أنك بحاجة إلى حوالي 98% في الاختبار النهائي للوصول إلى هدفك.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq2Question">هل يُمكن استخدامه لحساب المعدل التراكمي؟</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq2Answer">على الرغم من أنها مخصصة بشكل أساسي للمقررات الفردية، يمكنك استخدام النتائج مع <a href="/gpa-calculator">حاسبة المعدل التراكمي</a> لتقدير المعدل التراكمي الإجمالي الخاص بك.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq3Question">هل يمكنني استخدامه لأي موضوع؟</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq3Answer">نعم، تعمل الآلة الحاسبة لأي موضوع أو دورة تستخدم التقييم المرجح.</p>
+            </div>
+        </div>
+        <div class="faq-item active">
+            <div class="faq-question">
+                <h3 data-translate="faq4Question">ماذا يعني 25% من الدرجة النهائية؟</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p data-translate="faq4Answer">إذا كان امتحانك النهائي أو مشروعك يُمثل ٢٥٪ من درجتك النهائية، فهذا يعني أن ربع درجتك الكلية في المقرر ستُحسب بناءً على هذا التقييم. أما الـ ٧٥٪ المتبقية، فستُحسب بناءً على واجباتك واختباراتك ومشاريعك واختباراتك السابقة.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('من فضلك أدخل أرقامًا صحيحة. يجب أن يتراوح وزن الامتحان النهائي بين 1 و 99.');
+                    return;
+                }
+                
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('يجب أن يكون حقل "من" رقمًا موجبًا.');
+                     return;
+                }
+
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+
+                const remainingWeight = 100 - finalWeight;
+
+                if (remainingWeight <= 0) {
+                    alert('يجب أن يكون وزن الامتحان النهائي أقل من 100%.');
+                    return;
+                }
+
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'أنت بحاجة إلى أكثر من 100% في الاختبار النهائي، وهو أمر مستحيل. ستحتاج إلى تقليل درجتك المطلوبة.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'لقد حققت بالفعل درجتك المطلوبة.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'للوصول إلى هدفك، هذه هي الدرجة المطلوبة.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+
+                resultSection.scroll-intoView({ behavior: 'smooth' });
+            });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

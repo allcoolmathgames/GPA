@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Final Notu Hesaplayıcısı</title>
+    <meta name="description"
+        content="İstediğiniz ders notunu alabilmeniz için final sınavında almanız gereken minimum notu bulmak amacıyla bu hesap makinesini kullanın."
+        data-translate="metaDescription">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/tr/final-grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/final-grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/final-grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/final-grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/final-grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/final-grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/final-grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/final-grade-calculator"/>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="tr">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -110px;">
+        <section class="page-content" style="padding-top: 80px;">
+            <h1>Final Notu Hesaplayıcısı</h1>
+            <p style="text-align: center;">İstediğiniz ders notunu alabilmeniz için final sınavında almanız gereken minimum notu bulmak amacıyla bu hesap makinesini kullanın.</p>
+            <br> <br>
+            <div class="input-section centered-section" style="position: relative; top: -35px;">
+                <h2>Notlarınızı ve Ağırlıklarını Girin</h2>
+                <div class="calculator-form">
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="desired_grade">İstenen Not</label>
+                            <input type="number" id="desired_grade" min="0" placeholder="örn., 90">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="desired_out_of">Üzerinden</label>
+                            <input type="number" id="desired_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="current_grade">Mevcut Not</label>
+                            <input type="number" id="current_grade" min="0" placeholder="örn., 85">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="current_out_of">Üzerinden</label>
+                            <input type="number" id="current_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group-combined">
+                        <div class="form-group">
+                            <label for="final_exam_weight">Finalin Ağırlığı</label>
+                            <input type="number" id="final_exam_weight" min="0" max="100" placeholder="örn., 30">
+                        </div>
+                        <div class="form-group out-of-group">
+                            <label for="final_out_of">Üzerinden</label>
+                            <input type="number" id="final_out_of" min="1" value="100">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="calculateFinalGradeBtn" class="primary-btn">Gerekli Final Notunu Hesapla</button>
+                    </div>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="finalGradeSummarySection" style="display: none;">
+                <h2>Gerekli Final Notu</h2>
+                <div class="grade-box">
+                    <span>En az şu notu almalısınız:</span>
+                    <span id="requiredFinalGradeDisplay">0.00%</span>
+                </div>
+                <p id="finalGradeMessage" style="color: #4a4a4a; margin-top: 10px; font-weight: 500;"></p>
+                <div class="button-group">
+                    <a href="/tr/final-grade-calculator"><button class="secondary-btn">Sıfırla</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Final Notu Hesaplayıcısı Nasıl Kullanılır</h2>
+                <p>Final notu hesaplayıcısını kullanmak çok basit ve kullanımı kolaydır. Hesaplamak için gpacalculatorcollege.com web sitesinde şu adımları izleyin:</p>
+                <div class="how-to-use-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3><span>İstenen Not</span></h3>
+                        <p style="text-align: left;">
+                            <span>Dönem sonunda 100 üzerinden almak istediğiniz notu veya diğer sayıları girin.</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3><span>Mevcut Not</span></h3>
+                        <p style="text-align: left;">
+                            <span>Tamamladığınız tüm ödevler, kısa sınavlar, projeler ve sınavlara dayanarak derste şu ana kadar aldığınız mevcut notunuzu girin.</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3><span>Final Notunun Ağırlığı</span></h3>
+                        <p style="text-align: left;">
+                            <span>Final notunuzun 100 üzerinden ağırlığını, yani final sınavınızın, projenizin veya son değerlendirmenizin toplam ders notunuza oranını girin.</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3><span>Hesapla'ya tıklayın</span></h3>
+                        <p style="text-align: left;">
+                            <span>Tüm bilgileri girdikten sonra "Final Notunu Hesapla" düğmesine tıklayın.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Final Notu Hesaplayıcımızı Neden Kullanmalısınız?</h2>
+                <p style="text-align: left;">
+                    Hesap makinemiz, herkesin kullanabileceği basit bir arayüze sahiptir ve matematik becerisi gerektirmez. İstediğiniz final notunu, mevcut notunuzu ve kalan çalışma notunuzun ağırlığını girin ve anında sonuçları görmek için "Hesapla"ya tıklayın.
+                </p>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Kullanımı Kolay</h3>
+                        <p style="text-align: left;">
+                            Hesap makinemiz, herkesin kullanabileceği basit bir arayüze sahiptir ve matematik becerisi gerektirmez. İstediğiniz final notunu, mevcut notunuzu ve kalan çalışma notunuzun ağırlığını girin ve anında sonuçları görmek için "Hesapla"ya tıklayın.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Doğru Hesaplamalar</h3>
+                        <p style="text-align: left;">
+                            Hesap makinemiz, her seferinde güvenilir sonuçlar almanızı sağlamak için hassas formüller kullanır. Tamamlanmış ve kalan ders çalışmalarınızın tam ağırlığını hesaba katarak, tahmin yürütmeyi ortadan kaldırır ve hedefinize ulaşmak için neye ihtiyacınız olduğuna dair gerçek bir resim sunar.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Çalışmanızı Planlayın</h3>
+                        <p style="text-align: left;">
+                            Zamanınızı ve enerjinizi en önemli olana odaklamanıza yardımcı olur. Yaklaşan çalışmalarınızdan tam olarak ne kadar puan almanız gerektiğini bilerek, akıllı bir çalışma planı oluşturabilir ve düşük etkili görevlere zaman harcamaktan kaçınabilirsiniz.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Final Notu Hesaplayıcısı Nedir?</h2>
+                <p>
+                    Bu final <a href="https://gpacalculatorcollege.com/tr/grade-calculator">not hesaplayıcısı</a>, öğrencilerin istenen genel ders notuna ulaşmak için kalan ödev veya sınavlardan almaları gereken puanı belirlemelerine yardımcı olur. Mevcut performansa ve kalan çalışmaların ağırlığına göre gerekli notları hızla hesaplar.
+                </p>
+                <h2>Final Notu Hesaplama: Formül ve Örnek</h2>
+                <p>
+                    <b>Formül:</b><br>
+                    <span>Son Not = (Mevcut Not × Tamamlanan Çalışmanın Ağırlığı) + (İstenen Final Sınavı Puanı × Kalan Çalışmanın Ağırlığı)</span>
+                    <br><br>
+                    <span>
+                        Burada:<br>
+                        Mevcut Not = Derste şu ana kadar aldığınız ortalama puan<br>
+                        Tamamlanan Çalışmanın Ağırlığı = Dersin zaten notlandırılan kısmının yüzdesi<br>
+                        Kalan Çalışmanın Ağırlığı = Dersin henüz tamamlanmamış kısmının yüzdesi (örneğin, final sınavı)
+                    </span>
+                </p>
+                <h2>Örnek:</h2>
+                <p>
+                    <b>Mevcut Not:</b> %85<br>
+                    <b>Tamamlanan Çalışmanın Ağırlığı:</b> %70<br>
+                    <b>Final Sınavı Ağırlığı:</b> %30<br>
+                    <b>İstenen Final Notu:</b> %90
+                </p>
+                <h3>Formül:</h3>
+                <p>
+                    <span>90 = (85 x 0,70) + (Gereken Sınav Puanı x 0,30)</span>
+                </p>
+                <h3>Adım Adım:</h3>
+                <ol style="padding-left: 30px;">
+                    <li>85 x 0.70 = 59.5</li>
+                    <li>90 - 59.5 = 30.5</li>
+                    <li>30.5 ÷ 0.30 = 101.67</li>
+                </ol>
+                <p>
+                    Sonuç: %90 final notuna ulaşmak için final sınavında yaklaşık %102'ye ihtiyacınız olacak, bu da ek kredi olmadığı sürece matematiksel olarak imkansız olduğu anlamına geliyor.
+                </p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Final Not Hesaplayıcısının Kullanım Alanları</h2>
+                <p>
+                    İşte final not hesaplayıcısının bazı faydalı örnekleri:
+                </p>
+                <h3>Çalışma Çabasını Planlama</h3>
+                <p>
+                    Bu hesap makinesi, kalan çalışmalarınızdan tam olarak ne kadar puan almanız gerektiğini hesaplamanıza yardımcı olur, böylece çalışma sürenizi buna göre planlayabilirsiniz.
+                </p>
+                <h3>Gerçekçi Hedefler Belirleme</h3>
+                <p>
+                    Bir final not hesaplayıcısı, istediğiniz notun gerçekçi bir şekilde mümkün olup olmadığını göstererek ulaşılabilir akademik hedefler belirlemenize yardımcı olur.
+                </p>
+                <h3>Stratejik Planlama</h3>
+                <p>
+                    Çalışmalarınız için odaklanmış bir oyun planı oluşturabilirsiniz. Kalan her görevin genel notunuzu ne kadar etkilediğini tam olarak bilerek, en iyi sonuçlar için enerjinizi nereye odaklayacağınıza karar verebilirsiniz.
+                </p>
+                <h3>Motivasyon</h3>
+                <p>
+                    Belirsiz akademik hedefleri net ve ulaşılabilir hedeflere dönüştürerek motivasyonunuzu artırabilir. Kalan çalışmalarınızdan tam olarak ne kadar puan almanız gerektiğini görmek, hedeflemeniz gereken belirli bir dönüm noktası sağlar ve çalışma seanslarınızı daha amaçlı hale getirir.
+                </p>
+            </div>
+            <section class="faq-section centered-section">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <div class="faq-container">
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3>Final Sınavından Kaç Not Almalıyım?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Öğrenciler tarafından en çok sorulan soru: Final sınavından önce final sınavımdan kaç not almalıyım? Final not hesaplayıcımızı kullanarak, istediğiniz notu, mevcut notu ve final notunun ağırlığını girerek hesaplayabilirsiniz.</p>
+                            <p><strong>Örnek:</strong><br>İstenen Not: %90<br>Final Sınavı Ağırlığı: %40<br>Mevcut Not: %82<br>Hesap makinesi, hedefinize ulaşmak için final sınavında yaklaşık %98 not almanız gerektiğini gösterecektir.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3>GNO hesaplamasında işe yarar mı?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Genellikle bireysel dersler için olsa da, genel GNO'nuzu tahmin etmek için sonuçları bir <a href="/tr/gpa-calculator">GNO hesaplayıcısı</a> ile kullanabilirsiniz.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3>Herhangi bir ders için kullanabilir miyim?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Evet, hesap makinesi ağırlıklı notlandırma kullanan herhangi bir ders veya ders için çalışır.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <h3>Final Notunun %25'i Ne Anlama Geliyor?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Final sınavınız veya projeniz final notunuzun %25'ini oluşturuyorsa, bu, genel ders notunuzun dörtte birinin bu değerlendirmeden geleceği anlamına gelir. Kalan %75 ise önceki ödevleriniz, sınavlarınız, projeleriniz ve testlerinize dayanacaktır.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const desiredGradeInput = document.getElementById('desired_grade');
+            const desiredOutOfInput = document.getElementById('desired_out_of');
+            const currentGradeInput = document.getElementById('current_grade');
+            const currentOutOfInput = document.getElementById('current_out_of');
+            const finalExamWeightInput = document.getElementById('final_exam_weight');
+            const calculateBtn = document.getElementById('calculateFinalGradeBtn');
+            const resultSection = document.getElementById('finalGradeSummarySection');
+            const resultDisplay = document.getElementById('requiredFinalGradeDisplay');
+            const messageDisplay = document.getElementById('finalGradeMessage');
+            calculateBtn.addEventListener('click', () => {
+                const desiredGrade = parseFloat(desiredGradeInput.value);
+                const desiredOutOf = parseFloat(desiredOutOfInput.value);
+                const currentGrade = parseFloat(currentGradeInput.value);
+                const currentOutOf = parseFloat(currentOutOfInput.value);
+                const finalWeight = parseFloat(finalExamWeightInput.value);
+                // Validation
+                if (isNaN(desiredGrade) || isNaN(currentGrade) || isNaN(finalWeight) || isNaN(desiredOutOf) || isNaN(currentOutOf) || finalWeight >= 100 || finalWeight <= 0) {
+                    alert('Lütfen geçerli sayıları girin. Final sınavı ağırlığı 1 ile 99 arasında olmalıdır.');
+                    return;
+                }
+
+                if (desiredOutOf <= 0 || currentOutOf <= 0) {
+                     alert('Üzerinden değer pozitif bir sayı olmalıdır.');
+                     return;
+                }
+                // Convert grades to a common percentage base
+                const desiredGradePercentage = (desiredGrade / desiredOutOf) * 100;
+                const currentGradePercentage = (currentGrade / currentOutOf) * 100;
+                const remainingWeight = 100 - finalWeight;
+                if (remainingWeight <= 0) {
+                    alert('Final sınavı ağırlığı %100\'den az olmalıdır.');
+                    return;
+                }
+                const requiredFinalGrade = (desiredGradePercentage - (currentGradePercentage * (remainingWeight / 100))) / (finalWeight / 100);
+                resultDisplay.textContent = `${requiredFinalGrade.toFixed(2)}%`;
+                resultSection.style.display = 'block';
+                if (requiredFinalGrade > 100) {
+                    messageDisplay.textContent = 'Finalde %100\'den fazla not almanız gerekiyor, bu imkansız. İstediğiniz notu düşürmeniz gerekecek.';
+                    messageDisplay.style.color = '#d9534f';
+                } else if (requiredFinalGrade < 0) {
+                    messageDisplay.textContent = 'Zaten istediğiniz notu elde ettiniz.';
+                    messageDisplay.style.color = '#5cb85c';
+                } else {
+                    messageDisplay.textContent = 'Hedefinize ulaşmak için bu not gereklidir.';
+                    messageDisplay.style.color = '#4a4a4a';
+                }
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

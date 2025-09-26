@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Калькулятор оценок | Взвешенный калькулятор оценок</title>
+    <meta name="description"
+        content="Этот калькулятор оценок позволяет быстро, точно и легко рассчитать вашу текущую оценку. Узнайте, какую оценку вам нужно получить на итоговом экзамене, чтобы достичь желаемого результата.">
+    <meta name="keywords" content="Калькулятор оценок, Расчёт оценок, Рассчитать оценку, калькулятор оценок за тест, взвешенный калькулятор оценок, невзвешенный калькулятор оценок">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="ru">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Калькулятор оценок</h1>
+            <p>Воспользуйтесь этим простым калькулятором оценок, чтобы узнать свою текущую оценку и то, что вам нужно для итогового экзамена.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Рассчитайте свою оценку</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Оценки</th>
+                            <th>Баллы (%)</th>
+                            <th>Вес (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Добавить оценку"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="напр., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="напр., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Добавить оценку"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="напр., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="напр., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Добавить оценку"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="напр., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="напр., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Добавить ещё оценки</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Рассчитать оценку</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Итоговая оценка</h2>
+                <div class="grade-box">
+                    <span>Текущая оценка</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Сбросить все оценки</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Как пользоваться нашим калькулятором?</h2>
+                <div class="how-to-use-container">
+                    <p>Работа этого калькулятора очень проста и удобна в использовании:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Оценки</h3>
+                        <p style="text-align: left;">Вам необходимо ввести название каждой оценки, например: «Оценка 1», «Оценка 2», «Домашнее задание», «Экзамен» и т. д.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Баллы</h3>
+                        <p style="text-align: left;">Введите свои баллы за каждую оценку, математику, тест или другой экзамен в течение курса. Каждая запись обычно включает в себя набранный процент (10%, 30%, 50% и т. д.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Вес</h3>
+                        <p style="text-align: left;">Укажите вес задания в общей оценке курса. Вес показывает, насколько каждое задание влияет на вашу итоговую оценку, то есть итоговый экзамен может иметь гораздо большее значение, чем небольшое домашнее задание.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Рассчитать оценку</h3>
+                        <p style="text-align: left;">После того, как вы ввели всю необходимую информацию, нажмите кнопку «Рассчитать оценку», и вы получите свою оценку.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Преимущества использования нашего калькулятора оценок</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Экономия времени</h3>
+                        <p style="text-align: left;">С помощью этого инструмента вы можете легко рассчитать оценки. Вам не придётся тратить время на ручные расчёты.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Простота использования</h3>
+                        <p style="text-align: left;">Простой интерфейс позволяет легко вводить баллы и весовые коэффициенты, выдавая результаты всего за несколько кликов.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Точность</h3>
+                        <p style="text-align: left;">Калькулятор использует точные формулы для обеспечения правильности результатов, исключая вероятность ошибок, которые могут возникнуть при ручных расчётах.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Гибкость</h3>
+                        <p style="text-align: left;">Калькулятор работает с различными системами оценок и предметами, позволяя вам корректировать весовые коэффициенты, баллы и форматы в соответствии с требованиями вашего курса.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>Что такое калькулятор оценок?</h2>
+                <p>
+                    Калькулятор оценок помогает быстро определить общую оценку по курсу или предмету, суммируя баллы за задания, контрольные работы, экзамены и проекты, часто учитывая их различный вес. Он помогает студентам понять, как каждое задание влияет на их общую оценку по курсу. Это означает, что общая оценка по курсу основана на двух ключевых факторах: оценке каждого задания (<b>g</b>) и его весе (<b>w</b>). С помощью этого инструмента вы можете рассчитать свой текущий средний балл по курсу, используя выполненные вами задания за семестр.
+                </p>
+                <h2>Расчет взвешенной оценки: формула и пример</h2>
+                <p>
+                    <b>Формула:</b><br>
+                    <span>Взвешенная оценка = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)</span>
+                    <br><br>
+                    <span>
+                        Где:<br>
+                        g = оценка (в процентах или баллах) за каждое задание<br>
+                        w = вес каждого задания (возможный процент или балл)
+                    </span>
+                </p>
+                <h2>Пример:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Оценки</th>
+                            <th>Оценка (%)</th>
+                            <th>Вес (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Викторины</td><td>80</td><td>20</td></tr>
+                        <tr><td>Промежуточный экзамен</td><td>75</td><td>30</td></tr>
+                        <tr><td>Выпускной экзамен</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Шаги:</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Умножьте каждый балл на его вес:<br>Тесты: 80 × 20 = 1600<br>Промежуточный экзамен: 75 × 30 = 2250<br>Итоговый экзамен: 90 × 50 = 4500</li>
+                    <li>Складываем результаты: 1600 + 2250 + 4500 = 8350</li>
+                    <li>Разделить на общий вес: 8350 ÷ 100 = 83,5%</li>
+                </ol>
+                <p>
+                    Взвешенная оценка: <b>83,5%</b> (<b>оценка B</b>)
+                </p>
+                <h2>Другие калькуляторы, которые стоит попробовать:</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">Калькулятор среднего балла</a></li>
+                    <li><a href="/">Калькулятор среднего балла колледжа</a></li>
+                    <li><a href="/highschool-gpa">Средний балл средней школы</a></li>
+                    <li><a href="/final-grade-calculator">Калькулятор итоговой оценки</a></li>
+                </ul>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Советы по улучшению оценок</h2>
+                <p>
+                    Использование калькулятора оценок может помочь вам отслеживать свою успеваемость, но для улучшения оценок может потребоваться определённая стратегия. Вот несколько советов по улучшению оценок.
+                </p>
+                <h3>Управляйте своим временем</h3>
+                <p>
+                    Составьте план обучения заранее, сосредоточьтесь на предметах, которые даются вам сложнее, и разделите работу на небольшие этапы, чтобы не спешить перед экзаменами.
+                </p>
+                <h3>Обратитесь за помощью заранее</h3>
+                <p>
+                    Если у вас возникают трудности с какой-либо темой, сразу же обратитесь за помощью к учителю, репетитору или однокурсникам, а не ждите до начала экзаменов.
+                </p>
+                <h3>Практика прошлых работ</h3>
+                <p>
+                    Работайте над вопросами прошлых экзаменов, чтобы ознакомиться с форматом, понять типы задаваемых вопросов и повысить свою скорость и точность.
+                </p>
+                <h3>Используйте калькулятор оценок</h3>
+                <p>
+                    Следите за своими текущими баллами и узнайте, какие оценки вам нужны за предстоящие задания или экзамены для достижения вашей цели, что поможет вам эффективнее планировать обучение.
+                </p>
+            </div>
+
+            <section class="faq-section centered-section">
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>В чём разница между простым и взвешенным калькулятором оценок?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Простой калькулятор оценок рассматривает все задания одинаково, в то время как взвешенный калькулятор оценок учитывает важность (вес) каждого задания в вашей итоговой оценке.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Какой проходной балл считается в большинстве школ?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Во многих школах проходной балл составляет 60% или буквенная оценка D, но это может варьироваться в зависимости от учебного заведения.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Используют ли все школы одинаковую систему оценок?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Нет. Системы оценок различаются в зависимости от страны, штата и учебного заведения, поэтому всегда проверяйте политику оценивания вашей школы.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Как лучше всего быстро улучшить свои оценки?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Сосредоточьтесь на предметах, по которым вы потеряли больше всего баллов, обратитесь за помощью к учителям или репетиторам и используйте учебный план, чтобы оставаться последовательным.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Добавить оценку"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="напр., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="напр., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Calculadora de Calificaciones | Calculadora de Calificaciones Ponderadas</title>
+    <meta name="description"
+        content="Esta calculadora de calificaciones te permite calcular tu calificación actual de forma rápida, precisa y fácil. Descubre la calificación necesaria en el examen final para alcanzar tu meta.">
+    <meta name="keywords" content="Calculadora de Calificaciones, Cálculo de Calificaciones, Calcular Calificación, calculadora de nota de examen, calculadora de calificaciones ponderadas, calculadora de calificaciones no ponderadas">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
+    <link rel="canonical" href="https://gpacalculatorcollege.com/es/grade-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/grade-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/grade-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/grade-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/grade-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/grade-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/grade-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/grade-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/grade-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/grade-calculator"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+</head>
+<body data-lang="es">
+    {% include 'header.html' %}
+    <main style="position: relative; top: -55px;">
+        <section class="page-content">
+            <h1>Calculadora de Calificaciones</h1>
+            <p>Usa esta sencilla calculadora de calificaciones para conocer tu calificación actual y qué necesitas para tu examen final.</p>
+            <br>
+            <div class="input-section centered-section">
+                <h2 style="position: relative; top: -35px;">Calcula tu calificación</h2>
+                <table class="course-input-table" style="position: relative; top: -35px;">
+                    <thead>
+                        <tr>
+                            <th>Evaluación</th>
+                            <th>Puntuación (%)</th>
+                            <th>Peso (%)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="assessmentTableBody">
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Agregar Evaluación"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ej., 95"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ej., 10"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Agregar Evaluación"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ej., 85"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ej., 25"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="assessmentName" placeholder="Agregar Evaluación"></td>
+                            <td><input type="number" name="score" min="0" max="100" placeholder="ej., 90"></td>
+                            <td><input type="number" name="weight" min="0" placeholder="ej., 40"></td>
+                            <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-group" style="position: relative; top: -35px;">
+                    <button id="addMoreAssessmentBtn" class="secondary-btn">Agregar Más Evaluaciones</button>
+                    <button id="calculateGradeBtn" class="primary-btn">Calcular Calificación</button>
+                </div>
+            </div>
+            <div class="grade-summary-section centered-section" id="gradeSummarySection">
+                <h2>Resumen de Calificación</h2>
+                <div class="grade-box">
+                    <span>Calificación Actual</span>
+                    <span id="currentGradeDisplay">0.00%</span>
+                </div>
+                <div class="button-group">
+                    <a href="/grade-calculator"><button class="secondary-btn">Restablecer Todas las Evaluaciones</button></a>
+                </div>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>¿Cómo usar nuestra calculadora?</h2>
+                <div class="how-to-use-container">
+                    <p>El funcionamiento de esta calculadora es muy sencillo y fácil de usar:</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-1"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Evaluaciones</h3>
+                        <p style="text-align: left;">Ingresa el nombre de cada evaluación, por ejemplo: Evaluación 1, 2, 3, Tarea, Examen, etc.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-2"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Puntuación</h3>
+                        <p style="text-align: left;">Ingresa tus puntuaciones para cada evaluación, ya sea de matemáticas, examen o cualquier otro examen del curso. Cada entrada suele incluir el porcentaje obtenido (10%, 30%, 50%, etc.).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-3"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Ponderación</h3>
+                        <p style="text-align: left;">Ingresa la ponderación de la tarea en la calificación general del curso. La ponderación muestra cuánto afecta cada tarea a tu calificación final, lo que significa que un examen final podría ser mucho más importante que una tarea pequeña.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-4"></i>
+                        </div>
+                        <h3 style="text-decoration: none;">Calcular calificación</h3>
+                        <p style="text-align: left;">Después de ingresar toda la información, haz clic en el botón "Calcular calificación" para obtener el resultado de tu calificación.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section centered-section">
+                <h2>Beneficios de usar nuestra calculadora de calificaciones</h2>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Ahorra tiempo</h3>
+                        <p style="text-align: left;">Con esta herramienta, puedes calcular tus calificaciones fácilmente. Así, no tendrás que perder tiempo con cálculos manuales.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Fácil de usar</h3>
+                        <p style="text-align: left;">Con un diseño sencillo, esta herramienta te permite ingresar tus puntuaciones y ponderaciones fácilmente, brindándote resultados con solo unos clics.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Precisión</h3>
+                        <p style="text-align: left;">La calculadora utiliza fórmulas precisas para garantizar que tus resultados sean correctos, eliminando la posibilidad de errores que pueden ocurrir con los cálculos manuales.</p>
+                    </div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Flexibilidad</h3>
+                        <p style="text-align: left;">La calculadora funciona con diferentes sistemas de calificación y asignaturas, permitiéndote ajustar las ponderaciones, las puntuaciones y los formatos para que se ajusten a los requisitos específicos de tu curso.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-section centered-section">
+                <h2>¿Qué es la Calculadora de Calificaciones?</h2>
+                <p>
+                    La calculadora de calificaciones te ayuda a determinar rápidamente tu calificación general en un curso o asignatura combinando las puntuaciones de tareas, cuestionarios, exámenes y proyectos, a menudo considerando sus diferentes ponderaciones. Ayuda a los estudiantes a comprender cómo cada tarea afecta su calificación general ponderada en un curso. Esto significa que la calificación general de un curso se basa en dos factores clave: la calificación de cada tarea (<b>g</b>) y su ponderación (<b>w</b>). Con esta herramienta, puedes calcular tu calificación promedio actual en un curso utilizando las tareas que has completado hasta el momento en el semestre.
+                </p>
+                <h2>Cálculo de la calificación ponderada: Fórmula y ejemplo</h2>
+                <p>
+                    <b>Fórmula:</b><br>
+                    <span>Calificación ponderada = (g₁ × w₁ + g₂ × w₂ + ... + gₙ × wₙ) ÷ (w₁ + w₂ + ... + wₙ)</span>
+                    <br><br>
+                    <span>
+                        Donde:<br>
+                        g = calificación (en porcentaje o puntos) de cada tarea<br>
+                        w = ponderación de cada tarea (en porcentaje o puntos posibles)
+                    </span>
+                </p>
+                <h2>Ejemplo:</h2>
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Evaluaciones</th>
+                            <th>Calificación (%)</th>
+                            <th>Peso (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Cuestionarios</td><td>80</td><td>20</td></tr>
+                        <tr><td>Examen parcial</td><td>75</td><td>30</td></tr>
+                        <tr><td>Examen final</td><td>90</td><td>50</td></tr>
+                    </tbody>
+                </table>
+                <h2>Pasos:</h2>
+                <ol style="padding-left: 30px;">
+                    <li>Multiplica cada grado por su peso:<br>Cuestionarios: 80 × 20 = 1600<br>Examen parcial: 75 × 30 = 2250<br>Examen final: 90 × 50 = 4500</li>
+                    <li>Suma los resultados: 1600 + 2250 + 4500 = 8350</li>
+                    <li>Dividir por el peso total: 8350 ÷ 100 = 83,5%</li>
+                </ol>
+                <p>
+                    Calificación ponderada: <b>83,5%</b> (<b>Calificación B</b>)
+                </p>
+                <h2>Otras calculadoras para probar:</h2>
+                <ul style="padding-left: 30px;">
+                    <li><a href="/gpa-calculator">Calculadora de GPA</a></li>
+                    <li><a href="/">Calculadora de GPA universitaria</a></li>
+                    <li><a href="/highschool-gpa">Promedio de calificaciones de la escuela secundaria</a></li>
+                    <li><a href="/final-grade-calculator">Calculadora de calificaciones finales</a></li>
+                </ul>
+            </div>
+
+            <div class="content-section centered-section">
+                <h2>Consejos para mejorar tus calificaciones</h2>
+                <p>
+                    Si bien usar la calculadora de calificaciones puede ayudarte a controlar tu rendimiento académico, mejorar tus calificaciones puede requerir cierta estrategia. Aquí tienes algunos consejos para mejorar tus calificaciones.
+                </p>
+                <h3>Administra tu tiempo</h3>
+                <p>
+                    Elabora un plan de estudio con antelación, concéntrate más en las asignaturas que te resulten más difíciles y divide tu trabajo en partes pequeñas para no tener que apresurarte antes de los exámenes.
+                </p>
+                <h3>Busca ayuda con anticipación</h3>
+                <p>
+                    Si tienes dificultades con un tema, pide ayuda a tu profesor, tutor o compañeros de clase de inmediato en lugar de esperar hasta justo antes de los exámenes.
+                </p>
+                <h3>Practica exámenes anteriores</h3>
+                <p>
+                    Trabaja en preguntas de exámenes anteriores para familiarizarte con el formato, comprender los tipos de preguntas y mejorar tu velocidad y precisión.
+                </p>
+                <h3>Usa una calculadora de calificaciones</h3>
+                <p>
+                    Lleva un registro de tus calificaciones actuales y descubre qué calificaciones necesitas en las próximas tareas o exámenes para alcanzar tu objetivo, lo que te ayudará a planificar tus estudios de forma más eficaz.
+                </p>
+            </div>
+
+            <section class="faq-section centered-section">
+                <h2>Preguntas frecuentes</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Cuál es la diferencia entre una calculadora de calificaciones simple y una calculadora de calificaciones ponderadas?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Una calculadora de calificaciones simple trata todas las tareas por igual, mientras que una calculadora de calificaciones ponderadas considera la importancia (ponderación) de cada tarea en la calificación final.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Qué se considera una calificación aprobatoria en la mayoría de las escuelas?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>En muchas escuelas, una calificación aprobatoria es del 60% o una D, pero esto puede variar según la institución.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Todas las escuelas usan el mismo sistema de calificación?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No. Los sistemas de calificación varían según el país, el estado y la institución, así que siempre consulta la política de calificaciones de tu escuela.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Cuál es la mejor manera de mejorar mis calificaciones rápidamente?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Céntrate en las asignaturas en las que has perdido más puntos, busca ayuda de profesores o tutores y usa un plan de estudio para mantener la constancia.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const assessmentTableBody = document.getElementById('assessmentTableBody');
+            const addMoreAssessmentBtn = document.getElementById('addMoreAssessmentBtn');
+            const calculateGradeBtn = document.getElementById('calculateGradeBtn');
+            const currentGradeDisplay = document.getElementById('currentGradeDisplay');
+
+            function addAssessmentRow() {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="assessmentName" placeholder="Agregar Evaluación"></td>
+                    <td><input type="number" name="score" min="0" max="100" placeholder="ej., 85"></td>
+                    <td><input type="number" name="weight" min="0" placeholder="ej., 20"></td>
+                    <td><button class="delete-btn"><i class="fa-solid fa-xmark"></i></button></td>
+                `;
+                assessmentTableBody.appendChild(newRow);
+            }
+
+            function calculateGrade() {
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                const rows = assessmentTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const scoreInput = row.querySelector('input[name="score"]');
+                    const weightInput = row.querySelector('input[name="weight"]');
+                    const score = parseFloat(scoreInput.value);
+                    const weight = parseFloat(weightInput.value);
+                    if (!isNaN(score) && !isNaN(weight)) {
+                        totalWeightedScore += (score * weight);
+                        totalWeight += weight;
+                    }
+                });
+                if (totalWeight > 0) {
+                    const weightedGrade = (totalWeightedScore / totalWeight).toFixed(2);
+                    currentGradeDisplay.textContent = `${weightedGrade}%`;
+                } else {
+                    currentGradeDisplay.textContent = '0.00%';
+                }
+            }
+
+            addMoreAssessmentBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                addAssessmentRow();
+            });
+
+            calculateGradeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                calculateGrade();
+                const gradeSummarySection = document.getElementById('gradeSummarySection');
+                gradeSummarySection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            assessmentTableBody.addEventListener('input', (event) => {
+                const target = event.target;
+                if (target.matches('input[name="score"]') || target.matches('input[name="weight"]')) {
+                    calculateGrade();
+                }
+            });
+
+            assessmentTableBody.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.closest('.delete-btn')) {
+                    event.preventDefault();
+                    target.closest('tr').remove();
+                    calculateGrade();
+                }
+            });
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Калькулятор SGPA в CGPA</title>
+    <meta name="description" content="Используйте этот калькулятор SGPA в CGPA, чтобы легко перевести средний балл за семестр в средний балл за семестр.">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="keywords" content="SGPA в CGPA, калькулятор CGPA, расчет CGPA, онлайн калькулятор CGPA, калькулятор совокупного среднего балла, 4.0 шкала GPA, 10.0 шкала GPA, 5.0 шкала GPA">
+    <link rel="canonical" href="https://gpacalculatorcollege.com/ru/sgpa-to-cgpa-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://gpacalculatorcollege.com/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="en" href="https://gpacalculatorcollege.com/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="ar" href="https://gpacalculatorcollege.com/ar/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="pt" href="https://gpacalculatorcollege.com/pt/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="ru" href="https://gpacalculatorcollege.com/ru/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="es" href="https://gpacalculatorcollege.com/es/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="de" href="https://gpacalculatorcollege.com/de/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="tr" href="https://gpacalculatorcollege.com/tr/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="fr" href="https://gpacalculatorcollege.com/fr/sgpa-to-cgpa-calculator"/>
+    <link rel="alternate" hreflang="it" href="https://gpacalculatorcollege.com/it/sgpa-to-cgpa-calculator"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2QWDFWwBCxN5V6qG/t3bLtmG6NvwK20R8T3M2t/FfD3M5C5P5M5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <meta name="google-site-verification" content="x3QE6UCiAosLmu-5fi2nFrLWXo-O_dWUaKDrxT5wL3k" />
+    <style>
+        :root {
+            --primary-color: #f8f9fa;
+            --secondary-color: #e9ecef;
+            --accent-color: #007bff;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+            --primary-dark: #0056b3;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding: 20px 10px;
+        }
+        .page-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: var(--dark-text);
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        .centered-section {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .input-section, .gpa-summary-section, .content-section {
+            background: var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .method-switch {
+            display: flex;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: var(--primary-color);
+        }
+        .method-switch button {
+            flex: 1;
+            padding: 10px;
+            background: var(--secondary-color);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9em;
+        }
+        .method-switch button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+        .method {
+            display: none;
+        }
+        .method.active {
+            display: block;
+        }
+        .semester-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+        .semester-item input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+        #addSemester {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #addSemester:hover {
+            background: var(--primary-dark);
+        }
+        .gpa-summary-section {
+            display: block !important;
+            margin-top: 20px;
+        }
+        .scale-selector {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .scale-selector select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            font-size: 1em;
+        }
+        .gpa-box {
+            background: var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            margin: 15px 0;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .primary-btn, .secondary-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            width: 100%;
+        }
+        .primary-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        .secondary-btn {
+            background: var(--secondary-color);
+            color: var(--dark-text);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        table.grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        table.grade-table th, table.grade-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+        table.grade-table th {
+            background: var(--secondary-color);
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .faq-item p {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .method-switch {
+                flex-direction: row;
+            }
+            .semester-item {
+                flex-direction: row;
+                align-items: center;
+            }
+            .semester-item input {
+                flex: 1;
+                min-width: 0;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body data-lang="ru" style="position: relative; top: -55px;">
+    {% include 'header.html' %}
+    <main class="main-content">
+        <section class="page-content">
+            <h1>Калькулятор SGPA в CGPA</h1>
+            <p>Этот калькулятор перевода балла за семестр (SGPA) в средний совокупный балл (CGPA) поможет вам преобразовать вашу успеваемость за семестр в общий средний академический балл.</p>
+            <div class="input-section centered-section">
+                <h2>Рассчитать CGPA</h2>
+                <div class="scale-selector">
+                    <label for="scale">Шкала оценок:</label>
+                    <select id="scale">
+                        <option value="4.0">4.0 Шкала</option>
+                        <option value="5.0">5.0 Шкала</option>
+                        <option value="10.0">10.0 Шкала</option>
+                    </select>
+                </div>
+                <div class="method-switch">
+                    <button class="active" data-method="method1">Метод 1: Введите отдельные SGPA</button>
+                    <button data-method="method2">Метод 2: Введите общий SGPA и количество семестров</button>
+                </div>
+                <div class="method active" id="method1">
+                    <h3>Введите SGPA за каждый семестр</h3>
+                    <div id="semesters">
+                        <div class="semester-item">
+                            <input type="number" placeholder="SGPA (Введите SGPA)" step="0.1" min="0">
+                            <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="addSemester" class="secondary-btn">Добавить семестр</button>
+                        <button id="calculate1" class="primary-btn">Рассчитать CGPA</button>
+                    </div>
+                </div>
+                <div class="method" id="method2">
+                    <h3>Введите общий SGPA и количество семестров</h3>
+                    <div class="form-group">
+                        <label for="totalSGPA">Общий SGPA:</label>
+                        <input type="number" id="totalSGPA" placeholder="Введите сумму всех ваших SGPA" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalSemesters">Количество семестров:</label>
+                        <input type="number" id="totalSemesters" placeholder="Введите общее количество семестров" min="1">
+                    </div>
+                    <div class="button-group">
+                        <button id="calculate2" class="primary-btn">Рассчитать CGPA</button>
+                    </div>
+                </div>
+            </div>
+            <div class="gpa-summary-section centered-section" id="gpaSummarySection">
+                <h2>Итог CGPA</h2>
+                <div class="gpa-box">
+                    <span>Текущий CGPA</span>
+                    <span id="currentCgpaDisplay">0.00</span>
+                </div>
+                <div class="button-group">
+                    <button id="resetButton" class="secondary-btn">Сбросить всё</button>
+                </div>
+            </div>
+            <div class="content-section centered-section">
+                <p style="text-align: left;">
+                    Этот калькулятор SGPA в CGPA помогает вам преобразовать ваш средний балл за семестр в совокупный средний балл. Независимо от того, находитесь ли вы в первом семестре или на последнем курсе, этот инструмент поможет вам отслеживать вашу общую академическую успеваемость.
+                </p>
+            </div>
+            <section class="how-to-use-section centered-section">
+                <h2>Как пользоваться конвертером SGPA в CGPA</h2>
+                <div class="how-to-use-container">
+                    <p>Просто следуйте этим простым шагам, чтобы использовать этот калькулятор SGPA в CGPA. Мы предлагаем два варианта конвертации SGPA в CGPA.</p>
+                    <div class="step">
+                        <h3>Для отдельных SGPA</h3>
+                        <p>Вам нужно указать SGPA за каждый семестр отдельно в этом калькуляторе SGPA. Вы можете добавить несколько семестров.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Для общего SGPA</h3>
+                        <p>Вам нужно указать общий SGPA. Во втором поле укажите общее количество семестров.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="why-choose-us-section centered-section">
+                <h2>Почему использовать наш калькулятор SGPA в CGPA?</h2>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Точность</h3>
+                        <p>Наш инструмент обеспечивает точные результаты, используя ваши SGPA и выбранную шкалу оценок.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Удобный интерфейс</h3>
+                        <p>Интерфейс разработан интуитивно понятным и простым в использовании, не требующим технических навыков.</p>
+                    </div>
+                </div>
+                <div class="feature-row left-text-right-image">
+                    <div class="feature-text">
+                        <h3>Мгновенные результаты</h3>
+                        <p>Получите свой CGPA мгновенно одним нажатием, экономя ваше время и усилия.</p>
+                    </div>
+                </div>
+                <div class="feature-row right-text-left-image">
+                    <div class="feature-text">
+                        <h3>Бесплатно</h3>
+                        <p>Наш калькулятор совершенно бесплатен, без регистрации или скрытых платежей.</p>
+                    </div>
+                </div>
+            </section>
+            <div class="content-section centered-section">
+                <h2>Разница между SGPA и CGPA</h2>
+                <p>Вот краткая справочная таблица разницы между средним баллом за семестр и средним баллом за весь семестр:</p>
+                <div style="overflow-x: auto;">
+                    <table class="grade-table">
+                        <thead>
+                            <tr>
+                                <th>Аспект</th>
+                                <th>SGPA (Средний балл за семестр)</th>
+                                <th>CGPA (Средний совокупный балл)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Значение</td>
+                                <td>Средний балл, полученный за один семестр</td>
+                                <td>Средний балл за все завершенные семестры</td>
+                            </tr>
+                            <tr>
+                                <td>Объем</td>
+                                <td>Ограничено только одним семестром</td>
+                                <td>Охватывает всю академическую продолжительность</td>
+                            </tr>
+                            <tr>
+                                <td>Используется для</td>
+                                <td>Оценка успеваемости в конкретном семестре</td>
+                                <td>Оценка общей академической успеваемости</td>
+                            </tr>
+                            <tr>
+                                <td>Расчет</td>
+                                <td>На основе курсов и кредитов одного семестра</td>
+                                <td>На основе всех SGPA и кредитов за несколько семестров</td>
+                            </tr>
+                            <tr>
+                                <td>Формула</td>
+                                <td>SGPA = (Σ [Баллы × Зачетные единицы курса]) ÷ Общее количество зачетных единиц</td>
+                                <td>CGPA = (Σ [SGPA × семестровые кредиты]) ÷ общая сумма кредитов</td>
+                            </tr>
+                            <tr>
+                                <td>Обновления</td>
+                                <td>Изменения каждый семестр</td>
+                                <td>Изменения после завершения каждого нового семестра</td>
+                            </tr>
+                            <tr>
+                                <td>Важность</td>
+                                <td>Помогает отслеживать прогресс по семестрам</td>
+                                <td>Используется для окончательных результатов, стенограмм, распределения, приема</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2>Как перевести SGPA в CGPA</h2>
+                <p>Перевод SGPA (средний балл за семестр) в CGPA (средний совокупный балл) подразумевает объединение ваших оценок за семестр в один общий средний балл.</p>
+                <h3>Если все семестры имеют одинаковое количество кредитов:</h3>
+                <ol>
+                    <li>Сложите все ваши баллы SGPA.</li>
+                    <li>Разделите сумму на количество семестров.</li>
+                </ol>
+                <p><strong>Формула:</strong> CGPA = (Сумма SGPAs) ÷ Общее количество семестров</p>
+                <p><strong>Пример:</strong> Если ваши баллы 8,2, 7,9, 8,5 и 8,0:<br>CGPA = (8,2 + 7,9 + 8,5 + 8,0) ÷ 4 = 8,15</p>
+                <h3>Если семестры имеют разное количество кредитов:</h3>
+                <ol>
+                    <li>Умножьте каждый SGPA на количество кредитов за семестр.</li>
+                    <li>Сложите все результаты.</li>
+                    <li>Разделите на общее количество кредитов за все семестры.</li>
+                </ol>
+                <p><strong>Формула:</strong> CGPA = (Σ [SGPA × Semester Credits]) ÷ Total Credits</p>
+                <p><strong>Пример:</strong><br>
+                    Семестр 1: SGPA = 8,0, кредитов = 20<br>
+                    Семестр 2: SGPA = 7,5, кредитов = 22<br>
+                    Семестр 3: SGPA = 8,3, кредитов = 18<br><br>
+                    CGPA = (8.0×20 + 7.5×22 + 8.3×18) ÷ (20 + 22 + 18)<br>
+                    CGPA = (160 + 165 + 149.4) ÷ 60 = 7.92
+                </p>
+                <p>Ручной расчёт может занять слишком много времени. Лучше всего воспользоваться калькулятором среднего балла (SGPA) и среднего балла (CGPA). Вы также можете воспользоваться калькулятором семестровых оценок, чтобы узнать свои текущие семестровые оценки.</p>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Перевод процентов для SGPA и CGPA</h2>
+                <p>В некоторых школах и университетах оценки выражаются в процентах вместо баллов. Вам также может потребоваться изменить формат оценок при подаче заявления. Вот как это сделать:</p>
+                <h3>Перевод SGPA в проценты</h3>
+                <ul>
+                    <li>Если ваш SGPA оценивается по 10-балльной шкале:<br>Процент = SGPA × 10<br>(Пример: SGPA 8,2 → 82%)</li>
+                    <li>Если ваш SGPA оценивается по 4-балльной шкале:<br>Процент = SGPA × 25 (приблизительно)<br>(Пример: SGPA 3,2 → 80%)<br><em>Примечание: этот показатель может варьироваться в зависимости от вашего университета, поэтому перепроверьте его требования.</em></li>
+                </ul>
+                <h3>Перевод среднего балла в проценты</h3>
+                <ul>
+                    <li>Если ваш средний балл оценивается по 10-балльной шкале:<br>Процент = средний балл × 10<br>(Пример: средний балл 8,5 → 85%)</li>
+                    <li>Если ваш средний балл оценивается по 4-балльной шкале:<br>Процент = средний балл × 25 (примерно)<br>(Пример: средний балл 3,4 → 85%)<br><em>Примечание: это может варьироваться в зависимости от университета, поэтому обязательно сверьтесь с их официальной формулой перевода.</em></li>
+                </ul>
+            </div>
+            <div class="content-section centered-section">
+                <h2>Что такое калькулятор SGPA в CGPA?</h2>
+                <p>Калькулятор конвертации SGPA в CGPA помогает студентам преобразовать средний балл за семестр (SGPA) за отдельные семестры в совокупный средний балл (CGPA), который отражает их общую академическую успеваемость за несколько семестров.</p>
+                <h2>Как рассчитываются SGPA и CGPA</h2>
+                <p>Оба показателя — SGPA и CGPA — используют систему оценок, обычно основанную на 4-балльной шкале (распространённой в США) или 10-балльной шкале (используемой в таких странах, как Индия). Вот как рассчитать их простыми словами:</p>
+                <h3>Как рассчитать SGPA (средний балл за семестр)</h3>
+                <ol>
+                    <li>Сначала найдите балл за каждый курс. (Например, A = 4 по 4-балльной шкале или 9 по 10-балльной шкале.)</li>
+                    <li>Умножьте балл на количество зачётных единиц за этот курс.</li>
+                    <li>Проделайте это для всех курсов, затем сложите все результаты.</li>
+                    <li>Разделите полученную сумму на сумму всех зачётных единиц за курс.</li>
+                </ol>
+                <p><strong>Формула:</strong> SGPA = (Sum of [Grade Points × Credits]) ÷ Total Credits</p>
+                <h3>Как рассчитать CGPA (средний совокупный балл)</h3>
+                <p>Если в разных семестрах общее количество зачётных единиц разное:</p>
+                <ol>
+                    <li>Умножьте каждый SGPA на общее количество кредитов за этот семестр.</li>
+                    <li>Сложите все эти результаты вместе.</li>
+                    <li>Разделите на общее количество кредитов от всех семестров.</li>
+                </ol>
+                <p>Если каждый семестр имеет одинаковое количество кредитов:</p>
+                <h3>Формула</h3>
+                <ul>
+                    <li>Просто сложите все SGPA и разделите на количество семестров.</li>
+                </ul>
+                <p><strong>Формула:</strong> CGPA = (Sum of [SGPA × Semester Credits]) ÷ Total Credits</p>
+            </div>
+            <div class="faq-section centered-section">
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="faq-item">
+                    <h3>Можно ли использовать этот калькулятор как для 10-балльной, так и для 4-балльной систем оценок?</h3>
+                    <p>Да! Калькулятор можно использовать как для 10-балльной, так и для 4-балльной систем среднего балла. Просто убедитесь, что вы последовательны и вводите значения SGPA в соответствии со шкалой оценок вашего университета.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Сохраняет ли этот калькулятор мои данные?</h3>
+                    <p>Нет, ваши данные не хранятся и не передаются третьим лицам. Все вычисления производятся мгновенно на вашем устройстве для вашей конфиденциальности и удобства.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Могу ли я преобразовать свой CGPA обратно в SGPA?</h3>
+                    <p>Нет, CGPA — это кумулятивный показатель, поэтому вы не можете преобразовать его обратно, чтобы найти отдельные значения SGPA. Однако вы можете использовать его для оценки своего общего академического уровня.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const methodButtons = document.querySelectorAll('.method-switch button');
+            const methods = document.querySelectorAll('.method');
+            const currentCgpaDisplay = document.getElementById('currentCgpaDisplay');
+            const semestersDiv = document.getElementById('semesters');
+            const scaleSelector = document.getElementById('scale');
+            function showError(message) {
+                const errorNotification = document.createElement('div');
+                errorNotification.style.position = 'fixed';
+                errorNotification.style.top = '20px';
+                errorNotification.style.right = '20px';
+                errorNotification.style.padding = '12px 20px';
+                errorNotification.style.backgroundColor = '#e74c3c';
+                errorNotification.style.color = 'white';
+                errorNotification.style.borderRadius = '5px';
+                errorNotification.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                errorNotification.style.zIndex = '1000';
+                errorNotification.style.fontFamily = 'Poppins, sans-serif';
+                errorNotification.textContent = message;
+                document.body.appendChild(errorNotification);
+                setTimeout(() => {
+                    errorNotification.remove();
+                }, 3000);
+            }
+            function updateCGPA(cgpa) {
+                currentCgpaDisplay.textContent = cgpa.toFixed(2);
+            }
+            function clearAllFields() {
+                const activeMethod = document.querySelector('.method.active');
+                if (activeMethod.id === 'method1') {
+                    semestersDiv.innerHTML = '';
+                    addSemesterRow();
+                } else if (activeMethod.id === 'method2') {
+                    document.getElementById('totalSGPA').value = '';
+                    document.getElementById('totalSemesters').value = '';
+                }
+                currentCgpaDisplay.textContent = '0.00';
+            }
+            function calculateCGPA1() {
+                const scale = parseFloat(scaleSelector.value);
+                const inputs = document.querySelectorAll('#semesters input');
+                let sum = 0;
+                let count = 0;
+                let isValid = true;
+                inputs.forEach(input => {
+                    const sgpa = parseFloat(input.value);
+                    if (!isNaN(sgpa)) {
+                        if (sgpa > scale) {
+                            showError(`Ошибка: SGPA не может быть больше ${scale} для выбранной шкалы.`);
+                            isValid = false;
+                            return;
+                        }
+                        sum += sgpa;
+                        count++;
+                    }
+                });
+                if (isValid && count > 0) {
+                    const cgpa = sum / count;
+                    updateCGPA(cgpa);
+                } else if (count === 0) {
+                    showError('Ошибка: Пожалуйста, введите хотя бы один SGPA.');
+                }
+            }
+            function calculateCGPA2() {
+                const scale = parseFloat(scaleSelector.value);
+                const totalSGPA = parseFloat(document.getElementById('totalSGPA').value);
+                const totalSemesters = parseFloat(document.getElementById('totalSemesters').value);
+                if (isNaN(totalSGPA) || isNaN(totalSemesters) || totalSemesters <= 0) {
+                    showError('Ошибка: Пожалуйста, введите корректные значения для общего SGPA и количества семестров.');
+                    return;
+                }
+                const maxPossibleSGPA = totalSemesters * scale;
+                if (totalSGPA > maxPossibleSGPA) {
+                    showError(`Ошибка: Общий SGPA не может быть больше ${maxPossibleSGPA} для ${totalSemesters} семестров на ${scale} шкале.`);
+                    return;
+                }
+                const cgpa = totalSGPA / totalSemesters;
+                updateCGPA(cgpa);
+            }
+            function addSemesterRow() {
+                const scale = parseFloat(scaleSelector.value);
+                const newSemester = document.createElement('div');
+                newSemester.className = 'semester-item';
+                newSemester.innerHTML = `
+                    <input type="number" placeholder="SGPA (Введите SGPA)" step="0.1" min="0" max="${scale}">
+                    <button class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                `;
+                semestersDiv.appendChild(newSemester);
+                newSemester.querySelector('.remove-btn').addEventListener('click', () => {
+                    newSemester.remove();
+                    calculateCGPA1();
+                });
+                newSemester.querySelector('input').addEventListener('input', calculateCGPA1);
+            }
+            function updateMaxAttributes() {
+                const scale = parseFloat(scaleSelector.value);
+                const inputs = document.querySelectorAll('#semesters input');
+                inputs.forEach(input => {
+                    input.setAttribute('max', scale);
+                });
+            }
+            methodButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    methodButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    methods.forEach(method => method.classList.remove('active'));
+                    document.getElementById(button.dataset.method).classList.add('active');
+                    currentCgpaDisplay.textContent = '0.00';
+                });
+            });
+            document.getElementById('addSemester').addEventListener('click', addSemesterRow);
+            document.getElementById('calculate1').addEventListener('click', calculateCGPA1);
+            document.getElementById('calculate2').addEventListener('click', calculateCGPA2);
+            document.getElementById('resetButton').addEventListener('click', clearAllFields);
+            scaleSelector.addEventListener('change', () => {
+                clearAllFields();
+                updateMaxAttributes();
+            });
+            addSemesterRow();
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                const paragraph = item.querySelector('p');
+                paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                header.addEventListener('click', () => {
+                    if (paragraph.style.maxHeight === '0px') {
+                        paragraph.style.maxHeight = paragraph.scrollHeight + 'px';
+                    } else {
+                        paragraph.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>
