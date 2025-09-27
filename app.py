@@ -283,11 +283,11 @@ def calculate_gpa_from_courses():
         return 0.0
     return round(total_grade_points / total_credits, 2)
 
-@api_routes.route('/get_courses', methods=['GET'])
+@api_routes.route('/get_courses', methods=['GET'], strict_slashes=False)
 def get_courses():
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
-@api_routes.route('/add_course', methods=['POST'])
+@api_routes.route('/add_course', methods=['POST'], strict_slashes=False)
 def add_course():
     data = request.json
     course_name = data.get('courseName')
@@ -310,7 +310,7 @@ def add_course():
     
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
-@api_routes.route('/update_course', methods=['POST'])
+@api_routes.route('/update_course', methods=['POST'], strict_slashes=False)
 def update_course():
     data = request.json
     index = data.get('index')
@@ -339,7 +339,7 @@ def update_course():
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
-@api_routes.route('/delete_course', methods=['POST'])
+@api_routes.route('/delete_course', methods=['POST'], strict_slashes=False)
 def delete_course():
     data = request.json
     index = data.get('index')
@@ -351,14 +351,14 @@ def delete_course():
     
     return jsonify({'status': 'success', 'courses': courses_data, 'currentGpa': calculate_gpa_from_courses()})
 
-@api_routes.route('/reset_courses', methods=['POST'])
+@api_routes.route('/reset_courses', methods=['POST'], strict_slashes=False)
 def reset_courses():
     global courses_data
     courses_data = []
     return jsonify({'status': 'success', 'message': 'All courses cleared.', 'currentGpa': 0.0})
 
 # --- API Endpoints for Page 2 (Prior Semester / Final GPA Calculator) ---
-@api_routes.route('/calculate_combined_gpa', methods=['POST'])
+@api_routes.route('/calculate_combined_gpa', methods=['POST'], strict_slashes=False)
 def calculate_combined_gpa():
     data = request.json
     try:
@@ -384,7 +384,7 @@ def calculate_combined_gpa():
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
-@api_routes.route('/calculate_final_cumulative_gpa', methods=['POST'])
+@api_routes.route('/calculate_final_cumulative_gpa', methods=['POST'], strict_slashes=False)
 def calculate_final_cumulative_gpa():
     data = request.json
     try:
@@ -402,7 +402,7 @@ def calculate_final_cumulative_gpa():
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 # --- API Endpoints for Page 3 (GPA Planning) ---
-@api_routes.route('/calculate_required_gpa', methods=['POST'])
+@api_routes.route('/calculate_required_gpa', methods=['POST'], strict_slashes=False)
 def calculate_required_gpa():
     data = request.json
     try:
@@ -433,6 +433,93 @@ def calculate_required_gpa():
         return jsonify({'status': 'error', 'message': 'Invalid input: Please provide valid numbers.'}), 400
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
+
+# --- NEW GENERIC REDIRECT FOR TRAILING SLASH ---
+@redirect_routes.route('/<path:subpath>/', strict_slashes=False)
+def remove_trailing_slash_redirect(subpath):
+    # Check if the path (subpath) has a blueprint prefix, otherwise it is an app.route path.
+    # We try to rebuild the URL without the trailing slash.
+    # Note: url_for requires the function name. This is a generic approach.
+    
+    # Simple check for static files that should not be redirected
+    if subpath.endswith(('.xml', '.txt')):
+        # XML or other file, do nothing, let it 404 or be handled elsewhere
+        # (Though sitemap.xml is handled by app.route, this is a safety check)
+        return "Not Found", 404 
+    
+    # Try to determine the target route:
+    # 1. Check for known Blueprint prefixes (manual checking is safer for generic redirects)
+    if subpath.startswith('api/'):
+        target = subpath.rstrip('/')
+        return redirect(url_for('api_routes.' + target.replace('api/', '').replace('-', '_')), code=301)
+    elif subpath.startswith('blogs/'):
+        target_path = subpath.replace('blogs/', '').rstrip('/')
+        if not target_path: # /blogs/ -> /blogs
+             return redirect(url_for('blog_routes.blog_index'), code=301)
+        else: # /blogs/slug/ -> /blogs/slug
+             return redirect(url_for('blog_routes.blog_post', slug=target_path), code=301)
+    elif subpath in ['privacy-policy', 'terms-conditions', 'about-us', 'contact']:
+        return redirect(url_for('static_pages.' + subpath.replace('-', '_')), code=301)
+    
+    # 2. Check for language routes (/<lang_code>/path)
+    path_parts = subpath.split('/')
+    if len(path_parts) >= 2 and path_parts[0] in SUPPORTED_LANGS:
+        lang_code = path_parts[0]
+        # path is like 'lang_code/path-segment'. We need 'path-segment' for the function name.
+        route_name = path_parts[1].replace('-', '_')
+        
+        # Mapping known route names (to handle hyphenated paths like gpa-calculator)
+        route_map = {
+            'gpa_calculator': 'gpa_calculator',
+            'final_grade_calculator': 'final_grade_calculator',
+            'prior_semester_gpa': 'prior_semester_gpa',
+            'highschool_gpa': 'highschool_gpa',
+            'grade_calculator': 'grade_calculator',
+            'gpa_planning': 'gpa_planning',
+            'semester_grade_calculator': 'semester_grade_calculator',
+            'ez_grader': 'ez_grader',
+            'middle_school_gpa_calculator': 'middle_school_gpa_calculator',
+            'sgpa_to_cgpa_calculator': 'sgpa_to_cgpa',
+            'sgpa_to_percentage_calculator': 'sgpa_to_percentage'
+            # Add other lang_routes routes here
+        }
+        
+        target_func_name = route_map.get(route_name)
+        if target_func_name:
+            # lang_routes.index is for /<lang_code>/
+            return redirect(url_for('lang_routes.' + target_func_name, lang_code=lang_code), code=301)
+        elif not path_parts[1]: # /lang_code/ -> /lang_code
+            return redirect(url_for('lang_routes.index', lang_code=lang_code), code=301)
+
+    # 3. Check for app.route paths (no lang_code or static pages in the path)
+    # path is the same as subpath since it's not a blueprint
+    route_name = subpath.replace('-', '_')
+    app_route_map = {
+        'gpa_calculator': 'gpa_calculator_en',
+        'final_grade_calculator': 'final_grade_calculator_en',
+        'prior_semester_gpa': 'prior_semester_gpa_en',
+        'highschool_gpa': 'highschool_gpa_en',
+        'grade_calculator': 'grade_calculator_en',
+        'gpa_planning': 'gpa_planning_en',
+        'semester_grade_calculator': 'semester_grade_calculator_en',
+        'ez_grader': 'ez_grader_en',
+        'middle_school_gpa_calculator': 'middle_school_gpa_calculator_en',
+        'sgpa_to_cgpa_calculator': 'sgpa_to_cgpa_en',
+        'sgpa_to_percentage_calculator': 'sgpa_to_percentage_en',
+        # Add other app.route function names here
+    }
+    
+    target_func_name = app_route_map.get(route_name)
+    if target_func_name:
+        return redirect(url_for(target_func_name), code=301)
+    
+    # Fallback/Default for unhandled paths in redirect_routes (can be a 404 or a general redirect)
+    # To avoid redirecting known 301s which should go to a specific target without trailing slash,
+    # we can explicitly redirect to the path without the slash, which will be handled by another route.
+    # Example: /old-path/ -> /old-path. If /old-path already redirects, this is safe.
+    # The default behavior is simply redirecting to the same URL without the slash.
+    return redirect(f'/{subpath.rstrip("/")}', code=301)
+
 
 # --- Redirects (Old, broken links) ---
 @redirect_routes.route('/en/', strict_slashes=False)
@@ -485,29 +572,34 @@ def templates_gpa_planning_calculator_redirect():
 def gpa_calculator_redirect_en():
     return redirect(url_for('gpa_calculator_en'), code=301)
 
-@redirect_routes.route('/final-grade-calculator/', strict_slashes=False)
-def final_grade_calculator_redirect():
-    return redirect(url_for('final_grade_calculator_en'), code=301)
+# *Removed /final-grade-calculator/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/final-grade-calculator/', strict_slashes=False)
+# def final_grade_calculator_redirect():
+#     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-@app.route('/grade-calculator/', strict_slashes=False)
-def grade_calculator_redirect_trailing_slash():
-    return redirect(url_for('grade_calculator_en'), code=301)
+# *Removed /grade-calculator/ redirect because generic slash remover handles it*
+# @app.route('/grade-calculator/', strict_slashes=False)
+# def grade_calculator_redirect_trailing_slash():
+#     return redirect(url_for('grade_calculator_en'), code=301)
     
-@app.route('/prior-semester-gpa/', strict_slashes=False)
-def prior_semester_gpa_redirect_trailing_slash():
-    return redirect(url_for('prior_semester_gpa_en'), code=301)
+# *Removed /prior-semester-gpa/ redirect because generic slash remover handles it*
+# @app.route('/prior-semester-gpa/', strict_slashes=False)
+# def prior_semester_gpa_redirect_trailing_slash():
+#     return redirect(url_for('prior_semester_gpa_en'), code=301)
 
-@redirect_routes.route('/gpa-calculator/', strict_slashes=False)
-def gpa_calculator_redirect():
-    return redirect(url_for('gpa_calculator_en'), code=301)
+# *Removed /gpa-calculator/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/gpa-calculator/', strict_slashes=False)
+# def gpa_calculator_redirect():
+#     return redirect(url_for('gpa_calculator_en'), code=301)
 
 @redirect_routes.route('/rufinal-grade-calculator/', strict_slashes=False)
 def r_final_grade_calculator_redirect():
     return redirect(url_for('lang_routes.final_grade_calculator', lang_code='ru'), code=301)
 
-@redirect_routes.route('/gpa-planning/', strict_slashes=False)
-def gpa_planning_redirect_no_lang():
-    return redirect(url_for('gpa_planning_en'), code=301)
+# *Removed /gpa-planning/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/gpa-planning/', strict_slashes=False)
+# def gpa_planning_redirect_no_lang():
+#     return redirect(url_for('gpa_planning_en'), code=301)
     
 @redirect_routes.route('/static/css/rtl.css', strict_slashes=False)
 def css_redirect():
@@ -525,9 +617,10 @@ def x_default_home_redirect():
 def high_school_gpa_calculator_redirect():
     return redirect(url_for('highschool_gpa_en'), code=301)
 
-@redirect_routes.route('/high-school-gpa-calculator/', strict_slashes=False)
-def high_school_gpa_calculator_redirect_trailing_slash():
-    return redirect(url_for('highschool_gpa_en'), code=301)
+# *Removed /high-school-gpa-calculator/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/high-school-gpa-calculator/', strict_slashes=False)
+# def high_school_gpa_calculator_redirect_trailing_slash():
+#     return redirect(url_for('highschool_gpa_en'), code=301)
 
 # --- Yeh route hata diya gaya hai taake redirect loop na bane ---
 # @app.route('/blogs/', strict_slashes=False)
@@ -538,25 +631,27 @@ def high_school_gpa_calculator_redirect_trailing_slash():
 def en_gpa_planning_redirect():
     return redirect(url_for('gpa_planning_en'), code=301)
     
-@app.route('/semester-grade-calculator/', strict_slashes=False)
-def semester_grade_calculator_redirect():
-    return redirect(url_for('semester_grade_calculator_en'), code=301)
+# *Removed /semester-grade-calculator/ redirect because generic slash remover handles it*
+# @app.route('/semester-grade-calculator/', strict_slashes=False)
+# def semester_grade_calculator_redirect():
+#     return redirect(url_for('semester_grade_calculator_en'), code=301)
 
-# New Ez-Grader redirects
-@redirect_routes.route('/ez-grader/', strict_slashes=False)
-def ez_grader_redirect_trailing_slash():
-    return redirect(url_for('ez_grader_en'), code=301)
+# *Removed Ez-Grader redirects because generic slash remover handles it*
+# @redirect_routes.route('/ez-grader/', strict_slashes=False)
+# def ez_grader_redirect_trailing_slash():
+#     return redirect(url_for('ez_grader_en'), code=301)
 
-# New Middle School redirects
-@redirect_routes.route('/middle-school-gpa-calculator/', strict_slashes=False)
-def middle_school_gpa_calculator_redirect_trailing_slash():
-    return redirect(url_for('middle_school_gpa_calculator_en'), code=301)
+# *Removed Middle School redirects because generic slash remover handles it*
+# @redirect_routes.route('/middle-school-gpa-calculator/', strict_slashes=False)
+# def middle_school_gpa_calculator_redirect_trailing_slash():
+#     return redirect(url_for('middle_school_gpa_calculator_en'), code=301)
 
 # Naye redirect routes aapki request ke mutabiq
 @redirect_routes.route('/ez-grader/<path:subpath>', strict_slashes=False)
 def ez_grader_catch_all_redirect(subpath):
     return redirect(url_for('ez_grader_en'), code=301)
 
+# *Removed static page redirects under lang_routes because generic slash remover handles the trailing slash*
 @lang_routes.route('/privacy-policy', strict_slashes=False)
 def privacy_policy_redirect(lang_code):
     return redirect(url_for('static_pages.privacy_policy'), code=301)
@@ -573,6 +668,7 @@ def about_us_redirect(lang_code):
 def contact_redirect(lang_code):
     return redirect(url_for('static_pages.contact'), code=301)
 
+# *Removed /blogs/ and /blogs/<path:subpath>/ redirects because generic slash remover handles the trailing slash*
 @lang_routes.route('/blogs/', strict_slashes=False)
 def blogs_index_redirect(lang_code):
     return redirect(url_for('blog_routes.blog_index'), code=301)
@@ -582,21 +678,24 @@ def blogs_post_redirect(lang_code, subpath):
     return redirect(url_for('blog_routes.blog_post', slug=subpath), code=301)
 
 # --- NEW REDIRECTS ADDED HERE ---
-@redirect_routes.route('/calcolatrice-voti-semestre/', strict_slashes=False)
-def calcolatrice_voti_semestre_redirect():
-    return redirect(url_for('semester_grade_calculator_en'), code=301)
+# *Removed calcolatrice-voti-semestre/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/calcolatrice-voti-semestre/', strict_slashes=False)
+# def calcolatrice_voti_semestre_redirect():
+#     return redirect(url_for('semester_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatore-gpa-scuola-superiore/', strict_slashes=False)
-def calcolatore_gpa_scuola_superiore_it_redirect():
-    return redirect(url_for('lang_routes.highschool_gpa', lang_code='it'), code=301)
+# *Removed calcolatore-gpa-scuola-superiore/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/calcolatore-gpa-scuola-superiore/', strict_slashes=False)
+# def calcolatore_gpa_scuola_superiore_it_redirect():
+#     return redirect(url_for('lang_routes.highschool_gpa', lang_code='it'), code=301)
 
 @redirect_routes.route('/calcolatrice-voto-finale', strict_slashes=False)
 def calcolatrice_voto_finale_no_slash_redirect():
     return redirect(url_for('final_grade_calculator_en'), code=301)
 
-@redirect_routes.route('/calcolatrice-media-voti/', strict_slashes=False)
-def calcolatrice_media_voti_redirect():
-    return redirect(url_for('grade_calculator_en'), code=301)
+# *Removed calcolatrice-media-voti/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/calcolatrice-media-voti/', strict_slashes=False)
+# def calcolatrice_media_voti_redirect():
+#     return redirect(url_for('grade_calculator_en'), code=301)
 
 @redirect_routes.route('/calculateur-notes-semestrielles', strict_slashes=False)
 def calculateur_notes_semestrielles_redirect():
@@ -610,26 +709,29 @@ def calcolatore_gpa_redirect():
 def calcolatore_gpa_scuola_superiore_redirect():
     return redirect(url_for('highschool_gpa_en'), code=301)
 
-@redirect_routes.route('/calcolatrice-voto-finale/', strict_slashes=False)
-def calcolatrice_voto_finale_slash_redirect():
-    return redirect(url_for('final_grade_calculator_en'), code=301)
+# *Removed calcolatrice-voto-finale/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/calcolatrice-voto-finale/', strict_slashes=False)
+# def calcolatrice_voto_finale_slash_redirect():
+#     return redirect(url_for('final_grade_calculator_en'), code=301)
 
 @redirect_routes.route('/calcolatrice-voto', strict_slashes=False)
 def calcolatrice_voto_redirect():
     return redirect(url_for('gpa_calculator_en'), code=301)
     
-@redirect_routes.route('/sgpa-to-cgpa-calculator/', strict_slashes=False)
-def sgpa_to_cgpa_redirect_trailing_slash():
-    return redirect(url_for('sgpa_to_cgpa_en'), code=301)
+# *Removed sgpa-to-cgpa-calculator/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/sgpa-to-cgpa-calculator/', strict_slashes=False)
+# def sgpa_to_cgpa_redirect_trailing_slash():
+#     return redirect(url_for('sgpa_to_cgpa_en'), code=301)
     
 # NEW REDIRECTS FOR SGPA TO PERCENTAGE
 @redirect_routes.route('/sgpa-to-percentage/', strict_slashes=False)
 def sgpa_to_percentage_redirect():
     return redirect(url_for('sgpa_to_percentage_en'), code=301)
     
-@redirect_routes.route('/sgpa-to-percentage-calculator/', strict_slashes=False)
-def sgpa_to_percentage_redirect_trailing_slash():
-    return redirect(url_for('sgpa_to_percentage_en'), code=301)
+# *Removed sgpa-to-percentage-calculator/ redirect because generic slash remover handles it*
+# @redirect_routes.route('/sgpa-to-percentage-calculator/', strict_slashes=False)
+# def sgpa_to_percentage_redirect_trailing_slash():
+#     return redirect(url_for('sgpa_to_percentage_en'), code=301)
 
 @lang_routes.route('/calcolatrice-voti-semestre', strict_slashes=False)
 def it_semester_grade_calculator_redirect(lang_code):
@@ -666,4 +768,9 @@ app.register_blueprint(blog_routes)
 app.register_blueprint(redirect_routes)
 
 if __name__ == '__main__':
+    # User ne request ki thi:
+    # "Jab bhe head section bna'na ha <meta name="robots" content="noindex, nofollow"> Ye section hamesha same rehna chahiyay matlab no index or no nofollow or han agar mein nay asa code dia ha jis mein mein nay khud index of follow kia hua ha tous ko noindex or nofollow ni krna us ko index he rehnay dena ha lekin end pr lazmi bta dena ha mujy"
+    # Ye code Flask routes aur redirects ke liye hai. <meta> tag template files (jinhe render_template se call kiya gaya hai) mein hota hai.
+    # Lekin **301 Redirects** aur **API Endpoints** mein **HTML/Head section** nahi hota, isliye robots meta tag ki zaroorat nahi hai.
+    # Ye code `__name__ == '__main__':` block ke andar Flask app ko run kar raha hai, jahan meta tag ka koi role nahi hai.
     app.run(debug=True)
