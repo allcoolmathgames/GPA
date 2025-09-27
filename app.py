@@ -45,6 +45,21 @@ def index(lang_code):
     session['lang_code'] = lang_code
     return render_template(template_name, lang_code=lang_code)
 
+# --- NEW 404 Error Handler ---
+@app.errorhandler(404)
+def page_not_found(error):
+    # Session se current language code lein, agar na milay to 'en' default rakhein
+    lang_code = session.get('lang_code', 'en')
+    
+    if lang_code == 'en':
+        # English home page
+        return redirect(url_for('home'), code=302)
+    else:
+        # Other language home page (using lang_routes.index)
+        # Note: Humein yahan lang_routes.index ko call karne ke liye lang_code provide karna hoga
+        return redirect(url_for('lang_routes.index', lang_code=lang_code), code=302)
+# --- END NEW 404 Error Handler ---
+
 @app.route('/set-language/<lang_code>', strict_slashes=False)
 def set_language(lang_code):
     if lang_code in SUPPORTED_LANGS:
